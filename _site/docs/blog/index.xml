@@ -5,11 +5,11 @@
       xmlns:dc="http://purl.org/dc/elements/1.1/" 
       version="2.0">
 <channel>
-<title>Kwangmin Kim</title>
-<link>kk3225.netlify.app/docs/blog/</link>
-<atom:link href="kk3225.netlify.app/docs/blog/index.xml" rel="self" type="application/rss+xml"/>
+<title>Junhyun Lee</title>
+<link>dlwns0719.netlify.app/docs/blog/</link>
+<atom:link href="dlwns0719.netlify.app/docs/blog/index.xml" rel="self" type="application/rss+xml"/>
 <description>blog</description>
 <generator>quarto-1.8.25</generator>
-<lastBuildDate>Tue, 11 Nov 2025 02:05:58 GMT</lastBuildDate>
+<lastBuildDate>Tue, 11 Nov 2025 04:03:07 GMT</lastBuildDate>
 </channel>
 </rss>
