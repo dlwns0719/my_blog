@@ -15,7 +15,7 @@ highlight-style: a11y
 
 website: # 웹사이트 전체 설정
   title: "Junhyun Lee"
-  site-url: dlwns0719.netlify.app
+  site-url: https://dlwns0719.netlify.app
   description: "blog"
   google-analytics: "G-6W0EKFMWBN"
   repo-url: https://github.com/dlwns0719/my_blog
