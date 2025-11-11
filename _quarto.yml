@@ -18,7 +18,7 @@ website: # 웹사이트 전체 설정
   site-url: dlwns0719.netlify.app
   description: "blog"
   google-analytics: "G-6W0EKFMWBN"
-  repo-url: https://github.com/kmink3225/blog
+  repo-url: https://github.com/dlwns0719/my_blog
   open-graph: true
   page-navigation: true # 이전/다음 페이지 버튼
   bread-crumbs: true #헤더에 블로그 게시물의 깊이를 보여주는 빵 부스러기(breadcrumbs) 내비게이션을 활성화
@@ -38,7 +38,7 @@ website: # 웹사이트 전체 설정
         href: about.qmd
     right:
       - icon: github
-        href: https://github.com/kmink3225/blog
+        href: https://github.com/dlwns0719/my_blog
   navbar: #네비게이션 설정
     background: dark
     logo: ./images/logo.png
@@ -57,10 +57,10 @@ website: # 웹사이트 전체 설정
       - text: Me
         href: about.qmd
       - icon: github
-        href: https://github.com/kmink3225
+        href: https://github.com/dlwns0719
         aria-label: Github
       - icon: linkedin
-        href: https://www.linkedin.com/in/kwangmin-kim-a5241b200/
+        href: https://www.linkedin.com/in/dlwns0719/
         aria-label: Linkedin
       #- icon: rss
       #  href: docs/blog/index.qmd
