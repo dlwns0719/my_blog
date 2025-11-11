@@ -1,1 +1,1 @@
-Sitemap: dlwns0719.netlify.app/sitemap.xml
+Sitemap: https://dlwns0719.netlify.app/sitemap.xml
