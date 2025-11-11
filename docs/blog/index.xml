@@ -6,10 +6,10 @@
       version="2.0">
 <channel>
 <title>Junhyun Lee</title>
-<link>https://dlwns0719.netlify.app/docs/blog/</link>
-<atom:link href="https://dlwns0719.netlify.app/docs/blog/index.xml" rel="self" type="application/rss+xml"/>
+<link>https://dlwns0719.github.io/my_blog/docs/blog/</link>
+<atom:link href="https://dlwns0719.github.io/my_blog/docs/blog/index.xml" rel="self" type="application/rss+xml"/>
 <description>blog</description>
 <generator>quarto-1.8.25</generator>
-<lastBuildDate>Tue, 11 Nov 2025 04:16:28 GMT</lastBuildDate>
+<lastBuildDate>Tue, 11 Nov 2025 04:46:24 GMT</lastBuildDate>
 </channel>
 </rss>
