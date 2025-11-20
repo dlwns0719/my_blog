@@ -451,7 +451,7 @@ background: #EDF3F9;
 <li><a href="https://python.langchain.com/v0.1/docs/modules/agents/agent_types/tool_calling/">LangChain 공식 도큐먼트</a></li>
 </ul>
 <p><img src="./assets/agent-concept.png" class="img-fluid"></p>
-<div id="cell-2" class="cell">
+<div id="a7c58715" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>코드</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a><span class="co"># API 키를 환경변수로 관리하기 위한 설정 파일</span></span>
@@ -461,7 +461,7 @@ background: #EDF3F9;
 <span id="cb1-5"><a href="#cb1-5"></a>load_dotenv()</span></code></pre></div><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<div id="cell-3" class="cell">
+<div id="6e56c40a" class="cell" data-execution_count="2">
 <details class="code-fold">
 <summary>코드</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1"></a><span class="co"># LangSmith 추적을 설정합니다. https://smith.langchain.com</span></span>
@@ -472,7 +472,7 @@ background: #EDF3F9;
 <span id="cb2-6"><a href="#cb2-6"></a>logging.langsmith(<span class="st">"CH15-Agents"</span>)</span></code></pre></div><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<div id="cell-4" class="cell">
+<div id="2047d1e0" class="cell" data-execution_count="3">
 <details class="code-fold">
 <summary>코드</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1"></a><span class="im">from</span> langchain.tools <span class="im">import</span> tool</span>
@@ -511,7 +511,7 @@ background: #EDF3F9;
 <span id="cb3-34"><a href="#cb3-34"></a><span class="bu">print</span>(<span class="ss">f"도구 설명: </span><span class="sc">{</span>python_repl_tool<span class="sc">.</span>description<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<div id="cell-5" class="cell" data-execution_count="4">
+<div id="ee789017" class="cell" data-execution_count="4">
 <details class="code-fold">
 <summary>코드</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1"></a><span class="co"># tools 정의</span></span>
@@ -525,7 +525,7 @@ background: #EDF3F9;
 <li><code>agent_scratchpad</code> : 에이전트가 임시로 저장하는 변수</li>
 <li><code>input</code> : 사용자의 입력</li>
 </ul>
-<div id="cell-7" class="cell" data-execution_count="5">
+<div id="b9ab9d67" class="cell" data-execution_count="5">
 <details class="code-fold">
 <summary>코드</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1"></a><span class="im">from</span> langchain_core.prompts <span class="im">import</span> ChatPromptTemplate</span>
@@ -549,7 +549,7 @@ background: #EDF3F9;
 </section>
 <section id="agent-생성" class="level2" data-number="2">
 <h2 data-number="2" class="anchored" data-anchor-id="agent-생성"><span class="header-section-number">2</span> Agent 생성</h2>
-<div id="cell-9" class="cell" data-execution_count="6">
+<div id="b26ef43d" class="cell" data-execution_count="6">
 <details class="code-fold">
 <summary>코드</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1"></a><span class="im">from</span> langchain_openai <span class="im">import</span> ChatOpenAI</span>
@@ -570,7 +570,7 @@ background: #EDF3F9;
 <p><strong>주요 메서드</strong> 1. <code>invoke</code>: 에이전트 실행 2. <code>stream</code>: 최종 출력에 도달하는 데 필요한 단계를 스트리밍</p>
 <p><strong>주요 기능</strong> 1. <strong>도구 검증</strong>: 에이전트와 호환되는 도구인지 확인 2. <strong>실행 제어</strong>: 최대 반복 횟수 및 실행 시간 제한 설정 가능 3. <strong>오류 처리</strong>: 출력 파싱 오류에 대한 다양한 처리 옵션 제공 4. <strong>중간 단계 관리</strong>: 중간 단계 트리밍 및 반환 옵션 5. <strong>비동기 지원</strong>: 비동기 실행 및 스트리밍 지원</p>
 <p><strong>최적화 팁</strong> - <code>max_iterations</code>와 <code>max_execution_time</code>을 적절히 설정하여 실행 시간 관리 - <code>trim_intermediate_steps</code>를 활용하여 메모리 사용량 최적화 - 복잡한 작업의 경우 <code>stream</code> 메서드를 사용하여 단계별 결과 모니터링</p>
-<div id="cell-11" class="cell">
+<div id="c14d2a84" class="cell" data-execution_count="7">
 <details class="code-fold">
 <summary>코드</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1"></a><span class="im">from</span> langchain.agents <span class="im">import</span> AgentExecutor</span>
@@ -634,7 +634,7 @@ background: #EDF3F9;
 </tbody>
 </table>
 <pre><code>
-::: {#cell-13 .cell execution_count=8}
+::: {#bf7b4031 .cell execution_count=8}
 ``` {.python .cell-code}
 from langchain.agents import AgentExecutor
 
@@ -646,7 +646,7 @@ agent_executor = AgentExecutor(
     handle_parsing_errors=True,
 )</code></pre>
 <p>:::</p>
-<div id="cell-14" class="cell">
+<div id="642b7a0f" class="cell" data-execution_count="9">
 <details class="code-fold">
 <summary>코드</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1"></a><span class="co"># 스트리밍 모드로 실행합니다</span></span>
@@ -666,7 +666,7 @@ agent_executor = AgentExecutor(
 <li><code>observation_callback</code>: 관찰(Observation) 출력을 처리하는 함수</li>
 <li><code>result_callback</code>: 최종 답변 출력을 처리하는 함수</li>
 </ul>
-<div id="cell-16" class="cell" data-execution_count="10">
+<div id="90683519" class="cell" data-execution_count="10">
 <details class="code-fold">
 <summary>코드</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1"></a><span class="co"># 업데이트</span></span>
@@ -675,7 +675,7 @@ agent_executor = AgentExecutor(
 </div>
 <p>아래는 Agent 의 중간 단계 과정을 깔끔하게 출력하기 위하여 사용되는 콜백 함수입니다.</p>
 <p>이 콜백 함수는 Streamlit 에서 중간 단계를 출력하여 사용자에게 제공할 때 유용할 수 있습니다.</p>
-<div id="cell-18" class="cell" data-execution_count="11">
+<div id="16505aa1" class="cell" data-execution_count="11">
 <details class="code-fold">
 <summary>코드</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1"></a><span class="im">from</span> langchain_teddynote.messages <span class="im">import</span> AgentStreamParser</span>
@@ -684,7 +684,7 @@ agent_executor = AgentExecutor(
 </details>
 </div>
 <p>스트리밍 방식으로 Agent 의 응답 과정을 확인합니다.</p>
-<div id="cell-20" class="cell">
+<div id="a23a18cc" class="cell" data-execution_count="12">
 <details class="code-fold">
 <summary>코드</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1"></a><span class="co"># 질의에 대한 답변을 스트리밍으로 출력 요청</span></span>
@@ -699,7 +699,7 @@ agent_executor = AgentExecutor(
 </details>
 </div>
 <p>다음은 callback 을 수정하여 사용하는 방법입니다.</p>
-<div id="cell-22" class="cell" data-execution_count="13">
+<div id="d52ccb95" class="cell" data-execution_count="13">
 <details class="code-fold">
 <summary>코드</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1"></a><span class="co"># AgentCallbacks와 AgentStreamParser를 langchain_teddynote.messages에서 가져옵니다.</span></span>
@@ -741,7 +741,7 @@ agent_executor = AgentExecutor(
 </details>
 </div>
 <p>아래의 출력 내용을 확인해 보면 중간 내용의 출력 값이 내가 변경한 콜백 함수의 출력 값으로 변경된 것을 확인할 수 있습니다.</p>
-<div id="cell-24" class="cell">
+<div id="9bc6f347" class="cell" data-execution_count="14">
 <details class="code-fold">
 <summary>코드</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1"></a><span class="co"># 질의에 대한 답변을 스트리밍으로 출력 요청</span></span>
@@ -759,7 +759,7 @@ agent_executor = AgentExecutor(
 <p>이전의 대화내용을 기억하기 위해서는 <code>RunnableWithMessageHistory</code> 를 사용하여 <code>AgentExecutor</code> 를 감싸줍니다.</p>
 <p><code>RunnableWithMessageHistory</code> 에 대한 자세한 내용은 아래 링크를 참고해 주세요.</p>
 <p><strong>참고</strong> - <a href="https://wikidocs.net/254682">RunnableWithMessageHistory</a></p>
-<div id="cell-26" class="cell" data-execution_count="15">
+<div id="b306df6b" class="cell" data-execution_count="15">
 <details class="code-fold">
 <summary>코드</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1"></a><span class="im">from</span> langchain_community.chat_message_histories <span class="im">import</span> ChatMessageHistory</span>
@@ -789,7 +789,7 @@ agent_executor = AgentExecutor(
 <span id="cb15-25"><a href="#cb15-25"></a>)</span></code></pre></div><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<div id="cell-27" class="cell">
+<div id="300db801" class="cell" data-execution_count="16">
 <details class="code-fold">
 <summary>코드</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1"></a><span class="co"># 질의에 대한 답변을 스트리밍으로 출력 요청</span></span>
@@ -804,7 +804,7 @@ agent_executor = AgentExecutor(
 <span id="cb16-10"><a href="#cb16-10"></a>    agent_stream_parser.process_agent_steps(step)</span></code></pre></div><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<div id="cell-28" class="cell">
+<div id="f6f55bd5" class="cell" data-execution_count="17">
 <details class="code-fold">
 <summary>코드</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1"></a><span class="co"># 질의에 대한 답변을 스트리밍으로 출력 요청</span></span>
@@ -819,7 +819,7 @@ agent_executor = AgentExecutor(
 <span id="cb17-10"><a href="#cb17-10"></a>    agent_stream_parser.process_agent_steps(step)</span></code></pre></div><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<div id="cell-29" class="cell">
+<div id="e73e5e75" class="cell" data-execution_count="18">
 <details class="code-fold">
 <summary>코드</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1"></a><span class="co"># 질의에 대한 답변을 스트리밍으로 출력 요청</span></span>
@@ -836,7 +836,7 @@ agent_executor = AgentExecutor(
 <span id="cb18-12"><a href="#cb18-12"></a>    agent_stream_parser.process_agent_steps(step)</span></code></pre></div><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<div id="cell-30" class="cell">
+<div id="cdf4fde2" class="cell" data-execution_count="19">
 <details class="code-fold">
 <summary>코드</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1"></a><span class="co"># 질의에 대한 답변을 스트리밍으로 출력 요청</span></span>
@@ -855,7 +855,7 @@ agent_executor = AgentExecutor(
 <span id="cb19-14"><a href="#cb19-14"></a>    agent_stream_parser.process_agent_steps(step)</span></code></pre></div><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<div id="cell-31" class="cell">
+<div id="4417861b" class="cell" data-execution_count="20">
 <details class="code-fold">
 <summary>코드</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1"></a><span class="co"># 질의에 대한 답변을 스트리밍으로 출력 요청</span></span>

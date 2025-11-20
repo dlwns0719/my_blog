@@ -435,7 +435,7 @@ background: #EDF3F9;
 <ul>
 <li><a href="https://python.langchain.com/v0.1/docs/modules/agents/agent_types/tool_calling/">LangChain 공식 도큐먼트</a></li>
 </ul>
-<div id="cell-2" class="cell">
+<div id="68e6b0d8" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>코드</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a><span class="co"># API 키를 환경변수로 관리하기 위한 설정 파일</span></span>
@@ -445,7 +445,7 @@ background: #EDF3F9;
 <span id="cb1-5"><a href="#cb1-5"></a>load_dotenv()</span></code></pre></div><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<div id="cell-3" class="cell">
+<div id="d290ebe1" class="cell" data-execution_count="2">
 <details class="code-fold">
 <summary>코드</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1"></a><span class="co"># LangSmith 추적을 설정합니다. https://smith.langchain.com</span></span>
@@ -456,7 +456,7 @@ background: #EDF3F9;
 <span id="cb2-6"><a href="#cb2-6"></a>logging.langsmith(<span class="st">"CH15-Agents"</span>)</span></code></pre></div><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<div id="cell-4" class="cell">
+<div id="7c39877a" class="cell" data-execution_count="3">
 <details class="code-fold">
 <summary>코드</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1"></a><span class="im">from</span> langchain.tools <span class="im">import</span> tool</span>
@@ -476,7 +476,7 @@ background: #EDF3F9;
 <span id="cb3-15"><a href="#cb3-15"></a><span class="bu">print</span>(<span class="ss">f"도구 설명: </span><span class="sc">{</span>search_news<span class="sc">.</span>description<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<div id="cell-5" class="cell" data-execution_count="10">
+<div id="8aa5a8e1" class="cell" data-execution_count="4">
 <details class="code-fold">
 <summary>코드</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1"></a><span class="co"># tools 정의</span></span>
@@ -490,7 +490,7 @@ background: #EDF3F9;
 <li><code>agent_scratchpad</code> : 에이전트가 임시로 저장하는 변수</li>
 <li><code>input</code> : 사용자의 입력</li>
 </ul>
-<div id="cell-7" class="cell" data-execution_count="11">
+<div id="996cbf84" class="cell" data-execution_count="5">
 <details class="code-fold">
 <summary>코드</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1"></a><span class="im">from</span> langchain_core.prompts <span class="im">import</span> ChatPromptTemplate</span>
@@ -539,13 +539,13 @@ background: #EDF3F9;
 <li>이전에 Ollama 를 사용하지 않았다면, <a href="https://wikidocs.net/233805">Ollama</a> 를 참고해 주세요.</li>
 </ul>
 <p>langchain-ollama 설치를 한 뒤 진행해 주세요.</p>
-<div id="cell-10" class="cell" data-execution_count="6">
+<div id="b4a4279f" class="cell" data-execution_count="6">
 <details class="code-fold">
 <summary>코드</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1"></a><span class="co"># !pip install -qU langchain-ollama==0.1.3</span></span></code></pre></div><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<div id="cell-11" class="cell" data-execution_count="3">
+<div id="b0dd3013" class="cell" data-execution_count="7">
 <details class="code-fold">
 <summary>코드</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1"></a><span class="im">from</span> langchain_anthropic <span class="im">import</span> ChatAnthropic</span>
@@ -580,7 +580,7 @@ background: #EDF3F9;
 </details>
 </div>
 <p>LLM 기반으로 Agent 를 생성합니다.</p>
-<div id="cell-13" class="cell" data-execution_count="12">
+<div id="7c27396e" class="cell" data-execution_count="8">
 <details class="code-fold">
 <summary>코드</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1"></a><span class="im">from</span> langchain.agents <span class="im">import</span> create_tool_calling_agent</span>
@@ -597,7 +597,7 @@ background: #EDF3F9;
 </section>
 <section id="agentexecutor-생성-후-실행-및-결과-확인" class="level2" data-number="3">
 <h2 data-number="3" class="anchored" data-anchor-id="agentexecutor-생성-후-실행-및-결과-확인"><span class="header-section-number">3</span> AgentExecutor 생성 후 실행 및 결과 확인</h2>
-<div id="cell-15" class="cell">
+<div id="e93f25bc" class="cell" data-execution_count="9">
 <details class="code-fold">
 <summary>코드</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1"></a><span class="im">from</span> langchain.agents <span class="im">import</span> AgentExecutor</span>
@@ -618,7 +618,7 @@ background: #EDF3F9;
 </div>
 <p>다양한 llm을 사용하여 에이전트를 실행합니다.</p>
 <p>다음은 입력받은 llm을 사용하여 Agent 를 생성하고 실행하여 결과를 출력하는 함수입니다.</p>
-<div id="cell-17" class="cell" data-execution_count="13">
+<div id="b94c7736" class="cell" data-execution_count="10">
 <details class="code-fold">
 <summary>코드</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1"></a><span class="kw">def</span> execute_agent(llm, tools, input_text, label):</span>
@@ -637,7 +637,7 @@ background: #EDF3F9;
 </details>
 </div>
 <p>각 llm 별로 에이전트를 생성하고 실행하여 결과를 출력합니다.</p>
-<div id="cell-19" class="cell" data-execution_count="14">
+<div id="64854b4e" class="cell" data-execution_count="11">
 <details class="code-fold">
 <summary>코드</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1"></a>query <span class="op">=</span> (</span>
@@ -645,28 +645,28 @@ background: #EDF3F9;
 <span id="cb11-3"><a href="#cb11-3"></a>)</span></code></pre></div><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<div id="cell-20" class="cell">
+<div id="883ecb50" class="cell" data-execution_count="12">
 <details class="code-fold">
 <summary>코드</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1"></a><span class="co"># gpt</span></span>
 <span id="cb12-2"><a href="#cb12-2"></a>execute_agent(gpt, tools, query, <span class="st">"gpt"</span>)</span></code></pre></div><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<div id="cell-21" class="cell">
+<div id="adbbd88e" class="cell" data-execution_count="13">
 <details class="code-fold">
 <summary>코드</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1"></a><span class="co"># claude</span></span>
 <span id="cb13-2"><a href="#cb13-2"></a>execute_agent(claude, tools, query, <span class="st">"claude"</span>)</span></code></pre></div><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<div id="cell-22" class="cell">
+<div id="32995ef4" class="cell" data-execution_count="14">
 <details class="code-fold">
 <summary>코드</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1"></a><span class="co"># gemini</span></span>
 <span id="cb14-2"><a href="#cb14-2"></a>execute_agent(gemini, tools, query, <span class="st">"gemini"</span>)</span></code></pre></div><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<div id="cell-23" class="cell">
+<div id="90ea433a" class="cell" data-execution_count="15">
 <details class="code-fold">
 <summary>코드</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1"></a><span class="co"># llama3.1 70B (Together.ai)</span></span>
@@ -678,14 +678,14 @@ background: #EDF3F9;
 <span id="cb15-7"><a href="#cb15-7"></a>)</span></code></pre></div><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<div id="cell-24" class="cell">
+<div id="f06d1a42" class="cell" data-execution_count="16">
 <details class="code-fold">
 <summary>코드</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1"></a><span class="co"># llama3.1 8B (ollama)</span></span>
 <span id="cb16-2"><a href="#cb16-2"></a>execute_agent(ollama, tools, query, <span class="st">"llama3.1(Ollama)"</span>)</span></code></pre></div><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<div id="cell-25" class="cell">
+<div id="e0d6d129" class="cell" data-execution_count="17">
 <details class="code-fold">
 <summary>코드</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1"></a><span class="co"># qwen2.5 7B (ollama)</span></span>

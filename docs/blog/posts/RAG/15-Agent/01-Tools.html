@@ -444,7 +444,7 @@ background: #EDF3F9;
 <ul>
 <li><a href="https://python.langchain.com/v0.1/docs/integrations/tools/">LangChain 통합된 도구 리스트</a></li>
 </ul>
-<div id="cell-2" class="cell">
+<div id="162928bb" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>코드</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a><span class="co"># API 키를 환경변수로 관리하기 위한 설정 파일</span></span>
@@ -453,17 +453,8 @@ background: #EDF3F9;
 <span id="cb1-4"><a href="#cb1-4"></a><span class="co"># API 키 정보 로드</span></span>
 <span id="cb1-5"><a href="#cb1-5"></a>load_dotenv()</span></code></pre></div><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
-<div class="cell-output cell-output-error">
-<div class="ansi-escaped-output">
-<pre><span class="ansi-red-fg ansi-bold">Running cells with 'Python 3.12.7' requires the ipykernel package.
-
-</span><span class="ansi-red-fg ansi-bold">&lt;a href='command:jupyter.createPythonEnvAndSelectController'&gt;Create a Python Environment&lt;/a&gt; with the required packages.
-
-</span><span class="ansi-red-fg ansi-bold">Or install 'ipykernel' using the command: '/opt/homebrew/bin/python3.12 -m pip install ipykernel -U --user --force-reinstall'</span></pre>
 </div>
-</div>
-</div>
-<div id="cell-3" class="cell">
+<div id="adba0a4e" class="cell" data-execution_count="2">
 <details class="code-fold">
 <summary>코드</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1"></a><span class="co"># LangSmith 추적을 설정합니다. https://smith.langchain.com</span></span>
@@ -474,7 +465,7 @@ background: #EDF3F9;
 <span id="cb2-6"><a href="#cb2-6"></a>logging.langsmith(<span class="st">"CH15-Tools"</span>)</span></code></pre></div><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<div id="cell-4" class="cell" data-execution_count="3">
+<div id="73f66311" class="cell" data-execution_count="3">
 <details class="code-fold">
 <summary>코드</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1"></a><span class="im">import</span> warnings</span>
@@ -512,7 +503,7 @@ background: #EDF3F9;
 <ul>
 <li>입력 문자열에서 불필요한 공백, 백틱, ‘python’ 키워드 등을 제거합니다.</li>
 </ul>
-<div id="cell-7" class="cell" data-execution_count="4">
+<div id="d943ee9e" class="cell" data-execution_count="4">
 <details class="code-fold">
 <summary>코드</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1"></a><span class="im">from</span> langchain_experimental.tools <span class="im">import</span> PythonREPLTool</span>
@@ -521,7 +512,7 @@ background: #EDF3F9;
 <span id="cb4-4"><a href="#cb4-4"></a>python_tool <span class="op">=</span> PythonREPLTool()</span></code></pre></div><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<div id="cell-8" class="cell">
+<div id="5c92c03c" class="cell" data-execution_count="5">
 <details class="code-fold">
 <summary>코드</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1"></a><span class="co"># 파이썬 코드를 실행하고 결과를 반환합니다.</span></span>
@@ -530,7 +521,7 @@ background: #EDF3F9;
 </div>
 <p>아래는 LLM 에게 파이썬 코드를 작성하도록 요청하고 결과를 반환하는 예제입니다.</p>
 <p><strong>흐름 정리</strong> 1. LLM 모델에게 특정 작업을 수행하는 Python 코드를 작성하도록 요청합니다. 2. 작성된 코드를 실행하여 결과를 얻습니다. 3. 결과를 출력합니다.</p>
-<div id="cell-10" class="cell" data-execution_count="14">
+<div id="544403e4" class="cell" data-execution_count="6">
 <details class="code-fold">
 <summary>코드</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1"></a><span class="im">from</span> langchain_openai <span class="im">import</span> ChatOpenAI</span>
@@ -565,7 +556,7 @@ background: #EDF3F9;
 <span id="cb6-30"><a href="#cb6-30"></a>chain <span class="op">=</span> prompt <span class="op">|</span> llm <span class="op">|</span> StrOutputParser() <span class="op">|</span> RunnableLambda(print_and_execute)</span></code></pre></div><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<div id="cell-11" class="cell">
+<div id="407d9735" class="cell" data-execution_count="7">
 <details class="code-fold">
 <summary>코드</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1"></a><span class="co"># 결과 출력</span></span>
@@ -587,7 +578,7 @@ background: #EDF3F9;
 <p><strong>주요 매개변수</strong> - <code>max_results</code> (int): 반환할 최대 검색 결과 수 (기본값: 5) - <code>search_depth</code> (str): 검색 깊이 (“basic” 또는 “advanced”) - <code>include_domains</code> (List[str]): 검색 결과에 포함할 도메인 목록 - <code>exclude_domains</code> (List[str]): 검색 결과에서 제외할 도메인 목록 - <code>include_answer</code> (bool): 원본 쿼리에 대한 짧은 답변 포함 여부 - <code>include_raw_content</code> (bool): 각 사이트의 정제된 HTML 콘텐츠 포함 여부 - <code>include_images</code> (bool): 쿼리 관련 이미지 목록 포함 여부</p>
 <p><strong>반환 값</strong> - 검색 결과를 포함하는 JSON 형식의 문자열(url, content)</p>
 <p>혹은 아래의 주석을 해제하고 발급받은 API 키를 입력합니다.</p>
-<div id="cell-14" class="cell" data-execution_count="10">
+<div id="2bb4df80" class="cell" data-execution_count="8">
 <details class="code-fold">
 <summary>코드</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1"></a><span class="co"># import os</span></span>
@@ -595,7 +586,7 @@ background: #EDF3F9;
 <span id="cb9-3"><a href="#cb9-3"></a><span class="co"># os.environ["TAVILY_API_KEY"] = "TAVILY API 키 입력"</span></span></code></pre></div><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<div id="cell-15" class="cell" data-execution_count="17">
+<div id="7d2ec10b" class="cell" data-execution_count="9">
 <details class="code-fold">
 <summary>코드</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1"></a><span class="im">from</span> langchain_community.tools.tavily_search <span class="im">import</span> TavilySearchResults</span>
@@ -612,7 +603,7 @@ background: #EDF3F9;
 <span id="cb10-12"><a href="#cb10-12"></a>)</span></code></pre></div><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<div id="cell-16" class="cell">
+<div id="a640a496" class="cell" data-execution_count="10">
 <details class="code-fold">
 <summary>코드</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1"></a><span class="co"># 도구 실행</span></span>
@@ -644,7 +635,7 @@ background: #EDF3F9;
 <p>다음은 DALL-E Image Generator 를 사용하여 이미지를 생성하는 예제입니다.</p>
 <p>이번에는 <code>DallEAPIWrapper</code> 를 사용하여 이미지를 생성해 보겠습니다.</p>
 <p>이때 입력 프롬프트는 LLM 모델에게 이미지를 생성하는 프롬프트를 작성하도록 요청합니다.</p>
-<div id="cell-19" class="cell">
+<div id="ce07ac5e" class="cell" data-execution_count="11">
 <details class="code-fold">
 <summary>코드</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1"></a><span class="im">from</span> langchain_core.output_parsers <span class="im">import</span> StrOutputParser</span>
@@ -685,14 +676,14 @@ background: #EDF3F9;
 <p><code>poetry shell</code> 명령어를 통해 다시 최신 langchain 버전으로 변경해야 합니다.</p>
 <p>이 과정이 번거로운 분들은 일단 <code>DallEAPIWrapper</code> 를 사용하지 않고 진행하셔도 무방합니다.</p>
 <p><strong>업그레이드/다운그레이드</strong> 후에는 반드시 상단 메뉴의 “Restart” 버튼을 클릭한 뒤 진행해야 합니다.</p>
-<div id="cell-22" class="cell">
+<div id="b2aaca2d" class="cell" data-execution_count="12">
 <details class="code-fold">
 <summary>코드</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1"></a><span class="co"># 임시 버전 다운그레이드 명령어 (실행 후 restart)</span></span>
 <span id="cb13-2"><a href="#cb13-2"></a><span class="co"># !pip install langchain==0.2.16 langchain-community==0.2.16 langchain-text-splitters==0.2.4 langchain-experimental==0.0.65 langchain-openai==0.1.20</span></span></code></pre></div><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<div id="cell-23" class="cell" data-execution_count="1">
+<div id="669cbaae" class="cell" data-execution_count="13">
 <details class="code-fold">
 <summary>코드</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1"></a><span class="co"># DALL-E API 래퍼 가져오기</span></span>
@@ -723,22 +714,6 @@ background: #EDF3F9;
 <span id="cb14-26"><a href="#cb14-26"></a><span class="co"># 생성된 이미지를 표시합니다.</span></span>
 <span id="cb14-27"><a href="#cb14-27"></a>Image(url<span class="op">=</span>image_url, width<span class="op">=</span><span class="dv">500</span>)</span></code></pre></div><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
-<div class="cell-output cell-output-error">
-<div class="ansi-escaped-output">
-<pre><span class="ansi-red-fg">---------------------------------------------------------------------------</span>
-<span class="ansi-red-fg">NameError</span>                                 Traceback (most recent call last)
-Cell <span class="ansi-green-fg">In[1], line 24</span>
-<span class="ansi-green-fg ansi-bold">     19</span> query <span style="color:rgb(98,98,98)">=</span> <span style="color:rgb(175,0,0)">"</span><span style="color:rgb(175,0,0)">스마트폰을 바라보는 사람들을 풍자한 neo-classicism painting</span><span style="color:rgb(175,0,0)">"</span>
-<span class="ansi-green-fg ansi-bold">     21</span> <span style="font-style:italic;color:rgb(95,135,135)"># 이미지 생성 및 URL 받기</span>
-<span class="ansi-green-fg ansi-bold">     22</span> <span style="font-style:italic;color:rgb(95,135,135)"># chain.invoke()를 사용하여 이미지 설명을 DALL-E 프롬프트로 변환</span>
-<span class="ansi-green-fg ansi-bold">     23</span> <span style="font-style:italic;color:rgb(95,135,135)"># dalle.run()을 사용하여 실제 이미지 생성</span>
-<span class="ansi-green-fg">---&gt; 24</span> image_url <span style="color:rgb(98,98,98)">=</span> dalle<span style="color:rgb(98,98,98)">.</span>run(<span class="ansi-yellow-bg">chain</span><span style="color:rgb(98,98,98)">.</span>invoke({<span style="color:rgb(175,0,0)">"</span><span style="color:rgb(175,0,0)">image_desc</span><span style="color:rgb(175,0,0)">"</span>: query}))
-<span class="ansi-green-fg ansi-bold">     26</span> <span style="font-style:italic;color:rgb(95,135,135)"># 생성된 이미지를 표시합니다.</span>
-<span class="ansi-green-fg ansi-bold">     27</span> Image(url<span style="color:rgb(98,98,98)">=</span>image_url, width<span style="color:rgb(98,98,98)">=</span><span style="color:rgb(98,98,98)">500</span>)
-
-<span class="ansi-red-fg">NameError</span>: name 'chain' is not defined</pre>
-</div>
-</div>
 </div>
 </section>
 </section>
@@ -751,7 +726,7 @@ Cell <span class="ansi-green-fg">In[1], line 24</span>
 <p>이 데코레이터는 함수를 도구로 변환하는 기능을 제공합니다. 다양한 옵션을 통해 도구의 동작을 커스터마이즈할 수 있습니다.</p>
 <p><strong>사용 방법</strong> 1. 함수 위에 <code>@tool</code> 데코레이터 적용 2. 필요에 따라 데코레이터 매개변수 설정</p>
 <p>이 데코레이터를 사용하면 일반 Python 함수를 강력한 도구로 쉽게 변환할 수 있으며, 자동화된 문서화와 유연한 인터페이스 생성이 가능합니다.</p>
-<div id="cell-25" class="cell" data-execution_count="2">
+<div id="bb173b35" class="cell" data-execution_count="14">
 <details class="code-fold">
 <summary>코드</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1"></a><span class="im">from</span> langchain.tools <span class="im">import</span> tool</span>
@@ -770,14 +745,14 @@ Cell <span class="ansi-green-fg">In[1], line 24</span>
 <span id="cb15-14"><a href="#cb15-14"></a>    <span class="cf">return</span> a <span class="op">*</span> b</span></code></pre></div><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<div id="cell-26" class="cell">
+<div id="58c9189a" class="cell" data-execution_count="15">
 <details class="code-fold">
 <summary>코드</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1"></a><span class="co"># 도구 실행</span></span>
 <span id="cb16-2"><a href="#cb16-2"></a>add_numbers.invoke({<span class="st">"a"</span>: <span class="dv">3</span>, <span class="st">"b"</span>: <span class="dv">4</span>})</span></code></pre></div><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<div id="cell-27" class="cell">
+<div id="dd962b45" class="cell" data-execution_count="16">
 <details class="code-fold">
 <summary>코드</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1"></a><span class="co"># 도구 실행</span></span>
@@ -793,13 +768,13 @@ Cell <span class="ansi-green-fg">In[1], line 24</span>
 <p><strong>설명</strong> - 구글 뉴스 검색 API를 사용하여 최신 뉴스를 검색합니다. - 키워드를 기반으로 뉴스를 검색할 수 있습니다. - 최신 뉴스를 검색할 수 있습니다.</p>
 <p><strong>주요 매개변수</strong> - <code>k</code> (int): 반환할 최대 검색 결과 수 (기본값: 5)</p>
 <p>사용하기 전 패키지를 업데이트 해주세요.</p>
-<div id="cell-30" class="cell" data-execution_count="5">
+<div id="d1d36cd5" class="cell" data-execution_count="17">
 <details class="code-fold">
 <summary>코드</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1"></a><span class="co"># !pip install -qU langchain-teddynote</span></span></code></pre></div><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<div id="cell-31" class="cell" data-execution_count="6">
+<div id="91d4596c" class="cell" data-execution_count="18">
 <details class="code-fold">
 <summary>코드</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1"></a><span class="im">from</span> langchain_teddynote.tools <span class="im">import</span> GoogleNews</span>
@@ -808,21 +783,21 @@ Cell <span class="ansi-green-fg">In[1], line 24</span>
 <span id="cb19-4"><a href="#cb19-4"></a>news_tool <span class="op">=</span> GoogleNews()</span></code></pre></div><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<div id="cell-32" class="cell">
+<div id="28908a00" class="cell" data-execution_count="19">
 <details class="code-fold">
 <summary>코드</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1"></a><span class="co"># 최신 뉴스 검색</span></span>
 <span id="cb20-2"><a href="#cb20-2"></a>news_tool.search_latest(k<span class="op">=</span><span class="dv">5</span>)</span></code></pre></div><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<div id="cell-33" class="cell">
+<div id="38f973dd" class="cell" data-execution_count="20">
 <details class="code-fold">
 <summary>코드</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1"></a><span class="co"># 키워드로 뉴스 검색</span></span>
 <span id="cb21-2"><a href="#cb21-2"></a>news_tool.search_by_keyword(<span class="st">"AI 투자"</span>, k<span class="op">=</span><span class="dv">3</span>)</span></code></pre></div><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<div id="cell-34" class="cell" data-execution_count="10">
+<div id="5b5c4a92" class="cell" data-execution_count="21">
 <details class="code-fold">
 <summary>코드</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1"></a><span class="im">from</span> langchain_teddynote.tools <span class="im">import</span> GoogleNews</span>
@@ -839,7 +814,7 @@ Cell <span class="ansi-green-fg">In[1], line 24</span>
 <span id="cb22-12"><a href="#cb22-12"></a>    <span class="cf">return</span> news_tool.search_by_keyword(query, k<span class="op">=</span><span class="dv">5</span>)</span></code></pre></div><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<div id="cell-35" class="cell">
+<div id="5db5b311" class="cell" data-execution_count="22">
 <details class="code-fold">
 <summary>코드</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1"></a><span class="co"># 실행 결과</span></span>

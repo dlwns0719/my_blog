@@ -429,7 +429,7 @@ background: #EDF3F9;
 
 <p><code>iter()</code> 메서드는 에이전트의 실행 과정을 단계별로 반복할 수 있게 해주는 반복자(iterator)를 생성합니다.</p>
 <p>중간 과정에서 사용자의 입력을 받아 계속 진행할지 묻는 기능을 제공합니다. 이를 <code>Human-in-the-loop</code> 라고 합니다.</p>
-<div id="cell-2" class="cell">
+<div id="2bc8a97c" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>코드</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a><span class="co"># API KEY를 환경변수로 관리하기 위한 설정 파일</span></span>
@@ -439,7 +439,7 @@ background: #EDF3F9;
 <span id="cb1-5"><a href="#cb1-5"></a>load_dotenv()</span></code></pre></div><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<div id="cell-3" class="cell">
+<div id="24adf030" class="cell" data-execution_count="2">
 <details class="code-fold">
 <summary>코드</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1"></a><span class="co"># LangSmith 추적을 설정합니다. https://smith.langchain.com</span></span>
@@ -451,7 +451,7 @@ background: #EDF3F9;
 </details>
 </div>
 <p>먼저, 도구(tool) 를 정의합니다.</p>
-<div id="cell-5" class="cell" data-execution_count="3">
+<div id="dc419bf7" class="cell" data-execution_count="3">
 <details class="code-fold">
 <summary>코드</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1"></a><span class="im">from</span> langchain.agents <span class="im">import</span> tool</span>
@@ -464,7 +464,7 @@ background: #EDF3F9;
 </details>
 </div>
 <p>다음으로는 <code>add_function</code> 을 사용하여 덧셈 계산을 수행하는 Agent 를 정의합니다.</p>
-<div id="cell-7" class="cell" data-execution_count="4">
+<div id="a0abec97" class="cell" data-execution_count="4">
 <details class="code-fold">
 <summary>코드</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1"></a><span class="im">from</span> langchain_core.prompts <span class="im">import</span> ChatPromptTemplate, MessagesPlaceholder</span>
@@ -518,7 +518,7 @@ background: #EDF3F9;
 <p>이때,</p>
 <p>단계별로 계산 결과를 사용자에게 보여주고, 사용자가 계속 진행할지 묻습니다. (<strong>Human-in-the-loop</strong>)</p>
 <p>사용자가 ’y’가 아닌 다른 입력을 하면 반복 중단됩니다.</p>
-<div id="cell-10" class="cell">
+<div id="101628de" class="cell" data-execution_count="5">
 <details class="code-fold">
 <summary>코드</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1"></a><span class="co"># 계산할 질문 설정</span></span>
