@@ -11,7 +11,7 @@
     "href": "docs/blog/index.html",
     "title": "Blog",
     "section": "",
-    "text": "Order By\n      Default\n      \n        Title\n      \n      \n        Date - Oldest\n      \n      \n        Date - Newest\n      \n      \n        Author\n      \n    \n  \n    \n      \n      \n    \n\n\n\n\n\n\n\n\n\n\nOpenAI 외 도구 호출 에이전트(Tool Calling Agent)\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n도구 (Tools)\n\n\n\n\n\n\nAI\n\nLangChain\n\nPrompt_Engineering\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nIteration 기능과 사람 개입(Human-in-the-loop)\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nLLM 에 도구 바인딩(Binding Tools)\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n도구 호출 에이전트(Tool Calling Agent)\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nPart 1 — 프롬프트 구조와 기능 탐구\n\n\n\n\n\n\nAI\n\nLangChain\n\nPrompt_Engineering\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nPart 1 — 프롬프트 구조와 기능 탐구\n\n\n\n\n\n\nAI\n\nLangChain\n\nPrompt_Engineering\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nPart 1 — 프롬프트 구조와 기능 탐구\n\n\n\n\n\n\nAI\n\nLangChain\n\nPrompt_Engineering\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nPart 1 — 프롬프트 구조와 기능 탐구\n\n\n\n\n\n\nAI\n\nLangChain\n\nPrompt_Engineering\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nPart 1 — 프롬프트 구조와 기능 탐구\n\n\n\n\n\n\nAI\n\nLangChain\n\nPrompt_Engineering\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nPart 1 — 프롬프트 구조와 기능 탐구\n\n\n\n\n\n\nAI\n\nLangChain\n\nPrompt_Engineering\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nRAG\n\n\nRAG Content List\n\n\n\nAI\n\nLangChain\n\nRAG\n\n\n\nRetrieval-Augmented Generation (RAG) 기술의 전체 구현 과정을 다루는 종합 가이드. LangChain을 활용한 RAG 시스템 구축, 문서 로딩, 임베딩, 벡터 저장소, 검색기, 그리고 고급 RAG 기법까지 단계별로 학습할 수 있는 실습 중심의 블로그 모음입니다.\n\n\n\n\n\nNov 1, 2025\n\n\nJunhyun Lee\n\n\n\n\n\n\n\n\n\n\n\n\nPrompt_Engineering\n\n\nPrompt_Engineering Content List\n\n\n\nAI\n\nLangChain\n\nRAG\n\n\n\n\n\n\n\n\n\nNov 1, 2025\n\n\nJunhyun Lee\n\n\n\n\n\nNo matching items",
+    "text": "Order By\n      Default\n      \n        Title\n      \n      \n        Date - Oldest\n      \n      \n        Date - Newest\n      \n      \n        Author\n      \n    \n  \n    \n      \n      \n    \n\n\n\n\n\n\n\n\n\n\nOpenAI 외 도구 호출 에이전트(Tool Calling Agent)\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n도구 (Tools)\n\n\n\n\n\n\nAI\n\nLangChain\n\nPrompt_Engineering\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nIteration 기능과 사람 개입(Human-in-the-loop)\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nLLM 에 도구 바인딩(Binding Tools)\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n도구 호출 에이전트(Tool Calling Agent)\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nPart 1 — 프롬프트 구조와 기능 탐구\n\n\n\n\n\n\nAI\n\nLangChain\n\nPrompt_Engineering\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nPart 1 — 프롬프트 구조와 기능 탐구\n\n\n\n\n\n\nAI\n\nLangChain\n\nPrompt_Engineering\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nRAG\n\n\nRAG Content List\n\n\n\nAI\n\nLangChain\n\nRAG\n\n\n\nRetrieval-Augmented Generation (RAG) 기술의 전체 구현 과정을 다루는 종합 가이드. LangChain을 활용한 RAG 시스템 구축, 문서 로딩, 임베딩, 벡터 저장소, 검색기, 그리고 고급 RAG 기법까지 단계별로 학습할 수 있는 실습 중심의 블로그 모음입니다.\n\n\n\n\n\nNov 1, 2025\n\n\nJunhyun Lee\n\n\n\n\n\n\n\n\n\n\n\n\nPrompt_Engineering\n\n\nPrompt_Engineering Content List\n\n\n\nAI\n\nLangChain\n\nRAG\n\n\n\n\n\n\n\n\n\nNov 1, 2025\n\n\nJunhyun Lee\n\n\n\n\n\nNo matching items",
     "crumbs": [
       "Blog",
       "Blog Posts"
@@ -40,272 +40,6 @@
       "Blog Posts",
       "Prompt_Engineering"
     ]
-  },
-  {
-    "objectID": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy 5/01-Prompt-Structure.html",
-    "href": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy 5/01-Prompt-Structure.html",
-    "title": "Part 1 — 프롬프트 구조와 기능 탐구",
-    "section": "",
-    "text": "문자의 발명 → 인류의 기록 정확도 향상\n인쇄술 → 지식 대중화\n전화·라디오·TV → 즉각적인 원격 소통\n인터넷·모바일 → 실시간 대화\n생성형 AI → 인간-기계 상호작용 고도화\n\n\n\n\n\nPromptus(나타내다/생산하다)에서 유래\n현재 의미: 행동을 유도하는 신호\nAI에서: 모델에게 답변을 생성하도록 입력하는 문장\n\n\n\n\n\n\n\n\n\n\n\n\n항목\n프롬프트\n프롬프트 엔지니어링\n\n\n\n\n목적\n응답 생성 요청\n원하는 형태로 정확한 응답을 얻기 위한 설계\n\n\n필요성\n기본 입력\n모델 작동 방식·언어적 맥락 이해 필요\n\n\n예시\n“용에 대한 이야기 해줘”\n“용감한 용이 마을을 구하는 5문장 이야기 생성해줘. 대화 포함.”"
-  },
-  {
-    "objectID": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy 5/01-Prompt-Structure.html#인간-컴퓨터-상호작용의-변화",
-    "href": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy 5/01-Prompt-Structure.html#인간-컴퓨터-상호작용의-변화",
-    "title": "Part 1 — 프롬프트 구조와 기능 탐구",
-    "section": "",
-    "text": "문자의 발명 → 인류의 기록 정확도 향상\n인쇄술 → 지식 대중화\n전화·라디오·TV → 즉각적인 원격 소통\n인터넷·모바일 → 실시간 대화\n생성형 AI → 인간-기계 상호작용 고도화"
-  },
-  {
-    "objectID": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy 5/01-Prompt-Structure.html#프롬프트의-정의",
-    "href": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy 5/01-Prompt-Structure.html#프롬프트의-정의",
-    "title": "Part 1 — 프롬프트 구조와 기능 탐구",
-    "section": "",
-    "text": "Promptus(나타내다/생산하다)에서 유래\n현재 의미: 행동을 유도하는 신호\nAI에서: 모델에게 답변을 생성하도록 입력하는 문장"
-  },
-  {
-    "objectID": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy 5/01-Prompt-Structure.html#프롬프트-vs-프롬프트-엔지니어링",
-    "href": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy 5/01-Prompt-Structure.html#프롬프트-vs-프롬프트-엔지니어링",
-    "title": "Part 1 — 프롬프트 구조와 기능 탐구",
-    "section": "",
-    "text": "항목\n프롬프트\n프롬프트 엔지니어링\n\n\n\n\n목적\n응답 생성 요청\n원하는 형태로 정확한 응답을 얻기 위한 설계\n\n\n필요성\n기본 입력\n모델 작동 방식·언어적 맥락 이해 필요\n\n\n예시\n“용에 대한 이야기 해줘”\n“용감한 용이 마을을 구하는 5문장 이야기 생성해줘. 대화 포함.”"
-  },
-  {
-    "objectID": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy 5/01-Prompt-Structure.html#개념",
-    "href": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy 5/01-Prompt-Structure.html#개념",
-    "title": "Part 1 — 프롬프트 구조와 기능 탐구",
-    "section": "2.1 2.1 개념",
-    "text": "2.1 2.1 개념\n\n방대한 데이터 기반 사전학습 모델\nAutoregression: 이전 토큰 기반으로 다음 단어 예측\n기반 기술: Transformer 구조(셀프 어텐션)"
-  },
-  {
-    "objectID": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy 5/01-Prompt-Structure.html#주요-모델-패밀리",
-    "href": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy 5/01-Prompt-Structure.html#주요-모델-패밀리",
-    "title": "Part 1 — 프롬프트 구조와 기능 탐구",
-    "section": "2.2 2.2 주요 모델 패밀리",
-    "text": "2.2 2.2 주요 모델 패밀리\n\nOpenAI – GPT-4o: 멀티모달·실시간 처리\nAnthropic – Claude 3: 안전성 중점, 헌법적 AI\nGoogle – Gemini / BERT / T5: 다중 모달 처리"
-  },
-  {
-    "objectID": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy 5/01-Prompt-Structure.html#모델-튜닝-방식",
-    "href": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy 5/01-Prompt-Structure.html#모델-튜닝-방식",
-    "title": "Part 1 — 프롬프트 구조와 기능 탐구",
-    "section": "2.3 2.3 모델 튜닝 방식",
-    "text": "2.3 2.3 모델 튜닝 방식\n\nFine-Tuning\nPrompt Engineering\nFeature-Tuning(특징 공간 해석 기반 제어)"
-  },
-  {
-    "objectID": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy 5/01-Prompt-Structure.html#필수-4요소",
-    "href": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy 5/01-Prompt-Structure.html#필수-4요소",
-    "title": "Part 1 — 프롬프트 구조와 기능 탐구",
-    "section": "3.1 3.1 필수 4요소",
-    "text": "3.1 3.1 필수 4요소\n\nInstruction: 어떤 작업을 해야 하는가\nContext: 배경 정보\nInput Data: 처리 대상 데이터\nOutput Indicator: 출력 형식 규정"
-  },
-  {
-    "objectID": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy 5/01-Prompt-Structure.html#프롬프트-타입-구조type-ad",
-    "href": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy 5/01-Prompt-Structure.html#프롬프트-타입-구조type-ad",
-    "title": "Part 1 — 프롬프트 구조와 기능 탐구",
-    "section": "3.2 3.2 프롬프트 타입 구조(Type A–D)",
-    "text": "3.2 3.2 프롬프트 타입 구조(Type A–D)\n\nA: 지시문 + 출력문\nB: 지시문 + 맥락 + 출력문\nC: 지시문 + 맥락 + 예시 + 출력문\nD: 지시문 + 입력값 + 출력문\n\n예시와 함께 구조적으로 프롬프트를 설계하면 LLM이 더 안정적으로 원하는 출력 생성."
-  },
-  {
-    "objectID": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy 5/01-Prompt-Structure.html#대-원칙",
-    "href": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy 5/01-Prompt-Structure.html#대-원칙",
-    "title": "Part 1 — 프롬프트 구조와 기능 탐구",
-    "section": "4.1 4.1 4대 원칙",
-    "text": "4.1 4.1 4대 원칙\n\n범용성: 다양한 상황에서도 동작\n목적 지향성: 특정 사용자 목적 반영\n일관성: 반복 실행해도 동일 품질\n경제성: API 비용 절감"
-  },
-  {
-    "objectID": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy 5/01-Prompt-Structure.html#scaffolding-prompting",
-    "href": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy 5/01-Prompt-Structure.html#scaffolding-prompting",
-    "title": "Part 1 — 프롬프트 구조와 기능 탐구",
-    "section": "4.2 4.2 Scaffolding Prompting",
-    "text": "4.2 4.2 Scaffolding Prompting\n\n인간의 학습 이론(ZPD)을 적용\nUnderstand → Ideation → Analysis → Apply → Evaluate → Generalize\n단계적 사고구조 유도"
-  },
-  {
-    "objectID": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy 5/01-Prompt-Structure.html#핵심-5-tips",
-    "href": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy 5/01-Prompt-Structure.html#핵심-5-tips",
-    "title": "Part 1 — 프롬프트 구조와 기능 탐구",
-    "section": "4.3 4.3 핵심 5 Tips",
-    "text": "4.3 4.3 핵심 5 Tips\n\n4.3.1 Tip1. 최신 모델 사용\n\n\n4.3.2 Tip2. 명확한 동사로 지시\n예: 분석해, 정리해, 요약해, 작성해 등\n\n\n4.3.3 Tip 3. 프롬프트를 구조화하자\n프롬프트를 구조화하면 LLM이 입력을 더 명확하게 해석할 수 있고,\n작업 목적·규칙·입력 데이터·출력 형식을 혼동 없이 처리할 수 있다.\n구조화를 위한 핵심 기법은 Markdown, 코드 프롬프트, XML 태그이다."
-  },
-  {
-    "objectID": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy 5/01-Prompt-Structure.html#markdown-구조화-headers-lists-emphasis",
-    "href": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy 5/01-Prompt-Structure.html#markdown-구조화-headers-lists-emphasis",
-    "title": "Part 1 — 프롬프트 구조와 기능 탐구",
-    "section": "4.4 3.1 Markdown 구조화 (Headers, Lists, Emphasis)",
-    "text": "4.4 3.1 Markdown 구조화 (Headers, Lists, Emphasis)\nMarkdown은 LLM이 가장 잘 해석하는 구조적 문법 중 하나이다.\n섹션을 명확히 나누고, 각 부분을 시각적으로 구분해줌으로써\n모델의 오류를 줄이고 반복 작업 시 유지보수성이 높아진다.\n\n4.4.1 1) 헤더(Headers) 활용\n헤더는 프롬프트의 구성을 크게 나누는 데 사용한다.\n# 역할(Role)\n너는 스포츠 기사 분석 엔진이다.\n\n## 작업(Task)\n아래 텍스트에서 장소(도시, 국가, 축구 클럽)를 모두 추출해라.\n\n## 출력 형식(Format)\n- \"장소: A, B, C\" 형태의 한 줄 출력\n- 설명 금지\n\n## 텍스트(Text)\n{{TEXT}}\n\n\n4.4.2 2) 목록(Lists) 활용\n절차, 규칙, 조건을 번호 목록으로 정리하면 LLM이 하나씩 적용하기 쉽다.\n다음 규칙을 따라 작업을 수행해라.\n1. 사람 이름은 제외한다.\n2. 축구 클럽은 장소로 포함한다.\n3. 결과는 쉼표로 구분한다.\n4. 설명 문장은 쓰지 않는다.\n\n\n4.4.3 3) 강조(Emphasis) 사용\n중요 조건을 굵게 또는 기울임으로 표시해 모델의 우선순위를 높인다.\n- 반드시 **한국어**로 작성하라.\n- 출력은 **한 줄**로만 작성한다.\n- *설명 문장은 포함하지 않는다.*"
-  },
-  {
-    "objectID": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy 5/01-Prompt-Structure.html#코드-프롬프트code-prompting",
-    "href": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy 5/01-Prompt-Structure.html#코드-프롬프트code-prompting",
-    "title": "Part 1 — 프롬프트 구조와 기능 탐구",
-    "section": "4.5 3.2 코드 프롬프트(Code Prompting)",
-    "text": "4.5 3.2 코드 프롬프트(Code Prompting)\n자연어 대신 코드 형식으로 의도를 명세하면 애매함이 줄어들고 LLM이 구조적으로 이해해 할루시네이션이 감소한다.\n# 역할 정의\nrole = \"정보 추출 엔진\"\n\n# 작업 정의\ntask = \"텍스트에서 '장소명'을 추출해 정렬된 리스트로 반환\"\n\n# 출력 형식 정의\noutput = {\n    \"places\": [\"string\"]\n}\n코드 방식의 장점:\n\n논리 구조가 명확하게 표현됨\n조건과 출력 형식이 혼동되지 않음\n정형화된 포맷을 자주 재사용 가능"
-  },
-  {
-    "objectID": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy 5/01-Prompt-Structure.html#xml-태그-기반-구조화-claude-최적화",
-    "href": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy 5/01-Prompt-Structure.html#xml-태그-기반-구조화-claude-최적화",
-    "title": "Part 1 — 프롬프트 구조와 기능 탐구",
-    "section": "4.6 3.3 XML 태그 기반 구조화 (Claude 최적화)",
-    "text": "4.6 3.3 XML 태그 기반 구조화 (Claude 최적화)\nXML 태그는 텍스트 내 특정 영역을 명확히 구분해 Claude뿐 아니라 대부분의 LLM에서 구조적 파싱을 돕는 강력한 방식이다.\n\n4.6.1 1) 태그로 영역 지정\n&lt;email&gt;\nShow up at 6AM because I say so.\n&lt;/email&gt;\n\nMake this email more polite.\nLLM은 &lt;email&gt;...&lt;/email&gt; 내부 텍스트만 변환하면 된다는 것을 명확히 인식한다.\n\n\n4.6.2 2) 데이터 템플릿 예시\n&lt;animal&gt;{{ANIMAL}}&lt;/animal&gt;\n입력만 바꿔 여러 데이터를 동일한 템플릿에 적용할 수 있다.\n예:\n&lt;animal&gt;Cow&lt;/animal&gt;\n&lt;animal&gt;Dog&lt;/animal&gt;\n&lt;animal&gt;Seal&lt;/animal&gt;\n장점:\n\n구역별 의미가 명확\n반복 작업에서 수정이 쉽고 안정적\n모델이 태그 단위로 파싱하기 때문에 오류 감소"
-  },
-  {
-    "objectID": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy 5/01-Prompt-Structure.html#구조화-기법이-필요한-이유",
-    "href": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy 5/01-Prompt-Structure.html#구조화-기법이-필요한-이유",
-    "title": "Part 1 — 프롬프트 구조와 기능 탐구",
-    "section": "4.7 3.4 구조화 기법이 필요한 이유",
-    "text": "4.7 3.4 구조화 기법이 필요한 이유\n\n명령어, 입력 데이터, 출력 형식을 명확히 구분해 모델의 해석 오류를 줄인다.\n규칙을 시각적으로 구분하여 작업 수행 품질의 일관성과 재현성을 높인다.\n재사용 가능한 템플릿이 되어 프롬프트 제작 비용과 시간 절감에 기여한다."
-  },
-  {
-    "objectID": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy 5/01-Prompt-Structure.html#구조화-적용-사례-장소명-추출",
-    "href": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy 5/01-Prompt-Structure.html#구조화-적용-사례-장소명-추출",
-    "title": "Part 1 — 프롬프트 구조와 기능 탐구",
-    "section": "4.8 3.5 구조화 적용 사례 (장소명 추출)",
-    "text": "4.8 3.5 구조화 적용 사례 (장소명 추출)\n# 역할(Role)\n너는 텍스트에서 장소명을 추출하는 엔진이다.\n\n## 작업(Task)\n텍스트 내 도시, 국가, 축구 클럽 이름을 모두 \"장소\"로 간주하고 추출해라.\n\n## 출력 형식(Format)\n- 한 줄로만 출력한다.\n- 형식: `장소: A, B, C`\n- 설명 문장 금지.\n\n## 텍스트(Text)\n음바페는 26일 쿠프 드 프랑스 프랑스컵 올랭피크 리옹과의\n결승전에서 풀타임을 뛰며 2-1로 팀 승리를 도왔다.\n3년 만에 대회 정상에 오른 PSG는 역대 최다 15회 우승으로\n2위 마르세유(10회)를 멀찍이 따돌렸다.\n음바페는 이날 PSG에서의 커리어를 마무리했다.\n\n4.8.1 Tip4. 단문 중심\n\n한국어는 짧고 명확하게 작성\n톤·형식·분량을 구체적으로 지시\n\n\n\n4.8.2 Tip5. 하지 말 것(X) → 할 것(O)\n\n부정 지시보다 긍정적 행동 지시가 안정적"
-  },
-  {
-    "objectID": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy 5/01-Prompt-Structure.html#llm-한계",
-    "href": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy 5/01-Prompt-Structure.html#llm-한계",
-    "title": "Part 1 — 프롬프트 구조와 기능 탐구",
-    "section": "5.1 5.1 LLM 한계",
-    "text": "5.1 5.1 LLM 한계\n\n할루시네이션\n편향성\n근거 없는 출처 생성\n수학 및 추론 한계\nPrompt Injection(프롬프트 해킹)"
-  },
-  {
-    "objectID": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy 5/01-Prompt-Structure.html#프롬프트-엔지니어링이-필요한-이유",
-    "href": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy 5/01-Prompt-Structure.html#프롬프트-엔지니어링이-필요한-이유",
-    "title": "Part 1 — 프롬프트 구조와 기능 탐구",
-    "section": "5.2 5.2 프롬프트 엔지니어링이 필요한 이유",
-    "text": "5.2 5.2 프롬프트 엔지니어링이 필요한 이유\n\n정확성 향상\n오류 및 편향 감소\n모델 행동 제어\n사용자 경험 개선\n비용 절감"
-  },
-  {
-    "objectID": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy 3/01-Prompt-Structure.html",
-    "href": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy 3/01-Prompt-Structure.html",
-    "title": "Part 1 — 프롬프트 구조와 기능 탐구",
-    "section": "",
-    "text": "문자의 발명 → 인류의 기록 정확도 향상\n인쇄술 → 지식 대중화\n전화·라디오·TV → 즉각적인 원격 소통\n인터넷·모바일 → 실시간 대화\n생성형 AI → 인간-기계 상호작용 고도화\n\n\n\n\n\nPromptus(나타내다/생산하다)에서 유래\n현재 의미: 행동을 유도하는 신호\nAI에서: 모델에게 답변을 생성하도록 입력하는 문장\n\n\n\n\n\n\n\n\n\n\n\n\n항목\n프롬프트\n프롬프트 엔지니어링\n\n\n\n\n목적\n응답 생성 요청\n원하는 형태로 정확한 응답을 얻기 위한 설계\n\n\n필요성\n기본 입력\n모델 작동 방식·언어적 맥락 이해 필요\n\n\n예시\n“용에 대한 이야기 해줘”\n“용감한 용이 마을을 구하는 5문장 이야기 생성해줘. 대화 포함.”"
-  },
-  {
-    "objectID": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy 3/01-Prompt-Structure.html#인간-컴퓨터-상호작용의-변화",
-    "href": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy 3/01-Prompt-Structure.html#인간-컴퓨터-상호작용의-변화",
-    "title": "Part 1 — 프롬프트 구조와 기능 탐구",
-    "section": "",
-    "text": "문자의 발명 → 인류의 기록 정확도 향상\n인쇄술 → 지식 대중화\n전화·라디오·TV → 즉각적인 원격 소통\n인터넷·모바일 → 실시간 대화\n생성형 AI → 인간-기계 상호작용 고도화"
-  },
-  {
-    "objectID": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy 3/01-Prompt-Structure.html#프롬프트의-정의",
-    "href": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy 3/01-Prompt-Structure.html#프롬프트의-정의",
-    "title": "Part 1 — 프롬프트 구조와 기능 탐구",
-    "section": "",
-    "text": "Promptus(나타내다/생산하다)에서 유래\n현재 의미: 행동을 유도하는 신호\nAI에서: 모델에게 답변을 생성하도록 입력하는 문장"
-  },
-  {
-    "objectID": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy 3/01-Prompt-Structure.html#프롬프트-vs-프롬프트-엔지니어링",
-    "href": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy 3/01-Prompt-Structure.html#프롬프트-vs-프롬프트-엔지니어링",
-    "title": "Part 1 — 프롬프트 구조와 기능 탐구",
-    "section": "",
-    "text": "항목\n프롬프트\n프롬프트 엔지니어링\n\n\n\n\n목적\n응답 생성 요청\n원하는 형태로 정확한 응답을 얻기 위한 설계\n\n\n필요성\n기본 입력\n모델 작동 방식·언어적 맥락 이해 필요\n\n\n예시\n“용에 대한 이야기 해줘”\n“용감한 용이 마을을 구하는 5문장 이야기 생성해줘. 대화 포함.”"
-  },
-  {
-    "objectID": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy 3/01-Prompt-Structure.html#개념",
-    "href": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy 3/01-Prompt-Structure.html#개념",
-    "title": "Part 1 — 프롬프트 구조와 기능 탐구",
-    "section": "2.1 2.1 개념",
-    "text": "2.1 2.1 개념\n\n방대한 데이터 기반 사전학습 모델\nAutoregression: 이전 토큰 기반으로 다음 단어 예측\n기반 기술: Transformer 구조(셀프 어텐션)"
-  },
-  {
-    "objectID": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy 3/01-Prompt-Structure.html#주요-모델-패밀리",
-    "href": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy 3/01-Prompt-Structure.html#주요-모델-패밀리",
-    "title": "Part 1 — 프롬프트 구조와 기능 탐구",
-    "section": "2.2 2.2 주요 모델 패밀리",
-    "text": "2.2 2.2 주요 모델 패밀리\n\nOpenAI – GPT-4o: 멀티모달·실시간 처리\nAnthropic – Claude 3: 안전성 중점, 헌법적 AI\nGoogle – Gemini / BERT / T5: 다중 모달 처리"
-  },
-  {
-    "objectID": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy 3/01-Prompt-Structure.html#모델-튜닝-방식",
-    "href": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy 3/01-Prompt-Structure.html#모델-튜닝-방식",
-    "title": "Part 1 — 프롬프트 구조와 기능 탐구",
-    "section": "2.3 2.3 모델 튜닝 방식",
-    "text": "2.3 2.3 모델 튜닝 방식\n\nFine-Tuning\nPrompt Engineering\nFeature-Tuning(특징 공간 해석 기반 제어)"
-  },
-  {
-    "objectID": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy 3/01-Prompt-Structure.html#필수-4요소",
-    "href": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy 3/01-Prompt-Structure.html#필수-4요소",
-    "title": "Part 1 — 프롬프트 구조와 기능 탐구",
-    "section": "3.1 3.1 필수 4요소",
-    "text": "3.1 3.1 필수 4요소\n\nInstruction: 어떤 작업을 해야 하는가\nContext: 배경 정보\nInput Data: 처리 대상 데이터\nOutput Indicator: 출력 형식 규정"
-  },
-  {
-    "objectID": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy 3/01-Prompt-Structure.html#프롬프트-타입-구조type-ad",
-    "href": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy 3/01-Prompt-Structure.html#프롬프트-타입-구조type-ad",
-    "title": "Part 1 — 프롬프트 구조와 기능 탐구",
-    "section": "3.2 3.2 프롬프트 타입 구조(Type A–D)",
-    "text": "3.2 3.2 프롬프트 타입 구조(Type A–D)\n\nA: 지시문 + 출력문\nB: 지시문 + 맥락 + 출력문\nC: 지시문 + 맥락 + 예시 + 출력문\nD: 지시문 + 입력값 + 출력문\n\n예시와 함께 구조적으로 프롬프트를 설계하면 LLM이 더 안정적으로 원하는 출력 생성."
-  },
-  {
-    "objectID": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy 3/01-Prompt-Structure.html#대-원칙",
-    "href": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy 3/01-Prompt-Structure.html#대-원칙",
-    "title": "Part 1 — 프롬프트 구조와 기능 탐구",
-    "section": "4.1 4.1 4대 원칙",
-    "text": "4.1 4.1 4대 원칙\n\n범용성: 다양한 상황에서도 동작\n목적 지향성: 특정 사용자 목적 반영\n일관성: 반복 실행해도 동일 품질\n경제성: API 비용 절감"
-  },
-  {
-    "objectID": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy 3/01-Prompt-Structure.html#scaffolding-prompting",
-    "href": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy 3/01-Prompt-Structure.html#scaffolding-prompting",
-    "title": "Part 1 — 프롬프트 구조와 기능 탐구",
-    "section": "4.2 4.2 Scaffolding Prompting",
-    "text": "4.2 4.2 Scaffolding Prompting\n\n인간의 학습 이론(ZPD)을 적용\nUnderstand → Ideation → Analysis → Apply → Evaluate → Generalize\n단계적 사고구조 유도"
-  },
-  {
-    "objectID": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy 3/01-Prompt-Structure.html#핵심-5-tips",
-    "href": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy 3/01-Prompt-Structure.html#핵심-5-tips",
-    "title": "Part 1 — 프롬프트 구조와 기능 탐구",
-    "section": "4.3 4.3 핵심 5 Tips",
-    "text": "4.3 4.3 핵심 5 Tips\n\n4.3.1 Tip1. 최신 모델 사용\n\n\n4.3.2 Tip2. 명확한 동사로 지시\n예: 분석해, 정리해, 요약해, 작성해 등\n\n\n4.3.3 Tip 3. 프롬프트를 구조화하자\n프롬프트를 구조화하면 LLM이 입력을 더 명확하게 해석할 수 있고,\n작업 목적·규칙·입력 데이터·출력 형식을 혼동 없이 처리할 수 있다.\n구조화를 위한 핵심 기법은 Markdown, 코드 프롬프트, XML 태그이다."
-  },
-  {
-    "objectID": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy 3/01-Prompt-Structure.html#markdown-구조화-headers-lists-emphasis",
-    "href": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy 3/01-Prompt-Structure.html#markdown-구조화-headers-lists-emphasis",
-    "title": "Part 1 — 프롬프트 구조와 기능 탐구",
-    "section": "4.4 3.1 Markdown 구조화 (Headers, Lists, Emphasis)",
-    "text": "4.4 3.1 Markdown 구조화 (Headers, Lists, Emphasis)\nMarkdown은 LLM이 가장 잘 해석하는 구조적 문법 중 하나이다.\n섹션을 명확히 나누고, 각 부분을 시각적으로 구분해줌으로써\n모델의 오류를 줄이고 반복 작업 시 유지보수성이 높아진다.\n\n4.4.1 1) 헤더(Headers) 활용\n헤더는 프롬프트의 구성을 크게 나누는 데 사용한다.\n# 역할(Role)\n너는 스포츠 기사 분석 엔진이다.\n\n## 작업(Task)\n아래 텍스트에서 장소(도시, 국가, 축구 클럽)를 모두 추출해라.\n\n## 출력 형식(Format)\n- \"장소: A, B, C\" 형태의 한 줄 출력\n- 설명 금지\n\n## 텍스트(Text)\n{{TEXT}}\n\n\n4.4.2 2) 목록(Lists) 활용\n절차, 규칙, 조건을 번호 목록으로 정리하면 LLM이 하나씩 적용하기 쉽다.\n다음 규칙을 따라 작업을 수행해라.\n1. 사람 이름은 제외한다.\n2. 축구 클럽은 장소로 포함한다.\n3. 결과는 쉼표로 구분한다.\n4. 설명 문장은 쓰지 않는다.\n\n\n4.4.3 3) 강조(Emphasis) 사용\n중요 조건을 굵게 또는 기울임으로 표시해 모델의 우선순위를 높인다.\n- 반드시 **한국어**로 작성하라.\n- 출력은 **한 줄**로만 작성한다.\n- *설명 문장은 포함하지 않는다.*"
-  },
-  {
-    "objectID": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy 3/01-Prompt-Structure.html#코드-프롬프트code-prompting",
-    "href": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy 3/01-Prompt-Structure.html#코드-프롬프트code-prompting",
-    "title": "Part 1 — 프롬프트 구조와 기능 탐구",
-    "section": "4.5 3.2 코드 프롬프트(Code Prompting)",
-    "text": "4.5 3.2 코드 프롬프트(Code Prompting)\n자연어 대신 코드 형식으로 의도를 명세하면 애매함이 줄어들고 LLM이 구조적으로 이해해 할루시네이션이 감소한다.\n# 역할 정의\nrole = \"정보 추출 엔진\"\n\n# 작업 정의\ntask = \"텍스트에서 '장소명'을 추출해 정렬된 리스트로 반환\"\n\n# 출력 형식 정의\noutput = {\n    \"places\": [\"string\"]\n}\n코드 방식의 장점:\n\n논리 구조가 명확하게 표현됨\n조건과 출력 형식이 혼동되지 않음\n정형화된 포맷을 자주 재사용 가능"
-  },
-  {
-    "objectID": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy 3/01-Prompt-Structure.html#xml-태그-기반-구조화-claude-최적화",
-    "href": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy 3/01-Prompt-Structure.html#xml-태그-기반-구조화-claude-최적화",
-    "title": "Part 1 — 프롬프트 구조와 기능 탐구",
-    "section": "4.6 3.3 XML 태그 기반 구조화 (Claude 최적화)",
-    "text": "4.6 3.3 XML 태그 기반 구조화 (Claude 최적화)\nXML 태그는 텍스트 내 특정 영역을 명확히 구분해 Claude뿐 아니라 대부분의 LLM에서 구조적 파싱을 돕는 강력한 방식이다.\n\n4.6.1 1) 태그로 영역 지정\n&lt;email&gt;\nShow up at 6AM because I say so.\n&lt;/email&gt;\n\nMake this email more polite.\nLLM은 &lt;email&gt;...&lt;/email&gt; 내부 텍스트만 변환하면 된다는 것을 명확히 인식한다.\n\n\n4.6.2 2) 데이터 템플릿 예시\n&lt;animal&gt;{{ANIMAL}}&lt;/animal&gt;\n입력만 바꿔 여러 데이터를 동일한 템플릿에 적용할 수 있다.\n예:\n&lt;animal&gt;Cow&lt;/animal&gt;\n&lt;animal&gt;Dog&lt;/animal&gt;\n&lt;animal&gt;Seal&lt;/animal&gt;\n장점:\n\n구역별 의미가 명확\n반복 작업에서 수정이 쉽고 안정적\n모델이 태그 단위로 파싱하기 때문에 오류 감소"
-  },
-  {
-    "objectID": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy 3/01-Prompt-Structure.html#구조화-기법이-필요한-이유",
-    "href": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy 3/01-Prompt-Structure.html#구조화-기법이-필요한-이유",
-    "title": "Part 1 — 프롬프트 구조와 기능 탐구",
-    "section": "4.7 3.4 구조화 기법이 필요한 이유",
-    "text": "4.7 3.4 구조화 기법이 필요한 이유\n\n명령어, 입력 데이터, 출력 형식을 명확히 구분해 모델의 해석 오류를 줄인다.\n규칙을 시각적으로 구분하여 작업 수행 품질의 일관성과 재현성을 높인다.\n재사용 가능한 템플릿이 되어 프롬프트 제작 비용과 시간 절감에 기여한다."
-  },
-  {
-    "objectID": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy 3/01-Prompt-Structure.html#구조화-적용-사례-장소명-추출",
-    "href": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy 3/01-Prompt-Structure.html#구조화-적용-사례-장소명-추출",
-    "title": "Part 1 — 프롬프트 구조와 기능 탐구",
-    "section": "4.8 3.5 구조화 적용 사례 (장소명 추출)",
-    "text": "4.8 3.5 구조화 적용 사례 (장소명 추출)\n# 역할(Role)\n너는 텍스트에서 장소명을 추출하는 엔진이다.\n\n## 작업(Task)\n텍스트 내 도시, 국가, 축구 클럽 이름을 모두 \"장소\"로 간주하고 추출해라.\n\n## 출력 형식(Format)\n- 한 줄로만 출력한다.\n- 형식: `장소: A, B, C`\n- 설명 문장 금지.\n\n## 텍스트(Text)\n음바페는 26일 쿠프 드 프랑스 프랑스컵 올랭피크 리옹과의\n결승전에서 풀타임을 뛰며 2-1로 팀 승리를 도왔다.\n3년 만에 대회 정상에 오른 PSG는 역대 최다 15회 우승으로\n2위 마르세유(10회)를 멀찍이 따돌렸다.\n음바페는 이날 PSG에서의 커리어를 마무리했다.\n\n4.8.1 Tip4. 단문 중심\n\n한국어는 짧고 명확하게 작성\n톤·형식·분량을 구체적으로 지시\n\n\n\n4.8.2 Tip5. 하지 말 것(X) → 할 것(O)\n\n부정 지시보다 긍정적 행동 지시가 안정적"
-  },
-  {
-    "objectID": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy 3/01-Prompt-Structure.html#llm-한계",
-    "href": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy 3/01-Prompt-Structure.html#llm-한계",
-    "title": "Part 1 — 프롬프트 구조와 기능 탐구",
-    "section": "5.1 5.1 LLM 한계",
-    "text": "5.1 5.1 LLM 한계\n\n할루시네이션\n편향성\n근거 없는 출처 생성\n수학 및 추론 한계\nPrompt Injection(프롬프트 해킹)"
-  },
-  {
-    "objectID": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy 3/01-Prompt-Structure.html#프롬프트-엔지니어링이-필요한-이유",
-    "href": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy 3/01-Prompt-Structure.html#프롬프트-엔지니어링이-필요한-이유",
-    "title": "Part 1 — 프롬프트 구조와 기능 탐구",
-    "section": "5.2 5.2 프롬프트 엔지니어링이 필요한 이유",
-    "text": "5.2 5.2 프롬프트 엔지니어링이 필요한 이유\n\n정확성 향상\n오류 및 편향 감소\n모델 행동 제어\n사용자 경험 개선\n비용 절감"
   },
   {
     "objectID": "docs/blog/posts/RAG/15-Agent/03-Agent.html",
@@ -598,400 +332,134 @@
     "text": "5.2 5.2 프롬프트 엔지니어링이 필요한 이유\n\n정확성 향상\n오류 및 편향 감소\n모델 행동 제어\n사용자 경험 개선\n비용 절감"
   },
   {
-    "objectID": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy 4/01-Prompt-Structure.html",
-    "href": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy 4/01-Prompt-Structure.html",
+    "objectID": "docs/blog/posts/Prompt_Engineering/02-Prompt/01-Prompt-Structure.html",
+    "href": "docs/blog/posts/Prompt_Engineering/02-Prompt/01-Prompt-Structure.html",
     "title": "Part 1 — 프롬프트 구조와 기능 탐구",
     "section": "",
     "text": "문자의 발명 → 인류의 기록 정확도 향상\n인쇄술 → 지식 대중화\n전화·라디오·TV → 즉각적인 원격 소통\n인터넷·모바일 → 실시간 대화\n생성형 AI → 인간-기계 상호작용 고도화\n\n\n\n\n\nPromptus(나타내다/생산하다)에서 유래\n현재 의미: 행동을 유도하는 신호\nAI에서: 모델에게 답변을 생성하도록 입력하는 문장\n\n\n\n\n\n\n\n\n\n\n\n\n항목\n프롬프트\n프롬프트 엔지니어링\n\n\n\n\n목적\n응답 생성 요청\n원하는 형태로 정확한 응답을 얻기 위한 설계\n\n\n필요성\n기본 입력\n모델 작동 방식·언어적 맥락 이해 필요\n\n\n예시\n“용에 대한 이야기 해줘”\n“용감한 용이 마을을 구하는 5문장 이야기 생성해줘. 대화 포함.”"
   },
   {
-    "objectID": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy 4/01-Prompt-Structure.html#인간-컴퓨터-상호작용의-변화",
-    "href": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy 4/01-Prompt-Structure.html#인간-컴퓨터-상호작용의-변화",
+    "objectID": "docs/blog/posts/Prompt_Engineering/02-Prompt/01-Prompt-Structure.html#인간-컴퓨터-상호작용의-변화",
+    "href": "docs/blog/posts/Prompt_Engineering/02-Prompt/01-Prompt-Structure.html#인간-컴퓨터-상호작용의-변화",
     "title": "Part 1 — 프롬프트 구조와 기능 탐구",
     "section": "",
     "text": "문자의 발명 → 인류의 기록 정확도 향상\n인쇄술 → 지식 대중화\n전화·라디오·TV → 즉각적인 원격 소통\n인터넷·모바일 → 실시간 대화\n생성형 AI → 인간-기계 상호작용 고도화"
   },
   {
-    "objectID": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy 4/01-Prompt-Structure.html#프롬프트의-정의",
-    "href": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy 4/01-Prompt-Structure.html#프롬프트의-정의",
+    "objectID": "docs/blog/posts/Prompt_Engineering/02-Prompt/01-Prompt-Structure.html#프롬프트의-정의",
+    "href": "docs/blog/posts/Prompt_Engineering/02-Prompt/01-Prompt-Structure.html#프롬프트의-정의",
     "title": "Part 1 — 프롬프트 구조와 기능 탐구",
     "section": "",
     "text": "Promptus(나타내다/생산하다)에서 유래\n현재 의미: 행동을 유도하는 신호\nAI에서: 모델에게 답변을 생성하도록 입력하는 문장"
   },
   {
-    "objectID": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy 4/01-Prompt-Structure.html#프롬프트-vs-프롬프트-엔지니어링",
-    "href": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy 4/01-Prompt-Structure.html#프롬프트-vs-프롬프트-엔지니어링",
+    "objectID": "docs/blog/posts/Prompt_Engineering/02-Prompt/01-Prompt-Structure.html#프롬프트-vs-프롬프트-엔지니어링",
+    "href": "docs/blog/posts/Prompt_Engineering/02-Prompt/01-Prompt-Structure.html#프롬프트-vs-프롬프트-엔지니어링",
     "title": "Part 1 — 프롬프트 구조와 기능 탐구",
     "section": "",
     "text": "항목\n프롬프트\n프롬프트 엔지니어링\n\n\n\n\n목적\n응답 생성 요청\n원하는 형태로 정확한 응답을 얻기 위한 설계\n\n\n필요성\n기본 입력\n모델 작동 방식·언어적 맥락 이해 필요\n\n\n예시\n“용에 대한 이야기 해줘”\n“용감한 용이 마을을 구하는 5문장 이야기 생성해줘. 대화 포함.”"
   },
   {
-    "objectID": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy 4/01-Prompt-Structure.html#개념",
-    "href": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy 4/01-Prompt-Structure.html#개념",
+    "objectID": "docs/blog/posts/Prompt_Engineering/02-Prompt/01-Prompt-Structure.html#개념",
+    "href": "docs/blog/posts/Prompt_Engineering/02-Prompt/01-Prompt-Structure.html#개념",
     "title": "Part 1 — 프롬프트 구조와 기능 탐구",
     "section": "2.1 2.1 개념",
     "text": "2.1 2.1 개념\n\n방대한 데이터 기반 사전학습 모델\nAutoregression: 이전 토큰 기반으로 다음 단어 예측\n기반 기술: Transformer 구조(셀프 어텐션)"
   },
   {
-    "objectID": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy 4/01-Prompt-Structure.html#주요-모델-패밀리",
-    "href": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy 4/01-Prompt-Structure.html#주요-모델-패밀리",
+    "objectID": "docs/blog/posts/Prompt_Engineering/02-Prompt/01-Prompt-Structure.html#주요-모델-패밀리",
+    "href": "docs/blog/posts/Prompt_Engineering/02-Prompt/01-Prompt-Structure.html#주요-모델-패밀리",
     "title": "Part 1 — 프롬프트 구조와 기능 탐구",
     "section": "2.2 2.2 주요 모델 패밀리",
     "text": "2.2 2.2 주요 모델 패밀리\n\nOpenAI – GPT-4o: 멀티모달·실시간 처리\nAnthropic – Claude 3: 안전성 중점, 헌법적 AI\nGoogle – Gemini / BERT / T5: 다중 모달 처리"
   },
   {
-    "objectID": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy 4/01-Prompt-Structure.html#모델-튜닝-방식",
-    "href": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy 4/01-Prompt-Structure.html#모델-튜닝-방식",
+    "objectID": "docs/blog/posts/Prompt_Engineering/02-Prompt/01-Prompt-Structure.html#모델-튜닝-방식",
+    "href": "docs/blog/posts/Prompt_Engineering/02-Prompt/01-Prompt-Structure.html#모델-튜닝-방식",
     "title": "Part 1 — 프롬프트 구조와 기능 탐구",
     "section": "2.3 2.3 모델 튜닝 방식",
     "text": "2.3 2.3 모델 튜닝 방식\n\nFine-Tuning\nPrompt Engineering\nFeature-Tuning(특징 공간 해석 기반 제어)"
   },
   {
-    "objectID": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy 4/01-Prompt-Structure.html#필수-4요소",
-    "href": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy 4/01-Prompt-Structure.html#필수-4요소",
+    "objectID": "docs/blog/posts/Prompt_Engineering/02-Prompt/01-Prompt-Structure.html#필수-4요소",
+    "href": "docs/blog/posts/Prompt_Engineering/02-Prompt/01-Prompt-Structure.html#필수-4요소",
     "title": "Part 1 — 프롬프트 구조와 기능 탐구",
     "section": "3.1 3.1 필수 4요소",
     "text": "3.1 3.1 필수 4요소\n\nInstruction: 어떤 작업을 해야 하는가\nContext: 배경 정보\nInput Data: 처리 대상 데이터\nOutput Indicator: 출력 형식 규정"
   },
   {
-    "objectID": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy 4/01-Prompt-Structure.html#프롬프트-타입-구조type-ad",
-    "href": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy 4/01-Prompt-Structure.html#프롬프트-타입-구조type-ad",
+    "objectID": "docs/blog/posts/Prompt_Engineering/02-Prompt/01-Prompt-Structure.html#프롬프트-타입-구조type-ad",
+    "href": "docs/blog/posts/Prompt_Engineering/02-Prompt/01-Prompt-Structure.html#프롬프트-타입-구조type-ad",
     "title": "Part 1 — 프롬프트 구조와 기능 탐구",
     "section": "3.2 3.2 프롬프트 타입 구조(Type A–D)",
     "text": "3.2 3.2 프롬프트 타입 구조(Type A–D)\n\nA: 지시문 + 출력문\nB: 지시문 + 맥락 + 출력문\nC: 지시문 + 맥락 + 예시 + 출력문\nD: 지시문 + 입력값 + 출력문\n\n예시와 함께 구조적으로 프롬프트를 설계하면 LLM이 더 안정적으로 원하는 출력 생성."
   },
   {
-    "objectID": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy 4/01-Prompt-Structure.html#대-원칙",
-    "href": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy 4/01-Prompt-Structure.html#대-원칙",
+    "objectID": "docs/blog/posts/Prompt_Engineering/02-Prompt/01-Prompt-Structure.html#대-원칙",
+    "href": "docs/blog/posts/Prompt_Engineering/02-Prompt/01-Prompt-Structure.html#대-원칙",
     "title": "Part 1 — 프롬프트 구조와 기능 탐구",
     "section": "4.1 4.1 4대 원칙",
     "text": "4.1 4.1 4대 원칙\n\n범용성: 다양한 상황에서도 동작\n목적 지향성: 특정 사용자 목적 반영\n일관성: 반복 실행해도 동일 품질\n경제성: API 비용 절감"
   },
   {
-    "objectID": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy 4/01-Prompt-Structure.html#scaffolding-prompting",
-    "href": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy 4/01-Prompt-Structure.html#scaffolding-prompting",
+    "objectID": "docs/blog/posts/Prompt_Engineering/02-Prompt/01-Prompt-Structure.html#scaffolding-prompting",
+    "href": "docs/blog/posts/Prompt_Engineering/02-Prompt/01-Prompt-Structure.html#scaffolding-prompting",
     "title": "Part 1 — 프롬프트 구조와 기능 탐구",
     "section": "4.2 4.2 Scaffolding Prompting",
     "text": "4.2 4.2 Scaffolding Prompting\n\n인간의 학습 이론(ZPD)을 적용\nUnderstand → Ideation → Analysis → Apply → Evaluate → Generalize\n단계적 사고구조 유도"
   },
   {
-    "objectID": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy 4/01-Prompt-Structure.html#핵심-5-tips",
-    "href": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy 4/01-Prompt-Structure.html#핵심-5-tips",
+    "objectID": "docs/blog/posts/Prompt_Engineering/02-Prompt/01-Prompt-Structure.html#핵심-5-tips",
+    "href": "docs/blog/posts/Prompt_Engineering/02-Prompt/01-Prompt-Structure.html#핵심-5-tips",
     "title": "Part 1 — 프롬프트 구조와 기능 탐구",
     "section": "4.3 4.3 핵심 5 Tips",
     "text": "4.3 4.3 핵심 5 Tips\n\n4.3.1 Tip1. 최신 모델 사용\n\n\n4.3.2 Tip2. 명확한 동사로 지시\n예: 분석해, 정리해, 요약해, 작성해 등\n\n\n4.3.3 Tip 3. 프롬프트를 구조화하자\n프롬프트를 구조화하면 LLM이 입력을 더 명확하게 해석할 수 있고,\n작업 목적·규칙·입력 데이터·출력 형식을 혼동 없이 처리할 수 있다.\n구조화를 위한 핵심 기법은 Markdown, 코드 프롬프트, XML 태그이다."
   },
   {
-    "objectID": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy 4/01-Prompt-Structure.html#markdown-구조화-headers-lists-emphasis",
-    "href": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy 4/01-Prompt-Structure.html#markdown-구조화-headers-lists-emphasis",
+    "objectID": "docs/blog/posts/Prompt_Engineering/02-Prompt/01-Prompt-Structure.html#markdown-구조화-headers-lists-emphasis",
+    "href": "docs/blog/posts/Prompt_Engineering/02-Prompt/01-Prompt-Structure.html#markdown-구조화-headers-lists-emphasis",
     "title": "Part 1 — 프롬프트 구조와 기능 탐구",
     "section": "4.4 3.1 Markdown 구조화 (Headers, Lists, Emphasis)",
     "text": "4.4 3.1 Markdown 구조화 (Headers, Lists, Emphasis)\nMarkdown은 LLM이 가장 잘 해석하는 구조적 문법 중 하나이다.\n섹션을 명확히 나누고, 각 부분을 시각적으로 구분해줌으로써\n모델의 오류를 줄이고 반복 작업 시 유지보수성이 높아진다.\n\n4.4.1 1) 헤더(Headers) 활용\n헤더는 프롬프트의 구성을 크게 나누는 데 사용한다.\n# 역할(Role)\n너는 스포츠 기사 분석 엔진이다.\n\n## 작업(Task)\n아래 텍스트에서 장소(도시, 국가, 축구 클럽)를 모두 추출해라.\n\n## 출력 형식(Format)\n- \"장소: A, B, C\" 형태의 한 줄 출력\n- 설명 금지\n\n## 텍스트(Text)\n{{TEXT}}\n\n\n4.4.2 2) 목록(Lists) 활용\n절차, 규칙, 조건을 번호 목록으로 정리하면 LLM이 하나씩 적용하기 쉽다.\n다음 규칙을 따라 작업을 수행해라.\n1. 사람 이름은 제외한다.\n2. 축구 클럽은 장소로 포함한다.\n3. 결과는 쉼표로 구분한다.\n4. 설명 문장은 쓰지 않는다.\n\n\n4.4.3 3) 강조(Emphasis) 사용\n중요 조건을 굵게 또는 기울임으로 표시해 모델의 우선순위를 높인다.\n- 반드시 **한국어**로 작성하라.\n- 출력은 **한 줄**로만 작성한다.\n- *설명 문장은 포함하지 않는다.*"
   },
   {
-    "objectID": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy 4/01-Prompt-Structure.html#코드-프롬프트code-prompting",
-    "href": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy 4/01-Prompt-Structure.html#코드-프롬프트code-prompting",
+    "objectID": "docs/blog/posts/Prompt_Engineering/02-Prompt/01-Prompt-Structure.html#코드-프롬프트code-prompting",
+    "href": "docs/blog/posts/Prompt_Engineering/02-Prompt/01-Prompt-Structure.html#코드-프롬프트code-prompting",
     "title": "Part 1 — 프롬프트 구조와 기능 탐구",
     "section": "4.5 3.2 코드 프롬프트(Code Prompting)",
     "text": "4.5 3.2 코드 프롬프트(Code Prompting)\n자연어 대신 코드 형식으로 의도를 명세하면 애매함이 줄어들고 LLM이 구조적으로 이해해 할루시네이션이 감소한다.\n# 역할 정의\nrole = \"정보 추출 엔진\"\n\n# 작업 정의\ntask = \"텍스트에서 '장소명'을 추출해 정렬된 리스트로 반환\"\n\n# 출력 형식 정의\noutput = {\n    \"places\": [\"string\"]\n}\n코드 방식의 장점:\n\n논리 구조가 명확하게 표현됨\n조건과 출력 형식이 혼동되지 않음\n정형화된 포맷을 자주 재사용 가능"
   },
   {
-    "objectID": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy 4/01-Prompt-Structure.html#xml-태그-기반-구조화-claude-최적화",
-    "href": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy 4/01-Prompt-Structure.html#xml-태그-기반-구조화-claude-최적화",
+    "objectID": "docs/blog/posts/Prompt_Engineering/02-Prompt/01-Prompt-Structure.html#xml-태그-기반-구조화-claude-최적화",
+    "href": "docs/blog/posts/Prompt_Engineering/02-Prompt/01-Prompt-Structure.html#xml-태그-기반-구조화-claude-최적화",
     "title": "Part 1 — 프롬프트 구조와 기능 탐구",
     "section": "4.6 3.3 XML 태그 기반 구조화 (Claude 최적화)",
     "text": "4.6 3.3 XML 태그 기반 구조화 (Claude 최적화)\nXML 태그는 텍스트 내 특정 영역을 명확히 구분해 Claude뿐 아니라 대부분의 LLM에서 구조적 파싱을 돕는 강력한 방식이다.\n\n4.6.1 1) 태그로 영역 지정\n&lt;email&gt;\nShow up at 6AM because I say so.\n&lt;/email&gt;\n\nMake this email more polite.\nLLM은 &lt;email&gt;...&lt;/email&gt; 내부 텍스트만 변환하면 된다는 것을 명확히 인식한다.\n\n\n4.6.2 2) 데이터 템플릿 예시\n&lt;animal&gt;{{ANIMAL}}&lt;/animal&gt;\n입력만 바꿔 여러 데이터를 동일한 템플릿에 적용할 수 있다.\n예:\n&lt;animal&gt;Cow&lt;/animal&gt;\n&lt;animal&gt;Dog&lt;/animal&gt;\n&lt;animal&gt;Seal&lt;/animal&gt;\n장점:\n\n구역별 의미가 명확\n반복 작업에서 수정이 쉽고 안정적\n모델이 태그 단위로 파싱하기 때문에 오류 감소"
   },
   {
-    "objectID": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy 4/01-Prompt-Structure.html#구조화-기법이-필요한-이유",
-    "href": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy 4/01-Prompt-Structure.html#구조화-기법이-필요한-이유",
+    "objectID": "docs/blog/posts/Prompt_Engineering/02-Prompt/01-Prompt-Structure.html#구조화-기법이-필요한-이유",
+    "href": "docs/blog/posts/Prompt_Engineering/02-Prompt/01-Prompt-Structure.html#구조화-기법이-필요한-이유",
     "title": "Part 1 — 프롬프트 구조와 기능 탐구",
     "section": "4.7 3.4 구조화 기법이 필요한 이유",
     "text": "4.7 3.4 구조화 기법이 필요한 이유\n\n명령어, 입력 데이터, 출력 형식을 명확히 구분해 모델의 해석 오류를 줄인다.\n규칙을 시각적으로 구분하여 작업 수행 품질의 일관성과 재현성을 높인다.\n재사용 가능한 템플릿이 되어 프롬프트 제작 비용과 시간 절감에 기여한다."
   },
   {
-    "objectID": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy 4/01-Prompt-Structure.html#구조화-적용-사례-장소명-추출",
-    "href": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy 4/01-Prompt-Structure.html#구조화-적용-사례-장소명-추출",
+    "objectID": "docs/blog/posts/Prompt_Engineering/02-Prompt/01-Prompt-Structure.html#구조화-적용-사례-장소명-추출",
+    "href": "docs/blog/posts/Prompt_Engineering/02-Prompt/01-Prompt-Structure.html#구조화-적용-사례-장소명-추출",
     "title": "Part 1 — 프롬프트 구조와 기능 탐구",
     "section": "4.8 3.5 구조화 적용 사례 (장소명 추출)",
     "text": "4.8 3.5 구조화 적용 사례 (장소명 추출)\n# 역할(Role)\n너는 텍스트에서 장소명을 추출하는 엔진이다.\n\n## 작업(Task)\n텍스트 내 도시, 국가, 축구 클럽 이름을 모두 \"장소\"로 간주하고 추출해라.\n\n## 출력 형식(Format)\n- 한 줄로만 출력한다.\n- 형식: `장소: A, B, C`\n- 설명 문장 금지.\n\n## 텍스트(Text)\n음바페는 26일 쿠프 드 프랑스 프랑스컵 올랭피크 리옹과의\n결승전에서 풀타임을 뛰며 2-1로 팀 승리를 도왔다.\n3년 만에 대회 정상에 오른 PSG는 역대 최다 15회 우승으로\n2위 마르세유(10회)를 멀찍이 따돌렸다.\n음바페는 이날 PSG에서의 커리어를 마무리했다.\n\n4.8.1 Tip4. 단문 중심\n\n한국어는 짧고 명확하게 작성\n톤·형식·분량을 구체적으로 지시\n\n\n\n4.8.2 Tip5. 하지 말 것(X) → 할 것(O)\n\n부정 지시보다 긍정적 행동 지시가 안정적"
   },
   {
-    "objectID": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy 4/01-Prompt-Structure.html#llm-한계",
-    "href": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy 4/01-Prompt-Structure.html#llm-한계",
+    "objectID": "docs/blog/posts/Prompt_Engineering/02-Prompt/01-Prompt-Structure.html#llm-한계",
+    "href": "docs/blog/posts/Prompt_Engineering/02-Prompt/01-Prompt-Structure.html#llm-한계",
     "title": "Part 1 — 프롬프트 구조와 기능 탐구",
     "section": "5.1 5.1 LLM 한계",
     "text": "5.1 5.1 LLM 한계\n\n할루시네이션\n편향성\n근거 없는 출처 생성\n수학 및 추론 한계\nPrompt Injection(프롬프트 해킹)"
   },
   {
-    "objectID": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy 4/01-Prompt-Structure.html#프롬프트-엔지니어링이-필요한-이유",
-    "href": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy 4/01-Prompt-Structure.html#프롬프트-엔지니어링이-필요한-이유",
-    "title": "Part 1 — 프롬프트 구조와 기능 탐구",
-    "section": "5.2 5.2 프롬프트 엔지니어링이 필요한 이유",
-    "text": "5.2 5.2 프롬프트 엔지니어링이 필요한 이유\n\n정확성 향상\n오류 및 편향 감소\n모델 행동 제어\n사용자 경험 개선\n비용 절감"
-  },
-  {
-    "objectID": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy 2/01-Prompt-Structure.html",
-    "href": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy 2/01-Prompt-Structure.html",
-    "title": "Part 1 — 프롬프트 구조와 기능 탐구",
-    "section": "",
-    "text": "문자의 발명 → 인류의 기록 정확도 향상\n인쇄술 → 지식 대중화\n전화·라디오·TV → 즉각적인 원격 소통\n인터넷·모바일 → 실시간 대화\n생성형 AI → 인간-기계 상호작용 고도화\n\n\n\n\n\nPromptus(나타내다/생산하다)에서 유래\n현재 의미: 행동을 유도하는 신호\nAI에서: 모델에게 답변을 생성하도록 입력하는 문장\n\n\n\n\n\n\n\n\n\n\n\n\n항목\n프롬프트\n프롬프트 엔지니어링\n\n\n\n\n목적\n응답 생성 요청\n원하는 형태로 정확한 응답을 얻기 위한 설계\n\n\n필요성\n기본 입력\n모델 작동 방식·언어적 맥락 이해 필요\n\n\n예시\n“용에 대한 이야기 해줘”\n“용감한 용이 마을을 구하는 5문장 이야기 생성해줘. 대화 포함.”"
-  },
-  {
-    "objectID": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy 2/01-Prompt-Structure.html#인간-컴퓨터-상호작용의-변화",
-    "href": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy 2/01-Prompt-Structure.html#인간-컴퓨터-상호작용의-변화",
-    "title": "Part 1 — 프롬프트 구조와 기능 탐구",
-    "section": "",
-    "text": "문자의 발명 → 인류의 기록 정확도 향상\n인쇄술 → 지식 대중화\n전화·라디오·TV → 즉각적인 원격 소통\n인터넷·모바일 → 실시간 대화\n생성형 AI → 인간-기계 상호작용 고도화"
-  },
-  {
-    "objectID": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy 2/01-Prompt-Structure.html#프롬프트의-정의",
-    "href": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy 2/01-Prompt-Structure.html#프롬프트의-정의",
-    "title": "Part 1 — 프롬프트 구조와 기능 탐구",
-    "section": "",
-    "text": "Promptus(나타내다/생산하다)에서 유래\n현재 의미: 행동을 유도하는 신호\nAI에서: 모델에게 답변을 생성하도록 입력하는 문장"
-  },
-  {
-    "objectID": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy 2/01-Prompt-Structure.html#프롬프트-vs-프롬프트-엔지니어링",
-    "href": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy 2/01-Prompt-Structure.html#프롬프트-vs-프롬프트-엔지니어링",
-    "title": "Part 1 — 프롬프트 구조와 기능 탐구",
-    "section": "",
-    "text": "항목\n프롬프트\n프롬프트 엔지니어링\n\n\n\n\n목적\n응답 생성 요청\n원하는 형태로 정확한 응답을 얻기 위한 설계\n\n\n필요성\n기본 입력\n모델 작동 방식·언어적 맥락 이해 필요\n\n\n예시\n“용에 대한 이야기 해줘”\n“용감한 용이 마을을 구하는 5문장 이야기 생성해줘. 대화 포함.”"
-  },
-  {
-    "objectID": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy 2/01-Prompt-Structure.html#개념",
-    "href": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy 2/01-Prompt-Structure.html#개념",
-    "title": "Part 1 — 프롬프트 구조와 기능 탐구",
-    "section": "2.1 2.1 개념",
-    "text": "2.1 2.1 개념\n\n방대한 데이터 기반 사전학습 모델\nAutoregression: 이전 토큰 기반으로 다음 단어 예측\n기반 기술: Transformer 구조(셀프 어텐션)"
-  },
-  {
-    "objectID": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy 2/01-Prompt-Structure.html#주요-모델-패밀리",
-    "href": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy 2/01-Prompt-Structure.html#주요-모델-패밀리",
-    "title": "Part 1 — 프롬프트 구조와 기능 탐구",
-    "section": "2.2 2.2 주요 모델 패밀리",
-    "text": "2.2 2.2 주요 모델 패밀리\n\nOpenAI – GPT-4o: 멀티모달·실시간 처리\nAnthropic – Claude 3: 안전성 중점, 헌법적 AI\nGoogle – Gemini / BERT / T5: 다중 모달 처리"
-  },
-  {
-    "objectID": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy 2/01-Prompt-Structure.html#모델-튜닝-방식",
-    "href": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy 2/01-Prompt-Structure.html#모델-튜닝-방식",
-    "title": "Part 1 — 프롬프트 구조와 기능 탐구",
-    "section": "2.3 2.3 모델 튜닝 방식",
-    "text": "2.3 2.3 모델 튜닝 방식\n\nFine-Tuning\nPrompt Engineering\nFeature-Tuning(특징 공간 해석 기반 제어)"
-  },
-  {
-    "objectID": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy 2/01-Prompt-Structure.html#필수-4요소",
-    "href": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy 2/01-Prompt-Structure.html#필수-4요소",
-    "title": "Part 1 — 프롬프트 구조와 기능 탐구",
-    "section": "3.1 3.1 필수 4요소",
-    "text": "3.1 3.1 필수 4요소\n\nInstruction: 어떤 작업을 해야 하는가\nContext: 배경 정보\nInput Data: 처리 대상 데이터\nOutput Indicator: 출력 형식 규정"
-  },
-  {
-    "objectID": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy 2/01-Prompt-Structure.html#프롬프트-타입-구조type-ad",
-    "href": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy 2/01-Prompt-Structure.html#프롬프트-타입-구조type-ad",
-    "title": "Part 1 — 프롬프트 구조와 기능 탐구",
-    "section": "3.2 3.2 프롬프트 타입 구조(Type A–D)",
-    "text": "3.2 3.2 프롬프트 타입 구조(Type A–D)\n\nA: 지시문 + 출력문\nB: 지시문 + 맥락 + 출력문\nC: 지시문 + 맥락 + 예시 + 출력문\nD: 지시문 + 입력값 + 출력문\n\n예시와 함께 구조적으로 프롬프트를 설계하면 LLM이 더 안정적으로 원하는 출력 생성."
-  },
-  {
-    "objectID": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy 2/01-Prompt-Structure.html#대-원칙",
-    "href": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy 2/01-Prompt-Structure.html#대-원칙",
-    "title": "Part 1 — 프롬프트 구조와 기능 탐구",
-    "section": "4.1 4.1 4대 원칙",
-    "text": "4.1 4.1 4대 원칙\n\n범용성: 다양한 상황에서도 동작\n목적 지향성: 특정 사용자 목적 반영\n일관성: 반복 실행해도 동일 품질\n경제성: API 비용 절감"
-  },
-  {
-    "objectID": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy 2/01-Prompt-Structure.html#scaffolding-prompting",
-    "href": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy 2/01-Prompt-Structure.html#scaffolding-prompting",
-    "title": "Part 1 — 프롬프트 구조와 기능 탐구",
-    "section": "4.2 4.2 Scaffolding Prompting",
-    "text": "4.2 4.2 Scaffolding Prompting\n\n인간의 학습 이론(ZPD)을 적용\nUnderstand → Ideation → Analysis → Apply → Evaluate → Generalize\n단계적 사고구조 유도"
-  },
-  {
-    "objectID": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy 2/01-Prompt-Structure.html#핵심-5-tips",
-    "href": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy 2/01-Prompt-Structure.html#핵심-5-tips",
-    "title": "Part 1 — 프롬프트 구조와 기능 탐구",
-    "section": "4.3 4.3 핵심 5 Tips",
-    "text": "4.3 4.3 핵심 5 Tips\n\n4.3.1 Tip1. 최신 모델 사용\n\n\n4.3.2 Tip2. 명확한 동사로 지시\n예: 분석해, 정리해, 요약해, 작성해 등\n\n\n4.3.3 Tip 3. 프롬프트를 구조화하자\n프롬프트를 구조화하면 LLM이 입력을 더 명확하게 해석할 수 있고,\n작업 목적·규칙·입력 데이터·출력 형식을 혼동 없이 처리할 수 있다.\n구조화를 위한 핵심 기법은 Markdown, 코드 프롬프트, XML 태그이다."
-  },
-  {
-    "objectID": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy 2/01-Prompt-Structure.html#markdown-구조화-headers-lists-emphasis",
-    "href": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy 2/01-Prompt-Structure.html#markdown-구조화-headers-lists-emphasis",
-    "title": "Part 1 — 프롬프트 구조와 기능 탐구",
-    "section": "4.4 3.1 Markdown 구조화 (Headers, Lists, Emphasis)",
-    "text": "4.4 3.1 Markdown 구조화 (Headers, Lists, Emphasis)\nMarkdown은 LLM이 가장 잘 해석하는 구조적 문법 중 하나이다.\n섹션을 명확히 나누고, 각 부분을 시각적으로 구분해줌으로써\n모델의 오류를 줄이고 반복 작업 시 유지보수성이 높아진다.\n\n4.4.1 1) 헤더(Headers) 활용\n헤더는 프롬프트의 구성을 크게 나누는 데 사용한다.\n# 역할(Role)\n너는 스포츠 기사 분석 엔진이다.\n\n## 작업(Task)\n아래 텍스트에서 장소(도시, 국가, 축구 클럽)를 모두 추출해라.\n\n## 출력 형식(Format)\n- \"장소: A, B, C\" 형태의 한 줄 출력\n- 설명 금지\n\n## 텍스트(Text)\n{{TEXT}}\n\n\n4.4.2 2) 목록(Lists) 활용\n절차, 규칙, 조건을 번호 목록으로 정리하면 LLM이 하나씩 적용하기 쉽다.\n다음 규칙을 따라 작업을 수행해라.\n1. 사람 이름은 제외한다.\n2. 축구 클럽은 장소로 포함한다.\n3. 결과는 쉼표로 구분한다.\n4. 설명 문장은 쓰지 않는다.\n\n\n4.4.3 3) 강조(Emphasis) 사용\n중요 조건을 굵게 또는 기울임으로 표시해 모델의 우선순위를 높인다.\n- 반드시 **한국어**로 작성하라.\n- 출력은 **한 줄**로만 작성한다.\n- *설명 문장은 포함하지 않는다.*"
-  },
-  {
-    "objectID": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy 2/01-Prompt-Structure.html#코드-프롬프트code-prompting",
-    "href": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy 2/01-Prompt-Structure.html#코드-프롬프트code-prompting",
-    "title": "Part 1 — 프롬프트 구조와 기능 탐구",
-    "section": "4.5 3.2 코드 프롬프트(Code Prompting)",
-    "text": "4.5 3.2 코드 프롬프트(Code Prompting)\n자연어 대신 코드 형식으로 의도를 명세하면 애매함이 줄어들고 LLM이 구조적으로 이해해 할루시네이션이 감소한다.\n# 역할 정의\nrole = \"정보 추출 엔진\"\n\n# 작업 정의\ntask = \"텍스트에서 '장소명'을 추출해 정렬된 리스트로 반환\"\n\n# 출력 형식 정의\noutput = {\n    \"places\": [\"string\"]\n}\n코드 방식의 장점:\n\n논리 구조가 명확하게 표현됨\n조건과 출력 형식이 혼동되지 않음\n정형화된 포맷을 자주 재사용 가능"
-  },
-  {
-    "objectID": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy 2/01-Prompt-Structure.html#xml-태그-기반-구조화-claude-최적화",
-    "href": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy 2/01-Prompt-Structure.html#xml-태그-기반-구조화-claude-최적화",
-    "title": "Part 1 — 프롬프트 구조와 기능 탐구",
-    "section": "4.6 3.3 XML 태그 기반 구조화 (Claude 최적화)",
-    "text": "4.6 3.3 XML 태그 기반 구조화 (Claude 최적화)\nXML 태그는 텍스트 내 특정 영역을 명확히 구분해 Claude뿐 아니라 대부분의 LLM에서 구조적 파싱을 돕는 강력한 방식이다.\n\n4.6.1 1) 태그로 영역 지정\n&lt;email&gt;\nShow up at 6AM because I say so.\n&lt;/email&gt;\n\nMake this email more polite.\nLLM은 &lt;email&gt;...&lt;/email&gt; 내부 텍스트만 변환하면 된다는 것을 명확히 인식한다.\n\n\n4.6.2 2) 데이터 템플릿 예시\n&lt;animal&gt;{{ANIMAL}}&lt;/animal&gt;\n입력만 바꿔 여러 데이터를 동일한 템플릿에 적용할 수 있다.\n예:\n&lt;animal&gt;Cow&lt;/animal&gt;\n&lt;animal&gt;Dog&lt;/animal&gt;\n&lt;animal&gt;Seal&lt;/animal&gt;\n장점:\n\n구역별 의미가 명확\n반복 작업에서 수정이 쉽고 안정적\n모델이 태그 단위로 파싱하기 때문에 오류 감소"
-  },
-  {
-    "objectID": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy 2/01-Prompt-Structure.html#구조화-기법이-필요한-이유",
-    "href": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy 2/01-Prompt-Structure.html#구조화-기법이-필요한-이유",
-    "title": "Part 1 — 프롬프트 구조와 기능 탐구",
-    "section": "4.7 3.4 구조화 기법이 필요한 이유",
-    "text": "4.7 3.4 구조화 기법이 필요한 이유\n\n명령어, 입력 데이터, 출력 형식을 명확히 구분해 모델의 해석 오류를 줄인다.\n규칙을 시각적으로 구분하여 작업 수행 품질의 일관성과 재현성을 높인다.\n재사용 가능한 템플릿이 되어 프롬프트 제작 비용과 시간 절감에 기여한다."
-  },
-  {
-    "objectID": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy 2/01-Prompt-Structure.html#구조화-적용-사례-장소명-추출",
-    "href": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy 2/01-Prompt-Structure.html#구조화-적용-사례-장소명-추출",
-    "title": "Part 1 — 프롬프트 구조와 기능 탐구",
-    "section": "4.8 3.5 구조화 적용 사례 (장소명 추출)",
-    "text": "4.8 3.5 구조화 적용 사례 (장소명 추출)\n# 역할(Role)\n너는 텍스트에서 장소명을 추출하는 엔진이다.\n\n## 작업(Task)\n텍스트 내 도시, 국가, 축구 클럽 이름을 모두 \"장소\"로 간주하고 추출해라.\n\n## 출력 형식(Format)\n- 한 줄로만 출력한다.\n- 형식: `장소: A, B, C`\n- 설명 문장 금지.\n\n## 텍스트(Text)\n음바페는 26일 쿠프 드 프랑스 프랑스컵 올랭피크 리옹과의\n결승전에서 풀타임을 뛰며 2-1로 팀 승리를 도왔다.\n3년 만에 대회 정상에 오른 PSG는 역대 최다 15회 우승으로\n2위 마르세유(10회)를 멀찍이 따돌렸다.\n음바페는 이날 PSG에서의 커리어를 마무리했다.\n\n4.8.1 Tip4. 단문 중심\n\n한국어는 짧고 명확하게 작성\n톤·형식·분량을 구체적으로 지시\n\n\n\n4.8.2 Tip5. 하지 말 것(X) → 할 것(O)\n\n부정 지시보다 긍정적 행동 지시가 안정적"
-  },
-  {
-    "objectID": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy 2/01-Prompt-Structure.html#llm-한계",
-    "href": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy 2/01-Prompt-Structure.html#llm-한계",
-    "title": "Part 1 — 프롬프트 구조와 기능 탐구",
-    "section": "5.1 5.1 LLM 한계",
-    "text": "5.1 5.1 LLM 한계\n\n할루시네이션\n편향성\n근거 없는 출처 생성\n수학 및 추론 한계\nPrompt Injection(프롬프트 해킹)"
-  },
-  {
-    "objectID": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy 2/01-Prompt-Structure.html#프롬프트-엔지니어링이-필요한-이유",
-    "href": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy 2/01-Prompt-Structure.html#프롬프트-엔지니어링이-필요한-이유",
-    "title": "Part 1 — 프롬프트 구조와 기능 탐구",
-    "section": "5.2 5.2 프롬프트 엔지니어링이 필요한 이유",
-    "text": "5.2 5.2 프롬프트 엔지니어링이 필요한 이유\n\n정확성 향상\n오류 및 편향 감소\n모델 행동 제어\n사용자 경험 개선\n비용 절감"
-  },
-  {
-    "objectID": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy/01-Prompt-Structure.html",
-    "href": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy/01-Prompt-Structure.html",
-    "title": "Part 1 — 프롬프트 구조와 기능 탐구",
-    "section": "",
-    "text": "문자의 발명 → 인류의 기록 정확도 향상\n인쇄술 → 지식 대중화\n전화·라디오·TV → 즉각적인 원격 소통\n인터넷·모바일 → 실시간 대화\n생성형 AI → 인간-기계 상호작용 고도화\n\n\n\n\n\nPromptus(나타내다/생산하다)에서 유래\n현재 의미: 행동을 유도하는 신호\nAI에서: 모델에게 답변을 생성하도록 입력하는 문장\n\n\n\n\n\n\n\n\n\n\n\n\n항목\n프롬프트\n프롬프트 엔지니어링\n\n\n\n\n목적\n응답 생성 요청\n원하는 형태로 정확한 응답을 얻기 위한 설계\n\n\n필요성\n기본 입력\n모델 작동 방식·언어적 맥락 이해 필요\n\n\n예시\n“용에 대한 이야기 해줘”\n“용감한 용이 마을을 구하는 5문장 이야기 생성해줘. 대화 포함.”"
-  },
-  {
-    "objectID": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy/01-Prompt-Structure.html#인간-컴퓨터-상호작용의-변화",
-    "href": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy/01-Prompt-Structure.html#인간-컴퓨터-상호작용의-변화",
-    "title": "Part 1 — 프롬프트 구조와 기능 탐구",
-    "section": "",
-    "text": "문자의 발명 → 인류의 기록 정확도 향상\n인쇄술 → 지식 대중화\n전화·라디오·TV → 즉각적인 원격 소통\n인터넷·모바일 → 실시간 대화\n생성형 AI → 인간-기계 상호작용 고도화"
-  },
-  {
-    "objectID": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy/01-Prompt-Structure.html#프롬프트의-정의",
-    "href": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy/01-Prompt-Structure.html#프롬프트의-정의",
-    "title": "Part 1 — 프롬프트 구조와 기능 탐구",
-    "section": "",
-    "text": "Promptus(나타내다/생산하다)에서 유래\n현재 의미: 행동을 유도하는 신호\nAI에서: 모델에게 답변을 생성하도록 입력하는 문장"
-  },
-  {
-    "objectID": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy/01-Prompt-Structure.html#프롬프트-vs-프롬프트-엔지니어링",
-    "href": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy/01-Prompt-Structure.html#프롬프트-vs-프롬프트-엔지니어링",
-    "title": "Part 1 — 프롬프트 구조와 기능 탐구",
-    "section": "",
-    "text": "항목\n프롬프트\n프롬프트 엔지니어링\n\n\n\n\n목적\n응답 생성 요청\n원하는 형태로 정확한 응답을 얻기 위한 설계\n\n\n필요성\n기본 입력\n모델 작동 방식·언어적 맥락 이해 필요\n\n\n예시\n“용에 대한 이야기 해줘”\n“용감한 용이 마을을 구하는 5문장 이야기 생성해줘. 대화 포함.”"
-  },
-  {
-    "objectID": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy/01-Prompt-Structure.html#개념",
-    "href": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy/01-Prompt-Structure.html#개념",
-    "title": "Part 1 — 프롬프트 구조와 기능 탐구",
-    "section": "2.1 2.1 개념",
-    "text": "2.1 2.1 개념\n\n방대한 데이터 기반 사전학습 모델\nAutoregression: 이전 토큰 기반으로 다음 단어 예측\n기반 기술: Transformer 구조(셀프 어텐션)"
-  },
-  {
-    "objectID": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy/01-Prompt-Structure.html#주요-모델-패밀리",
-    "href": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy/01-Prompt-Structure.html#주요-모델-패밀리",
-    "title": "Part 1 — 프롬프트 구조와 기능 탐구",
-    "section": "2.2 2.2 주요 모델 패밀리",
-    "text": "2.2 2.2 주요 모델 패밀리\n\nOpenAI – GPT-4o: 멀티모달·실시간 처리\nAnthropic – Claude 3: 안전성 중점, 헌법적 AI\nGoogle – Gemini / BERT / T5: 다중 모달 처리"
-  },
-  {
-    "objectID": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy/01-Prompt-Structure.html#모델-튜닝-방식",
-    "href": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy/01-Prompt-Structure.html#모델-튜닝-방식",
-    "title": "Part 1 — 프롬프트 구조와 기능 탐구",
-    "section": "2.3 2.3 모델 튜닝 방식",
-    "text": "2.3 2.3 모델 튜닝 방식\n\nFine-Tuning\nPrompt Engineering\nFeature-Tuning(특징 공간 해석 기반 제어)"
-  },
-  {
-    "objectID": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy/01-Prompt-Structure.html#필수-4요소",
-    "href": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy/01-Prompt-Structure.html#필수-4요소",
-    "title": "Part 1 — 프롬프트 구조와 기능 탐구",
-    "section": "3.1 3.1 필수 4요소",
-    "text": "3.1 3.1 필수 4요소\n\nInstruction: 어떤 작업을 해야 하는가\nContext: 배경 정보\nInput Data: 처리 대상 데이터\nOutput Indicator: 출력 형식 규정"
-  },
-  {
-    "objectID": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy/01-Prompt-Structure.html#프롬프트-타입-구조type-ad",
-    "href": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy/01-Prompt-Structure.html#프롬프트-타입-구조type-ad",
-    "title": "Part 1 — 프롬프트 구조와 기능 탐구",
-    "section": "3.2 3.2 프롬프트 타입 구조(Type A–D)",
-    "text": "3.2 3.2 프롬프트 타입 구조(Type A–D)\n\nA: 지시문 + 출력문\nB: 지시문 + 맥락 + 출력문\nC: 지시문 + 맥락 + 예시 + 출력문\nD: 지시문 + 입력값 + 출력문\n\n예시와 함께 구조적으로 프롬프트를 설계하면 LLM이 더 안정적으로 원하는 출력 생성."
-  },
-  {
-    "objectID": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy/01-Prompt-Structure.html#대-원칙",
-    "href": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy/01-Prompt-Structure.html#대-원칙",
-    "title": "Part 1 — 프롬프트 구조와 기능 탐구",
-    "section": "4.1 4.1 4대 원칙",
-    "text": "4.1 4.1 4대 원칙\n\n범용성: 다양한 상황에서도 동작\n목적 지향성: 특정 사용자 목적 반영\n일관성: 반복 실행해도 동일 품질\n경제성: API 비용 절감"
-  },
-  {
-    "objectID": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy/01-Prompt-Structure.html#scaffolding-prompting",
-    "href": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy/01-Prompt-Structure.html#scaffolding-prompting",
-    "title": "Part 1 — 프롬프트 구조와 기능 탐구",
-    "section": "4.2 4.2 Scaffolding Prompting",
-    "text": "4.2 4.2 Scaffolding Prompting\n\n인간의 학습 이론(ZPD)을 적용\nUnderstand → Ideation → Analysis → Apply → Evaluate → Generalize\n단계적 사고구조 유도"
-  },
-  {
-    "objectID": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy/01-Prompt-Structure.html#핵심-5-tips",
-    "href": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy/01-Prompt-Structure.html#핵심-5-tips",
-    "title": "Part 1 — 프롬프트 구조와 기능 탐구",
-    "section": "4.3 4.3 핵심 5 Tips",
-    "text": "4.3 4.3 핵심 5 Tips\n\n4.3.1 Tip1. 최신 모델 사용\n\n\n4.3.2 Tip2. 명확한 동사로 지시\n예: 분석해, 정리해, 요약해, 작성해 등\n\n\n4.3.3 Tip 3. 프롬프트를 구조화하자\n프롬프트를 구조화하면 LLM이 입력을 더 명확하게 해석할 수 있고,\n작업 목적·규칙·입력 데이터·출력 형식을 혼동 없이 처리할 수 있다.\n구조화를 위한 핵심 기법은 Markdown, 코드 프롬프트, XML 태그이다."
-  },
-  {
-    "objectID": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy/01-Prompt-Structure.html#markdown-구조화-headers-lists-emphasis",
-    "href": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy/01-Prompt-Structure.html#markdown-구조화-headers-lists-emphasis",
-    "title": "Part 1 — 프롬프트 구조와 기능 탐구",
-    "section": "4.4 3.1 Markdown 구조화 (Headers, Lists, Emphasis)",
-    "text": "4.4 3.1 Markdown 구조화 (Headers, Lists, Emphasis)\nMarkdown은 LLM이 가장 잘 해석하는 구조적 문법 중 하나이다.\n섹션을 명확히 나누고, 각 부분을 시각적으로 구분해줌으로써\n모델의 오류를 줄이고 반복 작업 시 유지보수성이 높아진다.\n\n4.4.1 1) 헤더(Headers) 활용\n헤더는 프롬프트의 구성을 크게 나누는 데 사용한다.\n# 역할(Role)\n너는 스포츠 기사 분석 엔진이다.\n\n## 작업(Task)\n아래 텍스트에서 장소(도시, 국가, 축구 클럽)를 모두 추출해라.\n\n## 출력 형식(Format)\n- \"장소: A, B, C\" 형태의 한 줄 출력\n- 설명 금지\n\n## 텍스트(Text)\n{{TEXT}}\n\n\n4.4.2 2) 목록(Lists) 활용\n절차, 규칙, 조건을 번호 목록으로 정리하면 LLM이 하나씩 적용하기 쉽다.\n다음 규칙을 따라 작업을 수행해라.\n1. 사람 이름은 제외한다.\n2. 축구 클럽은 장소로 포함한다.\n3. 결과는 쉼표로 구분한다.\n4. 설명 문장은 쓰지 않는다.\n\n\n4.4.3 3) 강조(Emphasis) 사용\n중요 조건을 굵게 또는 기울임으로 표시해 모델의 우선순위를 높인다.\n- 반드시 **한국어**로 작성하라.\n- 출력은 **한 줄**로만 작성한다.\n- *설명 문장은 포함하지 않는다.*"
-  },
-  {
-    "objectID": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy/01-Prompt-Structure.html#코드-프롬프트code-prompting",
-    "href": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy/01-Prompt-Structure.html#코드-프롬프트code-prompting",
-    "title": "Part 1 — 프롬프트 구조와 기능 탐구",
-    "section": "4.5 3.2 코드 프롬프트(Code Prompting)",
-    "text": "4.5 3.2 코드 프롬프트(Code Prompting)\n자연어 대신 코드 형식으로 의도를 명세하면 애매함이 줄어들고 LLM이 구조적으로 이해해 할루시네이션이 감소한다.\n# 역할 정의\nrole = \"정보 추출 엔진\"\n\n# 작업 정의\ntask = \"텍스트에서 '장소명'을 추출해 정렬된 리스트로 반환\"\n\n# 출력 형식 정의\noutput = {\n    \"places\": [\"string\"]\n}\n코드 방식의 장점:\n\n논리 구조가 명확하게 표현됨\n조건과 출력 형식이 혼동되지 않음\n정형화된 포맷을 자주 재사용 가능"
-  },
-  {
-    "objectID": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy/01-Prompt-Structure.html#xml-태그-기반-구조화-claude-최적화",
-    "href": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy/01-Prompt-Structure.html#xml-태그-기반-구조화-claude-최적화",
-    "title": "Part 1 — 프롬프트 구조와 기능 탐구",
-    "section": "4.6 3.3 XML 태그 기반 구조화 (Claude 최적화)",
-    "text": "4.6 3.3 XML 태그 기반 구조화 (Claude 최적화)\nXML 태그는 텍스트 내 특정 영역을 명확히 구분해 Claude뿐 아니라 대부분의 LLM에서 구조적 파싱을 돕는 강력한 방식이다.\n\n4.6.1 1) 태그로 영역 지정\n&lt;email&gt;\nShow up at 6AM because I say so.\n&lt;/email&gt;\n\nMake this email more polite.\nLLM은 &lt;email&gt;...&lt;/email&gt; 내부 텍스트만 변환하면 된다는 것을 명확히 인식한다.\n\n\n4.6.2 2) 데이터 템플릿 예시\n&lt;animal&gt;{{ANIMAL}}&lt;/animal&gt;\n입력만 바꿔 여러 데이터를 동일한 템플릿에 적용할 수 있다.\n예:\n&lt;animal&gt;Cow&lt;/animal&gt;\n&lt;animal&gt;Dog&lt;/animal&gt;\n&lt;animal&gt;Seal&lt;/animal&gt;\n장점:\n\n구역별 의미가 명확\n반복 작업에서 수정이 쉽고 안정적\n모델이 태그 단위로 파싱하기 때문에 오류 감소"
-  },
-  {
-    "objectID": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy/01-Prompt-Structure.html#구조화-기법이-필요한-이유",
-    "href": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy/01-Prompt-Structure.html#구조화-기법이-필요한-이유",
-    "title": "Part 1 — 프롬프트 구조와 기능 탐구",
-    "section": "4.7 3.4 구조화 기법이 필요한 이유",
-    "text": "4.7 3.4 구조화 기법이 필요한 이유\n\n명령어, 입력 데이터, 출력 형식을 명확히 구분해 모델의 해석 오류를 줄인다.\n규칙을 시각적으로 구분하여 작업 수행 품질의 일관성과 재현성을 높인다.\n재사용 가능한 템플릿이 되어 프롬프트 제작 비용과 시간 절감에 기여한다."
-  },
-  {
-    "objectID": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy/01-Prompt-Structure.html#구조화-적용-사례-장소명-추출",
-    "href": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy/01-Prompt-Structure.html#구조화-적용-사례-장소명-추출",
-    "title": "Part 1 — 프롬프트 구조와 기능 탐구",
-    "section": "4.8 3.5 구조화 적용 사례 (장소명 추출)",
-    "text": "4.8 3.5 구조화 적용 사례 (장소명 추출)\n# 역할(Role)\n너는 텍스트에서 장소명을 추출하는 엔진이다.\n\n## 작업(Task)\n텍스트 내 도시, 국가, 축구 클럽 이름을 모두 \"장소\"로 간주하고 추출해라.\n\n## 출력 형식(Format)\n- 한 줄로만 출력한다.\n- 형식: `장소: A, B, C`\n- 설명 문장 금지.\n\n## 텍스트(Text)\n음바페는 26일 쿠프 드 프랑스 프랑스컵 올랭피크 리옹과의\n결승전에서 풀타임을 뛰며 2-1로 팀 승리를 도왔다.\n3년 만에 대회 정상에 오른 PSG는 역대 최다 15회 우승으로\n2위 마르세유(10회)를 멀찍이 따돌렸다.\n음바페는 이날 PSG에서의 커리어를 마무리했다.\n\n4.8.1 Tip4. 단문 중심\n\n한국어는 짧고 명확하게 작성\n톤·형식·분량을 구체적으로 지시\n\n\n\n4.8.2 Tip5. 하지 말 것(X) → 할 것(O)\n\n부정 지시보다 긍정적 행동 지시가 안정적"
-  },
-  {
-    "objectID": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy/01-Prompt-Structure.html#llm-한계",
-    "href": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy/01-Prompt-Structure.html#llm-한계",
-    "title": "Part 1 — 프롬프트 구조와 기능 탐구",
-    "section": "5.1 5.1 LLM 한계",
-    "text": "5.1 5.1 LLM 한계\n\n할루시네이션\n편향성\n근거 없는 출처 생성\n수학 및 추론 한계\nPrompt Injection(프롬프트 해킹)"
-  },
-  {
-    "objectID": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy/01-Prompt-Structure.html#프롬프트-엔지니어링이-필요한-이유",
-    "href": "docs/blog/posts/Prompt_Engineering/01-Prompt-Structure copy/01-Prompt-Structure.html#프롬프트-엔지니어링이-필요한-이유",
+    "objectID": "docs/blog/posts/Prompt_Engineering/02-Prompt/01-Prompt-Structure.html#프롬프트-엔지니어링이-필요한-이유",
+    "href": "docs/blog/posts/Prompt_Engineering/02-Prompt/01-Prompt-Structure.html#프롬프트-엔지니어링이-필요한-이유",
     "title": "Part 1 — 프롬프트 구조와 기능 탐구",
     "section": "5.2 5.2 프롬프트 엔지니어링이 필요한 이유",
     "text": "5.2 5.2 프롬프트 엔지니어링이 필요한 이유\n\n정확성 향상\n오류 및 편향 감소\n모델 행동 제어\n사용자 경험 개선\n비용 절감"
