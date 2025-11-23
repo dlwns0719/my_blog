@@ -1,0 +1,1191 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ko" xml:lang="ko"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.25">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Part 1 — 프롬프트 구조와 기능 탐구 – Junhyun Lee</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../../../site_libs/quarto-search/quarto-search.js"></script>
+<script src="../../../../../site_libs/quarto-search/autocomplete-preset-algolia.umd.js"></script>
+<meta name="quarto:offset" content="../../../../../">
+<script src="../../../../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../../../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../../../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../../../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../../../site_libs/quarto-html/quarto-syntax-highlighting-065a5179aebd64318d7ea99d77b64a9e.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../../../../site_libs/quarto-html/quarto-syntax-highlighting-dark-969ddfa49e00a70eb3423444dbc81f6c.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../../../../site_libs/quarto-html/quarto-syntax-highlighting-065a5179aebd64318d7ea99d77b64a9e.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../../../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../../../site_libs/bootstrap/bootstrap-5a73818b025f47a6d9fdc61b5aee3d21.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../../../../site_libs/bootstrap/bootstrap-dark-0cc05e60083667b8b604a857b4577219.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../../../../site_libs/bootstrap/bootstrap-5a73818b025f47a6d9fdc61b5aee3d21.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "algolia": {
+    "application-id": "DUOR1DRC9D",
+    "search-only-api-key": "f264da5dea684ffb9e9b4a574af3ed61",
+    "index-name": "prod_QUARTO",
+    "analytics-events": true,
+    "show-logo": true,
+    "libDir": "site_libs"
+  },
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": true,
+  "language": {
+    "search-no-results-text": "일치 없음",
+    "search-matching-documents-text": "일치된 문서",
+    "search-copy-link-title": "검색 링크 복사",
+    "search-hide-matches-text": "추가 검색 결과 숨기기",
+    "search-more-match-text": "추가 검색결과",
+    "search-more-matches-text": "추가 검색결과",
+    "search-clear-button-title": "제거",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "취소",
+    "search-submit-button-title": "검색",
+    "search-label": "검색"
+  }
+}</script>
+<script src="https://cdn.jsdelivr.net/npm/algoliasearch@4.5.1/dist/algoliasearch-lite.umd.js"></script>
+
+
+<script type="text/javascript">
+var ALGOLIA_INSIGHTS_SRC = "https://cdn.jsdelivr.net/npm/search-insights/dist/search-insights.iife.min.js";
+!function(e,a,t,n,s,i,c){e.AlgoliaAnalyticsObject=s,e[s]=e[s]||function(){
+(e[s].queue=e[s].queue||[]).push(arguments)},i=a.createElement(t),c=a.getElementsByTagName(t)[0],
+i.async=1,i.src=n,c.parentNode.insertBefore(i,c)
+}(window,document,"script",ALGOLIA_INSIGHTS_SRC,"aa");
+</script>
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@algolia/autocomplete-plugin-algolia-insights">
+
+</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-6W0EKFMWBN"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-6W0EKFMWBN', { 'anonymize_ip': true});
+</script>
+<style>
+
+      .quarto-title-block .quarto-title-banner h1,
+      .quarto-title-block .quarto-title-banner h2,
+      .quarto-title-block .quarto-title-banner h3,
+      .quarto-title-block .quarto-title-banner h4,
+      .quarto-title-block .quarto-title-banner h5,
+      .quarto-title-block .quarto-title-banner h6
+      {
+        color: black;
+      }
+
+      .quarto-title-block .quarto-title-banner {
+        color: black;
+background: #EDF3F9;
+      }
+</style>
+<style>
+.custom-footer { 
+  text-align: center; 
+  font-size: 0.8em; 
+  color: #666; 
+  margin-top: 2rem; 
+}
+</style>
+
+
+<link rel="stylesheet" href="../../../../../styles.css">
+<meta property="og:title" content="Part 1 — 프롬프트 구조와 기능 탐구 – Junhyun Lee">
+<meta property="og:site_name" content="Junhyun Lee">
+<meta name="twitter:title" content="Part 1 — 프롬프트 구조와 기능 탐구 – Junhyun Lee">
+<meta name="twitter:card" content="summary">
+</head>
+
+<body class="nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="../../../../../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../../../../.././images/logo.png" alt="" class="navbar-logo light-content">
+    <img src="../../../../.././images/logo.png" alt="" class="navbar-logo dark-content">
+    </a>
+    <a class="navbar-brand" href="../../../../../index.html">
+    <span class="navbar-title">Junhyun Lee</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="검색"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="탐색 전환" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../../../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../../../docs/blog/index.html"> 
+<span class="menu-text">Blog</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../../../about.html"> 
+<span class="menu-text">Me</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/dlwns0719"> <i class="bi bi-github" role="img" aria-label="Github">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/in/dlwns0719/"> <i class="bi bi-linkedin" role="img" aria-label="Linkedin">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="다크 모드 전환"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Part 1 — 프롬프트 구조와 기능 탐구</h1>
+                                <div class="quarto-categories">
+                <div class="quarto-category">AI</div>
+                <div class="quarto-category">LangChain</div>
+                <div class="quarto-category">Prompt_Engineering</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">목차</h2>
+   
+  <ul>
+  <li><a href="#프롬프트-설계-원칙" id="toc-프롬프트-설계-원칙" class="nav-link active" data-scroll-target="#프롬프트-설계-원칙"><span class="header-section-number">1</span> 프롬프트 설계 원칙</a>
+  <ul class="collapse">
+  <li><a href="#대-원칙" id="toc-대-원칙" class="nav-link" data-scroll-target="#대-원칙"><span class="header-section-number">1.1</span> 4대 원칙</a></li>
+  <li><a href="#scaffolding-prompting" id="toc-scaffolding-prompting" class="nav-link" data-scroll-target="#scaffolding-prompting"><span class="header-section-number">1.2</span> Scaffolding Prompting</a></li>
+  <li><a href="#핵심-5-tips" id="toc-핵심-5-tips" class="nav-link" data-scroll-target="#핵심-5-tips"><span class="header-section-number">1.3</span> 핵심 5 Tips</a>
+  <ul class="collapse">
+  <li><a href="#tip1.-최신-모델-사용" id="toc-tip1.-최신-모델-사용" class="nav-link" data-scroll-target="#tip1.-최신-모델-사용"><span class="header-section-number">1.3.1</span> Tip1. 최신 모델 사용</a></li>
+  <li><a href="#tip2.-명확한-동사로-지시" id="toc-tip2.-명확한-동사로-지시" class="nav-link" data-scroll-target="#tip2.-명확한-동사로-지시"><span class="header-section-number">1.3.2</span> Tip2. 명확한 동사로 지시</a></li>
+  <li><a href="#tip3.-프롬프트를-구조화하자" id="toc-tip3.-프롬프트를-구조화하자" class="nav-link" data-scroll-target="#tip3.-프롬프트를-구조화하자"><span class="header-section-number">1.3.3</span> Tip3. 프롬프트를 구조화하자</a></li>
+  <li><a href="#tip4.-단문-중심의-간결한-문장을-쓰자." id="toc-tip4.-단문-중심의-간결한-문장을-쓰자." class="nav-link" data-scroll-target="#tip4.-단문-중심의-간결한-문장을-쓰자."><span class="header-section-number">1.3.4</span> Tip4. 단문 중심의 간결한 문장을 쓰자.</a></li>
+  <li><a href="#tip5.-하지-말-것x-할-것o" id="toc-tip5.-하지-말-것x-할-것o" class="nav-link" data-scroll-target="#tip5.-하지-말-것x-할-것o"><span class="header-section-number">1.3.5</span> Tip5. 하지 말 것(X) → 할 것(O)</a></li>
+  </ul></li>
+  <li><a href="#프롬프트-제작에-100-절대적인-것은-없다." id="toc-프롬프트-제작에-100-절대적인-것은-없다." class="nav-link" data-scroll-target="#프롬프트-제작에-100-절대적인-것은-없다."><span class="header-section-number">1.4</span> 프롬프트 제작에 100% 절대적인 것은 없다.</a></li>
+  </ul></li>
+  <li><a href="#llm의-한계와-프롬프트-엔지니어링-필요성" id="toc-llm의-한계와-프롬프트-엔지니어링-필요성" class="nav-link" data-scroll-target="#llm의-한계와-프롬프트-엔지니어링-필요성"><span class="header-section-number">2</span> LLM의 한계와 프롬프트 엔지니어링 필요성</a>
+  <ul class="collapse">
+  <li><a href="#llm-한계" id="toc-llm-한계" class="nav-link" data-scroll-target="#llm-한계"><span class="header-section-number">2.1</span> LLM 한계</a></li>
+  <li><a href="#프롬프트-엔지니어링이-필요한-이유" id="toc-프롬프트-엔지니어링이-필요한-이유" class="nav-link" data-scroll-target="#프롬프트-엔지니어링이-필요한-이유"><span class="header-section-number">2.2</span> 프롬프트 엔지니어링이 필요한 이유</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+
+
+<section id="프롬프트-설계-원칙" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> 프롬프트 설계 원칙</h1>
+<section id="대-원칙" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="대-원칙"><span class="header-section-number">1.1</span> 4대 원칙</h2>
+<ol type="1">
+<li><strong>범용성</strong>: 다양한 상황에서도 동작, 불특정 다수의 사용자 대상 다양한 상황과 과제에 적용 가능한 프롬프트의 결과를 내야 한다.<br>
+</li>
+<li><strong>목적 지향성</strong>: 특정 사용자 목적에 세분화된 기능을 제공해야 한다.</li>
+<li><strong>일관성</strong>: 여러가지 LLM 모델을 사용하더라도, 생성 할 때마다 결과가 바뀌면 안된다. 어느정도 스펙트럼 안에서 일정한 결과 유지.</li>
+<li><strong>경제성</strong>: 단어, 토큰수 운영 비용 API 비용 절감</li>
+</ol>
+</section>
+<section id="scaffolding-prompting" class="level2" data-number="1.2">
+<h2 data-number="1.2" class="anchored" data-anchor-id="scaffolding-prompting"><span class="header-section-number">1.2</span> Scaffolding Prompting</h2>
+<ul>
+<li>비계식 설계</li>
+<li>인간의 학습 이론(ZPD)을 적용</li>
+<li>외국어를 학습하는 사람들의 학습 능력을 최대한 끌어올리려면, 최대한 쉬운 단계부터 어려운 단계까지 차츰차츰 비계식으로 올라가야 한다.</li>
+<li>단어 -&gt; 문장 -&gt; 문단 완성을 하는 단계별 학습 방식 사용</li>
+<li>프롬프트 설계를 할떄도 이 방식을 사용하면 정말 잘 설계를 할 수 있다.</li>
+<li>Understand → Ideation → Analysis → Apply → Evaluate → Generalize</li>
+<li>풀어야될 문제(요구사항)에 대한 이해</li>
+<li>문제에 대한 이해를 바탕으로 여러가지 프롬프트를 만드는 아이디에이션 진행.</li>
+<li>아이디에이션을 통해 구현된 프롬프트를 분석.</li>
+<li>실제로 도입, 적용, 평가</li>
+<li>일반화 할 수 있는 결과를 얻으면 배포 진행.</li>
+<li>단계적 사고구조 유도</li>
+</ul>
+</section>
+<section id="핵심-5-tips" class="level2" data-number="1.3">
+<h2 data-number="1.3" class="anchored" data-anchor-id="핵심-5-tips"><span class="header-section-number">1.3</span> 핵심 5 Tips</h2>
+<section id="tip1.-최신-모델-사용" class="level3" data-number="1.3.1">
+<h3 data-number="1.3.1" class="anchored" data-anchor-id="tip1.-최신-모델-사용"><span class="header-section-number">1.3.1</span> Tip1. 최신 모델 사용</h3>
+<ul>
+<li>최근까지 GPT 4/5</li>
+<li>최신모델을 사용하면 프롬프트가 조금 엉성해도 좋은 결과를 얻을 수 있다.</li>
+<li>그러나 GPT 3.5을 이용해 A 라는 기능을 4/5 만큼 끌어올릴 수 있다면, 이 방법이 좋은 방법이다.</li>
+</ul>
+</section>
+<section id="tip2.-명확한-동사로-지시" class="level3" data-number="1.3.2">
+<h3 data-number="1.3.2" class="anchored" data-anchor-id="tip2.-명확한-동사로-지시"><span class="header-section-number">1.3.2</span> Tip2. 명확한 동사로 지시</h3>
+<p>어떤 단어가 좀더 구체적, 또는 명확하게 표현이 되어있는지 확인 조금더 명확한 동작을 하는 단어가 있을 수 있다. 뭐를 나누다 라는 맥락이 없으면 뜻을 정확하게 이해하기가 어려운 언어이다. 예: 분석해, 정리해, 요약해, 작성해 등 –&gt; 정확하게 무엇을 하려고 하는지 맥락 없어도 이해 가능하다.</p>
+</section>
+<section id="tip3.-프롬프트를-구조화하자" class="level3" data-number="1.3.3">
+<h3 data-number="1.3.3" class="anchored" data-anchor-id="tip3.-프롬프트를-구조화하자"><span class="header-section-number">1.3.3</span> Tip3. 프롬프트를 구조화하자</h3>
+<p>구조화라 함은 어떻게 요소별로 나눈다던지 섹션별로 컴포지션을 나누어서, 언어모델이 읽기 편한 구조를 만든다. 대표적으로 2가지 방법(<strong>Markdown</strong>, <strong>코드 프롬프트</strong>)이 있다. 프롬프트를 구조화하면 LLM이 입력을 더 명확하게 해석할 수 있고,<br>
+작업 목적·규칙·입력 데이터·출력 형식을 혼동 없이 처리할 수 있다.<br>
+구조화를 위한 핵심 기법은 <strong>Markdown</strong>, <strong>코드 프롬프트</strong>, <strong>XML 태그</strong>이다.</p>
+<ol type="1">
+<li>Markdown 기호 사용하기 (Headers, Lists, Emphasis)</li>
+</ol>
+<p>Markdown은 LLM이 가장 잘 해석하는 구조적 문법 중 하나이다.<br>
+섹션을 명확히 나누고, 각 부분을 시각적으로 구분해줌으로써<br>
+모델의 오류를 줄이고 반복 작업 시 유지보수성이 높아진다.</p>
+<p>1.1 헤더(Headers) 활용 헤더는 프롬프트의 구성을 크게 나누는 데 사용한다. 샾 개수만큼 주 제목, 부제목, 소제목 등의 계층적 우선순위 인덱스를 부여할 수 있다.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode numberSource markdown number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu"># 역할(Role)</span></span>
+<span id="cb1-2"><a href="#cb1-2"></a>너는 스포츠 기사 분석 엔진이다.</span>
+<span id="cb1-3"><a href="#cb1-3"></a></span>
+<span id="cb1-4"><a href="#cb1-4"></a><span class="fu">## 작업(Task)</span></span>
+<span id="cb1-5"><a href="#cb1-5"></a>아래 텍스트에서 장소(도시, 국가, 축구 클럽)를 모두 추출해라.</span>
+<span id="cb1-6"><a href="#cb1-6"></a></span>
+<span id="cb1-7"><a href="#cb1-7"></a><span class="fu">## 출력 형식(Format)</span></span>
+<span id="cb1-8"><a href="#cb1-8"></a><span class="ss">- </span>"장소: A, B, C" 형태의 한 줄 출력</span>
+<span id="cb1-9"><a href="#cb1-9"></a><span class="ss">- </span>설명 금지</span>
+<span id="cb1-10"><a href="#cb1-10"></a></span>
+<span id="cb1-11"><a href="#cb1-11"></a><span class="fu">## 텍스트(Text)</span></span>
+<span id="cb1-12"><a href="#cb1-12"></a>{{TEXT}}</span></code></pre></div><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></div>
+<p>1.2 목록(Lists) 활용 하이픈이나, 번호를 이용 –&gt; 수행할 순서가 있는 프롬프트에 사용한다. 절차, 규칙, 조건을 번호 목록으로 정리하면 LLM이 하나씩 적용하기 쉽다.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode numberSource markdown number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb2-1"><a href="#cb2-1"></a>다음 규칙을 따라 작업을 수행해라.</span>
+<span id="cb2-2"><a href="#cb2-2"></a><span class="ss">1. </span>사람 이름은 제외한다.</span>
+<span id="cb2-3"><a href="#cb2-3"></a><span class="ss">2. </span>축구 클럽은 장소로 포함한다.</span>
+<span id="cb2-4"><a href="#cb2-4"></a><span class="ss">3. </span>결과는 쉼표로 구분한다.</span>
+<span id="cb2-5"><a href="#cb2-5"></a><span class="ss">4. </span>설명 문장은 쓰지 않는다.</span></code></pre></div><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></div>
+<p>1.3 강조(Emphasis) 사용</p>
+<p>중요 조건을 굵게 또는 기울임으로 표시해 모델의 우선순위를 높인다. 실제로 이탤릭, 볼드체로 표현은 되지 않는다. 언어모델에게 일반 줄글의 텍스트가 아닌 다른 요소임을 강조.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode numberSource markdown number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb3-1"><a href="#cb3-1"></a><span class="ss">- </span>반드시 **한국어**로 작성하라.</span>
+<span id="cb3-2"><a href="#cb3-2"></a><span class="ss">- </span>출력은 **한 줄**로만 작성한다.</span>
+<span id="cb3-3"><a href="#cb3-3"></a><span class="ss">- </span>*설명 문장은 포함하지 않는다.*</span></code></pre></div><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></div>
+<ol start="2" type="1">
+<li>코드 프롬프트(Code Prompting)</li>
+</ol>
+<p>구조화를 좀더 구체적으로 하는 방식에 대해서 소개. AdaPlanner 논순 발췌, 구글의 리서처 분들이 많이 사용한다. 파이썬 언어를 사용해서 언어 모델이 정확히 수행 해야 하는 내용을 작성. 자연어 대신 <strong>코드 형식</strong>으로 의도를 명세하면 애매함이 줄어들고 LLM이 구조적으로 이해해 할루시네이션이 감소한다.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1"></a><span class="co"># 역할 정의</span></span>
+<span id="cb4-2"><a href="#cb4-2"></a>role <span class="op">=</span> <span class="st">"정보 추출 엔진"</span></span>
+<span id="cb4-3"><a href="#cb4-3"></a></span>
+<span id="cb4-4"><a href="#cb4-4"></a><span class="co"># 작업 정의</span></span>
+<span id="cb4-5"><a href="#cb4-5"></a>task <span class="op">=</span> <span class="st">"텍스트에서 '장소명'을 추출해 정렬된 리스트로 반환"</span></span>
+<span id="cb4-6"><a href="#cb4-6"></a></span>
+<span id="cb4-7"><a href="#cb4-7"></a><span class="co"># 출력 형식 정의</span></span>
+<span id="cb4-8"><a href="#cb4-8"></a>output <span class="op">=</span> {</span>
+<span id="cb4-9"><a href="#cb4-9"></a>    <span class="st">"places"</span>: [<span class="st">"string"</span>]</span>
+<span id="cb4-10"><a href="#cb4-10"></a>}</span></code></pre></div><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></div>
+<p>코드 방식의 장점:</p>
+<ul>
+<li>논리 구조가 명확하게 표현됨</li>
+<li>조건과 출력 형식이 혼동되지 않음</li>
+<li>정형화된 포맷을 자주 재사용 가능</li>
+</ul>
+<ol start="3" type="1">
+<li>XML 태그 기반 구조화 (Claude 최적화)</li>
+</ol>
+<p>엔트로픽 프롬팅 쿡북 참조하면 나오는 내용. 문장 내 구역 나눔, 해당 구적을 강조하는 효과, 반복작업에서 프롬프트 수정과 편집/용이, 언어모델의 처리 속도 향상 XML 태그는 텍스트 내 특정 영역을 명확히 구분해 Claude뿐 아니라 대부분의 LLM에서 <strong>구조적 파싱</strong>을 돕는 강력한 방식이다.</p>
+<p>이 방식의 장점은 탬플릿이 가능하다.</p>
+<ul>
+<li>태그로 영역 지정</li>
+</ul>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb5-1"><a href="#cb5-1"></a>&lt;email&gt;</span>
+<span id="cb5-2"><a href="#cb5-2"></a>Show up at 6AM because I say so.</span>
+<span id="cb5-3"><a href="#cb5-3"></a>&lt;/email&gt;</span>
+<span id="cb5-4"><a href="#cb5-4"></a></span>
+<span id="cb5-5"><a href="#cb5-5"></a>Make this email more polite.</span></code></pre></div><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></div>
+<p>LLM은 <code>&lt;email&gt;...&lt;/email&gt;</code> 내부 텍스트만 변환하면 된다는 것을 명확히 인식한다.</p>
+<ul>
+<li>데이터 템플릿 예시</li>
+</ul>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb6-1"><a href="#cb6-1"></a>&lt;animal&gt;{{ANIMAL}}&lt;/animal&gt;</span></code></pre></div><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></div>
+<p>입력만 바꿔 여러 데이터를 동일한 템플릿에 적용할 수 있다.</p>
+<p>예:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb7-1"><a href="#cb7-1"></a>&lt;animal&gt;Cow&lt;/animal&gt;</span>
+<span id="cb7-2"><a href="#cb7-2"></a>&lt;animal&gt;Dog&lt;/animal&gt;</span>
+<span id="cb7-3"><a href="#cb7-3"></a>&lt;animal&gt;Seal&lt;/animal&gt;</span></code></pre></div><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></div>
+<p>장점:</p>
+<ul>
+<li>구역별 의미가 명확</li>
+<li>반복 작업에서 수정이 쉽고 안정적</li>
+<li>모델이 태그 단위로 파싱하기 때문에 오류 감소</li>
+</ul>
+<ol start="4" type="1">
+<li>구조화 기법이 필요한 이유</li>
+</ol>
+<ul>
+<li>명령어, 입력 데이터, 출력 형식을 명확히 구분해 <strong>모델의 해석 오류를 줄인다.</strong></li>
+<li>규칙을 시각적으로 구분하여 <strong>작업 수행 품질의 일관성과 재현성을 높인다.</strong></li>
+<li>재사용 가능한 템플릿이 되어 <strong>프롬프트 제작 비용과 시간 절감에 기여한다.</strong></li>
+</ul>
+</section>
+<section id="tip4.-단문-중심의-간결한-문장을-쓰자." class="level3" data-number="1.3.4">
+<h3 data-number="1.3.4" class="anchored" data-anchor-id="tip4.-단문-중심의-간결한-문장을-쓰자."><span class="header-section-number">1.3.4</span> Tip4. 단문 중심의 간결한 문장을 쓰자.</h3>
+<ul>
+<li>한국어는 짧고 명확하게 작성</li>
+<li>톤·형식·분량을 구체적으로 지시</li>
+</ul>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb8-1"><a href="#cb8-1"></a>- 나쁜 예</span>
+<span id="cb8-2"><a href="#cb8-2"></a>5월의 봄을 주제로 시를 써주고 짧게</span>
+<span id="cb8-3"><a href="#cb8-3"></a>작성해줘 봄의 느낌을 살려봐.</span>
+<span id="cb8-4"><a href="#cb8-4"></a>결과: 오월의 푸른 하늘 아래</span>
+<span id="cb8-5"><a href="#cb8-5"></a>새싹이 희망을 노래하네.</span>
+<span id="cb8-6"><a href="#cb8-6"></a>아침 이슬에 빛나는 꽃들,</span>
+<span id="cb8-7"><a href="#cb8-7"></a>봄바람 따라 춤추는 나비.</span>
+<span id="cb8-8"><a href="#cb8-8"></a>모든 거리는 축제가 되어.</span>
+<span id="cb8-9"><a href="#cb8-9"></a></span>
+<span id="cb8-10"><a href="#cb8-10"></a>- 좋은 예</span>
+<span id="cb8-11"><a href="#cb8-11"></a>너는 시인이야. 한국의 계절, 봄을 상상해봐.</span>
+<span id="cb8-12"><a href="#cb8-12"></a>5월이야. 다양한 꽃이 여기저기 폈어.</span>
+<span id="cb8-13"><a href="#cb8-13"></a>그 분위기에 어울리는 짧은 시를 5줄 이내로</span>
+<span id="cb8-14"><a href="#cb8-14"></a>작성해줘. 한글 고유의 멋이 시에 드러나면 좋겠어.</span>
+<span id="cb8-15"><a href="#cb8-15"></a>결과: 봄바람, 너른 들녘을 스치며</span>
+<span id="cb8-16"><a href="#cb8-16"></a>꽃잎들 춤추듯 흩날리네</span>
+<span id="cb8-17"><a href="#cb8-17"></a>산들산들 부는 바람에</span>
+<span id="cb8-18"><a href="#cb8-18"></a>눈부신 햇살 아래</span>
+<span id="cb8-19"><a href="#cb8-19"></a>은은한 꽃 향기에 취하노라</span></code></pre></div><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="tip5.-하지-말-것x-할-것o" class="level3" data-number="1.3.5">
+<h3 data-number="1.3.5" class="anchored" data-anchor-id="tip5.-하지-말-것x-할-것o"><span class="header-section-number">1.3.5</span> Tip5. 하지 말 것(X) → 할 것(O)</h3>
+<ul>
+<li>부정 지시보다 긍정적 행동 지시가 안정적 구체적인 내용을 단문 형식으로 제공함과 언어모델에게 추측을 해야 하는 여지를 주면 안된다.</li>
+</ul>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb9-1"><a href="#cb9-1"></a>- 나쁜 예</span>
+<span id="cb9-2"><a href="#cb9-2"></a>다음은 에이전트와 고객의 대화이다.</span>
+<span id="cb9-3"><a href="#cb9-3"></a>고객에게 아이디와 비밀번호를 묻지</span>
+<span id="cb9-4"><a href="#cb9-4"></a>않는다. 반복하지 않는다.</span>
+<span id="cb9-5"><a href="#cb9-5"></a></span>
+<span id="cb9-6"><a href="#cb9-6"></a>- 좋은 예</span>
+<span id="cb9-7"><a href="#cb9-7"></a>다음은 에이전트와 고객과의 대화내용이다.</span>
+<span id="cb9-8"><a href="#cb9-8"></a>챗봇은 고객의 대화에서 드러난 문제를 진단하고 해결책을</span>
+<span id="cb9-9"><a href="#cb9-9"></a>제시해야 한다. 사용자 아이디와 비밀번호같은 개인정보를</span>
+<span id="cb9-10"><a href="#cb9-10"></a>묻지 않는 대신,</span>
+<span id="cb9-11"><a href="#cb9-11"></a>사용자가 www.samplewebsite.com/help/faq에서 관련</span>
+<span id="cb9-12"><a href="#cb9-12"></a>사항을 찾도록 안내해라.</span></code></pre></div><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+</section>
+<section id="프롬프트-제작에-100-절대적인-것은-없다." class="level2" data-number="1.4">
+<h2 data-number="1.4" class="anchored" data-anchor-id="프롬프트-제작에-100-절대적인-것은-없다."><span class="header-section-number">1.4</span> 프롬프트 제작에 100% 절대적인 것은 없다.</h2>
+<ul>
+<li>절대 나와서는 안되는 조건을 적용하기</li>
+<li>되도록 LLM 이 추론을 할 수 없게 구체적으로 주기</li>
+<li>긍정문을 쓰되 절대 나와서 안되는 문구들은 2중 부정을 사용</li>
+</ul>
+</section>
+</section>
+<section id="llm의-한계와-프롬프트-엔지니어링-필요성" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> LLM의 한계와 프롬프트 엔지니어링 필요성</h1>
+<section id="llm-한계" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="llm-한계"><span class="header-section-number">2.1</span> LLM 한계</h2>
+<ul>
+<li>할루시네이션</li>
+<li>편향성</li>
+<li>근거 없는 출처 생성</li>
+<li>수학 및 추론 한계</li>
+<li>Prompt Injection(프롬프트 해킹)</li>
+</ul>
+</section>
+<section id="프롬프트-엔지니어링이-필요한-이유" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="프롬프트-엔지니어링이-필요한-이유"><span class="header-section-number">2.2</span> 프롬프트 엔지니어링이 필요한 이유</h2>
+<ul>
+<li>정확성 향상</li>
+<li>오류 및 편향 감소</li>
+<li>모델 행동 제어</li>
+<li>사용자 경험 개선</li>
+<li>비용 절감</li>
+</ul>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script type="text/javascript">
+
+// replace cmd keyboard shortcut w/ control on non-Mac platforms
+const kPlatformMac = typeof navigator !== 'undefined' ? /Mac/.test(navigator.platform) : false;
+if (!kPlatformMac) {
+   var kbds = document.querySelectorAll("kbd")
+   kbds.forEach(function(kbd) {
+      kbd.innerHTML = kbd.innerHTML.replace(/⌘/g, '⌃');
+   });
+}
+
+// tweak headings in pymd
+document.querySelectorAll(".pymd span.co").forEach(el => {
+   if (!el.innerText.startsWith("#|")) {
+      el.style.fontWeight = 1000;
+   }
+});
+
+</script>
+<!-- Begin Mailchimp Signup Form -->
+<div id="mc_embed_signup" style="padding-bottom: 1em; max-width: 400px;" class="ms-auto me-auto">
+  <p style="font-weight: 600; margin-bottom: 0;">Subscribe</p>
+  <span style="font-size: 0.9em;">Enjoy this blog? Get notified of new posts by email:</span>
+<form action="https://quarto.us14.list-manage.com/subscribe/post?u=c79fb56a311ae347fbe916740&amp;id=ec05dfca03" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate="">
+    <div id="mc_embed_signup_scroll">
+	
+        <div class="input-group mt-1 mb-2">
+        <input type="email" class="form-control" placeholder="Email Address" aria-label="Email Address" name="EMAIL" style="font-size: 0.8em; padding: .2em;">
+        </div>              
+
+	<div id="mce-responses" class="clear foot">
+		<div class="response" id="mce-error-response" style="display:none"></div>
+		<div class="response" id="mce-success-response" style="display:none"></div>
+	</div>    <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+    <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_c79fb56a311ae347fbe916740_ec05dfca03" tabindex="-1" value=""></div>
+        <div class="optionalParent">
+            <div class="clear foot" style="display: flex; align-items: center; justify-content: center;">
+              
+              
+                <input type="submit" value="Subscribe" name="subscribe" style="min-width: 150px; font-size: 0.8em;" id="mc-embedded-subscribe" class="button btn btn-light btn-sm ms-auto me-auto">
+            </div>
+        </div>
+    </div>
+</form>
+</div>
+
+<!--End mc_embed_signup-->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "복사완료!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "복사완료!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/dlwns0719\.github\.io\/my_blog");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<input type="hidden" id="giscus-base-theme" value="light">
+<input type="hidden" id="giscus-alt-theme" value="dark">
+<script>
+  function loadGiscus() {
+    // Function to get the theme based on body class
+    const getTheme = () => {
+      let baseTheme = document.getElementById('giscus-base-theme').value;
+      let altTheme = document.getElementById('giscus-alt-theme').value;
+      if (authorPrefersDark) {
+          [baseTheme, altTheme] = [altTheme, baseTheme];
+      }
+      return document.body.classList.contains('quarto-dark') ? altTheme : baseTheme;
+    };
+    const script = document.createElement("script");
+    script.src = "https://giscus.app/client.js";
+    script.async = true;
+    script.dataset.repo = "kmink3225/blog";
+    script.dataset.repoId = "R_kgDOLCZyDg";
+    script.dataset.category = "Blog";
+    script.dataset.categoryId = "";
+    script.dataset.mapping = "title";
+    script.dataset.reactionsEnabled = "1";
+    script.dataset.emitMetadata = "0";
+    script.dataset.inputPosition = "top";
+    script.dataset.theme = getTheme();
+    script.dataset.lang = "en";
+    script.crossOrigin = "anonymous";
+    // Append the script to the desired div instead of at the end of the body
+    document.getElementById("quarto-content").appendChild(script);
+  }
+  loadGiscus();
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Junhyun Lee</p>
+</div>   
+    <div class="nav-footer-center">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item">
+    <a class="nav-link" href="../../../../../about.html">
+<p>About</p>
+</a>
+  </li>  
+</ul>
+    </div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/dlwns0719/my_blog">
+      <i class="bi bi-github" role="img">
+</i> 
+    </a>
+  </li>  
+</ul>
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>
