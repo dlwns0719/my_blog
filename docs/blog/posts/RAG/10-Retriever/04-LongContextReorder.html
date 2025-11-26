@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Part 1 — 프롬프트 구조와 기능 탐구 – Junhyun Lee</title>
+<title>긴 문맥 재정렬(LongContextReorder) – Junhyun Lee</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -167,9 +167,11 @@ background: #EDF3F9;
 
 
 <link rel="stylesheet" href="../../../../../styles.css">
-<meta property="og:title" content="Part 1 — 프롬프트 구조와 기능 탐구 – Junhyun Lee">
+<meta property="og:title" content="긴 문맥 재정렬(LongContextReorder) – Junhyun Lee">
+<meta property="og:description" content="blog">
 <meta property="og:site_name" content="Junhyun Lee">
-<meta name="twitter:title" content="Part 1 — 프롬프트 구조와 기능 탐구 – Junhyun Lee">
+<meta name="twitter:title" content="긴 문맥 재정렬(LongContextReorder) – Junhyun Lee">
+<meta name="twitter:description" content="blog">
 <meta name="twitter:card" content="summary">
 </head>
 
@@ -392,13 +394,8 @@ background: #EDF3F9;
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Part 1 — 프롬프트 구조와 기능 탐구</h1>
-                                <div class="quarto-categories">
-                <div class="quarto-category">AI</div>
-                <div class="quarto-category">LangChain</div>
-                <div class="quarto-category">Prompt_Engineering</div>
-              </div>
-                  </div>
+      <h1 class="title">긴 문맥 재정렬(LongContextReorder)</h1>
+                      </div>
   </div>
     
   
@@ -418,57 +415,7 @@ background: #EDF3F9;
     <h2 id="toc-title">목차</h2>
    
   <ul>
-  <li><a href="#프롬프트-기초" id="toc-프롬프트-기초" class="nav-link active" data-scroll-target="#프롬프트-기초"><span class="header-section-number">1</span> 1. 프롬프트 기초</a>
-  <ul class="collapse">
-  <li><a href="#인간-컴퓨터-상호작용의-변화" id="toc-인간-컴퓨터-상호작용의-변화" class="nav-link" data-scroll-target="#인간-컴퓨터-상호작용의-변화"><span class="header-section-number">1.1</span> 1.1 인간-컴퓨터 상호작용의 변화</a></li>
-  <li><a href="#프롬프트의-정의" id="toc-프롬프트의-정의" class="nav-link" data-scroll-target="#프롬프트의-정의"><span class="header-section-number">1.2</span> 1.2 프롬프트의 정의</a></li>
-  <li><a href="#프롬프트-vs-프롬프트-엔지니어링" id="toc-프롬프트-vs-프롬프트-엔지니어링" class="nav-link" data-scroll-target="#프롬프트-vs-프롬프트-엔지니어링"><span class="header-section-number">1.3</span> 1.3 프롬프트 vs 프롬프트 엔지니어링</a></li>
-  </ul></li>
-  <li><a href="#대형-언어-모델llm-이해" id="toc-대형-언어-모델llm-이해" class="nav-link" data-scroll-target="#대형-언어-모델llm-이해"><span class="header-section-number">2</span> 2. 대형 언어 모델(LLM) 이해</a>
-  <ul class="collapse">
-  <li><a href="#개념" id="toc-개념" class="nav-link" data-scroll-target="#개념"><span class="header-section-number">2.1</span> 2.1 개념</a></li>
-  <li><a href="#주요-모델-패밀리" id="toc-주요-모델-패밀리" class="nav-link" data-scroll-target="#주요-모델-패밀리"><span class="header-section-number">2.2</span> 2.2 주요 모델 패밀리</a></li>
-  <li><a href="#모델-튜닝-방식" id="toc-모델-튜닝-방식" class="nav-link" data-scroll-target="#모델-튜닝-방식"><span class="header-section-number">2.3</span> 2.3 모델 튜닝 방식</a></li>
-  </ul></li>
-  <li><a href="#프롬프트-기본-요소" id="toc-프롬프트-기본-요소" class="nav-link" data-scroll-target="#프롬프트-기본-요소"><span class="header-section-number">3</span> 3. 프롬프트 기본 요소</a>
-  <ul class="collapse">
-  <li><a href="#필수-4요소" id="toc-필수-4요소" class="nav-link" data-scroll-target="#필수-4요소"><span class="header-section-number">3.1</span> 3.1 필수 4요소</a></li>
-  <li><a href="#프롬프트-타입-구조type-ad" id="toc-프롬프트-타입-구조type-ad" class="nav-link" data-scroll-target="#프롬프트-타입-구조type-ad"><span class="header-section-number">3.2</span> 3.2 프롬프트 타입 구조(Type A–D)</a></li>
-  </ul></li>
-  <li><a href="#프롬프트-설계-원칙" id="toc-프롬프트-설계-원칙" class="nav-link" data-scroll-target="#프롬프트-설계-원칙"><span class="header-section-number">4</span> 4. 프롬프트 설계 원칙</a>
-  <ul class="collapse">
-  <li><a href="#대-원칙" id="toc-대-원칙" class="nav-link" data-scroll-target="#대-원칙"><span class="header-section-number">4.1</span> 4.1 4대 원칙</a></li>
-  <li><a href="#scaffolding-prompting" id="toc-scaffolding-prompting" class="nav-link" data-scroll-target="#scaffolding-prompting"><span class="header-section-number">4.2</span> 4.2 Scaffolding Prompting</a></li>
-  <li><a href="#핵심-5-tips" id="toc-핵심-5-tips" class="nav-link" data-scroll-target="#핵심-5-tips"><span class="header-section-number">4.3</span> 4.3 핵심 5 Tips</a>
-  <ul class="collapse">
-  <li><a href="#tip1.-최신-모델-사용" id="toc-tip1.-최신-모델-사용" class="nav-link" data-scroll-target="#tip1.-최신-모델-사용"><span class="header-section-number">4.3.1</span> Tip1. 최신 모델 사용</a></li>
-  <li><a href="#tip2.-명확한-동사로-지시" id="toc-tip2.-명확한-동사로-지시" class="nav-link" data-scroll-target="#tip2.-명확한-동사로-지시"><span class="header-section-number">4.3.2</span> Tip2. 명확한 동사로 지시</a></li>
-  <li><a href="#tip-3.-프롬프트를-구조화하자" id="toc-tip-3.-프롬프트를-구조화하자" class="nav-link" data-scroll-target="#tip-3.-프롬프트를-구조화하자"><span class="header-section-number">4.3.3</span> Tip 3. 프롬프트를 구조화하자</a></li>
-  </ul></li>
-  <li><a href="#markdown-구조화-headers-lists-emphasis" id="toc-markdown-구조화-headers-lists-emphasis" class="nav-link" data-scroll-target="#markdown-구조화-headers-lists-emphasis"><span class="header-section-number">4.4</span> 3.1 Markdown 구조화 (Headers, Lists, Emphasis)</a>
-  <ul class="collapse">
-  <li><a href="#헤더headers-활용" id="toc-헤더headers-활용" class="nav-link" data-scroll-target="#헤더headers-활용"><span class="header-section-number">4.4.1</span> 1) 헤더(Headers) 활용</a></li>
-  <li><a href="#목록lists-활용" id="toc-목록lists-활용" class="nav-link" data-scroll-target="#목록lists-활용"><span class="header-section-number">4.4.2</span> 2) 목록(Lists) 활용</a></li>
-  <li><a href="#강조emphasis-사용" id="toc-강조emphasis-사용" class="nav-link" data-scroll-target="#강조emphasis-사용"><span class="header-section-number">4.4.3</span> 3) 강조(Emphasis) 사용</a></li>
-  </ul></li>
-  <li><a href="#코드-프롬프트code-prompting" id="toc-코드-프롬프트code-prompting" class="nav-link" data-scroll-target="#코드-프롬프트code-prompting"><span class="header-section-number">4.5</span> 3.2 코드 프롬프트(Code Prompting)</a></li>
-  <li><a href="#xml-태그-기반-구조화-claude-최적화" id="toc-xml-태그-기반-구조화-claude-최적화" class="nav-link" data-scroll-target="#xml-태그-기반-구조화-claude-최적화"><span class="header-section-number">4.6</span> 3.3 XML 태그 기반 구조화 (Claude 최적화)</a>
-  <ul class="collapse">
-  <li><a href="#태그로-영역-지정" id="toc-태그로-영역-지정" class="nav-link" data-scroll-target="#태그로-영역-지정"><span class="header-section-number">4.6.1</span> 1) 태그로 영역 지정</a></li>
-  <li><a href="#데이터-템플릿-예시" id="toc-데이터-템플릿-예시" class="nav-link" data-scroll-target="#데이터-템플릿-예시"><span class="header-section-number">4.6.2</span> 2) 데이터 템플릿 예시</a></li>
-  </ul></li>
-  <li><a href="#구조화-기법이-필요한-이유" id="toc-구조화-기법이-필요한-이유" class="nav-link" data-scroll-target="#구조화-기법이-필요한-이유"><span class="header-section-number">4.7</span> 3.4 구조화 기법이 필요한 이유</a></li>
-  <li><a href="#구조화-적용-사례-장소명-추출" id="toc-구조화-적용-사례-장소명-추출" class="nav-link" data-scroll-target="#구조화-적용-사례-장소명-추출"><span class="header-section-number">4.8</span> 3.5 구조화 적용 사례 (장소명 추출)</a>
-  <ul class="collapse">
-  <li><a href="#tip4.-단문-중심" id="toc-tip4.-단문-중심" class="nav-link" data-scroll-target="#tip4.-단문-중심"><span class="header-section-number">4.8.1</span> Tip4. 단문 중심</a></li>
-  <li><a href="#tip5.-하지-말-것x-할-것o" id="toc-tip5.-하지-말-것x-할-것o" class="nav-link" data-scroll-target="#tip5.-하지-말-것x-할-것o"><span class="header-section-number">4.8.2</span> Tip5. 하지 말 것(X) → 할 것(O)</a></li>
-  </ul></li>
-  </ul></li>
-  <li><a href="#llm의-한계와-프롬프트-엔지니어링-필요성" id="toc-llm의-한계와-프롬프트-엔지니어링-필요성" class="nav-link" data-scroll-target="#llm의-한계와-프롬프트-엔지니어링-필요성"><span class="header-section-number">5</span> 5. LLM의 한계와 프롬프트 엔지니어링 필요성</a>
-  <ul class="collapse">
-  <li><a href="#llm-한계" id="toc-llm-한계" class="nav-link" data-scroll-target="#llm-한계"><span class="header-section-number">5.1</span> 5.1 LLM 한계</a></li>
-  <li><a href="#프롬프트-엔지니어링이-필요한-이유" id="toc-프롬프트-엔지니어링이-필요한-이유" class="nav-link" data-scroll-target="#프롬프트-엔지니어링이-필요한-이유"><span class="header-section-number">5.2</span> 5.2 프롬프트 엔지니어링이 필요한 이유</a></li>
-  </ul></li>
+  <li><a href="#context-reordering을-사용하여-질의-응답-체인-생성" id="toc-context-reordering을-사용하여-질의-응답-체인-생성" class="nav-link active" data-scroll-target="#context-reordering을-사용하여-질의-응답-체인-생성"><span class="header-section-number">1</span> Context Reordering을 사용하여 질의-응답 체인 생성</a></li>
   </ul>
 </nav>
     </div>
@@ -480,297 +427,203 @@ background: #EDF3F9;
 
 
 
-<section id="프롬프트-기초" class="level1" data-number="1">
-<h1 data-number="1"><span class="header-section-number">1</span> 1. 프롬프트 기초</h1>
-<section id="인간-컴퓨터-상호작용의-변화" class="level2" data-number="1.1">
-<h2 data-number="1.1" class="anchored" data-anchor-id="인간-컴퓨터-상호작용의-변화"><span class="header-section-number">1.1</span> 1.1 인간-컴퓨터 상호작용의 변화</h2>
+<p>모델의 아키텍처와 상관없이, 10개 이상의 검색된 문서를 포함할 경우 성능이 상당히 저하됩니다.</p>
+<p>간단히 말해, 모델이 긴 컨텍스트 중간에 있는 관련 정보에 접근해야 할 때, 제공된 문서를 무시하는 경향이 있습니다.</p>
+<p>자세한 내용은 다음 논문을 참조하세요</p>
 <ul>
-<li>문자의 발명 → 인류의 기록 정확도 향상</li>
-<li>인쇄술 → 지식 대중화</li>
-<li>전화·라디오·TV → 즉각적인 원격 소통</li>
-<li>인터넷·모바일 → 실시간 대화</li>
-<li>생성형 AI → 인간-기계 상호작용 고도화</li>
+<li>https://arxiv.org/abs/2307.03172</li>
 </ul>
-</section>
-<section id="프롬프트의-정의" class="level2" data-number="1.2">
-<h2 data-number="1.2" class="anchored" data-anchor-id="프롬프트의-정의"><span class="header-section-number">1.2</span> 1.2 프롬프트의 정의</h2>
+<p>이 문제를 피하기 위해, 검색 후 문서의 순서를 재배열하여 성능 저하를 방지할 수 있습니다.</p>
 <ul>
-<li><em>Promptus</em>(나타내다/생산하다)에서 유래</li>
-<li>현재 의미: <strong>행동을 유도하는 신호</strong></li>
-<li>AI에서: <strong>모델에게 답변을 생성하도록 입력하는 문장</strong></li>
+<li><code>Chroma</code> 벡터 저장소를 사용하여 텍스트 데이터를 저장하고 검색할 수 있는 <code>retriever</code>를 생성합니다.</li>
+<li><code>retriever</code>의 <code>invoke</code> 메서드를 사용하여 주어진 쿼리에 대해 관련성이 높은 문서를 검색합니다.</li>
 </ul>
-</section>
-<section id="프롬프트-vs-프롬프트-엔지니어링" class="level2" data-number="1.3">
-<h2 data-number="1.3" class="anchored" data-anchor-id="프롬프트-vs-프롬프트-엔지니어링"><span class="header-section-number">1.3</span> 1.3 프롬프트 vs 프롬프트 엔지니어링</h2>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 5%">
-<col style="width: 25%">
-<col style="width: 68%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>항목</th>
-<th>프롬프트</th>
-<th>프롬프트 엔지니어링</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>목적</td>
-<td>응답 생성 요청</td>
-<td>원하는 형태로 정확한 응답을 얻기 위한 설계</td>
-</tr>
-<tr class="even">
-<td>필요성</td>
-<td>기본 입력</td>
-<td>모델 작동 방식·언어적 맥락 이해 필요</td>
-</tr>
-<tr class="odd">
-<td>예시</td>
-<td>“용에 대한 이야기 해줘”</td>
-<td>“용감한 용이 마을을 구하는 5문장 이야기 생성해줘. 대화 포함.”</td>
-</tr>
-</tbody>
-</table>
-</section>
-</section>
-<section id="대형-언어-모델llm-이해" class="level1" data-number="2">
-<h1 data-number="2"><span class="header-section-number">2</span> 2. 대형 언어 모델(LLM) 이해</h1>
-<section id="개념" class="level2" data-number="2.1">
-<h2 data-number="2.1" class="anchored" data-anchor-id="개념"><span class="header-section-number">2.1</span> 2.1 개념</h2>
-<ul>
-<li>방대한 데이터 기반 사전학습 모델</li>
-<li><strong>Autoregression</strong>: 이전 토큰 기반으로 다음 단어 예측</li>
-<li>기반 기술: <strong>Transformer 구조(셀프 어텐션)</strong></li>
-</ul>
-</section>
-<section id="주요-모델-패밀리" class="level2" data-number="2.2">
-<h2 data-number="2.2" class="anchored" data-anchor-id="주요-모델-패밀리"><span class="header-section-number">2.2</span> 2.2 주요 모델 패밀리</h2>
-<ul>
-<li><strong>OpenAI – GPT-4o</strong>: 멀티모달·실시간 처리</li>
-<li><strong>Anthropic – Claude 3</strong>: 안전성 중점, 헌법적 AI</li>
-<li><strong>Google – Gemini / BERT / T5</strong>: 다중 모달 처리</li>
-</ul>
-</section>
-<section id="모델-튜닝-방식" class="level2" data-number="2.3">
-<h2 data-number="2.3" class="anchored" data-anchor-id="모델-튜닝-방식"><span class="header-section-number">2.3</span> 2.3 모델 튜닝 방식</h2>
-<ul>
-<li>Fine-Tuning</li>
-<li>Prompt Engineering</li>
-<li>Feature-Tuning(특징 공간 해석 기반 제어)</li>
-</ul>
-</section>
-</section>
-<section id="프롬프트-기본-요소" class="level1" data-number="3">
-<h1 data-number="3"><span class="header-section-number">3</span> 3. 프롬프트 기본 요소</h1>
-<section id="필수-4요소" class="level2" data-number="3.1">
-<h2 data-number="3.1" class="anchored" data-anchor-id="필수-4요소"><span class="header-section-number">3.1</span> 3.1 필수 4요소</h2>
-<ol type="1">
-<li><strong>Instruction</strong>: 어떤 작업을 해야 하는가</li>
-<li><strong>Context</strong>: 배경 정보</li>
-<li><strong>Input Data</strong>: 처리 대상 데이터</li>
-<li><strong>Output Indicator</strong>: 출력 형식 규정</li>
-</ol>
-</section>
-<section id="프롬프트-타입-구조type-ad" class="level2" data-number="3.2">
-<h2 data-number="3.2" class="anchored" data-anchor-id="프롬프트-타입-구조type-ad"><span class="header-section-number">3.2</span> 3.2 프롬프트 타입 구조(Type A–D)</h2>
-<ul>
-<li><strong>A: 지시문 + 출력문</strong></li>
-<li><strong>B: 지시문 + 맥락 + 출력문</strong></li>
-<li><strong>C: 지시문 + 맥락 + 예시 + 출력문</strong></li>
-<li><strong>D: 지시문 + 입력값 + 출력문</strong></li>
-</ul>
-<p>예시와 함께 구조적으로 프롬프트를 설계하면 LLM이 더 안정적으로 원하는 출력 생성.</p>
-</section>
-</section>
-<section id="프롬프트-설계-원칙" class="level1" data-number="4">
-<h1 data-number="4"><span class="header-section-number">4</span> 4. 프롬프트 설계 원칙</h1>
-<section id="대-원칙" class="level2" data-number="4.1">
-<h2 data-number="4.1" class="anchored" data-anchor-id="대-원칙"><span class="header-section-number">4.1</span> 4.1 4대 원칙</h2>
-<ol type="1">
-<li><strong>범용성</strong>: 다양한 상황에서도 동작</li>
-<li><strong>목적 지향성</strong>: 특정 사용자 목적 반영</li>
-<li><strong>일관성</strong>: 반복 실행해도 동일 품질</li>
-<li><strong>경제성</strong>: API 비용 절감</li>
-</ol>
-</section>
-<section id="scaffolding-prompting" class="level2" data-number="4.2">
-<h2 data-number="4.2" class="anchored" data-anchor-id="scaffolding-prompting"><span class="header-section-number">4.2</span> 4.2 Scaffolding Prompting</h2>
-<ul>
-<li>인간의 학습 이론(ZPD)을 적용</li>
-<li>Understand → Ideation → Analysis → Apply → Evaluate → Generalize</li>
-<li>단계적 사고구조 유도</li>
-</ul>
-</section>
-<section id="핵심-5-tips" class="level2" data-number="4.3">
-<h2 data-number="4.3" class="anchored" data-anchor-id="핵심-5-tips"><span class="header-section-number">4.3</span> 4.3 핵심 5 Tips</h2>
-<section id="tip1.-최신-모델-사용" class="level3" data-number="4.3.1">
-<h3 data-number="4.3.1" class="anchored" data-anchor-id="tip1.-최신-모델-사용"><span class="header-section-number">4.3.1</span> Tip1. 최신 모델 사용</h3>
-</section>
-<section id="tip2.-명확한-동사로-지시" class="level3" data-number="4.3.2">
-<h3 data-number="4.3.2" class="anchored" data-anchor-id="tip2.-명확한-동사로-지시"><span class="header-section-number">4.3.2</span> Tip2. 명확한 동사로 지시</h3>
-<p>예: 분석해, 정리해, 요약해, 작성해 등</p>
-</section>
-<section id="tip-3.-프롬프트를-구조화하자" class="level3" data-number="4.3.3">
-<h3 data-number="4.3.3" class="anchored" data-anchor-id="tip-3.-프롬프트를-구조화하자"><span class="header-section-number">4.3.3</span> Tip 3. 프롬프트를 구조화하자</h3>
-<p>프롬프트를 구조화하면 LLM이 입력을 더 명확하게 해석할 수 있고,<br>
-작업 목적·규칙·입력 데이터·출력 형식을 혼동 없이 처리할 수 있다.<br>
-구조화를 위한 핵심 기법은 <strong>Markdown</strong>, <strong>코드 프롬프트</strong>, <strong>XML 태그</strong>이다.</p>
-</section>
-</section>
-<section id="markdown-구조화-headers-lists-emphasis" class="level2" data-number="4.4">
-<h2 data-number="4.4" class="anchored" data-anchor-id="markdown-구조화-headers-lists-emphasis"><span class="header-section-number">4.4</span> 3.1 Markdown 구조화 (Headers, Lists, Emphasis)</h2>
-<p>Markdown은 LLM이 가장 잘 해석하는 구조적 문법 중 하나이다.<br>
-섹션을 명확히 나누고, 각 부분을 시각적으로 구분해줌으로써<br>
-모델의 오류를 줄이고 반복 작업 시 유지보수성이 높아진다.</p>
-<section id="헤더headers-활용" class="level3" data-number="4.4.1">
-<h3 data-number="4.4.1" class="anchored" data-anchor-id="헤더headers-활용"><span class="header-section-number">4.4.1</span> 1) 헤더(Headers) 활용</h3>
-<p>헤더는 프롬프트의 구성을 크게 나누는 데 사용한다.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode numberSource markdown number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu"># 역할(Role)</span></span>
-<span id="cb1-2"><a href="#cb1-2"></a>너는 스포츠 기사 분석 엔진이다.</span>
+<div id="1a914221" class="cell">
+<details class="code-fold">
+<summary>코드</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a><span class="co"># API 키를 환경변수로 관리하기 위한 설정 파일</span></span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="im">from</span> dotenv <span class="im">import</span> load_dotenv</span>
 <span id="cb1-3"><a href="#cb1-3"></a></span>
-<span id="cb1-4"><a href="#cb1-4"></a><span class="fu">## 작업(Task)</span></span>
-<span id="cb1-5"><a href="#cb1-5"></a>아래 텍스트에서 장소(도시, 국가, 축구 클럽)를 모두 추출해라.</span>
-<span id="cb1-6"><a href="#cb1-6"></a></span>
-<span id="cb1-7"><a href="#cb1-7"></a><span class="fu">## 출력 형식(Format)</span></span>
-<span id="cb1-8"><a href="#cb1-8"></a><span class="ss">- </span>"장소: A, B, C" 형태의 한 줄 출력</span>
-<span id="cb1-9"><a href="#cb1-9"></a><span class="ss">- </span>설명 금지</span>
-<span id="cb1-10"><a href="#cb1-10"></a></span>
-<span id="cb1-11"><a href="#cb1-11"></a><span class="fu">## 텍스트(Text)</span></span>
-<span id="cb1-12"><a href="#cb1-12"></a>{{TEXT}}</span></code></pre></div><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></div>
-</section>
-<section id="목록lists-활용" class="level3" data-number="4.4.2">
-<h3 data-number="4.4.2" class="anchored" data-anchor-id="목록lists-활용"><span class="header-section-number">4.4.2</span> 2) 목록(Lists) 활용</h3>
-<p>절차, 규칙, 조건을 번호 목록으로 정리하면 LLM이 하나씩 적용하기 쉽다.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode numberSource markdown number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb2-1"><a href="#cb2-1"></a>다음 규칙을 따라 작업을 수행해라.</span>
-<span id="cb2-2"><a href="#cb2-2"></a><span class="ss">1. </span>사람 이름은 제외한다.</span>
-<span id="cb2-3"><a href="#cb2-3"></a><span class="ss">2. </span>축구 클럽은 장소로 포함한다.</span>
-<span id="cb2-4"><a href="#cb2-4"></a><span class="ss">3. </span>결과는 쉼표로 구분한다.</span>
-<span id="cb2-5"><a href="#cb2-5"></a><span class="ss">4. </span>설명 문장은 쓰지 않는다.</span></code></pre></div><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></div>
-</section>
-<section id="강조emphasis-사용" class="level3" data-number="4.4.3">
-<h3 data-number="4.4.3" class="anchored" data-anchor-id="강조emphasis-사용"><span class="header-section-number">4.4.3</span> 3) 강조(Emphasis) 사용</h3>
-<p>중요 조건을 굵게 또는 기울임으로 표시해 모델의 우선순위를 높인다.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode numberSource markdown number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb3-1"><a href="#cb3-1"></a><span class="ss">- </span>반드시 **한국어**로 작성하라.</span>
-<span id="cb3-2"><a href="#cb3-2"></a><span class="ss">- </span>출력은 **한 줄**로만 작성한다.</span>
-<span id="cb3-3"><a href="#cb3-3"></a><span class="ss">- </span>*설명 문장은 포함하지 않는다.*</span></code></pre></div><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></div>
-</section>
-</section>
-<section id="코드-프롬프트code-prompting" class="level2" data-number="4.5">
-<h2 data-number="4.5" class="anchored" data-anchor-id="코드-프롬프트code-prompting"><span class="header-section-number">4.5</span> 3.2 코드 프롬프트(Code Prompting)</h2>
-<p>자연어 대신 <strong>코드 형식</strong>으로 의도를 명세하면 애매함이 줄어들고 LLM이 구조적으로 이해해 할루시네이션이 감소한다.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1"></a><span class="co"># 역할 정의</span></span>
-<span id="cb4-2"><a href="#cb4-2"></a>role <span class="op">=</span> <span class="st">"정보 추출 엔진"</span></span>
-<span id="cb4-3"><a href="#cb4-3"></a></span>
-<span id="cb4-4"><a href="#cb4-4"></a><span class="co"># 작업 정의</span></span>
-<span id="cb4-5"><a href="#cb4-5"></a>task <span class="op">=</span> <span class="st">"텍스트에서 '장소명'을 추출해 정렬된 리스트로 반환"</span></span>
-<span id="cb4-6"><a href="#cb4-6"></a></span>
-<span id="cb4-7"><a href="#cb4-7"></a><span class="co"># 출력 형식 정의</span></span>
-<span id="cb4-8"><a href="#cb4-8"></a>output <span class="op">=</span> {</span>
-<span id="cb4-9"><a href="#cb4-9"></a>    <span class="st">"places"</span>: [<span class="st">"string"</span>]</span>
-<span id="cb4-10"><a href="#cb4-10"></a>}</span></code></pre></div><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></div>
-<p>코드 방식의 장점:</p>
+<span id="cb1-4"><a href="#cb1-4"></a><span class="co"># API 키 정보 로드</span></span>
+<span id="cb1-5"><a href="#cb1-5"></a>load_dotenv()</span></code></pre></div><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<div id="0d337cfb" class="cell">
+<details class="code-fold">
+<summary>코드</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1"></a><span class="co"># LangSmith 추적을 설정합니다. https://smith.langchain.com</span></span>
+<span id="cb2-2"><a href="#cb2-2"></a><span class="co"># !pip install langchain-teddynote</span></span>
+<span id="cb2-3"><a href="#cb2-3"></a><span class="im">from</span> langchain_teddynote <span class="im">import</span> logging</span>
+<span id="cb2-4"><a href="#cb2-4"></a></span>
+<span id="cb2-5"><a href="#cb2-5"></a><span class="co"># 프로젝트 이름을 입력합니다.</span></span>
+<span id="cb2-6"><a href="#cb2-6"></a>logging.langsmith(<span class="st">"CH10-Retriever"</span>)</span></code></pre></div><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<div id="089f999e" class="cell">
+<details class="code-fold">
+<summary>코드</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1"></a><span class="im">from</span> langchain_core.prompts <span class="im">import</span> PromptTemplate</span>
+<span id="cb3-2"><a href="#cb3-2"></a><span class="im">from</span> langchain_community.document_transformers <span class="im">import</span> LongContextReorder</span>
+<span id="cb3-3"><a href="#cb3-3"></a><span class="im">from</span> langchain_community.vectorstores <span class="im">import</span> Chroma</span>
+<span id="cb3-4"><a href="#cb3-4"></a><span class="im">from</span> langchain_openai <span class="im">import</span> OpenAIEmbeddings</span>
+<span id="cb3-5"><a href="#cb3-5"></a></span>
+<span id="cb3-6"><a href="#cb3-6"></a></span>
+<span id="cb3-7"><a href="#cb3-7"></a><span class="co"># 임베딩을 가져옵니다.</span></span>
+<span id="cb3-8"><a href="#cb3-8"></a>embeddings <span class="op">=</span> OpenAIEmbeddings(model<span class="op">=</span><span class="st">"text-embedding-3-small"</span>)</span>
+<span id="cb3-9"><a href="#cb3-9"></a></span>
+<span id="cb3-10"><a href="#cb3-10"></a>texts <span class="op">=</span> [</span>
+<span id="cb3-11"><a href="#cb3-11"></a>    <span class="st">"이건 그냥 내가 아무렇게나 적어본 글입니다."</span>,</span>
+<span id="cb3-12"><a href="#cb3-12"></a>    <span class="st">"사용자와 대화하는 것처럼 설계된 AI인 ChatGPT는 다양한 질문에 답할 수 있습니다."</span>,</span>
+<span id="cb3-13"><a href="#cb3-13"></a>    <span class="st">"아이폰, 아이패드, 맥북 등은 애플이 출시한 대표적인 제품들입니다."</span>,</span>
+<span id="cb3-14"><a href="#cb3-14"></a>    <span class="st">"챗GPT는 OpenAI에 의해 개발되었으며, 지속적으로 개선되고 있습니다."</span>,</span>
+<span id="cb3-15"><a href="#cb3-15"></a>    <span class="st">"챗지피티는 사용자의 질문을 이해하고 적절한 답변을 생성하기 위해 대량의 데이터를 학습했습니다."</span>,</span>
+<span id="cb3-16"><a href="#cb3-16"></a>    <span class="st">"애플 워치와 에어팟 같은 웨어러블 기기도 애플의 인기 제품군에 속합니다."</span>,</span>
+<span id="cb3-17"><a href="#cb3-17"></a>    <span class="st">"ChatGPT는 복잡한 문제를 해결하거나 창의적인 아이디어를 제안하는 데에도 사용될 수 있습니다."</span>,</span>
+<span id="cb3-18"><a href="#cb3-18"></a>    <span class="st">"비트코인은 디지털 금이라고도 불리며, 가치 저장 수단으로서 인기를 얻고 있습니다."</span>,</span>
+<span id="cb3-19"><a href="#cb3-19"></a>    <span class="st">"ChatGPT의 기능은 지속적인 학습과 업데이트를 통해 더욱 발전하고 있습니다."</span>,</span>
+<span id="cb3-20"><a href="#cb3-20"></a>    <span class="st">"FIFA 월드컵은 네 번째 해마다 열리며, 국제 축구에서 가장 큰 행사입니다."</span>,</span>
+<span id="cb3-21"><a href="#cb3-21"></a>]</span>
+<span id="cb3-22"><a href="#cb3-22"></a></span>
+<span id="cb3-23"><a href="#cb3-23"></a></span>
+<span id="cb3-24"><a href="#cb3-24"></a><span class="co"># 검색기를 생성합니다. (K는 10으로 설정합니다)</span></span>
+<span id="cb3-25"><a href="#cb3-25"></a>retriever <span class="op">=</span> Chroma.from_texts(texts, embedding<span class="op">=</span>embeddings).as_retriever(</span>
+<span id="cb3-26"><a href="#cb3-26"></a>    search_kwargs<span class="op">=</span>{<span class="st">"k"</span>: <span class="dv">10</span>}</span>
+<span id="cb3-27"><a href="#cb3-27"></a>)</span></code></pre></div><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<p>검색기에 쿼리를 입력하여 검색을 수행합니다.</p>
+<div id="2871aeaf" class="cell">
+<details class="code-fold">
+<summary>코드</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1"></a>query <span class="op">=</span> <span class="st">"ChatGPT에 대해 무엇을 말해줄 수 있나요?"</span></span>
+<span id="cb4-2"><a href="#cb4-2"></a></span>
+<span id="cb4-3"><a href="#cb4-3"></a><span class="co"># 관련성 점수에 따라 정렬된 관련 문서를 가져옵니다.</span></span>
+<span id="cb4-4"><a href="#cb4-4"></a>docs <span class="op">=</span> retriever.invoke(query)</span>
+<span id="cb4-5"><a href="#cb4-5"></a>docs</span></code></pre></div><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<p><code>LongContextReorder</code> 클래스의 인스턴스인 <code>reordering</code>을 생성합니다.</p>
 <ul>
-<li>논리 구조가 명확하게 표현됨</li>
-<li>조건과 출력 형식이 혼동되지 않음</li>
-<li>정형화된 포맷을 자주 재사용 가능</li>
-</ul>
-</section>
-<section id="xml-태그-기반-구조화-claude-최적화" class="level2" data-number="4.6">
-<h2 data-number="4.6" class="anchored" data-anchor-id="xml-태그-기반-구조화-claude-최적화"><span class="header-section-number">4.6</span> 3.3 XML 태그 기반 구조화 (Claude 최적화)</h2>
-<p>XML 태그는 텍스트 내 특정 영역을 명확히 구분해 Claude뿐 아니라 대부분의 LLM에서 <strong>구조적 파싱</strong>을 돕는 강력한 방식이다.</p>
-<section id="태그로-영역-지정" class="level3" data-number="4.6.1">
-<h3 data-number="4.6.1" class="anchored" data-anchor-id="태그로-영역-지정"><span class="header-section-number">4.6.1</span> 1) 태그로 영역 지정</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb5-1"><a href="#cb5-1"></a>&lt;email&gt;</span>
-<span id="cb5-2"><a href="#cb5-2"></a>Show up at 6AM because I say so.</span>
-<span id="cb5-3"><a href="#cb5-3"></a>&lt;/email&gt;</span>
-<span id="cb5-4"><a href="#cb5-4"></a></span>
-<span id="cb5-5"><a href="#cb5-5"></a>Make this email more polite.</span></code></pre></div><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></div>
-<p>LLM은 <code>&lt;email&gt;...&lt;/email&gt;</code> 내부 텍스트만 변환하면 된다는 것을 명확히 인식한다.</p>
-</section>
-<section id="데이터-템플릿-예시" class="level3" data-number="4.6.2">
-<h3 data-number="4.6.2" class="anchored" data-anchor-id="데이터-템플릿-예시"><span class="header-section-number">4.6.2</span> 2) 데이터 템플릿 예시</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb6-1"><a href="#cb6-1"></a>&lt;animal&gt;{{ANIMAL}}&lt;/animal&gt;</span></code></pre></div><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></div>
-<p>입력만 바꿔 여러 데이터를 동일한 템플릿에 적용할 수 있다.</p>
-<p>예:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb7-1"><a href="#cb7-1"></a>&lt;animal&gt;Cow&lt;/animal&gt;</span>
-<span id="cb7-2"><a href="#cb7-2"></a>&lt;animal&gt;Dog&lt;/animal&gt;</span>
-<span id="cb7-3"><a href="#cb7-3"></a>&lt;animal&gt;Seal&lt;/animal&gt;</span></code></pre></div><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></div>
-<p>장점:</p>
+<li><code>reordering.transform_documents(docs)</code>를 호출하여 문서 목록 <code>docs</code>를 재정렬합니다.
 <ul>
-<li>구역별 의미가 명확</li>
-<li>반복 작업에서 수정이 쉽고 안정적</li>
-<li>모델이 태그 단위로 파싱하기 때문에 오류 감소</li>
+<li>덜 관련된 문서는 목록의 중간에 위치하고, 더 관련된 문서는 시작과 끝에 위치하도록 재정렬됩니다.</li>
+</ul></li>
 </ul>
-</section>
-</section>
-<section id="구조화-기법이-필요한-이유" class="level2" data-number="4.7">
-<h2 data-number="4.7" class="anchored" data-anchor-id="구조화-기법이-필요한-이유"><span class="header-section-number">4.7</span> 3.4 구조화 기법이 필요한 이유</h2>
+<div id="ae93a9a1" class="cell">
+<details class="code-fold">
+<summary>코드</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1"></a><span class="co"># 문서를 재정렬합니다</span></span>
+<span id="cb5-2"><a href="#cb5-2"></a><span class="co"># 덜 관련된 문서는 목록의 중간에 위치하고 더 관련된 요소는 시작/끝에 위치합니다.</span></span>
+<span id="cb5-3"><a href="#cb5-3"></a>reordering <span class="op">=</span> LongContextReorder()</span>
+<span id="cb5-4"><a href="#cb5-4"></a>reordered_docs <span class="op">=</span> reordering.transform_documents(docs)</span>
+<span id="cb5-5"><a href="#cb5-5"></a></span>
+<span id="cb5-6"><a href="#cb5-6"></a><span class="co"># 4개의 관련 문서가 시작과 끝에 위치하는지 확인합니다.</span></span>
+<span id="cb5-7"><a href="#cb5-7"></a>reordered_docs</span></code></pre></div><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<section id="context-reordering을-사용하여-질의-응답-체인-생성" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="context-reordering을-사용하여-질의-응답-체인-생성"><span class="header-section-number">1</span> Context Reordering을 사용하여 질의-응답 체인 생성</h2>
+<div id="1f2ea0a4" class="cell">
+<details class="code-fold">
+<summary>코드</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1"></a><span class="kw">def</span> format_docs(docs):</span>
+<span id="cb6-2"><a href="#cb6-2"></a>    <span class="cf">return</span> <span class="st">"</span><span class="ch">\n</span><span class="st">"</span>.join([doc.page_content <span class="cf">for</span> i, doc <span class="kw">in</span> <span class="bu">enumerate</span>(docs)])</span></code></pre></div><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<div id="4a645502" class="cell">
+<details class="code-fold">
+<summary>코드</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1"></a><span class="bu">print</span>(format_docs(docs))</span></code></pre></div><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<div id="2c9b07e1" class="cell">
+<details class="code-fold">
+<summary>코드</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1"></a><span class="kw">def</span> format_docs(docs):</span>
+<span id="cb8-2"><a href="#cb8-2"></a>    <span class="cf">return</span> <span class="st">"</span><span class="ch">\n</span><span class="st">"</span>.join(</span>
+<span id="cb8-3"><a href="#cb8-3"></a>        [</span>
+<span id="cb8-4"><a href="#cb8-4"></a>            <span class="ss">f"[</span><span class="sc">{</span>i<span class="sc">}</span><span class="ss">] </span><span class="sc">{</span>doc<span class="sc">.</span>page_content<span class="sc">}</span><span class="ss"> [source: teddylee777@gmail.com]"</span></span>
+<span id="cb8-5"><a href="#cb8-5"></a>            <span class="cf">for</span> i, doc <span class="kw">in</span> <span class="bu">enumerate</span>(docs)</span>
+<span id="cb8-6"><a href="#cb8-6"></a>        ]</span>
+<span id="cb8-7"><a href="#cb8-7"></a>    )</span>
+<span id="cb8-8"><a href="#cb8-8"></a></span>
+<span id="cb8-9"><a href="#cb8-9"></a></span>
+<span id="cb8-10"><a href="#cb8-10"></a><span class="kw">def</span> reorder_documents(docs):</span>
+<span id="cb8-11"><a href="#cb8-11"></a>    <span class="co"># 재정렬</span></span>
+<span id="cb8-12"><a href="#cb8-12"></a>    reordering <span class="op">=</span> LongContextReorder()</span>
+<span id="cb8-13"><a href="#cb8-13"></a>    reordered_docs <span class="op">=</span> reordering.transform_documents(docs)</span>
+<span id="cb8-14"><a href="#cb8-14"></a>    combined <span class="op">=</span> format_docs(reordered_docs)</span>
+<span id="cb8-15"><a href="#cb8-15"></a>    <span class="bu">print</span>(combined)</span>
+<span id="cb8-16"><a href="#cb8-16"></a>    <span class="cf">return</span> combined</span></code></pre></div><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<p>재정렬된 문서를 출력합니다.</p>
+<div id="a193bc14" class="cell">
+<details class="code-fold">
+<summary>코드</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1"></a><span class="co"># 재정렬된 문서를 출력</span></span>
+<span id="cb9-2"><a href="#cb9-2"></a>_ <span class="op">=</span> reorder_documents(docs)</span></code></pre></div><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<div id="703afe03" class="cell">
+<details class="code-fold">
+<summary>코드</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1"></a><span class="im">from</span> langchain.prompts <span class="im">import</span> ChatPromptTemplate</span>
+<span id="cb10-2"><a href="#cb10-2"></a><span class="im">from</span> operator <span class="im">import</span> itemgetter</span>
+<span id="cb10-3"><a href="#cb10-3"></a><span class="im">from</span> langchain_openai <span class="im">import</span> ChatOpenAI</span>
+<span id="cb10-4"><a href="#cb10-4"></a><span class="im">from</span> langchain_core.output_parsers <span class="im">import</span> StrOutputParser</span>
+<span id="cb10-5"><a href="#cb10-5"></a><span class="im">from</span> langchain_core.runnables <span class="im">import</span> RunnableLambda</span>
+<span id="cb10-6"><a href="#cb10-6"></a></span>
+<span id="cb10-7"><a href="#cb10-7"></a><span class="co"># 프롬프트 템플릿</span></span>
+<span id="cb10-8"><a href="#cb10-8"></a>template <span class="op">=</span> <span class="st">"""Given this text extracts:</span></span>
+<span id="cb10-9"><a href="#cb10-9"></a><span class="sc">{context}</span></span>
+<span id="cb10-10"><a href="#cb10-10"></a></span>
+<span id="cb10-11"><a href="#cb10-11"></a><span class="st">-----</span></span>
+<span id="cb10-12"><a href="#cb10-12"></a><span class="st">Please answer the following question:</span></span>
+<span id="cb10-13"><a href="#cb10-13"></a><span class="sc">{question}</span></span>
+<span id="cb10-14"><a href="#cb10-14"></a></span>
+<span id="cb10-15"><a href="#cb10-15"></a><span class="st">Answer in the following languages: </span><span class="sc">{language}</span></span>
+<span id="cb10-16"><a href="#cb10-16"></a><span class="st">"""</span></span>
+<span id="cb10-17"><a href="#cb10-17"></a></span>
+<span id="cb10-18"><a href="#cb10-18"></a><span class="co"># 프롬프트 정의</span></span>
+<span id="cb10-19"><a href="#cb10-19"></a>prompt <span class="op">=</span> ChatPromptTemplate.from_template(template)</span>
+<span id="cb10-20"><a href="#cb10-20"></a></span>
+<span id="cb10-21"><a href="#cb10-21"></a><span class="co"># Chain 정의</span></span>
+<span id="cb10-22"><a href="#cb10-22"></a>chain <span class="op">=</span> (</span>
+<span id="cb10-23"><a href="#cb10-23"></a>    {</span>
+<span id="cb10-24"><a href="#cb10-24"></a>        <span class="st">"context"</span>: itemgetter(<span class="st">"question"</span>)</span>
+<span id="cb10-25"><a href="#cb10-25"></a>        <span class="op">|</span> retriever</span>
+<span id="cb10-26"><a href="#cb10-26"></a>        <span class="op">|</span> RunnableLambda(reorder_documents),  <span class="co"># 질문을 기반으로 문맥을 검색합니다.</span></span>
+<span id="cb10-27"><a href="#cb10-27"></a>        <span class="st">"question"</span>: itemgetter(<span class="st">"question"</span>),  <span class="co"># 질문을 추출합니다.</span></span>
+<span id="cb10-28"><a href="#cb10-28"></a>        <span class="st">"language"</span>: itemgetter(<span class="st">"language"</span>),  <span class="co"># 답변 언어를 추출합니다.</span></span>
+<span id="cb10-29"><a href="#cb10-29"></a>    }</span>
+<span id="cb10-30"><a href="#cb10-30"></a>    <span class="op">|</span> prompt  <span class="co"># 프롬프트 템플릿에 값을 전달합니다.</span></span>
+<span id="cb10-31"><a href="#cb10-31"></a>    <span class="op">|</span> ChatOpenAI(model<span class="op">=</span><span class="st">"gpt-4o-mini"</span>)  <span class="co"># 언어 모델에 프롬프트를 전달합니다.</span></span>
+<span id="cb10-32"><a href="#cb10-32"></a>    <span class="op">|</span> StrOutputParser()  <span class="co"># 모델의 출력을 문자열로 파싱합니다.</span></span>
+<span id="cb10-33"><a href="#cb10-33"></a>)</span></code></pre></div><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<p><code>question</code> 에 쿼리를 입력하고 <code>language</code> 에 언어를 입력합니다.</p>
 <ul>
-<li>명령어, 입력 데이터, 출력 형식을 명확히 구분해 <strong>모델의 해석 오류를 줄인다.</strong></li>
-<li>규칙을 시각적으로 구분하여 <strong>작업 수행 품질의 일관성과 재현성을 높인다.</strong></li>
-<li>재사용 가능한 템플릿이 되어 <strong>프롬프트 제작 비용과 시간 절감에 기여한다.</strong></li>
+<li>재정렬된 문서의 검색 결과도 확인합니다.</li>
 </ul>
-</section>
-<section id="구조화-적용-사례-장소명-추출" class="level2" data-number="4.8">
-<h2 data-number="4.8" class="anchored" data-anchor-id="구조화-적용-사례-장소명-추출"><span class="header-section-number">4.8</span> 3.5 구조화 적용 사례 (장소명 추출)</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode numberSource markdown number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb8-1"><a href="#cb8-1"></a><span class="fu"># 역할(Role)</span></span>
-<span id="cb8-2"><a href="#cb8-2"></a>너는 텍스트에서 장소명을 추출하는 엔진이다.</span>
-<span id="cb8-3"><a href="#cb8-3"></a></span>
-<span id="cb8-4"><a href="#cb8-4"></a><span class="fu">## 작업(Task)</span></span>
-<span id="cb8-5"><a href="#cb8-5"></a>텍스트 내 도시, 국가, 축구 클럽 이름을 모두 "장소"로 간주하고 추출해라.</span>
-<span id="cb8-6"><a href="#cb8-6"></a></span>
-<span id="cb8-7"><a href="#cb8-7"></a><span class="fu">## 출력 형식(Format)</span></span>
-<span id="cb8-8"><a href="#cb8-8"></a><span class="ss">- </span>한 줄로만 출력한다.</span>
-<span id="cb8-9"><a href="#cb8-9"></a><span class="ss">- </span>형식: <span class="in">`장소: A, B, C`</span></span>
-<span id="cb8-10"><a href="#cb8-10"></a><span class="ss">- </span>설명 문장 금지.</span>
-<span id="cb8-11"><a href="#cb8-11"></a></span>
-<span id="cb8-12"><a href="#cb8-12"></a><span class="fu">## 텍스트(Text)</span></span>
-<span id="cb8-13"><a href="#cb8-13"></a>음바페는 26일 쿠프 드 프랑스 프랑스컵 올랭피크 리옹과의</span>
-<span id="cb8-14"><a href="#cb8-14"></a>결승전에서 풀타임을 뛰며 2-1로 팀 승리를 도왔다.</span>
-<span id="cb8-15"><a href="#cb8-15"></a>3년 만에 대회 정상에 오른 PSG는 역대 최다 15회 우승으로</span>
-<span id="cb8-16"><a href="#cb8-16"></a>2위 마르세유(10회)를 멀찍이 따돌렸다.</span>
-<span id="cb8-17"><a href="#cb8-17"></a>음바페는 이날 PSG에서의 커리어를 마무리했다.</span></code></pre></div><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></div>
-<section id="tip4.-단문-중심" class="level3" data-number="4.8.1">
-<h3 data-number="4.8.1" class="anchored" data-anchor-id="tip4.-단문-중심"><span class="header-section-number">4.8.1</span> Tip4. 단문 중심</h3>
-<ul>
-<li>한국어는 짧고 명확하게 작성</li>
-<li>톤·형식·분량을 구체적으로 지시</li>
-</ul>
-</section>
-<section id="tip5.-하지-말-것x-할-것o" class="level3" data-number="4.8.2">
-<h3 data-number="4.8.2" class="anchored" data-anchor-id="tip5.-하지-말-것x-할-것o"><span class="header-section-number">4.8.2</span> Tip5. 하지 말 것(X) → 할 것(O)</h3>
-<ul>
-<li>부정 지시보다 긍정적 행동 지시가 안정적</li>
-</ul>
-</section>
-</section>
-</section>
-<section id="llm의-한계와-프롬프트-엔지니어링-필요성" class="level1" data-number="5">
-<h1 data-number="5"><span class="header-section-number">5</span> 5. LLM의 한계와 프롬프트 엔지니어링 필요성</h1>
-<section id="llm-한계" class="level2" data-number="5.1">
-<h2 data-number="5.1" class="anchored" data-anchor-id="llm-한계"><span class="header-section-number">5.1</span> 5.1 LLM 한계</h2>
-<ul>
-<li>할루시네이션</li>
-<li>편향성</li>
-<li>근거 없는 출처 생성</li>
-<li>수학 및 추론 한계</li>
-<li>Prompt Injection(프롬프트 해킹)</li>
-</ul>
-</section>
-<section id="프롬프트-엔지니어링이-필요한-이유" class="level2" data-number="5.2">
-<h2 data-number="5.2" class="anchored" data-anchor-id="프롬프트-엔지니어링이-필요한-이유"><span class="header-section-number">5.2</span> 5.2 프롬프트 엔지니어링이 필요한 이유</h2>
-<ul>
-<li>정확성 향상</li>
-<li>오류 및 편향 감소</li>
-<li>모델 행동 제어</li>
-<li>사용자 경험 개선</li>
-<li>비용 절감</li>
-</ul>
+<div id="9249067c" class="cell">
+<details class="code-fold">
+<summary>코드</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1"></a>answer <span class="op">=</span> chain.invoke(</span>
+<span id="cb11-2"><a href="#cb11-2"></a>    {<span class="st">"question"</span>: <span class="st">"ChatGPT에 대해 무엇을 말해줄 수 있나요?"</span>, <span class="st">"language"</span>: <span class="st">"KOREAN"</span>}</span>
+<span id="cb11-3"><a href="#cb11-3"></a>)</span></code></pre></div><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<p>답변을 출력합니다.</p>
+<div id="2ef4b288" class="cell">
+<details class="code-fold">
+<summary>코드</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1"></a><span class="bu">print</span>(answer)</span></code></pre></div><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->

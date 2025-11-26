@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Part 1 — 프롬프트 구조와 기능 탐구 – Junhyun Lee</title>
+<title>Parent Document Retriever – Junhyun Lee</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -167,9 +167,11 @@ background: #EDF3F9;
 
 
 <link rel="stylesheet" href="../../../../../styles.css">
-<meta property="og:title" content="Part 2 — 프롬프트 구조와 기능 탐구 – Junhyun Lee">
+<meta property="og:title" content="Parent Document Retriever – Junhyun Lee">
+<meta property="og:description" content="blog">
 <meta property="og:site_name" content="Junhyun Lee">
-<meta name="twitter:title" content="Part 2 — 프롬프트 구조와 기능 탐구 – Junhyun Lee">
+<meta name="twitter:title" content="Parent Document Retriever – Junhyun Lee">
+<meta name="twitter:description" content="blog">
 <meta name="twitter:card" content="summary">
 </head>
 
@@ -392,13 +394,8 @@ background: #EDF3F9;
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Part 1 — 프롬프트 구조와 기능 탐구</h1>
-                                <div class="quarto-categories">
-                <div class="quarto-category">AI</div>
-                <div class="quarto-category">LangChain</div>
-                <div class="quarto-category">Prompt_Engineering</div>
-              </div>
-                  </div>
+      <h1 class="title">Parent Document Retriever</h1>
+                      </div>
   </div>
     
   
@@ -418,25 +415,8 @@ background: #EDF3F9;
     <h2 id="toc-title">목차</h2>
    
   <ul>
-  <li><a href="#프롬프트-설계-원칙" id="toc-프롬프트-설계-원칙" class="nav-link active" data-scroll-target="#프롬프트-설계-원칙"><span class="header-section-number">1</span> 프롬프트 설계 원칙</a>
-  <ul class="collapse">
-  <li><a href="#대-원칙" id="toc-대-원칙" class="nav-link" data-scroll-target="#대-원칙"><span class="header-section-number">1.1</span> 4대 원칙</a></li>
-  <li><a href="#scaffolding-prompting" id="toc-scaffolding-prompting" class="nav-link" data-scroll-target="#scaffolding-prompting"><span class="header-section-number">1.2</span> Scaffolding Prompting</a></li>
-  <li><a href="#핵심-5-tips" id="toc-핵심-5-tips" class="nav-link" data-scroll-target="#핵심-5-tips"><span class="header-section-number">1.3</span> 핵심 5 Tips</a>
-  <ul class="collapse">
-  <li><a href="#tip1.-최신-모델-사용" id="toc-tip1.-최신-모델-사용" class="nav-link" data-scroll-target="#tip1.-최신-모델-사용"><span class="header-section-number">1.3.1</span> Tip1. 최신 모델 사용</a></li>
-  <li><a href="#tip2.-명확한-동사로-지시" id="toc-tip2.-명확한-동사로-지시" class="nav-link" data-scroll-target="#tip2.-명확한-동사로-지시"><span class="header-section-number">1.3.2</span> Tip2. 명확한 동사로 지시</a></li>
-  <li><a href="#tip3.-프롬프트를-구조화하자" id="toc-tip3.-프롬프트를-구조화하자" class="nav-link" data-scroll-target="#tip3.-프롬프트를-구조화하자"><span class="header-section-number">1.3.3</span> Tip3. 프롬프트를 구조화하자</a></li>
-  <li><a href="#tip4.-단문-중심의-간결한-문장을-쓰자." id="toc-tip4.-단문-중심의-간결한-문장을-쓰자." class="nav-link" data-scroll-target="#tip4.-단문-중심의-간결한-문장을-쓰자."><span class="header-section-number">1.3.4</span> Tip4. 단문 중심의 간결한 문장을 쓰자.</a></li>
-  <li><a href="#tip5.-하지-말-것x-할-것o" id="toc-tip5.-하지-말-것x-할-것o" class="nav-link" data-scroll-target="#tip5.-하지-말-것x-할-것o"><span class="header-section-number">1.3.5</span> Tip5. 하지 말 것(X) → 할 것(O)</a></li>
-  </ul></li>
-  <li><a href="#프롬프트-제작에-100-절대적인-것은-없다." id="toc-프롬프트-제작에-100-절대적인-것은-없다." class="nav-link" data-scroll-target="#프롬프트-제작에-100-절대적인-것은-없다."><span class="header-section-number">1.4</span> 프롬프트 제작에 100% 절대적인 것은 없다.</a></li>
-  </ul></li>
-  <li><a href="#llm의-한계와-프롬프트-엔지니어링-필요성" id="toc-llm의-한계와-프롬프트-엔지니어링-필요성" class="nav-link" data-scroll-target="#llm의-한계와-프롬프트-엔지니어링-필요성"><span class="header-section-number">2</span> LLM의 한계와 프롬프트 엔지니어링 필요성</a>
-  <ul class="collapse">
-  <li><a href="#llm-한계" id="toc-llm-한계" class="nav-link" data-scroll-target="#llm-한계"><span class="header-section-number">2.1</span> LLM 한계</a></li>
-  <li><a href="#프롬프트-엔지니어링이-필요한-이유" id="toc-프롬프트-엔지니어링이-필요한-이유" class="nav-link" data-scroll-target="#프롬프트-엔지니어링이-필요한-이유"><span class="header-section-number">2.2</span> 프롬프트 엔지니어링이 필요한 이유</a></li>
-  </ul></li>
+  <li><a href="#전체-문서-검색" id="toc-전체-문서-검색" class="nav-link active" data-scroll-target="#전체-문서-검색"><span class="header-section-number">1</span> 전체 문서 검색</a></li>
+  <li><a href="#더-큰-chunk-의-크기를-조절" id="toc-더-큰-chunk-의-크기를-조절" class="nav-link" data-scroll-target="#더-큰-chunk-의-크기를-조절"><span class="header-section-number">2</span> 더 큰 Chunk 의 크기를 조절</a></li>
   </ul>
 </nav>
     </div>
@@ -448,220 +428,249 @@ background: #EDF3F9;
 
 
 
-<section id="프롬프트-설계-원칙" class="level1" data-number="1">
-<h1 data-number="1"><span class="header-section-number">1</span> 프롬프트 설계 원칙</h1>
-<section id="대-원칙" class="level2" data-number="1.1">
-<h2 data-number="1.1" class="anchored" data-anchor-id="대-원칙"><span class="header-section-number">1.1</span> 4대 원칙</h2>
+<p><strong>문서 검색과 문서 분할의 균형 잡기</strong></p>
+<p>문서 검색 과정에서 문서를 적절한 크기의 조각(청크)으로 나누는 것은 다음의 <strong>상충되는 두 가지 중요한 요소를 고려</strong>해야 합니다.</p>
 <ol type="1">
-<li><strong>범용성</strong>: 다양한 상황에서도 동작, 불특정 다수의 사용자 대상 다양한 상황과 과제에 적용 가능한 프롬프트의 결과를 내야 한다.<br>
-</li>
-<li><strong>목적 지향성</strong>: 특정 사용자 목적에 세분화된 기능을 제공해야 한다.</li>
-<li><strong>일관성</strong>: 여러가지 LLM 모델을 사용하더라도, 생성 할 때마다 결과가 바뀌면 안된다. 어느정도 스펙트럼 안에서 일정한 결과 유지.</li>
-<li><strong>경제성</strong>: 단어, 토큰수 운영 비용 API 비용 절감</li>
+<li>작은 문서를 원하는 경우: 이렇게 하면 문서의 임베딩이 그 의미를 가장 정확하게 반영할 수 있습니다. 문서가 너무 길면 임베딩이 의미를 잃어버릴 수 있습니다.</li>
+<li>각 청크의 맥락이 유지되도록 충분히 긴 문서를 원하는 경우입니다.</li>
 </ol>
-</section>
-<section id="scaffolding-prompting" class="level2" data-number="1.2">
-<h2 data-number="1.2" class="anchored" data-anchor-id="scaffolding-prompting"><span class="header-section-number">1.2</span> Scaffolding Prompting</h2>
+<p><strong><code>ParentDocumentRetriever</code>의 역할</strong></p>
+<p>이 두 요구 사항 사이의 균형을 맞추기 위해 <code>ParentDocumentRetriever</code>라는 도구가 사용됩니다. 이 도구는 문서를 작은 조각으로 나누고, 이 조각들을 관리합니다. 검색을 진행할 때는, 먼저 이 작은 조각들을 찾아낸 다음, 이 조각들이 속한 원본 문서(또는 더 큰 조각)의 식별자(ID)를 통해 전체적인 맥락을 파악할 수 있습니다.</p>
+<p>여기서 ’부모 문서’란, 작은 조각이 나누어진 원본 문서를 말합니다. 이는 전체 문서일 수도 있고, 비교적 큰 다른 조각일 수도 있습니다. 이 방식을 통해 문서의 의미를 정확하게 파악하면서도, 전체적인 맥락을 유지할 수 있게 됩니다.</p>
+<p><strong>정리</strong></p>
 <ul>
-<li>비계식 설계</li>
-<li>인간의 학습 이론(ZPD)을 적용</li>
-<li>외국어를 학습하는 사람들의 학습 능력을 최대한 끌어올리려면, 최대한 쉬운 단계부터 어려운 단계까지 차츰차츰 비계식으로 올라가야 한다.</li>
-<li>단어 -&gt; 문장 -&gt; 문단 완성을 하는 단계별 학습 방식 사용</li>
-<li>프롬프트 설계를 할떄도 이 방식을 사용하면 정말 잘 설계를 할 수 있다.</li>
-<li>Understand → Ideation → Analysis → Apply → Evaluate → Generalize</li>
-<li>풀어야될 문제(요구사항)에 대한 이해</li>
-<li>문제에 대한 이해를 바탕으로 여러가지 프롬프트를 만드는 아이디에이션 진행.</li>
-<li>아이디에이션을 통해 구현된 프롬프트를 분석.</li>
-<li>실제로 도입, 적용, 평가</li>
-<li>일반화 할 수 있는 결과를 얻으면 배포 진행.</li>
-<li>단계적 사고구조 유도</li>
+<li><strong>문서 간의 계층 구조 활용</strong>: <code>ParentDocumentRetriever</code>는 문서 검색의 효율성을 높이기 위해 문서 간의 계층 구조를 활용합니다.</li>
+<li><strong>검색 성능 향상</strong>: 관련성 높은 문서를 빠르게 찾아내며, 주어진 질문에 대한 가장 적합한 답변을 제공하는 문서를 효과적으로 찾아낼 수 있습니다. 문서를 검색할 때 자주 발생하는 두 가지 상충되는 요구 사항이 있습니다:</li>
 </ul>
-</section>
-<section id="핵심-5-tips" class="level2" data-number="1.3">
-<h2 data-number="1.3" class="anchored" data-anchor-id="핵심-5-tips"><span class="header-section-number">1.3</span> 핵심 5 Tips</h2>
-<section id="tip1.-최신-모델-사용" class="level3" data-number="1.3.1">
-<h3 data-number="1.3.1" class="anchored" data-anchor-id="tip1.-최신-모델-사용"><span class="header-section-number">1.3.1</span> Tip1. 최신 모델 사용</h3>
-<ul>
-<li>최근까지 GPT 4/5</li>
-<li>최신모델을 사용하면 프롬프트가 조금 엉성해도 좋은 결과를 얻을 수 있다.</li>
-<li>그러나 GPT 3.5을 이용해 A 라는 기능을 4/5 만큼 끌어올릴 수 있다면, 이 방법이 좋은 방법이다.</li>
-</ul>
-</section>
-<section id="tip2.-명확한-동사로-지시" class="level3" data-number="1.3.2">
-<h3 data-number="1.3.2" class="anchored" data-anchor-id="tip2.-명확한-동사로-지시"><span class="header-section-number">1.3.2</span> Tip2. 명확한 동사로 지시</h3>
-<p>어떤 단어가 좀더 구체적, 또는 명확하게 표현이 되어있는지 확인 조금더 명확한 동작을 하는 단어가 있을 수 있다. 뭐를 나누다 라는 맥락이 없으면 뜻을 정확하게 이해하기가 어려운 언어이다. 예: 분석해, 정리해, 요약해, 작성해 등 –&gt; 정확하게 무엇을 하려고 하는지 맥락 없어도 이해 가능하다.</p>
-</section>
-<section id="tip3.-프롬프트를-구조화하자" class="level3" data-number="1.3.3">
-<h3 data-number="1.3.3" class="anchored" data-anchor-id="tip3.-프롬프트를-구조화하자"><span class="header-section-number">1.3.3</span> Tip3. 프롬프트를 구조화하자</h3>
-<p>구조화라 함은 어떻게 요소별로 나눈다던지 섹션별로 컴포지션을 나누어서, 언어모델이 읽기 편한 구조를 만든다. 대표적으로 2가지 방법(<strong>Markdown</strong>, <strong>코드 프롬프트</strong>)이 있다. 프롬프트를 구조화하면 LLM이 입력을 더 명확하게 해석할 수 있고,<br>
-작업 목적·규칙·입력 데이터·출력 형식을 혼동 없이 처리할 수 있다.<br>
-구조화를 위한 핵심 기법은 <strong>Markdown</strong>, <strong>코드 프롬프트</strong>, <strong>XML 태그</strong>이다.</p>
-<ol type="1">
-<li>Markdown 기호 사용하기 (Headers, Lists, Emphasis)</li>
-</ol>
-<p>Markdown은 LLM이 가장 잘 해석하는 구조적 문법 중 하나이다.<br>
-섹션을 명확히 나누고, 각 부분을 시각적으로 구분해줌으로써<br>
-모델의 오류를 줄이고 반복 작업 시 유지보수성이 높아진다.</p>
-<p>1.1 헤더(Headers) 활용 헤더는 프롬프트의 구성을 크게 나누는 데 사용한다. 샾 개수만큼 주 제목, 부제목, 소제목 등의 계층적 우선순위 인덱스를 부여할 수 있다.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode numberSource markdown number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu"># 역할(Role)</span></span>
-<span id="cb1-2"><a href="#cb1-2"></a>너는 스포츠 기사 분석 엔진이다.</span>
+<p>여러 개의 텍스트 파일을 로드하기 위해 <code>TextLoader</code> 객체를 생성하고 데이터를 로드합니다.</p>
+<div id="d14d13cd" class="cell">
+<details class="code-fold">
+<summary>코드</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a><span class="co"># API 키를 환경변수로 관리하기 위한 설정 파일</span></span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="im">from</span> dotenv <span class="im">import</span> load_dotenv</span>
 <span id="cb1-3"><a href="#cb1-3"></a></span>
-<span id="cb1-4"><a href="#cb1-4"></a><span class="fu">## 작업(Task)</span></span>
-<span id="cb1-5"><a href="#cb1-5"></a>아래 텍스트에서 장소(도시, 국가, 축구 클럽)를 모두 추출해라.</span>
-<span id="cb1-6"><a href="#cb1-6"></a></span>
-<span id="cb1-7"><a href="#cb1-7"></a><span class="fu">## 출력 형식(Format)</span></span>
-<span id="cb1-8"><a href="#cb1-8"></a><span class="ss">- </span>"장소: A, B, C" 형태의 한 줄 출력</span>
-<span id="cb1-9"><a href="#cb1-9"></a><span class="ss">- </span>설명 금지</span>
-<span id="cb1-10"><a href="#cb1-10"></a></span>
-<span id="cb1-11"><a href="#cb1-11"></a><span class="fu">## 텍스트(Text)</span></span>
-<span id="cb1-12"><a href="#cb1-12"></a>{{TEXT}}</span></code></pre></div><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></div>
-<p>1.2 목록(Lists) 활용 하이픈이나, 번호를 이용 –&gt; 수행할 순서가 있는 프롬프트에 사용한다. 절차, 규칙, 조건을 번호 목록으로 정리하면 LLM이 하나씩 적용하기 쉽다.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode numberSource markdown number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb2-1"><a href="#cb2-1"></a>다음 규칙을 따라 작업을 수행해라.</span>
-<span id="cb2-2"><a href="#cb2-2"></a><span class="ss">1. </span>사람 이름은 제외한다.</span>
-<span id="cb2-3"><a href="#cb2-3"></a><span class="ss">2. </span>축구 클럽은 장소로 포함한다.</span>
-<span id="cb2-4"><a href="#cb2-4"></a><span class="ss">3. </span>결과는 쉼표로 구분한다.</span>
-<span id="cb2-5"><a href="#cb2-5"></a><span class="ss">4. </span>설명 문장은 쓰지 않는다.</span></code></pre></div><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></div>
-<p>1.3 강조(Emphasis) 사용</p>
-<p>중요 조건을 굵게 또는 기울임으로 표시해 모델의 우선순위를 높인다. 실제로 이탤릭, 볼드체로 표현은 되지 않는다. 언어모델에게 일반 줄글의 텍스트가 아닌 다른 요소임을 강조.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode numberSource markdown number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb3-1"><a href="#cb3-1"></a><span class="ss">- </span>반드시 **한국어**로 작성하라.</span>
-<span id="cb3-2"><a href="#cb3-2"></a><span class="ss">- </span>출력은 **한 줄**로만 작성한다.</span>
-<span id="cb3-3"><a href="#cb3-3"></a><span class="ss">- </span>*설명 문장은 포함하지 않는다.*</span></code></pre></div><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></div>
-<ol start="2" type="1">
-<li>코드 프롬프트(Code Prompting)</li>
-</ol>
-<p>구조화를 좀더 구체적으로 하는 방식에 대해서 소개. AdaPlanner 논순 발췌, 구글의 리서처 분들이 많이 사용한다. 파이썬 언어를 사용해서 언어 모델이 정확히 수행 해야 하는 내용을 작성. 자연어 대신 <strong>코드 형식</strong>으로 의도를 명세하면 애매함이 줄어들고 LLM이 구조적으로 이해해 할루시네이션이 감소한다.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1"></a><span class="co"># 역할 정의</span></span>
-<span id="cb4-2"><a href="#cb4-2"></a>role <span class="op">=</span> <span class="st">"정보 추출 엔진"</span></span>
-<span id="cb4-3"><a href="#cb4-3"></a></span>
-<span id="cb4-4"><a href="#cb4-4"></a><span class="co"># 작업 정의</span></span>
-<span id="cb4-5"><a href="#cb4-5"></a>task <span class="op">=</span> <span class="st">"텍스트에서 '장소명'을 추출해 정렬된 리스트로 반환"</span></span>
-<span id="cb4-6"><a href="#cb4-6"></a></span>
-<span id="cb4-7"><a href="#cb4-7"></a><span class="co"># 출력 형식 정의</span></span>
-<span id="cb4-8"><a href="#cb4-8"></a>output <span class="op">=</span> {</span>
-<span id="cb4-9"><a href="#cb4-9"></a>    <span class="st">"places"</span>: [<span class="st">"string"</span>]</span>
-<span id="cb4-10"><a href="#cb4-10"></a>}</span></code></pre></div><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></div>
-<p>코드 방식의 장점:</p>
+<span id="cb1-4"><a href="#cb1-4"></a><span class="co"># API 키 정보 로드</span></span>
+<span id="cb1-5"><a href="#cb1-5"></a>load_dotenv()</span></code></pre></div><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<div id="514e4b90" class="cell">
+<details class="code-fold">
+<summary>코드</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1"></a><span class="co"># LangSmith 추적을 설정합니다. https://smith.langchain.com</span></span>
+<span id="cb2-2"><a href="#cb2-2"></a><span class="co"># !pip install langchain-teddynote</span></span>
+<span id="cb2-3"><a href="#cb2-3"></a><span class="im">from</span> langchain_teddynote <span class="im">import</span> logging</span>
+<span id="cb2-4"><a href="#cb2-4"></a></span>
+<span id="cb2-5"><a href="#cb2-5"></a><span class="co"># 프로젝트 이름을 입력합니다.</span></span>
+<span id="cb2-6"><a href="#cb2-6"></a>logging.langsmith(<span class="st">"CH10-Retriever"</span>)</span></code></pre></div><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<div id="9c12ba1e" class="cell">
+<details class="code-fold">
+<summary>코드</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1"></a><span class="im">from</span> langchain.storage <span class="im">import</span> InMemoryStore</span>
+<span id="cb3-2"><a href="#cb3-2"></a><span class="im">from</span> langchain_community.document_loaders <span class="im">import</span> TextLoader</span>
+<span id="cb3-3"><a href="#cb3-3"></a><span class="im">from</span> langchain_chroma <span class="im">import</span> Chroma</span>
+<span id="cb3-4"><a href="#cb3-4"></a><span class="im">from</span> langchain_openai <span class="im">import</span> OpenAIEmbeddings</span>
+<span id="cb3-5"><a href="#cb3-5"></a><span class="im">from</span> langchain_text_splitters <span class="im">import</span> RecursiveCharacterTextSplitter</span>
+<span id="cb3-6"><a href="#cb3-6"></a><span class="im">from</span> langchain.retrievers <span class="im">import</span> ParentDocumentRetriever</span></code></pre></div><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<div id="68f6a054" class="cell">
+<details class="code-fold">
+<summary>코드</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1"></a>loaders <span class="op">=</span> [</span>
+<span id="cb4-2"><a href="#cb4-2"></a>    <span class="co"># 파일을 로드합니다.</span></span>
+<span id="cb4-3"><a href="#cb4-3"></a>    TextLoader(<span class="st">"./data/appendix-keywords.txt"</span>),</span>
+<span id="cb4-4"><a href="#cb4-4"></a>]</span>
+<span id="cb4-5"><a href="#cb4-5"></a></span>
+<span id="cb4-6"><a href="#cb4-6"></a>docs <span class="op">=</span> []</span>
+<span id="cb4-7"><a href="#cb4-7"></a><span class="cf">for</span> loader <span class="kw">in</span> loaders:</span>
+<span id="cb4-8"><a href="#cb4-8"></a>    <span class="co"># 로더를 사용하여 문서를 로드하고 docs 리스트에 추가합니다.</span></span>
+<span id="cb4-9"><a href="#cb4-9"></a>    docs.extend(loader.load())</span></code></pre></div><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<section id="전체-문서-검색" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="전체-문서-검색"><span class="header-section-number">1</span> 전체 문서 검색</h2>
+<p>이 모드에서는 전체 문서를 검색하고자 합니다. 따라서 <code>child_splitter</code> 만 지정하도록 하겠습니다.</p>
 <ul>
-<li>논리 구조가 명확하게 표현됨</li>
-<li>조건과 출력 형식이 혼동되지 않음</li>
-<li>정형화된 포맷을 자주 재사용 가능</li>
+<li>나중에는 <code>parent_splitter</code> 도 지정하여 결과를 비교해 보겠습니다.</li>
 </ul>
-<ol start="3" type="1">
-<li>XML 태그 기반 구조화 (Claude 최적화)</li>
-</ol>
-<p>엔트로픽 프롬팅 쿡북 참조하면 나오는 내용. 문장 내 구역 나눔, 해당 구적을 강조하는 효과, 반복작업에서 프롬프트 수정과 편집/용이, 언어모델의 처리 속도 향상 XML 태그는 텍스트 내 특정 영역을 명확히 구분해 Claude뿐 아니라 대부분의 LLM에서 <strong>구조적 파싱</strong>을 돕는 강력한 방식이다.</p>
-<p>이 방식의 장점은 탬플릿이 가능하다.</p>
+<div id="812dfdfe" class="cell">
+<details class="code-fold">
+<summary>코드</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1"></a><span class="co"># 자식 분할기를 생성합니다.</span></span>
+<span id="cb5-2"><a href="#cb5-2"></a>child_splitter <span class="op">=</span> RecursiveCharacterTextSplitter(chunk_size<span class="op">=</span><span class="dv">200</span>)</span>
+<span id="cb5-3"><a href="#cb5-3"></a></span>
+<span id="cb5-4"><a href="#cb5-4"></a><span class="co"># DB를 생성합니다.</span></span>
+<span id="cb5-5"><a href="#cb5-5"></a>vectorstore <span class="op">=</span> Chroma(</span>
+<span id="cb5-6"><a href="#cb5-6"></a>    collection_name<span class="op">=</span><span class="st">"full_documents"</span>, embedding_function<span class="op">=</span>OpenAIEmbeddings()</span>
+<span id="cb5-7"><a href="#cb5-7"></a>)</span>
+<span id="cb5-8"><a href="#cb5-8"></a></span>
+<span id="cb5-9"><a href="#cb5-9"></a>store <span class="op">=</span> InMemoryStore()</span>
+<span id="cb5-10"><a href="#cb5-10"></a></span>
+<span id="cb5-11"><a href="#cb5-11"></a><span class="co"># Retriever 를 생성합니다.</span></span>
+<span id="cb5-12"><a href="#cb5-12"></a>retriever <span class="op">=</span> ParentDocumentRetriever(</span>
+<span id="cb5-13"><a href="#cb5-13"></a>    vectorstore<span class="op">=</span>vectorstore,</span>
+<span id="cb5-14"><a href="#cb5-14"></a>    docstore<span class="op">=</span>store,</span>
+<span id="cb5-15"><a href="#cb5-15"></a>    child_splitter<span class="op">=</span>child_splitter,</span>
+<span id="cb5-16"><a href="#cb5-16"></a>)</span></code></pre></div><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<p><code>retriever.add_documents(docs, ids=None)</code> 함수로 문서목록을 추가합니다.</p>
 <ul>
-<li>태그로 영역 지정</li>
+<li><code>ids</code> 가 <code>None</code> 이면 자동으로 생성됩니다.</li>
+<li><code>add_to_docstore=False</code> 로 설정시 document 를 중복으로 추가하지 않습니다. 단, 중복을 체크하기 위한 <code>ids</code> 값이 필수 값으로 요구됩니다.</li>
 </ul>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb5-1"><a href="#cb5-1"></a>&lt;email&gt;</span>
-<span id="cb5-2"><a href="#cb5-2"></a>Show up at 6AM because I say so.</span>
-<span id="cb5-3"><a href="#cb5-3"></a>&lt;/email&gt;</span>
-<span id="cb5-4"><a href="#cb5-4"></a></span>
-<span id="cb5-5"><a href="#cb5-5"></a>Make this email more polite.</span></code></pre></div><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></div>
-<p>LLM은 <code>&lt;email&gt;...&lt;/email&gt;</code> 내부 텍스트만 변환하면 된다는 것을 명확히 인식한다.</p>
+<div id="c737c91d" class="cell">
+<details class="code-fold">
+<summary>코드</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1"></a><span class="co"># 문서를 검색기에 추가합니다. docs는 문서 목록이고, ids는 문서의 고유 식별자 목록입니다.</span></span>
+<span id="cb6-2"><a href="#cb6-2"></a>retriever.add_documents(docs, ids<span class="op">=</span><span class="va">None</span>, add_to_docstore<span class="op">=</span><span class="va">True</span>)</span></code></pre></div><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<p>이 코드는 두 개의 키를 반환해야 합니다. 그 이유는 우리가 두 개의 문서를 추가했기 때문입니다.</p>
 <ul>
-<li>데이터 템플릿 예시</li>
+<li><code>store</code> 객체의 <code>yield_keys()</code> 메서드를 호출하여 반환된 키(key) 값들을 리스트로 변환합니다.</li>
 </ul>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb6-1"><a href="#cb6-1"></a>&lt;animal&gt;{{ANIMAL}}&lt;/animal&gt;</span></code></pre></div><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></div>
-<p>입력만 바꿔 여러 데이터를 동일한 템플릿에 적용할 수 있다.</p>
-<p>예:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb7-1"><a href="#cb7-1"></a>&lt;animal&gt;Cow&lt;/animal&gt;</span>
-<span id="cb7-2"><a href="#cb7-2"></a>&lt;animal&gt;Dog&lt;/animal&gt;</span>
-<span id="cb7-3"><a href="#cb7-3"></a>&lt;animal&gt;Seal&lt;/animal&gt;</span></code></pre></div><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></div>
-<p>장점:</p>
-<ul>
-<li>구역별 의미가 명확</li>
-<li>반복 작업에서 수정이 쉽고 안정적</li>
-<li>모델이 태그 단위로 파싱하기 때문에 오류 감소</li>
-</ul>
-<ol start="4" type="1">
-<li>구조화 기법이 필요한 이유</li>
-</ol>
-<ul>
-<li>명령어, 입력 데이터, 출력 형식을 명확히 구분해 <strong>모델의 해석 오류를 줄인다.</strong></li>
-<li>규칙을 시각적으로 구분하여 <strong>작업 수행 품질의 일관성과 재현성을 높인다.</strong></li>
-<li>재사용 가능한 템플릿이 되어 <strong>프롬프트 제작 비용과 시간 절감에 기여한다.</strong></li>
-</ul>
+<div id="6875b63a" class="cell">
+<details class="code-fold">
+<summary>코드</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1"></a><span class="co"># 저장소의 모든 키를 리스트로 반환합니다.</span></span>
+<span id="cb7-2"><a href="#cb7-2"></a><span class="bu">list</span>(store.yield_keys())</span></code></pre></div><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<p>이제 벡터 스토어 검색 기능을 호출해 보겠습니다.</p>
+<p>우리가 작은 청크(chunk)들을 저장하고 있기 때문에, 검색 결과로 작은 청크들이 반환되는 것을 확인할 수 있을 것입니다.</p>
+<p><code>vectorstore</code> 객체의 <code>similarity_search</code> 메서드를 사용하여 유사도 검색을 수행합니다.</p>
+<div id="d6ed9a29" class="cell">
+<details class="code-fold">
+<summary>코드</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1"></a><span class="co"># 유사도 검색을 수행합니다.</span></span>
+<span id="cb8-2"><a href="#cb8-2"></a>sub_docs <span class="op">=</span> vectorstore.similarity_search(<span class="st">"Word2Vec"</span>)</span></code></pre></div><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<p><code>sub_docs[0].page_content</code>를 출력합니다.</p>
+<div id="4db52fa3" class="cell">
+<details class="code-fold">
+<summary>코드</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1"></a><span class="co"># sub_docs 리스트의 첫 번째 요소의 page_content 속성을 출력합니다.</span></span>
+<span id="cb9-2"><a href="#cb9-2"></a><span class="bu">print</span>(sub_docs[<span class="dv">0</span>].page_content)</span></code></pre></div><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<p>이제 전체 retriever에서 검색해 보겠습니다. 이 과정에서는 작은 청크(chunk)들이 위치한 <strong>문서를 반환</strong> 하기 때문에 상대적으로 큰 문서들이 반환될 것입니다.</p>
+<p><code>retriever</code> 객체의 <code>invoke()</code> 메서드를 사용하여 쿼리와 관련된 문서를 검색합니다.</p>
+<div id="bd845482" class="cell">
+<details class="code-fold">
+<summary>코드</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1"></a><span class="co"># 문서를 검색하여 가져옵니다.</span></span>
+<span id="cb10-2"><a href="#cb10-2"></a>retrieved_docs <span class="op">=</span> retriever.invoke(<span class="st">"Word2Vec"</span>)</span></code></pre></div><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<p>검색된 문서(<code>retrieved_docs[0]</code>)의 일부 내용을 출력합니다.</p>
+<div id="531585d6" class="cell">
+<details class="code-fold">
+<summary>코드</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1"></a><span class="co"># 검색된 문서의 문서의 페이지 내용의 길이를 출력합니다.</span></span>
+<span id="cb11-2"><a href="#cb11-2"></a><span class="bu">print</span>(</span>
+<span id="cb11-3"><a href="#cb11-3"></a>    <span class="ss">f"문서의 길이: </span><span class="sc">{</span><span class="bu">len</span>(retrieved_docs[<span class="dv">0</span>].page_content)<span class="sc">}</span><span class="ss">"</span>,</span>
+<span id="cb11-4"><a href="#cb11-4"></a>    end<span class="op">=</span><span class="st">"</span><span class="ch">\n\n</span><span class="st">=====================</span><span class="ch">\n\n</span><span class="st">"</span>,</span>
+<span id="cb11-5"><a href="#cb11-5"></a>)</span>
+<span id="cb11-6"><a href="#cb11-6"></a></span>
+<span id="cb11-7"><a href="#cb11-7"></a><span class="co"># 문서의 일부를 출력합니다.</span></span>
+<span id="cb11-8"><a href="#cb11-8"></a><span class="bu">print</span>(retrieved_docs[<span class="dv">0</span>].page_content[<span class="dv">2000</span>:<span class="dv">2500</span>])</span></code></pre></div><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
 </section>
-<section id="tip4.-단문-중심의-간결한-문장을-쓰자." class="level3" data-number="1.3.4">
-<h3 data-number="1.3.4" class="anchored" data-anchor-id="tip4.-단문-중심의-간결한-문장을-쓰자."><span class="header-section-number">1.3.4</span> Tip4. 단문 중심의 간결한 문장을 쓰자.</h3>
+<section id="더-큰-chunk-의-크기를-조절" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="더-큰-chunk-의-크기를-조절"><span class="header-section-number">2</span> 더 큰 Chunk 의 크기를 조절</h2>
+<p>이전의 결과처럼 <strong>전체 문서가 너무 커서 있는 그대로 검색하기에는 부적합</strong> 할 수 있습니다.</p>
+<p>이런 경우, 실제로 우리가 하고 싶은 것은 먼저 원시 문서를 더 큰 청크로 분할한 다음, 더 작은 청크로 분할하는 것입니다.</p>
+<p>그런 다음 작은 청크들을 인덱싱하지만, 검색 시에는 더 큰 청크를 검색합니다 (그러나 여전히 전체 문서는 아닙니다).</p>
 <ul>
-<li>한국어는 짧고 명확하게 작성</li>
-<li>톤·형식·분량을 구체적으로 지시</li>
-</ul>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb8-1"><a href="#cb8-1"></a>- 나쁜 예</span>
-<span id="cb8-2"><a href="#cb8-2"></a>5월의 봄을 주제로 시를 써주고 짧게</span>
-<span id="cb8-3"><a href="#cb8-3"></a>작성해줘 봄의 느낌을 살려봐.</span>
-<span id="cb8-4"><a href="#cb8-4"></a>결과: 오월의 푸른 하늘 아래</span>
-<span id="cb8-5"><a href="#cb8-5"></a>새싹이 희망을 노래하네.</span>
-<span id="cb8-6"><a href="#cb8-6"></a>아침 이슬에 빛나는 꽃들,</span>
-<span id="cb8-7"><a href="#cb8-7"></a>봄바람 따라 춤추는 나비.</span>
-<span id="cb8-8"><a href="#cb8-8"></a>모든 거리는 축제가 되어.</span>
-<span id="cb8-9"><a href="#cb8-9"></a></span>
-<span id="cb8-10"><a href="#cb8-10"></a>- 좋은 예</span>
-<span id="cb8-11"><a href="#cb8-11"></a>너는 시인이야. 한국의 계절, 봄을 상상해봐.</span>
-<span id="cb8-12"><a href="#cb8-12"></a>5월이야. 다양한 꽃이 여기저기 폈어.</span>
-<span id="cb8-13"><a href="#cb8-13"></a>그 분위기에 어울리는 짧은 시를 5줄 이내로</span>
-<span id="cb8-14"><a href="#cb8-14"></a>작성해줘. 한글 고유의 멋이 시에 드러나면 좋겠어.</span>
-<span id="cb8-15"><a href="#cb8-15"></a>결과: 봄바람, 너른 들녘을 스치며</span>
-<span id="cb8-16"><a href="#cb8-16"></a>꽃잎들 춤추듯 흩날리네</span>
-<span id="cb8-17"><a href="#cb8-17"></a>산들산들 부는 바람에</span>
-<span id="cb8-18"><a href="#cb8-18"></a>눈부신 햇살 아래</span>
-<span id="cb8-19"><a href="#cb8-19"></a>은은한 꽃 향기에 취하노라</span></code></pre></div><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></div>
-</section>
-<section id="tip5.-하지-말-것x-할-것o" class="level3" data-number="1.3.5">
-<h3 data-number="1.3.5" class="anchored" data-anchor-id="tip5.-하지-말-것x-할-것o"><span class="header-section-number">1.3.5</span> Tip5. 하지 말 것(X) → 할 것(O)</h3>
+<li><code>RecursiveCharacterTextSplitter</code>를 사용하여 부모 문서와 자식 문서를 생성합니다.
 <ul>
-<li>부정 지시보다 긍정적 행동 지시가 안정적 구체적인 내용을 단문 형식으로 제공함과 언어모델에게 추측을 해야 하는 여지를 주면 안된다.</li>
+<li>부모 문서는 <code>chunk_size</code>가 1000으로 설정되어 있습니다.</li>
+<li>자식 문서는 <code>chunk_size</code>가 200으로 설정되어 있으며, 부모 문서보다 작은 크기로 생성됩니다.</li>
+</ul></li>
 </ul>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb9-1"><a href="#cb9-1"></a>- 나쁜 예</span>
-<span id="cb9-2"><a href="#cb9-2"></a>다음은 에이전트와 고객의 대화이다.</span>
-<span id="cb9-3"><a href="#cb9-3"></a>고객에게 아이디와 비밀번호를 묻지</span>
-<span id="cb9-4"><a href="#cb9-4"></a>않는다. 반복하지 않는다.</span>
-<span id="cb9-5"><a href="#cb9-5"></a></span>
-<span id="cb9-6"><a href="#cb9-6"></a>- 좋은 예</span>
-<span id="cb9-7"><a href="#cb9-7"></a>다음은 에이전트와 고객과의 대화내용이다.</span>
-<span id="cb9-8"><a href="#cb9-8"></a>챗봇은 고객의 대화에서 드러난 문제를 진단하고 해결책을</span>
-<span id="cb9-9"><a href="#cb9-9"></a>제시해야 한다. 사용자 아이디와 비밀번호같은 개인정보를</span>
-<span id="cb9-10"><a href="#cb9-10"></a>묻지 않는 대신,</span>
-<span id="cb9-11"><a href="#cb9-11"></a>사용자가 www.samplewebsite.com/help/faq에서 관련</span>
-<span id="cb9-12"><a href="#cb9-12"></a>사항을 찾도록 안내해라.</span></code></pre></div><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></div>
-</section>
-</section>
-<section id="프롬프트-제작에-100-절대적인-것은-없다." class="level2" data-number="1.4">
-<h2 data-number="1.4" class="anchored" data-anchor-id="프롬프트-제작에-100-절대적인-것은-없다."><span class="header-section-number">1.4</span> 프롬프트 제작에 100% 절대적인 것은 없다.</h2>
+<div id="29662c13" class="cell">
+<details class="code-fold">
+<summary>코드</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1"></a><span class="co"># 부모 문서를 생성하는 데 사용되는 텍스트 분할기입니다.</span></span>
+<span id="cb12-2"><a href="#cb12-2"></a>parent_splitter <span class="op">=</span> RecursiveCharacterTextSplitter(chunk_size<span class="op">=</span><span class="dv">1000</span>)</span>
+<span id="cb12-3"><a href="#cb12-3"></a><span class="co"># 자식 문서를 생성하는 데 사용되는 텍스트 분할기입니다.</span></span>
+<span id="cb12-4"><a href="#cb12-4"></a><span class="co"># 부모보다 작은 문서를 생성해야 합니다.</span></span>
+<span id="cb12-5"><a href="#cb12-5"></a>child_splitter <span class="op">=</span> RecursiveCharacterTextSplitter(chunk_size<span class="op">=</span><span class="dv">200</span>)</span>
+<span id="cb12-6"><a href="#cb12-6"></a><span class="co"># 자식 청크를 인덱싱하는 데 사용할 벡터 저장소입니다.</span></span>
+<span id="cb12-7"><a href="#cb12-7"></a>vectorstore <span class="op">=</span> Chroma(</span>
+<span id="cb12-8"><a href="#cb12-8"></a>    collection_name<span class="op">=</span><span class="st">"split_parents"</span>, embedding_function<span class="op">=</span>OpenAIEmbeddings()</span>
+<span id="cb12-9"><a href="#cb12-9"></a>)</span>
+<span id="cb12-10"><a href="#cb12-10"></a><span class="co"># 부모 문서의 저장 계층입니다.</span></span>
+<span id="cb12-11"><a href="#cb12-11"></a>store <span class="op">=</span> InMemoryStore()</span></code></pre></div><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<p><code>ParentDocumentRetriever</code>를 초기화하는 코드입니다.</p>
 <ul>
-<li>절대 나와서는 안되는 조건을 적용하기</li>
-<li>되도록 LLM 이 추론을 할 수 없게 구체적으로 주기</li>
-<li>긍정문을 쓰되 절대 나와서 안되는 문구들은 2중 부정을 사용</li>
+<li><code>vectorstore</code> 매개변수는 문서 벡터를 저장하는 벡터 저장소를 지정합니다.</li>
+<li><code>docstore</code> 매개변수는 문서 데이터를 저장하는 문서 저장소를 지정합니다.</li>
+<li><code>child_splitter</code> 매개변수는 하위 문서를 분할하는 데 사용되는 문서 분할기를 지정합니다.</li>
+<li><code>parent_splitter</code> 매개변수는 상위 문서를 분할하는 데 사용되는 문서 분할기를 지정합니다.</li>
 </ul>
-</section>
-</section>
-<section id="llm의-한계와-프롬프트-엔지니어링-필요성" class="level1" data-number="2">
-<h1 data-number="2"><span class="header-section-number">2</span> LLM의 한계와 프롬프트 엔지니어링 필요성</h1>
-<section id="llm-한계" class="level2" data-number="2.1">
-<h2 data-number="2.1" class="anchored" data-anchor-id="llm-한계"><span class="header-section-number">2.1</span> LLM 한계</h2>
-<ul>
-<li>할루시네이션</li>
-<li>편향성</li>
-<li>근거 없는 출처 생성</li>
-<li>수학 및 추론 한계</li>
-<li>Prompt Injection(프롬프트 해킹)</li>
-</ul>
-</section>
-<section id="프롬프트-엔지니어링이-필요한-이유" class="level2" data-number="2.2">
-<h2 data-number="2.2" class="anchored" data-anchor-id="프롬프트-엔지니어링이-필요한-이유"><span class="header-section-number">2.2</span> 프롬프트 엔지니어링이 필요한 이유</h2>
-<ul>
-<li>정확성 향상</li>
-<li>오류 및 편향 감소</li>
-<li>모델 행동 제어</li>
-<li>사용자 경험 개선</li>
-<li>비용 절감</li>
-</ul>
+<p><code>ParentDocumentRetriever</code>는 계층적 문서 구조를 처리하며, 상위 문서와 하위 문서를 별도로 분할하고 저장합니다. 이를 통해 검색 시 상위 문서와 하위 문서를 효과적으로 활용할 수 있습니다.</p>
+<div id="c3cacb06" class="cell">
+<details class="code-fold">
+<summary>코드</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1"></a>retriever <span class="op">=</span> ParentDocumentRetriever(</span>
+<span id="cb13-2"><a href="#cb13-2"></a>    <span class="co"># 벡터 저장소를 지정합니다.</span></span>
+<span id="cb13-3"><a href="#cb13-3"></a>    vectorstore<span class="op">=</span>vectorstore,</span>
+<span id="cb13-4"><a href="#cb13-4"></a>    <span class="co"># 문서 저장소를 지정합니다.</span></span>
+<span id="cb13-5"><a href="#cb13-5"></a>    docstore<span class="op">=</span>store,</span>
+<span id="cb13-6"><a href="#cb13-6"></a>    <span class="co"># 하위 문서 분할기를 지정합니다.</span></span>
+<span id="cb13-7"><a href="#cb13-7"></a>    child_splitter<span class="op">=</span>child_splitter,</span>
+<span id="cb13-8"><a href="#cb13-8"></a>    <span class="co"># 상위 문서 분할기를 지정합니다.</span></span>
+<span id="cb13-9"><a href="#cb13-9"></a>    parent_splitter<span class="op">=</span>parent_splitter,</span>
+<span id="cb13-10"><a href="#cb13-10"></a>)</span></code></pre></div><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<p><code>retriever</code> 객체에 <code>docs</code>를 추가합니다. <code>retriever</code>가 검색할 수 있는 문서 집합에 새로운 문서들을 추가하는 역할을 합니다.</p>
+<div id="6f95883b" class="cell">
+<details class="code-fold">
+<summary>코드</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1"></a>retriever.add_documents(docs)  <span class="co"># 문서를 retriever에 추가합니다.</span></span></code></pre></div><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<p>이제 문서의 수가 훨씬 더 많아진 것을 볼 수 있습니다. 이는 더 큰 청크(chunk)들입니다.</p>
+<div id="7d0989cc" class="cell">
+<details class="code-fold">
+<summary>코드</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1"></a><span class="co"># 저장소에서 키를 생성하고 리스트로 변환한 후 길이를 반환합니다.</span></span>
+<span id="cb15-2"><a href="#cb15-2"></a><span class="bu">len</span>(<span class="bu">list</span>(store.yield_keys()))</span></code></pre></div><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<p>기본 벡터 저장소가 여전히 작은 청크를 검색하는지 확인해 보겠습니다.</p>
+<p><code>vectorstore</code> 객체의 <code>similarity_search</code> 메서드를 사용하여 유사도 검색을 수행합니다.</p>
+<div id="ec52ff30" class="cell">
+<details class="code-fold">
+<summary>코드</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1"></a><span class="co"># 유사도 검색을 수행합니다.</span></span>
+<span id="cb16-2"><a href="#cb16-2"></a>sub_docs <span class="op">=</span> vectorstore.similarity_search(<span class="st">"Word2Vec"</span>)</span>
+<span id="cb16-3"><a href="#cb16-3"></a><span class="co"># sub_docs 리스트의 첫 번째 요소의 page_content 속성을 출력합니다.</span></span>
+<span id="cb16-4"><a href="#cb16-4"></a><span class="bu">print</span>(sub_docs[<span class="dv">0</span>].page_content)</span></code></pre></div><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<p>이번에는 <code>retriever</code> 객체의 <code>invoke()</code> 메서드를 사용하여 문서를 검색합니다.</p>
+<div id="9944a690" class="cell">
+<details class="code-fold">
+<summary>코드</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1"></a><span class="co"># 문서를 검색하여 가져옵니다.</span></span>
+<span id="cb17-2"><a href="#cb17-2"></a>retrieved_docs <span class="op">=</span> retriever.invoke(<span class="st">"Word2Vec"</span>)</span>
+<span id="cb17-3"><a href="#cb17-3"></a></span>
+<span id="cb17-4"><a href="#cb17-4"></a><span class="co"># 검색된 문서의 첫 번째 문서의 페이지 내용의 길이를 반환합니다.</span></span>
+<span id="cb17-5"><a href="#cb17-5"></a><span class="bu">print</span>(retrieved_docs[<span class="dv">0</span>].page_content)</span></code></pre></div><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->
