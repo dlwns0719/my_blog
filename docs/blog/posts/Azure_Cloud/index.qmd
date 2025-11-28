@@ -1,0 +1,21 @@
+---
+title: "Prompt_Engineering"
+subtitle: Prompt_Engineering Content List
+description: |
+categories:
+  - Azure Cloud
+author: Junhyun Lee
+date: 11/01/2025
+format: 
+  html:
+    page-layout: full
+    code-fold: true
+    toc: true
+    number-sections: true
+draft: False
+---
+
+## Azure Cloud
+
+### 클라우드 인프라 설정
+1.  [01-Data Lake Storage](./01-클라우드 인프라 설정/01-Data_Lake_Storage.qmd)
