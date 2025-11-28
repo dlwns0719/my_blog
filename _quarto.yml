@@ -15,7 +15,7 @@ highlight-style: a11y
 
 website: # 웹사이트 전체 설정
   title: "Junhyun Lee"
-  site-url: https://dlwns0719.netlify.app
+  site-url: https://dlwns0719.github.io/my_blog
   description: "blog"
   google-analytics: "G-6W0EKFMWBN"
   repo-url: https://github.com/dlwns0719/my_blog
@@ -32,7 +32,7 @@ website: # 웹사이트 전체 설정
       analytics-events: true
       show-logo: true
   page-footer:
-    left: "© Kwangmin Kim"
+    left: "Junhyun Lee"
     center: 
       - text: "About"
         href: about.qmd
@@ -78,76 +78,9 @@ website: # 웹사이트 전체 설정
       contents:
       - section: "Blog Posts"
         href: docs/blog/index.qmd  #블로그 메인 페이지로 이동
-        contents:
-          - docs/blog/posts/Code_Test/index.qmd
-          - docs/blog/posts/Math/index.qmd            
-          - docs/blog/posts/Statistics/index.qmd  
-          - docs/blog/posts/Data_Science/index.qmd      
-          - docs/blog/posts/Machine_Learning/index.qmd        
-          - docs/blog/posts/Deep_Learning/index.qmd        
-          - docs/blog/posts/Engineering/index.qmd        
+        contents:     
           - docs/blog/posts/RAG/index.qmd
-          - docs/blog/posts/Experimentation/index.qmd
-          - docs/blog/posts/Governance/index.qmd  
-          - docs/blog/posts/Surveilance/index.qmd  
-          
-#  sidebar: 
-#    - id: Projects
-#      style: "floating"
-#      collapse-level: 1
-#      backgournd: light
-#      align: left
-#      contents:
-#        - text: "Projects"
-#          href: docs/projects/index.qmd
-#        - section: "FDA Validation" 
-#          contents:
-#          - docs/projects/dsp_validation/index.qmd  
-#        - section: "LLFS"  
-#          contents:
-#          - docs/projects/LLFS/project_description.qmd
-#          #- section: "Self Project"
-#          #  contents:
-#          #  - docs/projects/LLFS/self_description.qmd
-#          #  - docs/projects/LLFS/data_preparation.qmd
-#          #  - docs/projects/LLFS/eda.qmd
-#          #  - docs/projects/LLFS/mining.qmd
-#          #  - docs/projects/LLFS/statistical_approach.qmd
-#          #  - docs/projects/LLFS/ml_approach.qmd
-#          #  - docs/projects/LLFS/report.qmd
-#        - section: "Diagnostic Device QC"  
-#          contents:
-#          - docs/projects/qc_platform/index.qmd    
-#        - section: "Platform Plan"  
-#          contents:
-#          - docs/projects/platform_plan/index.qmd
-#        - section: "Diagnostic Algorithm"  
-#          contents:
-#          - docs/projects/backfitting/index.qmd
-#        - section: "Clinical Data Analysis"  
-#          contents:
-#          - docs/projects/pcr_clinical/index.qmd
-#        - section: "Heavy Metal Removal"  
-#          contents:
-#          - docs/projects/heavy_metal/index.qmd
-#        - section: "Diffusion Model"  
-#          contents:
-#          - docs/projects/social_network/index.qmd
-#        - section: "Phellinus Linteus Effects"  
-#          contents:
-#          - docs/projects/phellinus_linteus/index.qmd    
-#    - id: CV
-#      title: "CV" 
-#      style: "floating"
-#      collapse-level: 2
-#      backgournd: light
-#      align: left
-#      contents:
-#        - docs/CV/index.qmd
-#        - text: "Resume"
-#          href: docs/CV/Resume.pdf
-#        - text: "CV"
-#          href: docs/CV/cv.qmd
+          - docs/blog/posts/Prompt_Engineering/index.qmd
 
 format: # 출력 형식 및 테마 설정
   html:

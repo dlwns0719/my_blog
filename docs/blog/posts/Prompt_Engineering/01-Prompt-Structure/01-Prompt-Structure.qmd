@@ -1,0 +1,27 @@
+---
+title: Part 1 — 프롬프트 구조와 기능 탐구
+jupyter: python3
+categories:
+  - AI
+  - LangChain
+  - Prompt_Engineering
+---
+
+# 프롬프트 기본 요소
+
+## 필수 4요소
+
+1. **Instruction**: 어떤 작업을 해야 하는가
+2. **Context**: 배경 정보
+3. **Input Data**: 처리 대상 데이터
+4. **Output Indicator**: 출력 형식 규정
+
+## 프롬프트 타입 구조(Type A–D)
+
+* **A: 지시문 + 출력문**
+* **B: 지시문 + 맥락 + 출력문**
+* **C: 지시문 + 맥락 + 예시 + 출력문**
+* **D: 지시문 + 입력값 + 출력문**
+
+예시와 함께 구조적으로 프롬프트를 설계하면
+LLM이 더 안정적으로 원하는 출력 생성.

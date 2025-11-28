@@ -1,25 +1,33 @@
-.RData #R workspace image files, R/RStudio 임시 파일
-.Ruserdata #RStudio 사용자 설정 파일, R/RStudio 임시 파일
-.Rproj.user #RStudio 프로젝트 임시 파일, R/RStudio 임시 파일
-.DS_Store #macOS 파일 시스템 메타데이터 파일
-.Rhistoryt #R command history files, R/RStudio 임시 파일
-.Rhistory #R command history files, R/RStudio 임시 파일
-/.quarto/ #Quarto 프로젝트 임시 파일
-/_*.local #Quarto 로컬 설정 파일
-/.venv/ #Python 가상 환경 디렉토리
-/.condaenv/ #Conda 가상 환경 디렉토리
-*_cache/ #Quarto 캐시 디렉토리
-/env/ #Python 가상 환경 디렉토리
-/.venv/ #Python 가상 환경 디렉토리
-/_site/ #Quarto 렌더링 출력
+# R/RStudio 임시 파일
+.RData
+.Ruserdata
+.Rproj.user
+.Rhistory
+
+# macOS 파일 시스템 메타데이터
+.DS_Store
+
+# Quarto 프로젝트 임시 파일
+/.quarto/
+/_*.local
+*_cache/
+/_freeze/
+/_site/
+
+# Python 가상 환경 디렉토리
+/.venv/
+/.condaenv/
+/env/
+
+# Python 캐시 파일
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+
+# Quarto 노트북 파일
+**/*.quarto_ipynb
+
+# 기타 임시 파일
 *.log
 *.tmp
 *~
-.ipynb_checkpoints/
-__pycache__/
-*.pyc
-/_freeze/ #QUARTO computation 결과가 매번 같아도 상관없으면 gitingore에 추가할 것
-/.quarto
-
-/.quarto/
-**/*.quarto_ipynb
