@@ -12,6 +12,34 @@
 <generator>quarto-1.8.25</generator>
 <lastBuildDate>Fri, 31 Oct 2025 15:00:00 GMT</lastBuildDate>
 <item>
+  <title>Prompt_Engineering</title>
+  <dc:creator>Junhyun Lee</dc:creator>
+  <link>https://dlwns0719.github.io/my_blog/docs/blog/posts/Azure_Cloud/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+
+<section id="azure-cloud" class="level2" data-number="1">
+
+<section id="클라우드-인프라-설정" class="level3" data-number="1.1">
+
+<ol type="1">
+<li><a href="../../../../docs/blog/posts/Azure_Cloud/01-클라우드 인프라 설정/01-Data_Lake_Storage.html">01-Data Lake Storage</a></li>
+</ol>
+
+
+</section>
+</section>
+
+ ]]></description>
+  <category>Azure Cloud</category>
+  <guid>https://dlwns0719.github.io/my_blog/docs/blog/posts/Azure_Cloud/</guid>
+  <pubDate>Fri, 31 Oct 2025 15:00:00 GMT</pubDate>
+</item>
+<item>
   <title>RAG</title>
   <dc:creator>Junhyun Lee</dc:creator>
   <link>https://dlwns0719.github.io/my_blog/docs/blog/posts/RAG/</link>
@@ -85,6 +113,175 @@
   <pubDate>Fri, 31 Oct 2025 15:00:00 GMT</pubDate>
 </item>
 <item>
+  <title>01-Data Lake Storage</title>
+  <link>https://dlwns0719.github.io/my_blog/docs/blog/posts/Azure_Cloud/01-클라우드 인프라 설정/01-Data_Lake_Storage.html</link>
+  <description><![CDATA[ 
+
+
+
+
+
+
+<section id="스토리지-계정-생성" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> 스토리지 계정 생성</h1>
+<p>Azure Portal에서 Storage Account를 생성합니다.</p>
+<section id="기본-설정" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="기본-설정"><span class="header-section-number">1.1</span> 기본 설정</h2>
+<section id="프로젝트-세부-정보" class="level3" data-number="1.1.1">
+<h3 data-number="1.1.1" class="anchored" data-anchor-id="프로젝트-세부-정보"><span class="header-section-number">1.1.1</span> 프로젝트 세부 정보</h3>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://dlwns0719.github.io/my_blog/docs/blog/posts/Azure_Cloud/01-클라우드 인프라 설정/images/01-Data_Lake_Storage/1.png" class="img-fluid figure-img"></p>
+<figcaption>image</figcaption>
+</figure>
+</div>
+<p><strong>구독(Subscription)</strong> - 설명: 사용할 Azure 구독을 선택합니다. - 입력 값: <code>swlab-test-subs</code></p>
+<p><strong>리소스 그룹(Resource Group)</strong> - 설명: 스토리지 계정을 포함할 리소스 그룹을 선택하거나 새로 만듭니다. - 입력 값: <code>rg-aipoc-test-krc-001</code></p>
+</section>
+<section id="인스턴스-세부-정보" class="level3" data-number="1.1.2">
+<h3 data-number="1.1.2" class="anchored" data-anchor-id="인스턴스-세부-정보"><span class="header-section-number">1.1.2</span> 인스턴스 세부 정보</h3>
+<p><strong>스토리지 계정 이름</strong> - 설명: 전역적으로 고유한 스토리지 계정 이름을 입력합니다 (3-24자, 소문자와 숫자만 사용 가능). - 입력 값: <code>saaipoctestkrc001</code></p>
+<p><strong>지역(Region)</strong> - 설명: 스토리지 계정이 생성될 Azure 데이터 센터 위치를 선택합니다. - 입력 값: <code>(Asia Pacific) Korea Central</code></p>
+<p><strong>기본 스토리지 유형</strong> - 설명: 사용할 스토리지 서비스 유형을 선택합니다. - 입력 값: <code>Azure Blob Storage 또는 Azure Data Lake Storage Gen 2</code> - 참고: 관련 지침을 제공하는 데 도움이 됩니다. 스토리지를 이 리스크 유형으로 제한하지 않습니다.</p>
+<p><strong>기본 워크로드</strong> - 설명: 빅 데이터 분석을 위해 데이터 레이크를 호스트하는 데 가장 적합한 워크로드와 가장 일치하는 항목을 선택하여 모범 사례를 기반으로 구축된 권장 구성을 가져옵니다. 안제든지 이 구성을 변경할 수 있습니다. - 입력 값: <code>빅 데이터 분석</code> - 참고: 📊 빅 데이터 분석을 위해 데이터 레이크를 호스트하는 데 가장 적합</p>
+<p><strong>성능(Performance)</strong> - 설명: 스토리지 계정의 성능 계층을 선택합니다. - <strong>표준</strong>: 대부분 시나리오에 권장됨 (범용 v2 계정) - <strong>프리미엄</strong>: 짧은 대기 시간이 필요한 경우에 권장됨 - 선택 값: <code>표준: 대부분 시나리오에 권장됨(범용 v2 계정)</code> - 참고: 📊 표준 성능 워크로드에는 빅 데이터 분석(를) 사용하는 것이 좋습니다.</p>
+<p><strong>중복도(Redundancy)</strong> - 설명: 데이터 내구성을 위한 복제 전략을 선택합니다. - <strong>LRS</strong>: 로컬 중복 스토리지 - <strong>ZRS</strong>: 영역 중복 스토리지 - <strong>GRS</strong>: 지역 중복 스토리지 - <strong>RA-GRS</strong>: 읽기 액세스 지역 중복 스토리지 - 선택 값: <code>LRS(로컬 중복 스토리지)</code> - 참고: 📊 ZRS 워크로드에는 빅 데이터 분석(를) 사용하는 것이 좋습니다.</p>
+</section>
+</section>
+<section id="고급-설정" class="level2" data-number="1.2">
+<h2 data-number="1.2" class="anchored" data-anchor-id="고급-설정"><span class="header-section-number">1.2</span> 고급 설정</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://dlwns0719.github.io/my_blog/docs/blog/posts/Azure_Cloud/01-클라우드 인프라 설정/images/01-Data_Lake_Storage/2.png" class="img-fluid figure-img"></p>
+<figcaption>image</figcaption>
+</figure>
+</div>
+<section id="보안" class="level3" data-number="1.2.1">
+<h3 data-number="1.2.1" class="anchored" data-anchor-id="보안"><span class="header-section-number">1.2.1</span> 보안</h3>
+<p><strong>REST API 작업을 위한 보안 전송 필요</strong> - 설명: HTTPS를 통한 보안 연결만 허용합니다. - 선택 값: ☑ 체크됨</p>
+<p><strong>개별 컨테이너에 대한 익명 액세스 허용</strong> - 설명: 익명 Blob 액세스를 컨테이너 수준에서 허용할지 여부를 설정합니다. - 선택 값: ☐ 체크 안 됨</p>
+<p><strong>스토리지 계정 키 액세스 사용</strong> - 설명: 공유 키를 통한 스토리지 계정 액세스를 허용합니다. - 선택 값: ☑ 체크됨</p>
+<p><strong>Azure Portal에서 Microsoft Entra 인증 기본값 사용</strong> - 설명: Azure Portal 액세스 시 Microsoft Entra ID를 기본 인증 방법으로 사용합니다. - 선택 값: ☐ 체크 안 됨</p>
+<p><strong>최소 TLS 버전</strong> - 설명: 클라이언트에서 요청하는 최소 TLS(전송 계층 보안) 버전을 설정합니다. - 선택 값: <code>버전 1.2</code></p>
+<p><strong>복사 작업에 대해 허용된 범위(미리 보기)</strong> - 설명: 데이터 복사 작업의 허용 범위를 지정합니다. - 선택 값: <code>모든 스토리지 계정에서</code></p>
+</section>
+<section id="계층-구조-네임스페이스" class="level3" data-number="1.2.2">
+<h3 data-number="1.2.2" class="anchored" data-anchor-id="계층-구조-네임스페이스"><span class="header-section-number">1.2.2</span> 계층 구조 네임스페이스</h3>
+<p>Data Lake Storage Gen2 엔드포인트로 보안되는 계층 구조 네임스페이스는 파일 및 디렉터리 의미 체계를 사용하고, 빅 데이터 분석 워크로드를 가속화하고, ACL(액세스 제어 목록)을 사용합니다.</p>
+<p><strong>계층 구조 네임스페이스 사용</strong> - 설명: Data Lake Storage Gen2 엔드포인트를 보안되는 계층 구조 네임스페이스입니다. 파일 및 디렉터리 의미 체계를 사용하고, ACL(액세스 제어 목록)을 사용합니다. - 선택 값: ☑ 체크됨 - 참고: 📊 계층 구조 네임스페이스 워크로드에는 빅 데이터 분석(를) 사용하는 것이 좋습니다.</p>
+</section>
+<section id="액세스-프로토콜" class="level3" data-number="1.2.3">
+<h3 data-number="1.2.3" class="anchored" data-anchor-id="액세스-프로토콜"><span class="header-section-number">1.2.3</span> 액세스 프로토콜</h3>
+<p>BLOB 및 Data Lake Gen2 엔드포인트는 기본적으로 프로토비전됨</p>
+<p><strong>SFTP 사용</strong> - 설명: SFTP 프로토콜을 통한 파일 전송을 활성화합니다. - 선택 값: ☑ 체크됨 - 참고: ℹ️ 로컬 사용자 기능은 SFTP로 활성화됩니다. 스토리지 계정을 만든 후 SFTP 끝점에 액세스할 로컬 사용자 ID를 만듭니다.</p>
+<p><strong>네트워크 파일 시스템 v3 사용</strong> - 설명: NFS v3 프로토콜을 사용하여 파일 시스템을 마운트합니다. - 선택 값: ☑ 체크됨</p>
+</section>
+<section id="blob-storage" class="level3" data-number="1.2.4">
+<h3 data-number="1.2.4" class="anchored" data-anchor-id="blob-storage"><span class="header-section-number">1.2.4</span> Blob Storage</h3>
+<p><strong>테넌트 간 복제 허용</strong> - 설명: 다른 Azure AD 테넌트 간 Blob 복제를 허용합니다. - 선택 값: ☐ 체크 안 됨 - 참고: ℹ️ 테넌트 간 복제 및 계층 구조 네임스페이스를 동시에 사용하도록 설정할 수 없습니다.</p>
+<p><strong>액세스 계층</strong> - 설명: 데이터 액세스 빈도에 따른 기본 저장소 계층을 선택합니다. - <strong>핫</strong>: 자주 액세스하는 데이터 및 일상적인 사용 시나리오에 최적화됨 - <strong>쿨</strong>: 자주 액세스하지 않는 데이터 및 백업 시나리오에 최적화됨 - <strong>콜드</strong>: 거의 액세스하지 않는 데이터 및 백업 시나리오에 최적화됨 - 선택 값: <code>핫</code> - 참고: 📊 핫 Blob 액세스 계층 워크로드에는 빅 데이터 분석(를) 사용하는 것이 좋습니다.</p>
+</section>
+<section id="azure-files" class="level3" data-number="1.2.5">
+<h3 data-number="1.2.5" class="anchored" data-anchor-id="azure-files"><span class="header-section-number">1.2.5</span> Azure Files</h3>
+<p><strong>큰 파일 공유 사용</strong> - 설명: 최대 100TiB 용량의 대용량 파일 공유를 지원합니다. - 선택 값: ☑ 체크됨 (비활성화됨)</p>
+</section>
+</section>
+<section id="네트워킹-설정" class="level2" data-number="1.3">
+<h2 data-number="1.3" class="anchored" data-anchor-id="네트워킹-설정"><span class="header-section-number">1.3</span> 네트워킹 설정</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://dlwns0719.github.io/my_blog/docs/blog/posts/Azure_Cloud/01-클라우드 인프라 설정/images/01-Data_Lake_Storage/3.png" class="img-fluid figure-img"></p>
+<figcaption>image</figcaption>
+</figure>
+</div>
+<section id="공용-액세스" class="level3" data-number="1.3.1">
+<h3 data-number="1.3.1" class="anchored" data-anchor-id="공용-액세스"><span class="header-section-number">1.3.1</span> 공용 액세스</h3>
+<p>공용 네트워크를 통해 어디서나 리소스에 액세스합니다.</p>
+<p>참고: 공용 네트워크를 통해 리소스에 액세스할 수 있게 되면 보안 위험이 증가합니다.</p>
+<p><strong>공용 네트워크 액세스</strong> - 설명: 공용 인터넷에서 스토리지 계정에 대한 액세스 권한을 설정합니다. - 선택 값: <code>사용</code> - 이 리소스에 대한 리스크 액세스 구성을 사용하여 선택 인바운드 엔드포인트를 제한하는 옵션을 사용하며 인바운드 및 아웃바운드 엔드포인트를 허용합니다. - 옵션: - ⭕ <strong>사용</strong>: 이 리소스에 대한 리스크 액세스 구성을 사용하여 선택 인바운드 엔드포인트를 제한하는 옵션을 사용하며 인바운드 및 아웃바운드 엔드포인트를 허용합니다. - ⚪ <strong>사용 안 함</strong>: 아웃바운드 엔드포인트를 허용하면서 인바운드 엔드포인트를 제한합니다. - ⚪ <strong>경계로 보호(가장 제한됨)</strong>: 네트워크 보안 경계를 사용하여 인바운드 및 아웃바운드 엔드포인트를 제한합니다. 경계로 보호는 리소스를 보호하기 위해 가장 높은 수준의 인바운드 및 아웃바운드 제한을 제공합니다.</p>
+<p><strong>공용 네트워크 액세스 범위</strong> - 설명: 공용 네트워크를 통해 액세스할 수 있는 리소스의 범위를 지정합니다. - 선택 값: <code>선택한 가상 네트워크 및 IP 주소에서 사용</code> - 옵션: - ⚪ <strong>모든 네트워크에서 사용</strong> - ⭕ <strong>선택한 가상 네트워크 및 IP 주소에서 사용</strong></p>
+</section>
+<section id="가상-네트워크" class="level3" data-number="1.3.2">
+<h3 data-number="1.3.2" class="anchored" data-anchor-id="가상-네트워크"><span class="header-section-number">1.3.2</span> 가상 네트워크</h3>
+<p>선택한 네트워크만 이 스토리지 계정에 액세스할 수 있습니다.</p>
+<p><strong>가상 네트워크 구독</strong> - 설명: 가상 네트워크가 속한 Azure 구독을 선택합니다. - 입력 값: <code>swlab-test-subs</code></p>
+<p><strong>가상 네트워크</strong> - 설명: 스토리지 계정에 액세스할 수 있는 가상 네트워크를 선택합니다. - 입력 값: <code>vnet-aipoc-test-krc-insilico-001</code> - 링크: [가상 네트워크 만들기] / [선택한 가상 네트워크 관리]</p>
+<p><strong>서브넷</strong> - 설명: 가상 네트워크 내에서 액세스를 허용할 서브넷을 선택합니다. - 입력 값: <code>subnet-aipoc-test-krc-insilico-001(172.16.0.0/24)</code></p>
+</section>
+<section id="ipv4-addresses" class="level3" data-number="1.3.3">
+<h3 data-number="1.3.3" class="anchored" data-anchor-id="ipv4-addresses"><span class="header-section-number">1.3.3</span> IPv4 Addresses</h3>
+<p>Allow select public internet IP addresses to access your resource.</p>
+<p><strong>허용된 IP 주소</strong> - 설명: 스토리지 계정에 액세스할 수 있는 공용 IP 주소를 지정합니다. - 입력 값: <code>61.74.175.54</code></p>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">경고</span>⚠️ 중요
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>이 값을 <strong>자신의 로컬 PC Public IP</strong>로 설정을 해 주어야지만, 추후 <strong>Azure Portal을 통해 파일 업로드가 가능</strong>합니다.</p>
+</div>
+</div>
+</section>
+<section id="프라이빗-엔드포인트" class="level3" data-number="1.3.4">
+<h3 data-number="1.3.4" class="anchored" data-anchor-id="프라이빗-엔드포인트"><span class="header-section-number">1.3.4</span> 프라이빗 엔드포인트</h3>
+<p><strong>프라이빗 엔드포인트</strong> - 설명: 프라이빗 엔드포인트를 만들어 이 리소스에 대한 프라이빗 연결을 허용합니다. 추가 프라이빗 엔드포인트 연결은 스토리지 계정 또는 프라이빗 링크 센터 내에서 만들 수 있습니다. - 선택 값: [+ 프라이빗 엔드포인트 추가] 클릭 가능 - 상태: 프라이빗 엔드포인트를 만들려면 (추가를 클릭합니다)</p>
+</section>
+<section id="네트워크-라우팅" class="level3" data-number="1.3.5">
+<h3 data-number="1.3.5" class="anchored" data-anchor-id="네트워크-라우팅"><span class="header-section-number">1.3.5</span> 네트워크 라우팅</h3>
+<p>트래픽이 원본에서 Azure 엔드포인트로 이동하는 과정에서 트래픽을 라우팅할 방법을 결정하세요. 대부분의 고객의 경우 Microsoft 네트워크 라우팅이 권장됩니다.</p>
+<p><strong>라우팅 기본 설정</strong> - 설명: 트래픽이 원본에서 Azure 엔드포인트로 이동하는 과정에서 트래픽을 라우팅할 방법을 결정합니다. - 선택 값: <code>Microsoft 네트워크 라우팅</code> - 옵션: - ⭕ <strong>Microsoft 네트워크 라우팅</strong> - ⚪ <strong>인터넷 라우팅</strong></p>
+</section>
+</section>
+<section id="데이터-보호-설정" class="level2" data-number="1.4">
+<h2 data-number="1.4" class="anchored" data-anchor-id="데이터-보호-설정"><span class="header-section-number">1.4</span> 데이터 보호 설정</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://dlwns0719.github.io/my_blog/docs/blog/posts/Azure_Cloud/01-클라우드 인프라 설정/images/01-Data_Lake_Storage/4.png" class="img-fluid figure-img"></p>
+<figcaption>image</figcaption>
+</figure>
+</div>
+<section id="복구" class="level3" data-number="1.4.1">
+<h3 data-number="1.4.1" class="anchored" data-anchor-id="복구"><span class="header-section-number">1.4.1</span> 복구</h3>
+<ul>
+<li>전부 디폴트 설정으로 진행</li>
+</ul>
+<p><strong>Blob에 일시 삭제 사용</strong> - 설명: 일시 삭제를 사용하면 덮어쓴 Blob을 포함하여 이전에 삭제로 표시되었던 Blob을 복구할 수 있습니다. - 선택 값: ☑ 체크됨 - <strong>삭제된 Blob 보존 기간(일)</strong>: <code>7</code></p>
+<p><strong>컨테이너에 일시 삭제 사용</strong> - 설명: 일시 삭제를 사용하면 이전에 삭제로 표시된 컨테이너를 복구할 수 있습니다. - 선택 값: ☑ 체크됨 - <strong>삭제된 컨테이너 보존 기간(일)</strong>: <code>7</code> - 참고: 자주 덮어쓰는 데이터에 대해 일시 삭제를 사용하도록 설정하면 스토리지 비용이 증가할 수 있습니다.</p>
+<p><strong>파일 공유에 일시 삭제 사용</strong> - 설명: 일시 삭제를 사용하면 이전에 삭제로 표시된 파일 공유를 복구할 수 있습니다. - 선택 값: ☑ 체크됨 - <strong>삭제된 파일 공유 보존 기간(일)</strong>: <code>7</code></p>
+</section>
+<section id="추적" class="level3" data-number="1.4.2">
+<h3 data-number="1.4.2" class="anchored" data-anchor-id="추적"><span class="header-section-number">1.4.2</span> 추적</h3>
+<p><strong>Blob에 버전 관리 사용</strong> - 설명: 버전 관리를 사용하여 Blob의 이전 버전을 자동으로 유지합니다. - 선택 값: ☐ 체크 안 됨 - 참고: 워크로드, 생성된 버전 수에 미치는 영향, 결과 비용을 고려하세요. 데이터 수명 주기를 자동으로 관리하여 비용을 최적화합니다.</p>
+<p><strong>Blob 변경 피드 사용</strong> - 설명: 계정의 Blob에 대한 만들기, 수정 및 삭제 변경 내용을 추적합니다. - 선택 값: ☐ 체크 안 됨</p>
+</section>
+<section id="액세스-제어" class="level3" data-number="1.4.3">
+<h3 data-number="1.4.3" class="anchored" data-anchor-id="액세스-제어"><span class="header-section-number">1.4.3</span> 액세스 제어</h3>
+<p><strong>버전 수준 불변성 지원 사용</strong> - 설명: 모든 Blob 버전에 적용할 계정 수준에서 시간 기반 보존 정책을 설정할 수 있습니다. - 선택 값: ☐ 체크 안 됨 - 참고: 계정 수준에서 기본 정책을 설정하려면 이 기능을 사용하여 도록 설정합니다. 이 기능을 사용하지 않고도 컨테이너 수준에서 기본 정책을 설정하거나 특정 Blob 버전에 대한 정책을 설정할 수 있습니다. 이 속성을 사용하려면 버전 관리를 필요합니다.</p>
+</section>
+</section>
+</section>
+<section id="컨테이너-생성" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> 컨테이너 생성</h1>
+</section>
+<section id="blob-파일-업로드" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> Blob 파일 업로드</h1>
+</section>
+<section id="vm-내부에서-blob-파일-접근" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> VM 내부에서 Blob 파일 접근</h1>
+
+
+</section>
+
+ ]]></description>
+  <category>Azure Cloud</category>
+  <guid>https://dlwns0719.github.io/my_blog/docs/blog/posts/Azure_Cloud/01-클라우드 인프라 설정/01-Data_Lake_Storage.html</guid>
+  <pubDate>Mon, 01 Dec 2025 02:09:50 GMT</pubDate>
+</item>
+<item>
   <title>OpenAI 외 도구 호출 에이전트(Tool Calling Agent)</title>
   <link>https://dlwns0719.github.io/my_blog/docs/blog/posts/RAG/15-Agent/04-Agent-More-LLMs.html</link>
   <description><![CDATA[ 
@@ -100,7 +297,7 @@
 <ul>
 <li><a href="https://python.langchain.com/v0.1/docs/modules/agents/agent_types/tool_calling/">LangChain 공식 도큐먼트</a></li>
 </ul>
-<div id="68e6b0d8" class="cell" data-execution_count="1">
+<div id="22f90e6c" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>코드</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><span class="co" style="color: #5E5E5E;
@@ -118,7 +315,7 @@ font-style: inherit;"># API 키 정보 로드</span></span>
 <span id="cb1-5">load_dotenv()</span></code></pre></div></div>
 </details>
 </div>
-<div id="d290ebe1" class="cell" data-execution_count="2">
+<div id="fe2ad291" class="cell" data-execution_count="2">
 <details class="code-fold">
 <summary>코드</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><span class="co" style="color: #5E5E5E;
@@ -141,7 +338,7 @@ background-color: null;
 font-style: inherit;">"CH15-Agents"</span>)</span></code></pre></div></div>
 </details>
 </div>
-<div id="7c39877a" class="cell" data-execution_count="3">
+<div id="18768361" class="cell" data-execution_count="3">
 <details class="code-fold">
 <summary>코드</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><span class="im" style="color: #00769E;
@@ -223,7 +420,7 @@ background-color: null;
 font-style: inherit;">"</span>)</span></code></pre></div></div>
 </details>
 </div>
-<div id="8aa5a8e1" class="cell" data-execution_count="4">
+<div id="1259208a" class="cell" data-execution_count="4">
 <details class="code-fold">
 <summary>코드</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><span class="co" style="color: #5E5E5E;
@@ -241,7 +438,7 @@ font-style: inherit;">=</span> [search_news]</span></code></pre></div></div>
 <li><code>agent_scratchpad</code> : 에이전트가 임시로 저장하는 변수</li>
 <li><code>input</code> : 사용자의 입력</li>
 </ul>
-<div id="996cbf84" class="cell" data-execution_count="5">
+<div id="f2a23c1c" class="cell" data-execution_count="5">
 <details class="code-fold">
 <summary>코드</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><span class="im" style="color: #00769E;
@@ -334,7 +531,7 @@ font-style: inherit;">"</span>),</span>
 <li>이전에 Ollama 를 사용하지 않았다면, <a href="https://wikidocs.net/233805">Ollama</a> 를 참고해 주세요.</li>
 </ul>
 <p>langchain-ollama 설치를 한 뒤 진행해 주세요.</p>
-<div id="b4a4279f" class="cell" data-execution_count="6">
+<div id="b94cad71" class="cell" data-execution_count="6">
 <details class="code-fold">
 <summary>코드</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><span class="co" style="color: #5E5E5E;
@@ -342,7 +539,7 @@ background-color: null;
 font-style: inherit;"># !pip install -qU langchain-ollama==0.1.3</span></span></code></pre></div></div>
 </details>
 </div>
-<div id="b0dd3013" class="cell" data-execution_count="7">
+<div id="efd4a3ed" class="cell" data-execution_count="7">
 <details class="code-fold">
 <summary>코드</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><span class="im" style="color: #00769E;
@@ -463,7 +660,7 @@ font-style: inherit;">"qwen2.5:latest"</span>,</span>
 </details>
 </div>
 <p>LLM 기반으로 Agent 를 생성합니다.</p>
-<div id="7c27396e" class="cell" data-execution_count="8">
+<div id="fc717e7d" class="cell" data-execution_count="8">
 <details class="code-fold">
 <summary>코드</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><span class="im" style="color: #00769E;
@@ -498,7 +695,7 @@ font-style: inherit;">=</span> create_tool_calling_agent(qwen, tools, prompt)</s
 </section>
 <section id="agentexecutor-생성-후-실행-및-결과-확인" class="level2" data-number="3">
 <h2 data-number="3" class="anchored" data-anchor-id="agentexecutor-생성-후-실행-및-결과-확인"><span class="header-section-number">3</span> AgentExecutor 생성 후 실행 및 결과 확인</h2>
-<div id="e93f25bc" class="cell" data-execution_count="9">
+<div id="0e56d590" class="cell" data-execution_count="9">
 <details class="code-fold">
 <summary>코드</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><span class="im" style="color: #00769E;
@@ -553,7 +750,7 @@ font-style: inherit;">"output"</span>])</span></code></pre></div></div>
 </div>
 <p>다양한 llm을 사용하여 에이전트를 실행합니다.</p>
 <p>다음은 입력받은 llm을 사용하여 Agent 를 생성하고 실행하여 결과를 출력하는 함수입니다.</p>
-<div id="b94c7736" class="cell" data-execution_count="10">
+<div id="48d62f30" class="cell" data-execution_count="10">
 <details class="code-fold">
 <summary>코드</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10" style="background: #f1f3f5;"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb10-1"><span class="kw" style="color: #003B4F;
@@ -661,7 +858,7 @@ font-style: inherit;">"output"</span>])</span></code></pre></div></div>
 </details>
 </div>
 <p>각 llm 별로 에이전트를 생성하고 실행하여 결과를 출력합니다.</p>
-<div id="64854b4e" class="cell" data-execution_count="11">
+<div id="ae5371d1" class="cell" data-execution_count="11">
 <details class="code-fold">
 <summary>코드</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11" style="background: #f1f3f5;"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb11-1">query <span class="op" style="color: #5E5E5E;
@@ -673,7 +870,7 @@ font-style: inherit;">"AI 투자와 관련된 뉴스를 검색하고, 결과를 
 <span id="cb11-3">)</span></code></pre></div></div>
 </details>
 </div>
-<div id="883ecb50" class="cell" data-execution_count="12">
+<div id="8d47e6a7" class="cell" data-execution_count="12">
 <details class="code-fold">
 <summary>코드</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12" style="background: #f1f3f5;"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb12-1"><span class="co" style="color: #5E5E5E;
@@ -684,7 +881,7 @@ background-color: null;
 font-style: inherit;">"gpt"</span>)</span></code></pre></div></div>
 </details>
 </div>
-<div id="adbbd88e" class="cell" data-execution_count="13">
+<div id="89e363a1" class="cell" data-execution_count="13">
 <details class="code-fold">
 <summary>코드</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13" style="background: #f1f3f5;"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb13-1"><span class="co" style="color: #5E5E5E;
@@ -695,7 +892,7 @@ background-color: null;
 font-style: inherit;">"claude"</span>)</span></code></pre></div></div>
 </details>
 </div>
-<div id="32995ef4" class="cell" data-execution_count="14">
+<div id="58944514" class="cell" data-execution_count="14">
 <details class="code-fold">
 <summary>코드</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14" style="background: #f1f3f5;"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb14-1"><span class="co" style="color: #5E5E5E;
@@ -706,7 +903,7 @@ background-color: null;
 font-style: inherit;">"gemini"</span>)</span></code></pre></div></div>
 </details>
 </div>
-<div id="90ea433a" class="cell" data-execution_count="15">
+<div id="2283f0c4" class="cell" data-execution_count="15">
 <details class="code-fold">
 <summary>코드</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15" style="background: #f1f3f5;"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb15-1"><span class="co" style="color: #5E5E5E;
@@ -724,7 +921,7 @@ font-style: inherit;">"llama3.1 70B"</span>,</span>
 <span id="cb15-7">)</span></code></pre></div></div>
 </details>
 </div>
-<div id="f06d1a42" class="cell" data-execution_count="16">
+<div id="fe70f105" class="cell" data-execution_count="16">
 <details class="code-fold">
 <summary>코드</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16" style="background: #f1f3f5;"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb16-1"><span class="co" style="color: #5E5E5E;
@@ -735,7 +932,7 @@ background-color: null;
 font-style: inherit;">"llama3.1(Ollama)"</span>)</span></code></pre></div></div>
 </details>
 </div>
-<div id="e0d6d129" class="cell" data-execution_count="17">
+<div id="baef686c" class="cell" data-execution_count="17">
 <details class="code-fold">
 <summary>코드</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17" style="background: #f1f3f5;"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb17-1"><span class="co" style="color: #5E5E5E;
@@ -758,7 +955,7 @@ font-style: inherit;">"qwen2.5(Ollama)"</span>)</span></code></pre></div></div>
 
  ]]></description>
   <guid>https://dlwns0719.github.io/my_blog/docs/blog/posts/RAG/15-Agent/04-Agent-More-LLMs.html</guid>
-  <pubDate>Wed, 26 Nov 2025 02:19:19 GMT</pubDate>
+  <pubDate>Mon, 01 Dec 2025 02:09:50 GMT</pubDate>
 </item>
 <item>
   <title>도구 (Tools)</title>
@@ -1598,7 +1795,7 @@ font-style: inherit;">"LangChain AI"</span>})</span></code></pre></div></div>
   <category>LangChain</category>
   <category>Prompt_Engineering</category>
   <guid>https://dlwns0719.github.io/my_blog/docs/blog/posts/RAG/15-Agent/01-Tools.html</guid>
-  <pubDate>Wed, 26 Nov 2025 02:19:19 GMT</pubDate>
+  <pubDate>Mon, 01 Dec 2025 02:09:50 GMT</pubDate>
 </item>
 <item>
   <title>Iteration 기능과 사람 개입(Human-in-the-loop)</title>
@@ -1946,7 +2143,7 @@ font-style: inherit;">"output"</span>])</span></code></pre></div></div>
 
  ]]></description>
   <guid>https://dlwns0719.github.io/my_blog/docs/blog/posts/RAG/15-Agent/05-Iter-Human-In-the-Loop.html</guid>
-  <pubDate>Wed, 26 Nov 2025 02:19:19 GMT</pubDate>
+  <pubDate>Mon, 01 Dec 2025 02:09:50 GMT</pubDate>
 </item>
 <item>
   <title>LLM 에 도구 바인딩(Binding Tools)</title>
@@ -1961,7 +2158,7 @@ font-style: inherit;">"output"</span>])</span></code></pre></div></div>
 <p>LLM 모델이 도구(tool) 를 호출할 수 있으려면 chat 요청을 할 때 모델에 도구 스키마(tool schema) 를 전달해야 합니다.</p>
 <p>도구 호출(tool calling) 기능을 지원하는 LangChain Chat Model 은 <code>.bind_tools()</code> 메서드를 구현하여 LangChain 도구 객체, Pydantic 클래스 또는 JSON 스키마 목록을 수신하고 공급자별 예상 형식으로 채팅 모델에 바인딩(binding) 합니다.</p>
 <p>바인딩된 Chat Model 의 후속 호출은 모델 API에 대한 모든 호출에 도구 스키마를 포함합니다.</p>
-<div id="d6465534" class="cell" data-execution_count="1">
+<div id="52916810" class="cell" data-execution_count="2">
 <details class="code-fold">
 <summary>코드</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><span class="co" style="color: #5E5E5E;
@@ -1979,7 +2176,7 @@ font-style: inherit;"># API KEY 정보로드</span></span>
 <span id="cb1-5">load_dotenv()</span></code></pre></div></div>
 </details>
 </div>
-<div id="2e1d1509" class="cell" data-execution_count="2">
+<div id="1d313af7" class="cell" data-execution_count="3">
 <details class="code-fold">
 <summary>코드</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><span class="co" style="color: #5E5E5E;
@@ -2011,7 +2208,7 @@ font-style: inherit;">"CH15-Bind-Tools"</span>)</span></code></pre></div></div>
 <li><code>naver_news_crawl</code> : 네이버 뉴스 기사를 크롤링하여 본문 내용을 반환하는 함수</li>
 </ul>
 <p><strong>참고</strong> - 도구를 정의할 때 <code>@tool</code> 데코레이터를 사용하여 도구를 정의합니다. - docstring 은 가급적 영어로 작성하는 것을 권장합니다.</p>
-<div id="f485e4dc" class="cell" data-execution_count="3">
+<div id="d73aa88d" class="cell" data-execution_count="4">
 <details class="code-fold">
 <summary>코드</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><span class="im" style="color: #00769E;
@@ -2234,7 +2431,7 @@ font-style: inherit;">=</span> [get_word_length, add_function, naver_news_crawl]
 <section id="bind_tools-로-llm-에-도구-바인딩" class="level2" data-number="2">
 <h2 data-number="2" class="anchored" data-anchor-id="bind_tools-로-llm-에-도구-바인딩"><span class="header-section-number">2</span> bind_tools() 로 LLM 에 도구 바인딩</h2>
 <p>llm 모델에 <code>bind_tools()</code> 를 사용하여 도구를 바인딩합니다.</p>
-<div id="a4472c5b" class="cell" data-execution_count="4">
+<div id="5e2eb45f" class="cell" data-execution_count="5">
 <details class="code-fold">
 <summary>코드</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><span class="im" style="color: #00769E;
@@ -2269,7 +2466,7 @@ font-style: inherit;">=</span> llm.bind_tools(tools)</span></code></pre></div></
 <p>실행결과를 확인합니다.</p>
 <p>결과는 <code>tool_calls</code> 에 저장됩니다. 따라서, <code>.tool_calls</code> 를 확인하여 도구 호출 결과를 확인할 수 있습니다.</p>
 <p><strong>참고</strong> - <code>name</code> 은 도구의 이름을 의미합니다. - <code>args</code> 는 도구에 전달되는 인자를 의미합니다.</p>
-<div id="78d78ef1" class="cell" data-execution_count="5">
+<div id="4d229c08" class="cell" data-execution_count="6">
 <details class="code-fold">
 <summary>코드</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><span class="co" style="color: #5E5E5E;
@@ -2281,7 +2478,7 @@ font-style: inherit;">"What is the length of the word 'teddynote'?"</span>).tool
 </details>
 </div>
 <p>다음으로는 <code>llm_with_tools</code> 와 <code>JsonOutputToolsParser</code> 를 연결하여 <code>tool_calls</code> 를 parsing 하여 결과를 확인합니다.</p>
-<div id="0d47a174" class="cell" data-execution_count="6">
+<div id="6cf60047" class="cell" data-execution_count="7">
 <details class="code-fold">
 <summary>코드</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><span class="im" style="color: #00769E;
@@ -2311,7 +2508,7 @@ background-color: null;
 font-style: inherit;">"What is the length of the word 'teddynote'?"</span>)</span></code></pre></div></div>
 </details>
 </div>
-<div id="fb5ddb5e" class="cell" data-execution_count="7">
+<div id="ecad2bdb" class="cell" data-execution_count="8">
 <details class="code-fold">
 <summary>코드</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><span class="bu" style="color: null;
@@ -2321,7 +2518,7 @@ font-style: inherit;">print</span>(tool_call_results)</span></code></pre></div><
 </div>
 <p>실행 결과는 다음과 같습니다.</p>
 <p><strong>참고</strong> - <code>type</code>: 도구의 이름 - <code>args</code>: 도구에 전달되는 인자</p>
-<div id="fce73aef" class="cell" data-execution_count="8">
+<div id="96cd7ed4" class="cell" data-execution_count="9">
 <details class="code-fold">
 <summary>코드</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><span class="bu" style="color: null;
@@ -2366,7 +2563,7 @@ font-style: inherit;">"args"</span>])</span></code></pre></div></div>
 </details>
 </div>
 <p>도구 이름과 일치하는 도구를 찾아 실행합니다.</p>
-<div id="b2892283" class="cell" data-execution_count="9">
+<div id="3daea688" class="cell" data-execution_count="10">
 <details class="code-fold">
 <summary>코드</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1">tool_call_results[<span class="dv" style="color: #AD0000;
@@ -2380,7 +2577,7 @@ font-style: inherit;">0</span>].name</span></code></pre></div></div>
 </div>
 <p><code>execute_tool_calls</code> 함수는 도구를 찾아 args 를 전달하여 도구를 실행합니다.</p>
 <p>즉, <code>type</code> 은 도구의 이름을 의미하고 <code>args</code> 는 도구에 전달되는 인자를 의미합니다.</p>
-<div id="2a1ab2f9" class="cell" data-execution_count="10">
+<div id="a91886f1" class="cell" data-execution_count="11">
 <details class="code-fold">
 <summary>코드</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10" style="background: #f1f3f5;"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb10-1"><span class="kw" style="color: #003B4F;
@@ -2533,7 +2730,7 @@ font-style: inherit;"># 이전에 얻은 tool_call_results를 인자로 전달�
 <li><code>execute_tool_calls</code> : 도구 호출 결과를 실행하는 함수</li>
 </ul>
 <p><strong>흐름 정리</strong> 1. 모델에 도구를 바인딩 2. 도구 호출 결과를 파싱 3. 도구 호출 결과를 실행</p>
-<div id="3c6aa1fd" class="cell" data-execution_count="11">
+<div id="b40398e0" class="cell" data-execution_count="12">
 <details class="code-fold">
 <summary>코드</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11" style="background: #f1f3f5;"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb11-1"><span class="im" style="color: #00769E;
@@ -2556,7 +2753,7 @@ background-color: null;
 font-style: inherit;">|</span> execute_tool_calls</span></code></pre></div></div>
 </details>
 </div>
-<div id="b1b354a4" class="cell" data-execution_count="12">
+<div id="58212a70" class="cell" data-execution_count="13">
 <details class="code-fold">
 <summary>코드</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12" style="background: #f1f3f5;"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb12-1"><span class="co" style="color: #5E5E5E;
@@ -2567,7 +2764,7 @@ background-color: null;
 font-style: inherit;">"What is the length of the word 'teddynote'?"</span>)</span></code></pre></div></div>
 </details>
 </div>
-<div id="70a9a955" class="cell" data-execution_count="13">
+<div id="e23021d3" class="cell" data-execution_count="14">
 <details class="code-fold">
 <summary>코드</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13" style="background: #f1f3f5;"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb13-1"><span class="co" style="color: #5E5E5E;
@@ -2587,7 +2784,7 @@ background-color: null;
 font-style: inherit;">121.2</span>)</span></code></pre></div></div>
 </details>
 </div>
-<div id="2654998d" class="cell" data-execution_count="14">
+<div id="8f594c9b" class="cell" data-execution_count="15">
 <details class="code-fold">
 <summary>코드</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14" style="background: #f1f3f5;"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb14-1"><span class="co" style="color: #5E5E5E;
@@ -2606,7 +2803,7 @@ font-style: inherit;">"뉴스 기사 내용을 크롤링해줘: https://n.news.n
 <p><code>bind_tools()</code> 는 모델에 사용할 수 있는 스키마(도구)를 제공합니다.</p>
 <p><code>AgentExecutor</code> 는 실제로 llm 호출, 올바른 도구로 라우팅, 실행, 모델 재호출 등을 위한 실행 루프를 생성합니다.</p>
 <p><strong>참고</strong> - <code>Agent</code> 와 <code>AgentExecutor</code> 에 대해서는 다음 장에서 자세히 다룹니다.</p>
-<div id="f7449f8f" class="cell" data-execution_count="15">
+<div id="cc4b818e" class="cell" data-execution_count="16">
 <details class="code-fold">
 <summary>코드</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15" style="background: #f1f3f5;"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb15-1"><span class="im" style="color: #00769E;
@@ -2668,7 +2865,7 @@ background-color: null;
 font-style: inherit;">0</span>)</span></code></pre></div></div>
 </details>
 </div>
-<div id="38f30c27" class="cell" data-execution_count="16">
+<div id="2883f8c5" class="cell" data-execution_count="17">
 <details class="code-fold">
 <summary>코드</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16" style="background: #f1f3f5;"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb16-1"><span class="im" style="color: #00769E;
@@ -2721,7 +2918,7 @@ font-style: inherit;">True</span>,</span>
 <span id="cb16-16">)</span></code></pre></div></div>
 </details>
 </div>
-<div id="1e3b3b14" class="cell" data-execution_count="17">
+<div id="e195bd56" class="cell" data-execution_count="18">
 <details class="code-fold">
 <summary>코드</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17" style="background: #f1f3f5;"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb17-1"><span class="co" style="color: #5E5E5E;
@@ -2745,7 +2942,7 @@ background-color: null;
 font-style: inherit;">"output"</span>])</span></code></pre></div></div>
 </details>
 </div>
-<div id="098ffd53" class="cell" data-execution_count="18">
+<div id="e9f52c8b" class="cell" data-execution_count="19">
 <details class="code-fold">
 <summary>코드</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18" style="background: #f1f3f5;"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb18-1"><span class="co" style="color: #5E5E5E;
@@ -2770,7 +2967,7 @@ font-style: inherit;">"output"</span>])</span></code></pre></div></div>
 </details>
 </div>
 <p>한 번의 실행으로 끝나는 것이 아닌, 모델이 자신의 결과를 확인하고 다시 자신을 호출하는 과정을 거칩니다.</p>
-<div id="6280f9fb" class="cell" data-execution_count="19">
+<div id="63b0a35b" class="cell" data-execution_count="20">
 <details class="code-fold">
 <summary>코드</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19" style="background: #f1f3f5;"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb19-1"><span class="co" style="color: #5E5E5E;
@@ -2823,7 +3020,7 @@ font-style: inherit;">110.1</span>)</span></code></pre></div></div>
 </details>
 </div>
 <p>이번에는 뉴스 결과를 크롤링 해서 요약 해달라는 요청을 수행합니다.</p>
-<div id="5e579cd7" class="cell" data-execution_count="20">
+<div id="f7f7059e" class="cell" data-execution_count="21">
 <details class="code-fold">
 <summary>코드</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20" style="background: #f1f3f5;"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb20-1">result <span class="op" style="color: #5E5E5E;
@@ -2850,7 +3047,7 @@ font-style: inherit;">"output"</span>])</span></code></pre></div></div>
 
  ]]></description>
   <guid>https://dlwns0719.github.io/my_blog/docs/blog/posts/RAG/15-Agent/02-Bind-Tools.html</guid>
-  <pubDate>Wed, 26 Nov 2025 02:19:19 GMT</pubDate>
+  <pubDate>Mon, 01 Dec 2025 02:09:50 GMT</pubDate>
 </item>
 <item>
   <title>도구 호출 에이전트(Tool Calling Agent)</title>
@@ -3941,7 +4138,7 @@ font-style: inherit;">in</span> response:</span>
 
  ]]></description>
   <guid>https://dlwns0719.github.io/my_blog/docs/blog/posts/RAG/15-Agent/03-Agent.html</guid>
-  <pubDate>Wed, 26 Nov 2025 02:19:19 GMT</pubDate>
+  <pubDate>Mon, 01 Dec 2025 02:09:50 GMT</pubDate>
 </item>
 <item>
   <title>문맥 압축 검색기(ContextualCompressionRetriever)</title>
@@ -4500,7 +4697,7 @@ font-style: inherit;"># 압축된 문서를 예쁘게 출력합니다.</span></s
 
  ]]></description>
   <guid>https://dlwns0719.github.io/my_blog/docs/blog/posts/RAG/10-Retriever/02-ContextualCompressionRetriever.html</guid>
-  <pubDate>Wed, 26 Nov 2025 02:19:19 GMT</pubDate>
+  <pubDate>Mon, 01 Dec 2025 02:09:50 GMT</pubDate>
 </item>
 <item>
   <title>앙상블 검색기(Ensemble Retriever)</title>
@@ -5023,7 +5220,7 @@ font-style: inherit;"># 검색 결과인 docs를 출력합니다.</span></span><
 
  ]]></description>
   <guid>https://dlwns0719.github.io/my_blog/docs/blog/posts/RAG/10-Retriever/03-EnsembleRetriever.html</guid>
-  <pubDate>Wed, 26 Nov 2025 02:19:19 GMT</pubDate>
+  <pubDate>Mon, 01 Dec 2025 02:09:50 GMT</pubDate>
 </item>
 <item>
   <title>Parent Document Retriever</title>
@@ -5524,7 +5721,7 @@ font-style: inherit;">0</span>].page_content)</span></code></pre></div></div>
 
  ]]></description>
   <guid>https://dlwns0719.github.io/my_blog/docs/blog/posts/RAG/10-Retriever/05-ParentDocumentRetriever.html</guid>
-  <pubDate>Wed, 26 Nov 2025 02:19:19 GMT</pubDate>
+  <pubDate>Mon, 01 Dec 2025 02:09:50 GMT</pubDate>
 </item>
 <item>
   <title>MultiQueryRetriever</title>
@@ -6034,7 +6231,7 @@ font-style: inherit;">0</span>].page_content)</span></code></pre></div></div>
 
  ]]></description>
   <guid>https://dlwns0719.github.io/my_blog/docs/blog/posts/RAG/10-Retriever/06-MultiQueryRetriever.html</guid>
-  <pubDate>Wed, 26 Nov 2025 02:19:19 GMT</pubDate>
+  <pubDate>Mon, 01 Dec 2025 02:09:50 GMT</pubDate>
 </item>
 <item>
   <title>Ensemble Retriever Convex Combination(CC) 추가</title>
@@ -6583,7 +6780,7 @@ font-style: inherit;">"디지털 트랜스포메이션이란 무엇인가요?"</
 
  ]]></description>
   <guid>https://dlwns0719.github.io/my_blog/docs/blog/posts/RAG/10-Retriever/11-CC-EnsembleRetriever.html</guid>
-  <pubDate>Wed, 26 Nov 2025 02:19:19 GMT</pubDate>
+  <pubDate>Mon, 01 Dec 2025 02:09:50 GMT</pubDate>
 </item>
 <item>
   <title>셀프 쿼리(Self-querying)</title>
@@ -7284,7 +7481,7 @@ font-style: inherit;">"2023년도에 출시한 상품 중 평점이 4.5 이상�
 
  ]]></description>
   <guid>https://dlwns0719.github.io/my_blog/docs/blog/posts/RAG/10-Retriever/08-SelfQueryRetriever.html</guid>
-  <pubDate>Wed, 26 Nov 2025 02:19:19 GMT</pubDate>
+  <pubDate>Mon, 01 Dec 2025 02:09:50 GMT</pubDate>
 </item>
 <item>
   <title>한글 단어 리트리버 튜닝</title>
@@ -8345,7 +8542,7 @@ okt_bm25_faiss_37       : 금융보험은 장기적인 자산 관리와 위험 �
 
  ]]></description>
   <guid>https://dlwns0719.github.io/my_blog/docs/blog/posts/RAG/10-Retriever/10-Kiwi-BM25Retriever.html</guid>
-  <pubDate>Wed, 26 Nov 2025 02:19:19 GMT</pubDate>
+  <pubDate>Mon, 01 Dec 2025 02:09:50 GMT</pubDate>
 </item>
 <item>
   <title>시간 가중 벡터저장소 리트리버(TimeWeightedVectorStoreRetriever)</title>
@@ -8774,7 +8971,7 @@ font-style: inherit;">"테디노트"</span>))</span></code></pre></div></div>
 
  ]]></description>
   <guid>https://dlwns0719.github.io/my_blog/docs/blog/posts/RAG/10-Retriever/09-TimeWeightedVectorStoreRetriever.html</guid>
-  <pubDate>Wed, 26 Nov 2025 02:19:19 GMT</pubDate>
+  <pubDate>Mon, 01 Dec 2025 02:09:50 GMT</pubDate>
 </item>
 <item>
   <title>벡터스토어 기반 검색기(VectorStore-backed Retriever)</title>
@@ -9567,7 +9764,7 @@ font-style: inherit;">2</span>)</span></code></pre></div></div>
 
  ]]></description>
   <guid>https://dlwns0719.github.io/my_blog/docs/blog/posts/RAG/10-Retriever/01-VectorStoreRetriever.html</guid>
-  <pubDate>Wed, 26 Nov 2025 02:19:19 GMT</pubDate>
+  <pubDate>Mon, 01 Dec 2025 02:09:50 GMT</pubDate>
 </item>
 <item>
   <title>긴 문맥 재정렬(LongContextReorder)</title>
@@ -10052,7 +10249,7 @@ font-style: inherit;">print</span>(answer)</span></code></pre></div></div>
 
  ]]></description>
   <guid>https://dlwns0719.github.io/my_blog/docs/blog/posts/RAG/10-Retriever/04-LongContextReorder.html</guid>
-  <pubDate>Wed, 26 Nov 2025 02:19:19 GMT</pubDate>
+  <pubDate>Mon, 01 Dec 2025 02:09:50 GMT</pubDate>
 </item>
 <item>
   <title>다중 벡터저장소 검색기(MultiVectorRetriever)</title>
@@ -11504,658 +11701,7 @@ font-style: inherit;">print</span>(doc.page_content)</span></code></pre></div></
 
  ]]></description>
   <guid>https://dlwns0719.github.io/my_blog/docs/blog/posts/RAG/10-Retriever/07-MultiVectorRetriever.html</guid>
-  <pubDate>Wed, 26 Nov 2025 02:19:19 GMT</pubDate>
-</item>
-<item>
-  <title>Part 1 — 프롬프트 구조와 기능 탐구</title>
-  <link>https://dlwns0719.github.io/my_blog/docs/blog/posts/Prompt_Engineering/01-Prompt-Structure/02-Prompt-Structure.html</link>
-  <description><![CDATA[ 
-
-
-
-
-
-
-<section id="프롬프트-설계-원칙" class="level1" data-number="1">
-<h1 data-number="1"><span class="header-section-number">1</span> 프롬프트 설계 원칙</h1>
-<section id="대-원칙" class="level2" data-number="1.1">
-<h2 data-number="1.1" class="anchored" data-anchor-id="대-원칙"><span class="header-section-number">1.1</span> 4대 원칙</h2>
-<ol type="1">
-<li><strong>범용성</strong>: 다양한 상황에서도 동작, 불특정 다수의 사용자 대상 다양한 상황과 과제에 적용 가능한 프롬프트의 결과를 내야 한다.<br>
-</li>
-<li><strong>목적 지향성</strong>: 특정 사용자 목적에 세분화된 기능을 제공해야 한다.</li>
-<li><strong>일관성</strong>: 여러가지 LLM 모델을 사용하더라도, 생성 할 때마다 결과가 바뀌면 안된다. 어느정도 스펙트럼 안에서 일정한 결과 유지.</li>
-<li><strong>경제성</strong>: 단어, 토큰수 운영 비용 API 비용 절감</li>
-</ol>
-</section>
-<section id="scaffolding-prompting" class="level2" data-number="1.2">
-<h2 data-number="1.2" class="anchored" data-anchor-id="scaffolding-prompting"><span class="header-section-number">1.2</span> Scaffolding Prompting</h2>
-<ul>
-<li>비계식 설계</li>
-<li>인간의 학습 이론(ZPD)을 적용</li>
-<li>외국어를 학습하는 사람들의 학습 능력을 최대한 끌어올리려면, 최대한 쉬운 단계부터 어려운 단계까지 차츰차츰 비계식으로 올라가야 한다.</li>
-<li>단어 -&gt; 문장 -&gt; 문단 완성을 하는 단계별 학습 방식 사용</li>
-<li>프롬프트 설계를 할떄도 이 방식을 사용하면 정말 잘 설계를 할 수 있다.</li>
-<li>Understand → Ideation → Analysis → Apply → Evaluate → Generalize</li>
-<li>풀어야될 문제(요구사항)에 대한 이해</li>
-<li>문제에 대한 이해를 바탕으로 여러가지 프롬프트를 만드는 아이디에이션 진행.</li>
-<li>아이디에이션을 통해 구현된 프롬프트를 분석.</li>
-<li>실제로 도입, 적용, 평가</li>
-<li>일반화 할 수 있는 결과를 얻으면 배포 진행.</li>
-<li>단계적 사고구조 유도</li>
-</ul>
-</section>
-<section id="핵심-5-tips" class="level2" data-number="1.3">
-<h2 data-number="1.3" class="anchored" data-anchor-id="핵심-5-tips"><span class="header-section-number">1.3</span> 핵심 5 Tips</h2>
-<section id="tip1.-최신-모델-사용" class="level3" data-number="1.3.1">
-<h3 data-number="1.3.1" class="anchored" data-anchor-id="tip1.-최신-모델-사용"><span class="header-section-number">1.3.1</span> Tip1. 최신 모델 사용</h3>
-<ul>
-<li>최근까지 GPT 4/5</li>
-<li>최신모델을 사용하면 프롬프트가 조금 엉성해도 좋은 결과를 얻을 수 있다.</li>
-<li>그러나 GPT 3.5을 이용해 A 라는 기능을 4/5 만큼 끌어올릴 수 있다면, 이 방법이 좋은 방법이다.</li>
-</ul>
-</section>
-<section id="tip2.-명확한-동사로-지시" class="level3" data-number="1.3.2">
-<h3 data-number="1.3.2" class="anchored" data-anchor-id="tip2.-명확한-동사로-지시"><span class="header-section-number">1.3.2</span> Tip2. 명확한 동사로 지시</h3>
-<p>어떤 단어가 좀더 구체적, 또는 명확하게 표현이 되어있는지 확인 조금더 명확한 동작을 하는 단어가 있을 수 있다. 뭐를 나누다 라는 맥락이 없으면 뜻을 정확하게 이해하기가 어려운 언어이다. 예: 분석해, 정리해, 요약해, 작성해 등 –&gt; 정확하게 무엇을 하려고 하는지 맥락 없어도 이해 가능하다.</p>
-</section>
-<section id="tip3.-프롬프트를-구조화하자" class="level3" data-number="1.3.3">
-<h3 data-number="1.3.3" class="anchored" data-anchor-id="tip3.-프롬프트를-구조화하자"><span class="header-section-number">1.3.3</span> Tip3. 프롬프트를 구조화하자</h3>
-<p>구조화라 함은 어떻게 요소별로 나눈다던지 섹션별로 컴포지션을 나누어서, 언어모델이 읽기 편한 구조를 만든다. 대표적으로 2가지 방법(<strong>Markdown</strong>, <strong>코드 프롬프트</strong>)이 있다. 프롬프트를 구조화하면 LLM이 입력을 더 명확하게 해석할 수 있고,<br>
-작업 목적·규칙·입력 데이터·출력 형식을 혼동 없이 처리할 수 있다.<br>
-구조화를 위한 핵심 기법은 <strong>Markdown</strong>, <strong>코드 프롬프트</strong>, <strong>XML 태그</strong>이다.</p>
-<ol type="1">
-<li>Markdown 기호 사용하기 (Headers, Lists, Emphasis)</li>
-</ol>
-<p>Markdown은 LLM이 가장 잘 해석하는 구조적 문법 중 하나이다.<br>
-섹션을 명확히 나누고, 각 부분을 시각적으로 구분해줌으로써<br>
-모델의 오류를 줄이고 반복 작업 시 유지보수성이 높아진다.</p>
-<p>1.1 헤더(Headers) 활용 헤더는 프롬프트의 구성을 크게 나누는 데 사용한다. 샾 개수만큼 주 제목, 부제목, 소제목 등의 계층적 우선순위 인덱스를 부여할 수 있다.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode numberSource markdown number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;"># 역할(Role)</span></span>
-<span id="cb1-2">너는 스포츠 기사 분석 엔진이다.</span>
-<span id="cb1-3"></span>
-<span id="cb1-4"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">## 작업(Task)</span></span>
-<span id="cb1-5">아래 텍스트에서 장소(도시, 국가, 축구 클럽)를 모두 추출해라.</span>
-<span id="cb1-6"></span>
-<span id="cb1-7"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">## 출력 형식(Format)</span></span>
-<span id="cb1-8"><span class="ss" style="color: #20794D;
-background-color: null;
-font-style: inherit;">- </span>"장소: A, B, C" 형태의 한 줄 출력</span>
-<span id="cb1-9"><span class="ss" style="color: #20794D;
-background-color: null;
-font-style: inherit;">- </span>설명 금지</span>
-<span id="cb1-10"></span>
-<span id="cb1-11"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">## 텍스트(Text)</span></span>
-<span id="cb1-12">{{TEXT}}</span></code></pre></div></div>
-<p>1.2 목록(Lists) 활용 하이픈이나, 번호를 이용 –&gt; 수행할 순서가 있는 프롬프트에 사용한다. 절차, 규칙, 조건을 번호 목록으로 정리하면 LLM이 하나씩 적용하기 쉽다.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode numberSource markdown number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb2-1">다음 규칙을 따라 작업을 수행해라.</span>
-<span id="cb2-2"><span class="ss" style="color: #20794D;
-background-color: null;
-font-style: inherit;">1. </span>사람 이름은 제외한다.</span>
-<span id="cb2-3"><span class="ss" style="color: #20794D;
-background-color: null;
-font-style: inherit;">2. </span>축구 클럽은 장소로 포함한다.</span>
-<span id="cb2-4"><span class="ss" style="color: #20794D;
-background-color: null;
-font-style: inherit;">3. </span>결과는 쉼표로 구분한다.</span>
-<span id="cb2-5"><span class="ss" style="color: #20794D;
-background-color: null;
-font-style: inherit;">4. </span>설명 문장은 쓰지 않는다.</span></code></pre></div></div>
-<p>1.3 강조(Emphasis) 사용</p>
-<p>중요 조건을 굵게 또는 기울임으로 표시해 모델의 우선순위를 높인다. 실제로 이탤릭, 볼드체로 표현은 되지 않는다. 언어모델에게 일반 줄글의 텍스트가 아닌 다른 요소임을 강조.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode numberSource markdown number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb3-1"><span class="ss" style="color: #20794D;
-background-color: null;
-font-style: inherit;">- </span>반드시 **한국어**로 작성하라.</span>
-<span id="cb3-2"><span class="ss" style="color: #20794D;
-background-color: null;
-font-style: inherit;">- </span>출력은 **한 줄**로만 작성한다.</span>
-<span id="cb3-3"><span class="ss" style="color: #20794D;
-background-color: null;
-font-style: inherit;">- </span>*설명 문장은 포함하지 않는다.*</span></code></pre></div></div>
-<ol start="2" type="1">
-<li>코드 프롬프트(Code Prompting)</li>
-</ol>
-<p>구조화를 좀더 구체적으로 하는 방식에 대해서 소개. AdaPlanner 논순 발췌, 구글의 리서처 분들이 많이 사용한다. 파이썬 언어를 사용해서 언어 모델이 정확히 수행 해야 하는 내용을 작성. 자연어 대신 <strong>코드 형식</strong>으로 의도를 명세하면 애매함이 줄어들고 LLM이 구조적으로 이해해 할루시네이션이 감소한다.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># 역할 정의</span></span>
-<span id="cb4-2">role <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"정보 추출 엔진"</span></span>
-<span id="cb4-3"></span>
-<span id="cb4-4"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># 작업 정의</span></span>
-<span id="cb4-5">task <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"텍스트에서 '장소명'을 추출해 정렬된 리스트로 반환"</span></span>
-<span id="cb4-6"></span>
-<span id="cb4-7"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># 출력 형식 정의</span></span>
-<span id="cb4-8">output <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> {</span>
-<span id="cb4-9">    <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"places"</span>: [<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"string"</span>]</span>
-<span id="cb4-10">}</span></code></pre></div></div>
-<p>코드 방식의 장점:</p>
-<ul>
-<li>논리 구조가 명확하게 표현됨</li>
-<li>조건과 출력 형식이 혼동되지 않음</li>
-<li>정형화된 포맷을 자주 재사용 가능</li>
-</ul>
-<ol start="3" type="1">
-<li>XML 태그 기반 구조화 (Claude 최적화)</li>
-</ol>
-<p>엔트로픽 프롬팅 쿡북 참조하면 나오는 내용. 문장 내 구역 나눔, 해당 구적을 강조하는 효과, 반복작업에서 프롬프트 수정과 편집/용이, 언어모델의 처리 속도 향상 XML 태그는 텍스트 내 특정 영역을 명확히 구분해 Claude뿐 아니라 대부분의 LLM에서 <strong>구조적 파싱</strong>을 돕는 강력한 방식이다.</p>
-<p>이 방식의 장점은 탬플릿이 가능하다.</p>
-<ul>
-<li>태그로 영역 지정</li>
-</ul>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb5-1">&lt;email&gt;</span>
-<span id="cb5-2">Show up at 6AM because I say so.</span>
-<span id="cb5-3">&lt;/email&gt;</span>
-<span id="cb5-4"></span>
-<span id="cb5-5">Make this email more polite.</span></code></pre></div></div>
-<p>LLM은 <code>&lt;email&gt;...&lt;/email&gt;</code> 내부 텍스트만 변환하면 된다는 것을 명확히 인식한다.</p>
-<ul>
-<li>데이터 템플릿 예시</li>
-</ul>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb6-1">&lt;animal&gt;{{ANIMAL}}&lt;/animal&gt;</span></code></pre></div></div>
-<p>입력만 바꿔 여러 데이터를 동일한 템플릿에 적용할 수 있다.</p>
-<p>예:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb7-1">&lt;animal&gt;Cow&lt;/animal&gt;</span>
-<span id="cb7-2">&lt;animal&gt;Dog&lt;/animal&gt;</span>
-<span id="cb7-3">&lt;animal&gt;Seal&lt;/animal&gt;</span></code></pre></div></div>
-<p>장점:</p>
-<ul>
-<li>구역별 의미가 명확</li>
-<li>반복 작업에서 수정이 쉽고 안정적</li>
-<li>모델이 태그 단위로 파싱하기 때문에 오류 감소</li>
-</ul>
-<ol start="4" type="1">
-<li>구조화 기법이 필요한 이유</li>
-</ol>
-<ul>
-<li>명령어, 입력 데이터, 출력 형식을 명확히 구분해 <strong>모델의 해석 오류를 줄인다.</strong></li>
-<li>규칙을 시각적으로 구분하여 <strong>작업 수행 품질의 일관성과 재현성을 높인다.</strong></li>
-<li>재사용 가능한 템플릿이 되어 <strong>프롬프트 제작 비용과 시간 절감에 기여한다.</strong></li>
-</ul>
-</section>
-<section id="tip4.-단문-중심의-간결한-문장을-쓰자." class="level3" data-number="1.3.4">
-<h3 data-number="1.3.4" class="anchored" data-anchor-id="tip4.-단문-중심의-간결한-문장을-쓰자."><span class="header-section-number">1.3.4</span> Tip4. 단문 중심의 간결한 문장을 쓰자.</h3>
-<ul>
-<li>한국어는 짧고 명확하게 작성</li>
-<li>톤·형식·분량을 구체적으로 지시</li>
-</ul>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb8-1">- 나쁜 예</span>
-<span id="cb8-2">5월의 봄을 주제로 시를 써주고 짧게</span>
-<span id="cb8-3">작성해줘 봄의 느낌을 살려봐.</span>
-<span id="cb8-4">결과: 오월의 푸른 하늘 아래</span>
-<span id="cb8-5">새싹이 희망을 노래하네.</span>
-<span id="cb8-6">아침 이슬에 빛나는 꽃들,</span>
-<span id="cb8-7">봄바람 따라 춤추는 나비.</span>
-<span id="cb8-8">모든 거리는 축제가 되어.</span>
-<span id="cb8-9"></span>
-<span id="cb8-10">- 좋은 예</span>
-<span id="cb8-11">너는 시인이야. 한국의 계절, 봄을 상상해봐.</span>
-<span id="cb8-12">5월이야. 다양한 꽃이 여기저기 폈어.</span>
-<span id="cb8-13">그 분위기에 어울리는 짧은 시를 5줄 이내로</span>
-<span id="cb8-14">작성해줘. 한글 고유의 멋이 시에 드러나면 좋겠어.</span>
-<span id="cb8-15">결과: 봄바람, 너른 들녘을 스치며</span>
-<span id="cb8-16">꽃잎들 춤추듯 흩날리네</span>
-<span id="cb8-17">산들산들 부는 바람에</span>
-<span id="cb8-18">눈부신 햇살 아래</span>
-<span id="cb8-19">은은한 꽃 향기에 취하노라</span></code></pre></div></div>
-</section>
-<section id="tip5.-하지-말-것x-할-것o" class="level3" data-number="1.3.5">
-<h3 data-number="1.3.5" class="anchored" data-anchor-id="tip5.-하지-말-것x-할-것o"><span class="header-section-number">1.3.5</span> Tip5. 하지 말 것(X) → 할 것(O)</h3>
-<ul>
-<li>부정 지시보다 긍정적 행동 지시가 안정적 구체적인 내용을 단문 형식으로 제공함과 언어모델에게 추측을 해야 하는 여지를 주면 안된다.</li>
-</ul>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb9-1">- 나쁜 예</span>
-<span id="cb9-2">다음은 에이전트와 고객의 대화이다.</span>
-<span id="cb9-3">고객에게 아이디와 비밀번호를 묻지</span>
-<span id="cb9-4">않는다. 반복하지 않는다.</span>
-<span id="cb9-5"></span>
-<span id="cb9-6">- 좋은 예</span>
-<span id="cb9-7">다음은 에이전트와 고객과의 대화내용이다.</span>
-<span id="cb9-8">챗봇은 고객의 대화에서 드러난 문제를 진단하고 해결책을</span>
-<span id="cb9-9">제시해야 한다. 사용자 아이디와 비밀번호같은 개인정보를</span>
-<span id="cb9-10">묻지 않는 대신,</span>
-<span id="cb9-11">사용자가 www.samplewebsite.com/help/faq에서 관련</span>
-<span id="cb9-12">사항을 찾도록 안내해라.</span></code></pre></div></div>
-</section>
-</section>
-<section id="프롬프트-제작에-100-절대적인-것은-없다." class="level2" data-number="1.4">
-<h2 data-number="1.4" class="anchored" data-anchor-id="프롬프트-제작에-100-절대적인-것은-없다."><span class="header-section-number">1.4</span> 프롬프트 제작에 100% 절대적인 것은 없다.</h2>
-<ul>
-<li>절대 나와서는 안되는 조건을 적용하기</li>
-<li>되도록 LLM 이 추론을 할 수 없게 구체적으로 주기</li>
-<li>긍정문을 쓰되 절대 나와서 안되는 문구들은 2중 부정을 사용</li>
-</ul>
-</section>
-</section>
-<section id="llm의-한계와-프롬프트-엔지니어링-필요성" class="level1" data-number="2">
-<h1 data-number="2"><span class="header-section-number">2</span> LLM의 한계와 프롬프트 엔지니어링 필요성</h1>
-<section id="llm-한계" class="level2" data-number="2.1">
-<h2 data-number="2.1" class="anchored" data-anchor-id="llm-한계"><span class="header-section-number">2.1</span> LLM 한계</h2>
-<ul>
-<li>할루시네이션</li>
-<li>편향성</li>
-<li>근거 없는 출처 생성</li>
-<li>수학 및 추론 한계</li>
-<li>Prompt Injection(프롬프트 해킹)</li>
-</ul>
-</section>
-<section id="프롬프트-엔지니어링이-필요한-이유" class="level2" data-number="2.2">
-<h2 data-number="2.2" class="anchored" data-anchor-id="프롬프트-엔지니어링이-필요한-이유"><span class="header-section-number">2.2</span> 프롬프트 엔지니어링이 필요한 이유</h2>
-<ul>
-<li>정확성 향상</li>
-<li>오류 및 편향 감소</li>
-<li>모델 행동 제어</li>
-<li>사용자 경험 개선</li>
-<li>비용 절감</li>
-</ul>
-
-
-</section>
-</section>
-
- ]]></description>
-  <category>AI</category>
-  <category>LangChain</category>
-  <category>Prompt_Engineering</category>
-  <guid>https://dlwns0719.github.io/my_blog/docs/blog/posts/Prompt_Engineering/01-Prompt-Structure/02-Prompt-Structure.html</guid>
-  <pubDate>Wed, 26 Nov 2025 02:19:19 GMT</pubDate>
-</item>
-<item>
-  <title>Part 1 — 프롬프트 구조와 기능 탐구</title>
-  <link>https://dlwns0719.github.io/my_blog/docs/blog/posts/Prompt_Engineering/01-Prompt-Structure/01-Prompt-Structure.html</link>
-  <description><![CDATA[ 
-
-
-
-
-
-
-<section id="프롬프트-기초" class="level1" data-number="1">
-<h1 data-number="1"><span class="header-section-number">1</span> 1. 프롬프트 기초</h1>
-<section id="인간-컴퓨터-상호작용의-변화" class="level2" data-number="1.1">
-<h2 data-number="1.1" class="anchored" data-anchor-id="인간-컴퓨터-상호작용의-변화"><span class="header-section-number">1.1</span> 1.1 인간-컴퓨터 상호작용의 변화</h2>
-<ul>
-<li>문자의 발명 → 인류의 기록 정확도 향상</li>
-<li>인쇄술 → 지식 대중화</li>
-<li>전화·라디오·TV → 즉각적인 원격 소통</li>
-<li>인터넷·모바일 → 실시간 대화</li>
-<li>생성형 AI → 인간-기계 상호작용 고도화</li>
-</ul>
-</section>
-<section id="프롬프트의-정의" class="level2" data-number="1.2">
-<h2 data-number="1.2" class="anchored" data-anchor-id="프롬프트의-정의"><span class="header-section-number">1.2</span> 1.2 프롬프트의 정의</h2>
-<ul>
-<li><em>Promptus</em>(나타내다/생산하다)에서 유래</li>
-<li>현재 의미: <strong>행동을 유도하는 신호</strong></li>
-<li>AI에서: <strong>모델에게 답변을 생성하도록 입력하는 문장</strong></li>
-</ul>
-</section>
-<section id="프롬프트-vs-프롬프트-엔지니어링" class="level2" data-number="1.3">
-<h2 data-number="1.3" class="anchored" data-anchor-id="프롬프트-vs-프롬프트-엔지니어링"><span class="header-section-number">1.3</span> 1.3 프롬프트 vs 프롬프트 엔지니어링</h2>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 5%">
-<col style="width: 25%">
-<col style="width: 68%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>항목</th>
-<th>프롬프트</th>
-<th>프롬프트 엔지니어링</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>목적</td>
-<td>응답 생성 요청</td>
-<td>원하는 형태로 정확한 응답을 얻기 위한 설계</td>
-</tr>
-<tr class="even">
-<td>필요성</td>
-<td>기본 입력</td>
-<td>모델 작동 방식·언어적 맥락 이해 필요</td>
-</tr>
-<tr class="odd">
-<td>예시</td>
-<td>“용에 대한 이야기 해줘”</td>
-<td>“용감한 용이 마을을 구하는 5문장 이야기 생성해줘. 대화 포함.”</td>
-</tr>
-</tbody>
-</table>
-</section>
-</section>
-<section id="대형-언어-모델llm-이해" class="level1" data-number="2">
-<h1 data-number="2"><span class="header-section-number">2</span> 2. 대형 언어 모델(LLM) 이해</h1>
-<section id="개념" class="level2" data-number="2.1">
-<h2 data-number="2.1" class="anchored" data-anchor-id="개념"><span class="header-section-number">2.1</span> 2.1 개념</h2>
-<ul>
-<li>방대한 데이터 기반 사전학습 모델</li>
-<li><strong>Autoregression</strong>: 이전 토큰 기반으로 다음 단어 예측</li>
-<li>기반 기술: <strong>Transformer 구조(셀프 어텐션)</strong></li>
-</ul>
-</section>
-<section id="주요-모델-패밀리" class="level2" data-number="2.2">
-<h2 data-number="2.2" class="anchored" data-anchor-id="주요-모델-패밀리"><span class="header-section-number">2.2</span> 2.2 주요 모델 패밀리</h2>
-<ul>
-<li><strong>OpenAI – GPT-4o</strong>: 멀티모달·실시간 처리</li>
-<li><strong>Anthropic – Claude 3</strong>: 안전성 중점, 헌법적 AI</li>
-<li><strong>Google – Gemini / BERT / T5</strong>: 다중 모달 처리</li>
-</ul>
-</section>
-<section id="모델-튜닝-방식" class="level2" data-number="2.3">
-<h2 data-number="2.3" class="anchored" data-anchor-id="모델-튜닝-방식"><span class="header-section-number">2.3</span> 2.3 모델 튜닝 방식</h2>
-<ul>
-<li>Fine-Tuning</li>
-<li>Prompt Engineering</li>
-<li>Feature-Tuning(특징 공간 해석 기반 제어)</li>
-</ul>
-</section>
-</section>
-<section id="프롬프트-기본-요소" class="level1" data-number="3">
-<h1 data-number="3"><span class="header-section-number">3</span> 3. 프롬프트 기본 요소</h1>
-<section id="필수-4요소" class="level2" data-number="3.1">
-<h2 data-number="3.1" class="anchored" data-anchor-id="필수-4요소"><span class="header-section-number">3.1</span> 3.1 필수 4요소</h2>
-<ol type="1">
-<li><strong>Instruction</strong>: 어떤 작업을 해야 하는가</li>
-<li><strong>Context</strong>: 배경 정보</li>
-<li><strong>Input Data</strong>: 처리 대상 데이터</li>
-<li><strong>Output Indicator</strong>: 출력 형식 규정</li>
-</ol>
-</section>
-<section id="프롬프트-타입-구조type-ad" class="level2" data-number="3.2">
-<h2 data-number="3.2" class="anchored" data-anchor-id="프롬프트-타입-구조type-ad"><span class="header-section-number">3.2</span> 3.2 프롬프트 타입 구조(Type A–D)</h2>
-<ul>
-<li><strong>A: 지시문 + 출력문</strong></li>
-<li><strong>B: 지시문 + 맥락 + 출력문</strong></li>
-<li><strong>C: 지시문 + 맥락 + 예시 + 출력문</strong></li>
-<li><strong>D: 지시문 + 입력값 + 출력문</strong></li>
-</ul>
-<p>예시와 함께 구조적으로 프롬프트를 설계하면 LLM이 더 안정적으로 원하는 출력 생성.</p>
-</section>
-</section>
-<section id="프롬프트-설계-원칙" class="level1" data-number="4">
-<h1 data-number="4"><span class="header-section-number">4</span> 4. 프롬프트 설계 원칙</h1>
-<section id="대-원칙" class="level2" data-number="4.1">
-<h2 data-number="4.1" class="anchored" data-anchor-id="대-원칙"><span class="header-section-number">4.1</span> 4.1 4대 원칙</h2>
-<ol type="1">
-<li><strong>범용성</strong>: 다양한 상황에서도 동작</li>
-<li><strong>목적 지향성</strong>: 특정 사용자 목적 반영</li>
-<li><strong>일관성</strong>: 반복 실행해도 동일 품질</li>
-<li><strong>경제성</strong>: API 비용 절감</li>
-</ol>
-</section>
-<section id="scaffolding-prompting" class="level2" data-number="4.2">
-<h2 data-number="4.2" class="anchored" data-anchor-id="scaffolding-prompting"><span class="header-section-number">4.2</span> 4.2 Scaffolding Prompting</h2>
-<ul>
-<li>인간의 학습 이론(ZPD)을 적용</li>
-<li>Understand → Ideation → Analysis → Apply → Evaluate → Generalize</li>
-<li>단계적 사고구조 유도</li>
-</ul>
-</section>
-<section id="핵심-5-tips" class="level2" data-number="4.3">
-<h2 data-number="4.3" class="anchored" data-anchor-id="핵심-5-tips"><span class="header-section-number">4.3</span> 4.3 핵심 5 Tips</h2>
-<section id="tip1.-최신-모델-사용" class="level3" data-number="4.3.1">
-<h3 data-number="4.3.1" class="anchored" data-anchor-id="tip1.-최신-모델-사용"><span class="header-section-number">4.3.1</span> Tip1. 최신 모델 사용</h3>
-</section>
-<section id="tip2.-명확한-동사로-지시" class="level3" data-number="4.3.2">
-<h3 data-number="4.3.2" class="anchored" data-anchor-id="tip2.-명확한-동사로-지시"><span class="header-section-number">4.3.2</span> Tip2. 명확한 동사로 지시</h3>
-<p>예: 분석해, 정리해, 요약해, 작성해 등</p>
-</section>
-<section id="tip-3.-프롬프트를-구조화하자" class="level3" data-number="4.3.3">
-<h3 data-number="4.3.3" class="anchored" data-anchor-id="tip-3.-프롬프트를-구조화하자"><span class="header-section-number">4.3.3</span> Tip 3. 프롬프트를 구조화하자</h3>
-<p>프롬프트를 구조화하면 LLM이 입력을 더 명확하게 해석할 수 있고,<br>
-작업 목적·규칙·입력 데이터·출력 형식을 혼동 없이 처리할 수 있다.<br>
-구조화를 위한 핵심 기법은 <strong>Markdown</strong>, <strong>코드 프롬프트</strong>, <strong>XML 태그</strong>이다.</p>
-</section>
-</section>
-<section id="markdown-구조화-headers-lists-emphasis" class="level2" data-number="4.4">
-<h2 data-number="4.4" class="anchored" data-anchor-id="markdown-구조화-headers-lists-emphasis"><span class="header-section-number">4.4</span> 3.1 Markdown 구조화 (Headers, Lists, Emphasis)</h2>
-<p>Markdown은 LLM이 가장 잘 해석하는 구조적 문법 중 하나이다.<br>
-섹션을 명확히 나누고, 각 부분을 시각적으로 구분해줌으로써<br>
-모델의 오류를 줄이고 반복 작업 시 유지보수성이 높아진다.</p>
-<section id="헤더headers-활용" class="level3" data-number="4.4.1">
-<h3 data-number="4.4.1" class="anchored" data-anchor-id="헤더headers-활용"><span class="header-section-number">4.4.1</span> 1) 헤더(Headers) 활용</h3>
-<p>헤더는 프롬프트의 구성을 크게 나누는 데 사용한다.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode numberSource markdown number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;"># 역할(Role)</span></span>
-<span id="cb1-2">너는 스포츠 기사 분석 엔진이다.</span>
-<span id="cb1-3"></span>
-<span id="cb1-4"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">## 작업(Task)</span></span>
-<span id="cb1-5">아래 텍스트에서 장소(도시, 국가, 축구 클럽)를 모두 추출해라.</span>
-<span id="cb1-6"></span>
-<span id="cb1-7"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">## 출력 형식(Format)</span></span>
-<span id="cb1-8"><span class="ss" style="color: #20794D;
-background-color: null;
-font-style: inherit;">- </span>"장소: A, B, C" 형태의 한 줄 출력</span>
-<span id="cb1-9"><span class="ss" style="color: #20794D;
-background-color: null;
-font-style: inherit;">- </span>설명 금지</span>
-<span id="cb1-10"></span>
-<span id="cb1-11"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">## 텍스트(Text)</span></span>
-<span id="cb1-12">{{TEXT}}</span></code></pre></div></div>
-</section>
-<section id="목록lists-활용" class="level3" data-number="4.4.2">
-<h3 data-number="4.4.2" class="anchored" data-anchor-id="목록lists-활용"><span class="header-section-number">4.4.2</span> 2) 목록(Lists) 활용</h3>
-<p>절차, 규칙, 조건을 번호 목록으로 정리하면 LLM이 하나씩 적용하기 쉽다.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode numberSource markdown number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb2-1">다음 규칙을 따라 작업을 수행해라.</span>
-<span id="cb2-2"><span class="ss" style="color: #20794D;
-background-color: null;
-font-style: inherit;">1. </span>사람 이름은 제외한다.</span>
-<span id="cb2-3"><span class="ss" style="color: #20794D;
-background-color: null;
-font-style: inherit;">2. </span>축구 클럽은 장소로 포함한다.</span>
-<span id="cb2-4"><span class="ss" style="color: #20794D;
-background-color: null;
-font-style: inherit;">3. </span>결과는 쉼표로 구분한다.</span>
-<span id="cb2-5"><span class="ss" style="color: #20794D;
-background-color: null;
-font-style: inherit;">4. </span>설명 문장은 쓰지 않는다.</span></code></pre></div></div>
-</section>
-<section id="강조emphasis-사용" class="level3" data-number="4.4.3">
-<h3 data-number="4.4.3" class="anchored" data-anchor-id="강조emphasis-사용"><span class="header-section-number">4.4.3</span> 3) 강조(Emphasis) 사용</h3>
-<p>중요 조건을 굵게 또는 기울임으로 표시해 모델의 우선순위를 높인다.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode numberSource markdown number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb3-1"><span class="ss" style="color: #20794D;
-background-color: null;
-font-style: inherit;">- </span>반드시 **한국어**로 작성하라.</span>
-<span id="cb3-2"><span class="ss" style="color: #20794D;
-background-color: null;
-font-style: inherit;">- </span>출력은 **한 줄**로만 작성한다.</span>
-<span id="cb3-3"><span class="ss" style="color: #20794D;
-background-color: null;
-font-style: inherit;">- </span>*설명 문장은 포함하지 않는다.*</span></code></pre></div></div>
-</section>
-</section>
-<section id="코드-프롬프트code-prompting" class="level2" data-number="4.5">
-<h2 data-number="4.5" class="anchored" data-anchor-id="코드-프롬프트code-prompting"><span class="header-section-number">4.5</span> 3.2 코드 프롬프트(Code Prompting)</h2>
-<p>자연어 대신 <strong>코드 형식</strong>으로 의도를 명세하면 애매함이 줄어들고 LLM이 구조적으로 이해해 할루시네이션이 감소한다.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># 역할 정의</span></span>
-<span id="cb4-2">role <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"정보 추출 엔진"</span></span>
-<span id="cb4-3"></span>
-<span id="cb4-4"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># 작업 정의</span></span>
-<span id="cb4-5">task <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"텍스트에서 '장소명'을 추출해 정렬된 리스트로 반환"</span></span>
-<span id="cb4-6"></span>
-<span id="cb4-7"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># 출력 형식 정의</span></span>
-<span id="cb4-8">output <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> {</span>
-<span id="cb4-9">    <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"places"</span>: [<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"string"</span>]</span>
-<span id="cb4-10">}</span></code></pre></div></div>
-<p>코드 방식의 장점:</p>
-<ul>
-<li>논리 구조가 명확하게 표현됨</li>
-<li>조건과 출력 형식이 혼동되지 않음</li>
-<li>정형화된 포맷을 자주 재사용 가능</li>
-</ul>
-</section>
-<section id="xml-태그-기반-구조화-claude-최적화" class="level2" data-number="4.6">
-<h2 data-number="4.6" class="anchored" data-anchor-id="xml-태그-기반-구조화-claude-최적화"><span class="header-section-number">4.6</span> 3.3 XML 태그 기반 구조화 (Claude 최적화)</h2>
-<p>XML 태그는 텍스트 내 특정 영역을 명확히 구분해 Claude뿐 아니라 대부분의 LLM에서 <strong>구조적 파싱</strong>을 돕는 강력한 방식이다.</p>
-<section id="태그로-영역-지정" class="level3" data-number="4.6.1">
-<h3 data-number="4.6.1" class="anchored" data-anchor-id="태그로-영역-지정"><span class="header-section-number">4.6.1</span> 1) 태그로 영역 지정</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb5-1">&lt;email&gt;</span>
-<span id="cb5-2">Show up at 6AM because I say so.</span>
-<span id="cb5-3">&lt;/email&gt;</span>
-<span id="cb5-4"></span>
-<span id="cb5-5">Make this email more polite.</span></code></pre></div></div>
-<p>LLM은 <code>&lt;email&gt;...&lt;/email&gt;</code> 내부 텍스트만 변환하면 된다는 것을 명확히 인식한다.</p>
-</section>
-<section id="데이터-템플릿-예시" class="level3" data-number="4.6.2">
-<h3 data-number="4.6.2" class="anchored" data-anchor-id="데이터-템플릿-예시"><span class="header-section-number">4.6.2</span> 2) 데이터 템플릿 예시</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb6-1">&lt;animal&gt;{{ANIMAL}}&lt;/animal&gt;</span></code></pre></div></div>
-<p>입력만 바꿔 여러 데이터를 동일한 템플릿에 적용할 수 있다.</p>
-<p>예:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb7-1">&lt;animal&gt;Cow&lt;/animal&gt;</span>
-<span id="cb7-2">&lt;animal&gt;Dog&lt;/animal&gt;</span>
-<span id="cb7-3">&lt;animal&gt;Seal&lt;/animal&gt;</span></code></pre></div></div>
-<p>장점:</p>
-<ul>
-<li>구역별 의미가 명확</li>
-<li>반복 작업에서 수정이 쉽고 안정적</li>
-<li>모델이 태그 단위로 파싱하기 때문에 오류 감소</li>
-</ul>
-</section>
-</section>
-<section id="구조화-기법이-필요한-이유" class="level2" data-number="4.7">
-<h2 data-number="4.7" class="anchored" data-anchor-id="구조화-기법이-필요한-이유"><span class="header-section-number">4.7</span> 3.4 구조화 기법이 필요한 이유</h2>
-<ul>
-<li>명령어, 입력 데이터, 출력 형식을 명확히 구분해 <strong>모델의 해석 오류를 줄인다.</strong></li>
-<li>규칙을 시각적으로 구분하여 <strong>작업 수행 품질의 일관성과 재현성을 높인다.</strong></li>
-<li>재사용 가능한 템플릿이 되어 <strong>프롬프트 제작 비용과 시간 절감에 기여한다.</strong></li>
-</ul>
-</section>
-<section id="구조화-적용-사례-장소명-추출" class="level2" data-number="4.8">
-<h2 data-number="4.8" class="anchored" data-anchor-id="구조화-적용-사례-장소명-추출"><span class="header-section-number">4.8</span> 3.5 구조화 적용 사례 (장소명 추출)</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode numberSource markdown number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb8-1"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;"># 역할(Role)</span></span>
-<span id="cb8-2">너는 텍스트에서 장소명을 추출하는 엔진이다.</span>
-<span id="cb8-3"></span>
-<span id="cb8-4"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">## 작업(Task)</span></span>
-<span id="cb8-5">텍스트 내 도시, 국가, 축구 클럽 이름을 모두 "장소"로 간주하고 추출해라.</span>
-<span id="cb8-6"></span>
-<span id="cb8-7"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">## 출력 형식(Format)</span></span>
-<span id="cb8-8"><span class="ss" style="color: #20794D;
-background-color: null;
-font-style: inherit;">- </span>한 줄로만 출력한다.</span>
-<span id="cb8-9"><span class="ss" style="color: #20794D;
-background-color: null;
-font-style: inherit;">- </span>형식: <span class="in" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">`장소: A, B, C`</span></span>
-<span id="cb8-10"><span class="ss" style="color: #20794D;
-background-color: null;
-font-style: inherit;">- </span>설명 문장 금지.</span>
-<span id="cb8-11"></span>
-<span id="cb8-12"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">## 텍스트(Text)</span></span>
-<span id="cb8-13">음바페는 26일 쿠프 드 프랑스 프랑스컵 올랭피크 리옹과의</span>
-<span id="cb8-14">결승전에서 풀타임을 뛰며 2-1로 팀 승리를 도왔다.</span>
-<span id="cb8-15">3년 만에 대회 정상에 오른 PSG는 역대 최다 15회 우승으로</span>
-<span id="cb8-16">2위 마르세유(10회)를 멀찍이 따돌렸다.</span>
-<span id="cb8-17">음바페는 이날 PSG에서의 커리어를 마무리했다.</span></code></pre></div></div>
-<section id="tip4.-단문-중심" class="level3" data-number="4.8.1">
-<h3 data-number="4.8.1" class="anchored" data-anchor-id="tip4.-단문-중심"><span class="header-section-number">4.8.1</span> Tip4. 단문 중심</h3>
-<ul>
-<li>한국어는 짧고 명확하게 작성</li>
-<li>톤·형식·분량을 구체적으로 지시</li>
-</ul>
-</section>
-<section id="tip5.-하지-말-것x-할-것o" class="level3" data-number="4.8.2">
-<h3 data-number="4.8.2" class="anchored" data-anchor-id="tip5.-하지-말-것x-할-것o"><span class="header-section-number">4.8.2</span> Tip5. 하지 말 것(X) → 할 것(O)</h3>
-<ul>
-<li>부정 지시보다 긍정적 행동 지시가 안정적</li>
-</ul>
-</section>
-</section>
-</section>
-<section id="llm의-한계와-프롬프트-엔지니어링-필요성" class="level1" data-number="5">
-<h1 data-number="5"><span class="header-section-number">5</span> 5. LLM의 한계와 프롬프트 엔지니어링 필요성</h1>
-<section id="llm-한계" class="level2" data-number="5.1">
-<h2 data-number="5.1" class="anchored" data-anchor-id="llm-한계"><span class="header-section-number">5.1</span> 5.1 LLM 한계</h2>
-<ul>
-<li>할루시네이션</li>
-<li>편향성</li>
-<li>근거 없는 출처 생성</li>
-<li>수학 및 추론 한계</li>
-<li>Prompt Injection(프롬프트 해킹)</li>
-</ul>
-</section>
-<section id="프롬프트-엔지니어링이-필요한-이유" class="level2" data-number="5.2">
-<h2 data-number="5.2" class="anchored" data-anchor-id="프롬프트-엔지니어링이-필요한-이유"><span class="header-section-number">5.2</span> 5.2 프롬프트 엔지니어링이 필요한 이유</h2>
-<ul>
-<li>정확성 향상</li>
-<li>오류 및 편향 감소</li>
-<li>모델 행동 제어</li>
-<li>사용자 경험 개선</li>
-<li>비용 절감</li>
-</ul>
-
-
-</section>
-</section>
-
- ]]></description>
-  <category>AI</category>
-  <category>LangChain</category>
-  <category>Prompt_Engineering</category>
-  <guid>https://dlwns0719.github.io/my_blog/docs/blog/posts/Prompt_Engineering/01-Prompt-Structure/01-Prompt-Structure.html</guid>
-  <pubDate>Wed, 26 Nov 2025 02:19:19 GMT</pubDate>
+  <pubDate>Mon, 01 Dec 2025 02:09:50 GMT</pubDate>
 </item>
 </channel>
 </rss>

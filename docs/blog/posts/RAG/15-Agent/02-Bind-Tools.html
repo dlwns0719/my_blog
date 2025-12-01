@@ -433,7 +433,7 @@ background: #EDF3F9;
 <p>LLM 모델이 도구(tool) 를 호출할 수 있으려면 chat 요청을 할 때 모델에 도구 스키마(tool schema) 를 전달해야 합니다.</p>
 <p>도구 호출(tool calling) 기능을 지원하는 LangChain Chat Model 은 <code>.bind_tools()</code> 메서드를 구현하여 LangChain 도구 객체, Pydantic 클래스 또는 JSON 스키마 목록을 수신하고 공급자별 예상 형식으로 채팅 모델에 바인딩(binding) 합니다.</p>
 <p>바인딩된 Chat Model 의 후속 호출은 모델 API에 대한 모든 호출에 도구 스키마를 포함합니다.</p>
-<div id="d6465534" class="cell" data-execution_count="1">
+<div id="52916810" class="cell" data-execution_count="2">
 <details class="code-fold">
 <summary>코드</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a><span class="co"># API KEY를 환경변수로 관리하기 위한 설정 파일</span></span>
@@ -443,7 +443,7 @@ background: #EDF3F9;
 <span id="cb1-5"><a href="#cb1-5"></a>load_dotenv()</span></code></pre></div><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<div id="2e1d1509" class="cell" data-execution_count="2">
+<div id="1d313af7" class="cell" data-execution_count="3">
 <details class="code-fold">
 <summary>코드</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1"></a><span class="co"># LangSmith 추적을 설정합니다. https://smith.langchain.com</span></span>
@@ -463,7 +463,7 @@ background: #EDF3F9;
 <li><code>naver_news_crawl</code> : 네이버 뉴스 기사를 크롤링하여 본문 내용을 반환하는 함수</li>
 </ul>
 <p><strong>참고</strong> - 도구를 정의할 때 <code>@tool</code> 데코레이터를 사용하여 도구를 정의합니다. - docstring 은 가급적 영어로 작성하는 것을 권장합니다.</p>
-<div id="f485e4dc" class="cell" data-execution_count="3">
+<div id="d73aa88d" class="cell" data-execution_count="4">
 <details class="code-fold">
 <summary>코드</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1"></a><span class="im">import</span> re</span>
@@ -514,7 +514,7 @@ background: #EDF3F9;
 <section id="bind_tools-로-llm-에-도구-바인딩" class="level2" data-number="2">
 <h2 data-number="2" class="anchored" data-anchor-id="bind_tools-로-llm-에-도구-바인딩"><span class="header-section-number">2</span> bind_tools() 로 LLM 에 도구 바인딩</h2>
 <p>llm 모델에 <code>bind_tools()</code> 를 사용하여 도구를 바인딩합니다.</p>
-<div id="a4472c5b" class="cell" data-execution_count="4">
+<div id="5e2eb45f" class="cell" data-execution_count="5">
 <details class="code-fold">
 <summary>코드</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1"></a><span class="im">from</span> langchain_openai <span class="im">import</span> ChatOpenAI</span>
@@ -529,7 +529,7 @@ background: #EDF3F9;
 <p>실행결과를 확인합니다.</p>
 <p>결과는 <code>tool_calls</code> 에 저장됩니다. 따라서, <code>.tool_calls</code> 를 확인하여 도구 호출 결과를 확인할 수 있습니다.</p>
 <p><strong>참고</strong> - <code>name</code> 은 도구의 이름을 의미합니다. - <code>args</code> 는 도구에 전달되는 인자를 의미합니다.</p>
-<div id="78d78ef1" class="cell" data-execution_count="5">
+<div id="4d229c08" class="cell" data-execution_count="6">
 <details class="code-fold">
 <summary>코드</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1"></a><span class="co"># 실행 결과</span></span>
@@ -537,7 +537,7 @@ background: #EDF3F9;
 </details>
 </div>
 <p>다음으로는 <code>llm_with_tools</code> 와 <code>JsonOutputToolsParser</code> 를 연결하여 <code>tool_calls</code> 를 parsing 하여 결과를 확인합니다.</p>
-<div id="0d47a174" class="cell" data-execution_count="6">
+<div id="6cf60047" class="cell" data-execution_count="7">
 <details class="code-fold">
 <summary>코드</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1"></a><span class="im">from</span> langchain_core.output_parsers.openai_tools <span class="im">import</span> JsonOutputToolsParser</span>
@@ -549,7 +549,7 @@ background: #EDF3F9;
 <span id="cb6-7"><a href="#cb6-7"></a>tool_call_results <span class="op">=</span> chain.invoke(<span class="st">"What is the length of the word 'teddynote'?"</span>)</span></code></pre></div><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<div id="fb5ddb5e" class="cell" data-execution_count="7">
+<div id="ecad2bdb" class="cell" data-execution_count="8">
 <details class="code-fold">
 <summary>코드</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1"></a><span class="bu">print</span>(tool_call_results)</span></code></pre></div><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></div>
@@ -557,7 +557,7 @@ background: #EDF3F9;
 </div>
 <p>실행 결과는 다음과 같습니다.</p>
 <p><strong>참고</strong> - <code>type</code>: 도구의 이름 - <code>args</code>: 도구에 전달되는 인자</p>
-<div id="fce73aef" class="cell" data-execution_count="8">
+<div id="96cd7ed4" class="cell" data-execution_count="9">
 <details class="code-fold">
 <summary>코드</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1"></a><span class="bu">print</span>(tool_call_results, end<span class="op">=</span><span class="st">"</span><span class="ch">\n\n</span><span class="st">==========</span><span class="ch">\n\n</span><span class="st">"</span>)</span>
@@ -570,7 +570,7 @@ background: #EDF3F9;
 </details>
 </div>
 <p>도구 이름과 일치하는 도구를 찾아 실행합니다.</p>
-<div id="b2892283" class="cell" data-execution_count="9">
+<div id="3daea688" class="cell" data-execution_count="10">
 <details class="code-fold">
 <summary>코드</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1"></a>tool_call_results[<span class="dv">0</span>][<span class="st">"type"</span>], tools[<span class="dv">0</span>].name</span></code></pre></div><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></div>
@@ -578,7 +578,7 @@ background: #EDF3F9;
 </div>
 <p><code>execute_tool_calls</code> 함수는 도구를 찾아 args 를 전달하여 도구를 실행합니다.</p>
 <p>즉, <code>type</code> 은 도구의 이름을 의미하고 <code>args</code> 는 도구에 전달되는 인자를 의미합니다.</p>
-<div id="2a1ab2f9" class="cell" data-execution_count="10">
+<div id="a91886f1" class="cell" data-execution_count="11">
 <details class="code-fold">
 <summary>코드</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1"></a><span class="kw">def</span> execute_tool_calls(tool_call_results):</span>
@@ -623,7 +623,7 @@ background: #EDF3F9;
 <li><code>execute_tool_calls</code> : 도구 호출 결과를 실행하는 함수</li>
 </ul>
 <p><strong>흐름 정리</strong> 1. 모델에 도구를 바인딩 2. 도구 호출 결과를 파싱 3. 도구 호출 결과를 실행</p>
-<div id="3c6aa1fd" class="cell" data-execution_count="11">
+<div id="b40398e0" class="cell" data-execution_count="12">
 <details class="code-fold">
 <summary>코드</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1"></a><span class="im">from</span> langchain_core.output_parsers.openai_tools <span class="im">import</span> JsonOutputToolsParser</span>
@@ -632,14 +632,14 @@ background: #EDF3F9;
 <span id="cb11-4"><a href="#cb11-4"></a>chain <span class="op">=</span> llm_with_tools <span class="op">|</span> JsonOutputToolsParser(tools<span class="op">=</span>tools) <span class="op">|</span> execute_tool_calls</span></code></pre></div><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<div id="b1b354a4" class="cell" data-execution_count="12">
+<div id="58212a70" class="cell" data-execution_count="13">
 <details class="code-fold">
 <summary>코드</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1"></a><span class="co"># 실행 결과</span></span>
 <span id="cb12-2"><a href="#cb12-2"></a>chain.invoke(<span class="st">"What is the length of the word 'teddynote'?"</span>)</span></code></pre></div><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<div id="70a9a955" class="cell" data-execution_count="13">
+<div id="e23021d3" class="cell" data-execution_count="14">
 <details class="code-fold">
 <summary>코드</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1"></a><span class="co"># 실행 결과</span></span>
@@ -647,7 +647,7 @@ background: #EDF3F9;
 <span id="cb13-3"><a href="#cb13-3"></a><span class="bu">print</span>(<span class="fl">114.5</span> <span class="op">+</span> <span class="fl">121.2</span>)</span></code></pre></div><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<div id="2654998d" class="cell" data-execution_count="14">
+<div id="8f594c9b" class="cell" data-execution_count="15">
 <details class="code-fold">
 <summary>코드</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1"></a><span class="co"># 실행 결과</span></span>
@@ -662,7 +662,7 @@ background: #EDF3F9;
 <p><code>bind_tools()</code> 는 모델에 사용할 수 있는 스키마(도구)를 제공합니다.</p>
 <p><code>AgentExecutor</code> 는 실제로 llm 호출, 올바른 도구로 라우팅, 실행, 모델 재호출 등을 위한 실행 루프를 생성합니다.</p>
 <p><strong>참고</strong> - <code>Agent</code> 와 <code>AgentExecutor</code> 에 대해서는 다음 장에서 자세히 다룹니다.</p>
-<div id="f7449f8f" class="cell" data-execution_count="15">
+<div id="cc4b818e" class="cell" data-execution_count="16">
 <details class="code-fold">
 <summary>코드</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1"></a><span class="im">from</span> langchain_core.prompts <span class="im">import</span> ChatPromptTemplate, MessagesPlaceholder</span>
@@ -684,7 +684,7 @@ background: #EDF3F9;
 <span id="cb15-17"><a href="#cb15-17"></a>llm <span class="op">=</span> ChatOpenAI(model<span class="op">=</span><span class="st">"gpt-4o-mini"</span>, temperature<span class="op">=</span><span class="dv">0</span>)</span></code></pre></div><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<div id="38f30c27" class="cell" data-execution_count="16">
+<div id="2883f8c5" class="cell" data-execution_count="17">
 <details class="code-fold">
 <summary>코드</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1"></a><span class="im">from</span> langchain.agents <span class="im">import</span> create_tool_calling_agent</span>
@@ -705,7 +705,7 @@ background: #EDF3F9;
 <span id="cb16-16"><a href="#cb16-16"></a>)</span></code></pre></div><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<div id="1e3b3b14" class="cell" data-execution_count="17">
+<div id="e195bd56" class="cell" data-execution_count="18">
 <details class="code-fold">
 <summary>코드</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1"></a><span class="co"># Agent 실행</span></span>
@@ -715,7 +715,7 @@ background: #EDF3F9;
 <span id="cb17-5"><a href="#cb17-5"></a><span class="bu">print</span>(result[<span class="st">"output"</span>])</span></code></pre></div><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<div id="098ffd53" class="cell" data-execution_count="18">
+<div id="e9f52c8b" class="cell" data-execution_count="19">
 <details class="code-fold">
 <summary>코드</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1"></a><span class="co"># Agent 실행</span></span>
@@ -726,7 +726,7 @@ background: #EDF3F9;
 </details>
 </div>
 <p>한 번의 실행으로 끝나는 것이 아닌, 모델이 자신의 결과를 확인하고 다시 자신을 호출하는 과정을 거칩니다.</p>
-<div id="6280f9fb" class="cell" data-execution_count="19">
+<div id="63b0a35b" class="cell" data-execution_count="20">
 <details class="code-fold">
 <summary>코드</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1"></a><span class="co"># Agent 실행</span></span>
@@ -741,7 +741,7 @@ background: #EDF3F9;
 </details>
 </div>
 <p>이번에는 뉴스 결과를 크롤링 해서 요약 해달라는 요청을 수행합니다.</p>
-<div id="5e579cd7" class="cell" data-execution_count="20">
+<div id="f7f7059e" class="cell" data-execution_count="21">
 <details class="code-fold">
 <summary>코드</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1"></a>result <span class="op">=</span> agent_executor.invoke(</span>

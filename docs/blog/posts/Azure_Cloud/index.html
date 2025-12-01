@@ -6,8 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="Junhyun Lee">
 
-<title>OpenAI 외 도구 호출 에이전트(Tool Calling Agent) – Junhyun Lee</title>
+<title>Prompt_Engineering – Junhyun Lee</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,67 +21,32 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for syntax highlighting */
-html { -webkit-text-size-adjust: 100%; }
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
 </style>
 
 
-<script src="../../../../../site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="../../../../../site_libs/quarto-nav/headroom.min.js"></script>
-<script src="../../../../../site_libs/clipboard/clipboard.min.js"></script>
-<script src="../../../../../site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="../../../../../site_libs/quarto-search/fuse.min.js"></script>
-<script src="../../../../../site_libs/quarto-search/quarto-search.js"></script>
-<script src="../../../../../site_libs/quarto-search/autocomplete-preset-algolia.umd.js"></script>
-<meta name="quarto:offset" content="../../../../../">
-<script src="../../../../../site_libs/quarto-html/quarto.js" type="module"></script>
-<script src="../../../../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="../../../../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
-<script src="../../../../../site_libs/quarto-html/popper.min.js"></script>
-<script src="../../../../../site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="../../../../../site_libs/quarto-html/anchor.min.js"></script>
-<link href="../../../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../../../../site_libs/quarto-html/quarto-syntax-highlighting-065a5179aebd64318d7ea99d77b64a9e.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="../../../../../site_libs/quarto-html/quarto-syntax-highlighting-dark-969ddfa49e00a70eb3423444dbc81f6c.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="../../../../../site_libs/quarto-html/quarto-syntax-highlighting-065a5179aebd64318d7ea99d77b64a9e.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
-<script src="../../../../../site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="../../../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../../../../site_libs/bootstrap/bootstrap-5a73818b025f47a6d9fdc61b5aee3d21.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../../../../../site_libs/bootstrap/bootstrap-dark-0cc05e60083667b8b604a857b4577219.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="../../../../../site_libs/bootstrap/bootstrap-5a73818b025f47a6d9fdc61b5aee3d21.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script src="../../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../../site_libs/quarto-search/quarto-search.js"></script>
+<script src="../../../../site_libs/quarto-search/autocomplete-preset-algolia.umd.js"></script>
+<meta name="quarto:offset" content="../../../../">
+<script src="../../../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../../site_libs/quarto-html/quarto-syntax-highlighting-065a5179aebd64318d7ea99d77b64a9e.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../../../site_libs/quarto-html/quarto-syntax-highlighting-dark-969ddfa49e00a70eb3423444dbc81f6c.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../../../site_libs/quarto-html/quarto-syntax-highlighting-065a5179aebd64318d7ea99d77b64a9e.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../../site_libs/bootstrap/bootstrap-5a73818b025f47a6d9fdc61b5aee3d21.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../../../site_libs/bootstrap/bootstrap-dark-0cc05e60083667b8b604a857b4577219.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../../../site_libs/bootstrap/bootstrap-5a73818b025f47a6d9fdc61b5aee3d21.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -166,12 +132,12 @@ background: #EDF3F9;
 </style>
 
 
-<link rel="stylesheet" href="../../../../../styles.css">
-<meta property="og:title" content="OpenAI 외 도구 호출 에이전트(Tool Calling Agent) – Junhyun Lee">
-<meta property="og:description" content="blog">
+<link rel="stylesheet" href="../../../../styles.css">
+<meta property="og:title" content="Prompt_Engineering – Junhyun Lee">
+<meta property="og:description" content="Prompt_Engineering Content List">
 <meta property="og:site_name" content="Junhyun Lee">
-<meta name="twitter:title" content="OpenAI 외 도구 호출 에이전트(Tool Calling Agent) – Junhyun Lee">
-<meta name="twitter:description" content="blog">
+<meta name="twitter:title" content="Prompt_Engineering – Junhyun Lee">
+<meta name="twitter:description" content="Prompt_Engineering Content List">
 <meta name="twitter:card" content="summary">
 </head>
 
@@ -344,11 +310,11 @@ background: #EDF3F9;
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a href="../../../../../index.html" class="navbar-brand navbar-brand-logo">
-    <img src="../../../../.././images/logo.png" alt="" class="navbar-logo light-content">
-    <img src="../../../../.././images/logo.png" alt="" class="navbar-logo dark-content">
+    <a href="../../../../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../../../.././images/logo.png" alt="" class="navbar-logo light-content">
+    <img src="../../../.././images/logo.png" alt="" class="navbar-logo dark-content">
     </a>
-    <a class="navbar-brand" href="../../../../../index.html">
+    <a class="navbar-brand" href="../../../../index.html">
     <span class="navbar-title">Junhyun Lee</span>
     </a>
   </div>
@@ -359,17 +325,17 @@ background: #EDF3F9;
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../../../../../index.html"> 
+    <a class="nav-link" href="../../../../index.html"> 
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../../../../docs/blog/index.html"> 
+    <a class="nav-link" href="../../../../docs/blog/index.html"> 
 <span class="menu-text">Blog</span></a>
   </li>  
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../../../../../about.html"> 
+    <a class="nav-link" href="../../../../about.html"> 
 <span class="menu-text">Me</span></a>
   </li>  
   <li class="nav-item compact">
@@ -393,21 +359,37 @@ background: #EDF3F9;
 <!-- content -->
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
-    <div class="quarto-title column-body">
-      <h1 class="title">OpenAI 외 도구 호출 에이전트(Tool Calling Agent)</h1>
-                      </div>
+    <div class="quarto-title column-page-left">
+      <h1 class="title">Prompt_Engineering</h1>
+            <p class="subtitle lead">Prompt_Engineering Content List</p>
+                                <div class="quarto-categories">
+                <div class="quarto-category">Azure Cloud</div>
+              </div>
+                  </div>
   </div>
     
   
-  <div class="quarto-title-meta">
+  <div class="quarto-title-meta column-page-left">
 
+      <div>
+      <div class="quarto-title-meta-heading">저자</div>
+      <div class="quarto-title-meta-contents">
+               <p>Junhyun Lee </p>
+            </div>
+    </div>
       
+      <div>
+      <div class="quarto-title-meta-heading">공개</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">2025년 11월 01일</p>
+      </div>
+    </div>
     
       
     </div>
     
   
-  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
@@ -415,287 +397,31 @@ background: #EDF3F9;
     <h2 id="toc-title">목차</h2>
    
   <ul>
-  <li><a href="#agent-용-프롬프트-생성" id="toc-agent-용-프롬프트-생성" class="nav-link active" data-scroll-target="#agent-용-프롬프트-생성"><span class="header-section-number">1</span> Agent 용 프롬프트 생성</a></li>
-  <li><a href="#tool-calling-을-지원하는-다양한-llm-목록" id="toc-tool-calling-을-지원하는-다양한-llm-목록" class="nav-link" data-scroll-target="#tool-calling-을-지원하는-다양한-llm-목록"><span class="header-section-number">2</span> Tool Calling 을 지원하는 다양한 LLM 목록</a></li>
-  <li><a href="#agentexecutor-생성-후-실행-및-결과-확인" id="toc-agentexecutor-생성-후-실행-및-결과-확인" class="nav-link" data-scroll-target="#agentexecutor-생성-후-실행-및-결과-확인"><span class="header-section-number">3</span> AgentExecutor 생성 후 실행 및 결과 확인</a></li>
+  <li><a href="#azure-cloud" id="toc-azure-cloud" class="nav-link active" data-scroll-target="#azure-cloud"><span class="header-section-number">1</span> Azure Cloud</a>
+  <ul class="collapse">
+  <li><a href="#클라우드-인프라-설정" id="toc-클라우드-인프라-설정" class="nav-link" data-scroll-target="#클라우드-인프라-설정"><span class="header-section-number">1.1</span> 클라우드 인프라 설정</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
-<main class="content quarto-banner-title-block" id="quarto-document-content">
+<main class="content quarto-banner-title-block column-page-left" id="quarto-document-content">
 
 
 
 
 
 
-<p>OpenAI 외에도 <code>Anthropic</code>, <code>Google Gemini</code>, <code>Together.ai</code>, <code>Ollama</code>, <code>Mistral</code>과 같은 더 광범위한 공급자 구현을 지원합니다.</p>
-<p>이번 챕터에서는 다양한 LLM 을 사용하여 도구 호출 에이전트를 생성하고 실행하는 방법을 살펴보겠습니다.</p>
-<p><strong>참고 링크</strong></p>
-<ul>
-<li><a href="https://python.langchain.com/v0.1/docs/modules/agents/agent_types/tool_calling/">LangChain 공식 도큐먼트</a></li>
-</ul>
-<div id="22f90e6c" class="cell" data-execution_count="1">
-<details class="code-fold">
-<summary>코드</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a><span class="co"># API 키를 환경변수로 관리하기 위한 설정 파일</span></span>
-<span id="cb1-2"><a href="#cb1-2"></a><span class="im">from</span> dotenv <span class="im">import</span> load_dotenv</span>
-<span id="cb1-3"><a href="#cb1-3"></a></span>
-<span id="cb1-4"><a href="#cb1-4"></a><span class="co"># API 키 정보 로드</span></span>
-<span id="cb1-5"><a href="#cb1-5"></a>load_dotenv()</span></code></pre></div><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-</div>
-<div id="fe2ad291" class="cell" data-execution_count="2">
-<details class="code-fold">
-<summary>코드</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1"></a><span class="co"># LangSmith 추적을 설정합니다. https://smith.langchain.com</span></span>
-<span id="cb2-2"><a href="#cb2-2"></a><span class="co"># !pip install -qU langchain-teddynote</span></span>
-<span id="cb2-3"><a href="#cb2-3"></a><span class="im">from</span> langchain_teddynote <span class="im">import</span> logging</span>
-<span id="cb2-4"><a href="#cb2-4"></a></span>
-<span id="cb2-5"><a href="#cb2-5"></a><span class="co"># 프로젝트 이름을 입력합니다.</span></span>
-<span id="cb2-6"><a href="#cb2-6"></a>logging.langsmith(<span class="st">"CH15-Agents"</span>)</span></code></pre></div><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-</div>
-<div id="18768361" class="cell" data-execution_count="3">
-<details class="code-fold">
-<summary>코드</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1"></a><span class="im">from</span> langchain.tools <span class="im">import</span> tool</span>
-<span id="cb3-2"><a href="#cb3-2"></a><span class="im">from</span> typing <span class="im">import</span> List, Dict</span>
-<span id="cb3-3"><a href="#cb3-3"></a><span class="im">from</span> langchain_teddynote.tools <span class="im">import</span> GoogleNews</span>
-<span id="cb3-4"><a href="#cb3-4"></a></span>
-<span id="cb3-5"><a href="#cb3-5"></a></span>
-<span id="cb3-6"><a href="#cb3-6"></a><span class="co"># 도구 정의</span></span>
-<span id="cb3-7"><a href="#cb3-7"></a><span class="at">@tool</span></span>
-<span id="cb3-8"><a href="#cb3-8"></a><span class="kw">def</span> search_news(query: <span class="bu">str</span>) <span class="op">-&gt;</span> List[Dict[<span class="bu">str</span>, <span class="bu">str</span>]]:</span>
-<span id="cb3-9"><a href="#cb3-9"></a>    <span class="co">"""Search Google News by input keyword"""</span></span>
-<span id="cb3-10"><a href="#cb3-10"></a>    news_tool <span class="op">=</span> GoogleNews()</span>
-<span id="cb3-11"><a href="#cb3-11"></a>    <span class="cf">return</span> news_tool.search_by_keyword(query, k<span class="op">=</span><span class="dv">5</span>)</span>
-<span id="cb3-12"><a href="#cb3-12"></a></span>
-<span id="cb3-13"><a href="#cb3-13"></a></span>
-<span id="cb3-14"><a href="#cb3-14"></a><span class="bu">print</span>(<span class="ss">f"도구 이름: </span><span class="sc">{</span>search_news<span class="sc">.</span>name<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb3-15"><a href="#cb3-15"></a><span class="bu">print</span>(<span class="ss">f"도구 설명: </span><span class="sc">{</span>search_news<span class="sc">.</span>description<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-</div>
-<div id="1259208a" class="cell" data-execution_count="4">
-<details class="code-fold">
-<summary>코드</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1"></a><span class="co"># tools 정의</span></span>
-<span id="cb4-2"><a href="#cb4-2"></a>tools <span class="op">=</span> [search_news]</span></code></pre></div><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-</div>
-<section id="agent-용-프롬프트-생성" class="level2" data-number="1">
-<h2 data-number="1" class="anchored" data-anchor-id="agent-용-프롬프트-생성"><span class="header-section-number">1</span> Agent 용 프롬프트 생성</h2>
-<ul>
-<li><code>chat_history</code> : 이전 대화 내용을 저장하는 변수 (멀티턴을 지원하지 않는다면, 생략 가능합니다.)</li>
-<li><code>agent_scratchpad</code> : 에이전트가 임시로 저장하는 변수</li>
-<li><code>input</code> : 사용자의 입력</li>
-</ul>
-<div id="f2a23c1c" class="cell" data-execution_count="5">
-<details class="code-fold">
-<summary>코드</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1"></a><span class="im">from</span> langchain_core.prompts <span class="im">import</span> ChatPromptTemplate</span>
-<span id="cb5-2"><a href="#cb5-2"></a><span class="im">from</span> langchain.agents <span class="im">import</span> create_tool_calling_agent</span>
-<span id="cb5-3"><a href="#cb5-3"></a></span>
-<span id="cb5-4"><a href="#cb5-4"></a><span class="co"># 프롬프트 생성</span></span>
-<span id="cb5-5"><a href="#cb5-5"></a><span class="co"># 프롬프트는 에이전트에게 모델이 수행할 작업을 설명하는 텍스트를 제공합니다. (도구의 이름과 역할을 입력)</span></span>
-<span id="cb5-6"><a href="#cb5-6"></a>prompt <span class="op">=</span> ChatPromptTemplate.from_messages(</span>
-<span id="cb5-7"><a href="#cb5-7"></a>    [</span>
-<span id="cb5-8"><a href="#cb5-8"></a>        (</span>
-<span id="cb5-9"><a href="#cb5-9"></a>            <span class="st">"system"</span>,</span>
-<span id="cb5-10"><a href="#cb5-10"></a>            <span class="st">"You are a helpful assistant. "</span></span>
-<span id="cb5-11"><a href="#cb5-11"></a>            <span class="st">"Make sure to use the `search_news` tool for searching keyword related news."</span>,</span>
-<span id="cb5-12"><a href="#cb5-12"></a>        ),</span>
-<span id="cb5-13"><a href="#cb5-13"></a>        (<span class="st">"placeholder"</span>, <span class="st">"</span><span class="sc">{chat_history}</span><span class="st">"</span>),</span>
-<span id="cb5-14"><a href="#cb5-14"></a>        (<span class="st">"human"</span>, <span class="st">"</span><span class="sc">{input}</span><span class="st">"</span>),</span>
-<span id="cb5-15"><a href="#cb5-15"></a>        (<span class="st">"placeholder"</span>, <span class="st">"</span><span class="sc">{agent_scratchpad}</span><span class="st">"</span>),</span>
-<span id="cb5-16"><a href="#cb5-16"></a>    ]</span>
-<span id="cb5-17"><a href="#cb5-17"></a>)</span></code></pre></div><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-</div>
+<section id="azure-cloud" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="azure-cloud"><span class="header-section-number">1</span> Azure Cloud</h2>
+<section id="클라우드-인프라-설정" class="level3" data-number="1.1">
+<h3 data-number="1.1" class="anchored" data-anchor-id="클라우드-인프라-설정"><span class="header-section-number">1.1</span> 클라우드 인프라 설정</h3>
+<ol type="1">
+<li><a href="../../../../docs/blog/posts/Azure_Cloud/01-클라우드 인프라 설정/01-Data_Lake_Storage.html">01-Data Lake Storage</a></li>
+</ol>
+
+
 </section>
-<section id="tool-calling-을-지원하는-다양한-llm-목록" class="level2" data-number="2">
-<h2 data-number="2" class="anchored" data-anchor-id="tool-calling-을-지원하는-다양한-llm-목록"><span class="header-section-number">2</span> Tool Calling 을 지원하는 다양한 LLM 목록</h2>
-<p>실습 진행을 위해서는 아래 내용을 설정해야 합니다.</p>
-<p><strong>Anthropic</strong></p>
-<ul>
-<li><a href="https://console.anthropic.com/settings/keys">Anthropic API 키 발급 관련</a></li>
-<li><code>.env</code> 파일 내 <code>ANTHROPIC_API_KEY</code> 에 발급받은 키를 설정하세요</li>
-</ul>
-<p><strong>Gemini</strong></p>
-<ul>
-<li><a href="https://aistudio.google.com/app/apikey?hl=ko">Gemini API 키 발급 관련</a></li>
-<li><code>.env</code> 파일 내 <code>GOOGLE_API_KEY</code> 에 발급받은 키를 설정하세요</li>
-</ul>
-<p><strong>Together AI</strong></p>
-<ul>
-<li><a href="https://api.together.ai/">Together AI API 키 발급 관련</a></li>
-<li><code>.env</code> 파일 내 <code>TOGETHER_API_KEY</code> 에 발급받은 키를 설정하세요</li>
-</ul>
-<p><strong>Ollama</strong></p>
-<ul>
-<li><a href="https://ollama.com/search?c=tools">Ollama Tool Calling 지원 모델 리스트</a></li>
-<li><a href="https://ollama.com/library/llama3.1">이번 실습에 사용할 llama3.1 모델</a></li>
-<li>터미널 창에 <code>ollama pull llama3.1</code> 명령어를 입력하여 모델을 다운로드 받습니다.</li>
-<li>이전에 Ollama 를 사용하지 않았다면, <a href="https://wikidocs.net/233805">Ollama</a> 를 참고해 주세요.</li>
-</ul>
-<p>langchain-ollama 설치를 한 뒤 진행해 주세요.</p>
-<div id="b94cad71" class="cell" data-execution_count="6">
-<details class="code-fold">
-<summary>코드</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1"></a><span class="co"># !pip install -qU langchain-ollama==0.1.3</span></span></code></pre></div><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-</div>
-<div id="efd4a3ed" class="cell" data-execution_count="7">
-<details class="code-fold">
-<summary>코드</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1"></a><span class="im">from</span> langchain_anthropic <span class="im">import</span> ChatAnthropic</span>
-<span id="cb7-2"><a href="#cb7-2"></a><span class="im">from</span> langchain_google_genai <span class="im">import</span> ChatGoogleGenerativeAI</span>
-<span id="cb7-3"><a href="#cb7-3"></a><span class="im">from</span> langchain_openai <span class="im">import</span> ChatOpenAI</span>
-<span id="cb7-4"><a href="#cb7-4"></a><span class="im">from</span> langchain_ollama <span class="im">import</span> ChatOllama</span>
-<span id="cb7-5"><a href="#cb7-5"></a><span class="im">import</span> os</span>
-<span id="cb7-6"><a href="#cb7-6"></a></span>
-<span id="cb7-7"><a href="#cb7-7"></a><span class="co"># GPT-4o-mini</span></span>
-<span id="cb7-8"><a href="#cb7-8"></a>gpt <span class="op">=</span> ChatOpenAI(model<span class="op">=</span><span class="st">"gpt-4o-mini"</span>)</span>
-<span id="cb7-9"><a href="#cb7-9"></a></span>
-<span id="cb7-10"><a href="#cb7-10"></a><span class="co"># Claude-3-5-sonnet</span></span>
-<span id="cb7-11"><a href="#cb7-11"></a>claude <span class="op">=</span> ChatAnthropic(model<span class="op">=</span><span class="st">"claude-3-5-sonnet-20240620"</span>, temperature<span class="op">=</span><span class="dv">0</span>)</span>
-<span id="cb7-12"><a href="#cb7-12"></a></span>
-<span id="cb7-13"><a href="#cb7-13"></a><span class="co"># Gemini-1.5-pro-latest</span></span>
-<span id="cb7-14"><a href="#cb7-14"></a>gemini <span class="op">=</span> ChatGoogleGenerativeAI(model<span class="op">=</span><span class="st">"gemini-1.5-pro"</span>, temperature<span class="op">=</span><span class="dv">0</span>)</span>
-<span id="cb7-15"><a href="#cb7-15"></a></span>
-<span id="cb7-16"><a href="#cb7-16"></a><span class="co"># Llama-3.1-70B-Instruct-Turbo</span></span>
-<span id="cb7-17"><a href="#cb7-17"></a>llama <span class="op">=</span> ChatOpenAI(</span>
-<span id="cb7-18"><a href="#cb7-18"></a>    base_url<span class="op">=</span><span class="st">"https://api.together.xyz/v1"</span>,</span>
-<span id="cb7-19"><a href="#cb7-19"></a>    api_key<span class="op">=</span>os.environ[<span class="st">"TOGETHER_API_KEY"</span>],</span>
-<span id="cb7-20"><a href="#cb7-20"></a>    model<span class="op">=</span><span class="st">"meta-llama/Meta-Llama-3.1-70B-Instruct-Turbo"</span>,</span>
-<span id="cb7-21"><a href="#cb7-21"></a>)</span>
-<span id="cb7-22"><a href="#cb7-22"></a></span>
-<span id="cb7-23"><a href="#cb7-23"></a><span class="co"># Llama-3.1</span></span>
-<span id="cb7-24"><a href="#cb7-24"></a>ollama <span class="op">=</span> ChatOllama(model<span class="op">=</span><span class="st">"llama3.1"</span>, temperature<span class="op">=</span><span class="dv">0</span>)</span>
-<span id="cb7-25"><a href="#cb7-25"></a></span>
-<span id="cb7-26"><a href="#cb7-26"></a><span class="co"># Qwen2.5 7B (한글 성능 괜찮은 편)</span></span>
-<span id="cb7-27"><a href="#cb7-27"></a>qwen <span class="op">=</span> ChatOllama(</span>
-<span id="cb7-28"><a href="#cb7-28"></a>    model<span class="op">=</span><span class="st">"qwen2.5:latest"</span>,</span>
-<span id="cb7-29"><a href="#cb7-29"></a>)</span></code></pre></div><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-</div>
-<p>LLM 기반으로 Agent 를 생성합니다.</p>
-<div id="fc717e7d" class="cell" data-execution_count="8">
-<details class="code-fold">
-<summary>코드</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1"></a><span class="im">from</span> langchain.agents <span class="im">import</span> create_tool_calling_agent</span>
-<span id="cb8-2"><a href="#cb8-2"></a></span>
-<span id="cb8-3"><a href="#cb8-3"></a><span class="co"># Agent 생성</span></span>
-<span id="cb8-4"><a href="#cb8-4"></a>gpt_agent <span class="op">=</span> create_tool_calling_agent(gpt, tools, prompt)</span>
-<span id="cb8-5"><a href="#cb8-5"></a>claude_agent <span class="op">=</span> create_tool_calling_agent(claude, tools, prompt)</span>
-<span id="cb8-6"><a href="#cb8-6"></a>gemini_agent <span class="op">=</span> create_tool_calling_agent(gemini, tools, prompt)</span>
-<span id="cb8-7"><a href="#cb8-7"></a>llama_agent <span class="op">=</span> create_tool_calling_agent(llama, tools, prompt)</span>
-<span id="cb8-8"><a href="#cb8-8"></a>ollama_agent <span class="op">=</span> create_tool_calling_agent(ollama, tools, prompt)</span>
-<span id="cb8-9"><a href="#cb8-9"></a>qwen_agent <span class="op">=</span> create_tool_calling_agent(qwen, tools, prompt)</span></code></pre></div><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-</div>
-</section>
-<section id="agentexecutor-생성-후-실행-및-결과-확인" class="level2" data-number="3">
-<h2 data-number="3" class="anchored" data-anchor-id="agentexecutor-생성-후-실행-및-결과-확인"><span class="header-section-number">3</span> AgentExecutor 생성 후 실행 및 결과 확인</h2>
-<div id="0e56d590" class="cell" data-execution_count="9">
-<details class="code-fold">
-<summary>코드</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1"></a><span class="im">from</span> langchain.agents <span class="im">import</span> AgentExecutor</span>
-<span id="cb9-2"><a href="#cb9-2"></a></span>
-<span id="cb9-3"><a href="#cb9-3"></a><span class="co"># gpt_agent 실행</span></span>
-<span id="cb9-4"><a href="#cb9-4"></a>agent_executor <span class="op">=</span> AgentExecutor(</span>
-<span id="cb9-5"><a href="#cb9-5"></a>    agent<span class="op">=</span>gpt_agent,</span>
-<span id="cb9-6"><a href="#cb9-6"></a>    tools<span class="op">=</span>tools,</span>
-<span id="cb9-7"><a href="#cb9-7"></a>    verbose<span class="op">=</span><span class="va">True</span>,</span>
-<span id="cb9-8"><a href="#cb9-8"></a>    handle_parsing_errors<span class="op">=</span><span class="va">True</span>,</span>
-<span id="cb9-9"><a href="#cb9-9"></a>)</span>
-<span id="cb9-10"><a href="#cb9-10"></a></span>
-<span id="cb9-11"><a href="#cb9-11"></a>result <span class="op">=</span> agent_executor.invoke({<span class="st">"input"</span>: <span class="st">"AI 투자와 관련된 뉴스를 검색해 주세요."</span>})</span>
-<span id="cb9-12"><a href="#cb9-12"></a></span>
-<span id="cb9-13"><a href="#cb9-13"></a><span class="bu">print</span>(<span class="st">"Agent 실행 결과:"</span>)</span>
-<span id="cb9-14"><a href="#cb9-14"></a><span class="bu">print</span>(result[<span class="st">"output"</span>])</span></code></pre></div><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-</div>
-<p>다양한 llm을 사용하여 에이전트를 실행합니다.</p>
-<p>다음은 입력받은 llm을 사용하여 Agent 를 생성하고 실행하여 결과를 출력하는 함수입니다.</p>
-<div id="48d62f30" class="cell" data-execution_count="10">
-<details class="code-fold">
-<summary>코드</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1"></a><span class="kw">def</span> execute_agent(llm, tools, input_text, label):</span>
-<span id="cb10-2"><a href="#cb10-2"></a>    agent <span class="op">=</span> create_tool_calling_agent(llm, tools, prompt)</span>
-<span id="cb10-3"><a href="#cb10-3"></a>    executor <span class="op">=</span> AgentExecutor(agent<span class="op">=</span>agent, tools<span class="op">=</span>tools, verbose<span class="op">=</span><span class="va">False</span>)</span>
-<span id="cb10-4"><a href="#cb10-4"></a>    result <span class="op">=</span> executor.invoke({<span class="st">"input"</span>: input_text})</span>
-<span id="cb10-5"><a href="#cb10-5"></a>    <span class="bu">print</span>(<span class="ss">f"[</span><span class="sc">{</span>label<span class="sc">}</span><span class="ss">] 결과입니다."</span>)</span>
-<span id="cb10-6"><a href="#cb10-6"></a>    <span class="cf">if</span> <span class="bu">isinstance</span>(result[<span class="st">"output"</span>], <span class="bu">list</span>) <span class="kw">and</span> <span class="bu">len</span>(result[<span class="st">"output"</span>]) <span class="op">&gt;</span> <span class="dv">0</span>:</span>
-<span id="cb10-7"><a href="#cb10-7"></a>        <span class="cf">for</span> item <span class="kw">in</span> result[<span class="st">"output"</span>]:</span>
-<span id="cb10-8"><a href="#cb10-8"></a>            <span class="cf">if</span> <span class="st">"text"</span> <span class="kw">in</span> item:</span>
-<span id="cb10-9"><a href="#cb10-9"></a>                <span class="bu">print</span>(item[<span class="st">"text"</span>])</span>
-<span id="cb10-10"><a href="#cb10-10"></a>    <span class="cf">elif</span> <span class="bu">isinstance</span>(result[<span class="st">"output"</span>], <span class="bu">str</span>):</span>
-<span id="cb10-11"><a href="#cb10-11"></a>        <span class="bu">print</span>(result[<span class="st">"output"</span>])</span>
-<span id="cb10-12"><a href="#cb10-12"></a>    <span class="cf">else</span>:</span>
-<span id="cb10-13"><a href="#cb10-13"></a>        <span class="bu">print</span>(result[<span class="st">"output"</span>])</span></code></pre></div><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-</div>
-<p>각 llm 별로 에이전트를 생성하고 실행하여 결과를 출력합니다.</p>
-<div id="ae5371d1" class="cell" data-execution_count="11">
-<details class="code-fold">
-<summary>코드</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1"></a>query <span class="op">=</span> (</span>
-<span id="cb11-2"><a href="#cb11-2"></a>    <span class="st">"AI 투자와 관련된 뉴스를 검색하고, 결과를 Instagram 게시글 형식으로 작성해 주세요."</span></span>
-<span id="cb11-3"><a href="#cb11-3"></a>)</span></code></pre></div><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-</div>
-<div id="8d47e6a7" class="cell" data-execution_count="12">
-<details class="code-fold">
-<summary>코드</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1"></a><span class="co"># gpt</span></span>
-<span id="cb12-2"><a href="#cb12-2"></a>execute_agent(gpt, tools, query, <span class="st">"gpt"</span>)</span></code></pre></div><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-</div>
-<div id="89e363a1" class="cell" data-execution_count="13">
-<details class="code-fold">
-<summary>코드</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1"></a><span class="co"># claude</span></span>
-<span id="cb13-2"><a href="#cb13-2"></a>execute_agent(claude, tools, query, <span class="st">"claude"</span>)</span></code></pre></div><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-</div>
-<div id="58944514" class="cell" data-execution_count="14">
-<details class="code-fold">
-<summary>코드</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1"></a><span class="co"># gemini</span></span>
-<span id="cb14-2"><a href="#cb14-2"></a>execute_agent(gemini, tools, query, <span class="st">"gemini"</span>)</span></code></pre></div><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-</div>
-<div id="2283f0c4" class="cell" data-execution_count="15">
-<details class="code-fold">
-<summary>코드</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1"></a><span class="co"># llama3.1 70B (Together.ai)</span></span>
-<span id="cb15-2"><a href="#cb15-2"></a>execute_agent(</span>
-<span id="cb15-3"><a href="#cb15-3"></a>    llama,</span>
-<span id="cb15-4"><a href="#cb15-4"></a>    tools,</span>
-<span id="cb15-5"><a href="#cb15-5"></a>    <span class="st">"Search AI related news and write it in Instagram post format"</span>,</span>
-<span id="cb15-6"><a href="#cb15-6"></a>    <span class="st">"llama3.1 70B"</span>,</span>
-<span id="cb15-7"><a href="#cb15-7"></a>)</span></code></pre></div><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-</div>
-<div id="fe70f105" class="cell" data-execution_count="16">
-<details class="code-fold">
-<summary>코드</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1"></a><span class="co"># llama3.1 8B (ollama)</span></span>
-<span id="cb16-2"><a href="#cb16-2"></a>execute_agent(ollama, tools, query, <span class="st">"llama3.1(Ollama)"</span>)</span></code></pre></div><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-</div>
-<div id="baef686c" class="cell" data-execution_count="17">
-<details class="code-fold">
-<summary>코드</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1"></a><span class="co"># qwen2.5 7B (ollama)</span></span>
-<span id="cb17-2"><a href="#cb17-2"></a>query <span class="op">=</span> <span class="st">"AI 투자와 관련된 뉴스를 검색하고, 결과를 Instagram 게시글 형식으로 작성해 주세요. 한글로 답변하세요!"</span></span>
-<span id="cb17-3"><a href="#cb17-3"></a></span>
-<span id="cb17-4"><a href="#cb17-4"></a>execute_agent(qwen, tools, query, <span class="st">"qwen2.5(Ollama)"</span>)</span></code></pre></div><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-</div>
-
-
 </section>
 
 </main> <!-- /main -->
@@ -1200,7 +926,7 @@ document.querySelectorAll(".pymd span.co").forEach(el => {
     <div class="nav-footer-center">
       <ul class="footer-items list-unstyled">
     <li class="nav-item">
-    <a class="nav-link" href="../../../../../about.html">
+    <a class="nav-link" href="../../../../about.html">
 <p>About</p>
 </a>
   </li>  

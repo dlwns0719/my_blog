@@ -14,7 +14,7 @@
   </url>
   <url>
     <loc>https://dlwns0719.github.io/my_blog/docs/blog/posts/Prompt_Engineering/02-프롬프트의_이해/01-프롬프트분석.html</loc>
-    <lastmod>2025-11-26T02:17:21.757Z</lastmod>
+    <lastmod>2025-11-28T04:45:29.074Z</lastmod>
   </url>
   <url>
     <loc>https://dlwns0719.github.io/my_blog/docs/blog/posts/Prompt_Engineering/01-Prompt-Structure/02-Prompt-Structure.html</loc>
@@ -38,7 +38,7 @@
   </url>
   <url>
     <loc>https://dlwns0719.github.io/my_blog/docs/blog/posts/RAG/10-Retriever/03-EnsembleRetriever.html</loc>
-    <lastmod>2025-11-25T05:43:41.059Z</lastmod>
+    <lastmod>2025-12-01T00:51:21.823Z</lastmod>
   </url>
   <url>
     <loc>https://dlwns0719.github.io/my_blog/docs/blog/posts/RAG/15-Agent/03-Agent.html</loc>
@@ -50,11 +50,19 @@
   </url>
   <url>
     <loc>https://dlwns0719.github.io/my_blog/docs/blog/posts/RAG/15-Agent/04-Agent-More-LLMs.html</loc>
-    <lastmod>2025-11-20T00:33:59.722Z</lastmod>
+    <lastmod>2025-11-28T05:30:46.208Z</lastmod>
+  </url>
+  <url>
+    <loc>https://dlwns0719.github.io/my_blog/docs/blog/posts/Azure_Cloud/01-클라우드 인프라 설정/01-Data_Lake_Storage.html</loc>
+    <lastmod>2025-12-01T00:48:44.971Z</lastmod>
+  </url>
+  <url>
+    <loc>https://dlwns0719.github.io/my_blog/docs/blog/posts/Azure_Cloud/index.html</loc>
+    <lastmod>2025-12-01T00:48:44.976Z</lastmod>
   </url>
   <url>
     <loc>https://dlwns0719.github.io/my_blog/docs/blog/posts/RAG/index.html</loc>
-    <lastmod>2025-11-19T06:54:15.430Z</lastmod>
+    <lastmod>2025-12-01T00:51:21.824Z</lastmod>
   </url>
   <url>
     <loc>https://dlwns0719.github.io/my_blog/docs/blog/posts/RAG/15-Agent/01-Tools.html</loc>
@@ -62,11 +70,11 @@
   </url>
   <url>
     <loc>https://dlwns0719.github.io/my_blog/docs/blog/posts/RAG/15-Agent/02-Bind-Tools.html</loc>
-    <lastmod>2025-11-20T00:33:54.112Z</lastmod>
+    <lastmod>2025-11-28T04:17:21.104Z</lastmod>
   </url>
   <url>
     <loc>https://dlwns0719.github.io/my_blog/docs/blog/posts/RAG/10-Retriever/02-ContextualCompressionRetriever.html</loc>
-    <lastmod>2025-11-25T05:43:41.059Z</lastmod>
+    <lastmod>2025-12-01T00:51:21.823Z</lastmod>
   </url>
   <url>
     <loc>https://dlwns0719.github.io/my_blog/docs/blog/posts/RAG/10-Retriever/05-ParentDocumentRetriever.html</loc>
@@ -94,7 +102,7 @@
   </url>
   <url>
     <loc>https://dlwns0719.github.io/my_blog/docs/blog/posts/Prompt_Engineering/02-프롬프트의_이해/02-사용자언어읽기.html</loc>
-    <lastmod>2025-11-26T00:57:36.239Z</lastmod>
+    <lastmod>2025-12-01T02:02:20.225Z</lastmod>
   </url>
   <url>
     <loc>https://dlwns0719.github.io/my_blog/docs/blog/posts/Prompt_Engineering/index.html</loc>
