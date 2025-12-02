@@ -134,13 +134,13 @@ background: #EDF3F9;
 <link rel="stylesheet" href="../../../../../styles.css">
 <meta property="og:title" content="01-Data Lake Storage – Junhyun Lee">
 <meta property="og:description" content="blog">
-<meta property="og:image" content="https://dlwns0719.github.io/my_blog/docs/blog/posts/Azure_Cloud/01-클라우드 인프라 설정/images/01-Data_Lake_Storage/1.png">
+<meta property="og:image" content="https://dlwns0719.github.io/my_blog/docs/blog/posts/Azure_Cloud/01-클라우드_인프라_설정/images/01-Data_Lake_Storage/1.png">
 <meta property="og:site_name" content="Junhyun Lee">
 <meta property="og:image:height" content="1368">
 <meta property="og:image:width" content="1182">
 <meta name="twitter:title" content="01-Data Lake Storage – Junhyun Lee">
 <meta name="twitter:description" content="blog">
-<meta name="twitter:image" content="https://dlwns0719.github.io/my_blog/docs/blog/posts/Azure_Cloud/01-클라우드 인프라 설정/images/01-Data_Lake_Storage/1.png">
+<meta name="twitter:image" content="https://dlwns0719.github.io/my_blog/docs/blog/posts/Azure_Cloud/01-클라우드_인프라_설정/images/01-Data_Lake_Storage/1.png">
 <meta name="twitter:image-height" content="1368">
 <meta name="twitter:image-width" content="1182">
 <meta name="twitter:card" content="summary_large_image">
@@ -419,9 +419,13 @@ background: #EDF3F9;
   <li><a href="#액세스-제어" id="toc-액세스-제어" class="nav-link" data-scroll-target="#액세스-제어"><span class="header-section-number">1.4.3</span> 액세스 제어</a></li>
   </ul></li>
   </ul></li>
-  <li><a href="#컨테이너-생성" id="toc-컨테이너-생성" class="nav-link" data-scroll-target="#컨테이너-생성"><span class="header-section-number">2</span> 컨테이너 생성</a></li>
-  <li><a href="#blob-파일-업로드" id="toc-blob-파일-업로드" class="nav-link" data-scroll-target="#blob-파일-업로드"><span class="header-section-number">3</span> Blob 파일 업로드</a></li>
-  <li><a href="#vm-내부에서-blob-파일-접근" id="toc-vm-내부에서-blob-파일-접근" class="nav-link" data-scroll-target="#vm-내부에서-blob-파일-접근"><span class="header-section-number">4</span> VM 내부에서 Blob 파일 접근</a></li>
+  <li><a href="#컨테이너-생성-blob-파일-업로드" id="toc-컨테이너-생성-blob-파일-업로드" class="nav-link" data-scroll-target="#컨테이너-생성-blob-파일-업로드"><span class="header-section-number">2</span> 컨테이너 생성 &amp; Blob 파일 업로드</a>
+  <ul class="collapse">
+  <li><a href="#azure-portal에서-컨테이너를-생성합니다." id="toc-azure-portal에서-컨테이너를-생성합니다." class="nav-link" data-scroll-target="#azure-portal에서-컨테이너를-생성합니다."><span class="header-section-number">2.1</span> Azure Portal에서 컨테이너를 생성합니다.</a></li>
+  <li><a href="#디렉터리-추가" id="toc-디렉터리-추가" class="nav-link" data-scroll-target="#디렉터리-추가"><span class="header-section-number">2.2</span> 디렉터리 추가</a></li>
+  <li><a href="#blob-파일을-업로드합니다." id="toc-blob-파일을-업로드합니다." class="nav-link" data-scroll-target="#blob-파일을-업로드합니다."><span class="header-section-number">2.3</span> Blob 파일을 업로드합니다.</a></li>
+  </ul></li>
+  <li><a href="#vm-내부에서-blob-파일-접근" id="toc-vm-내부에서-blob-파일-접근" class="nav-link" data-scroll-target="#vm-내부에서-blob-파일-접근"><span class="header-section-number">3</span> VM 내부에서 Blob 파일 접근</a></li>
   </ul>
 </nav>
     </div>
@@ -575,14 +579,46 @@ background: #EDF3F9;
 </section>
 </section>
 </section>
-<section id="컨테이너-생성" class="level1" data-number="2">
-<h1 data-number="2"><span class="header-section-number">2</span> 컨테이너 생성</h1>
+<section id="컨테이너-생성-blob-파일-업로드" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> 컨테이너 생성 &amp; Blob 파일 업로드</h1>
+<section id="azure-portal에서-컨테이너를-생성합니다." class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="azure-portal에서-컨테이너를-생성합니다."><span class="header-section-number">2.1</span> Azure Portal에서 컨테이너를 생성합니다.</h2>
+<p>bc-aipoc-test-krc001 이름의 컨테이너가 이미 존재하여 생성되지 않지만 아래와 같은 방법으로 컨테이너를 생성할 수 있습니다. <img src="./images/01-Data_Lake_Storage/5.png" class="img-fluid" alt="image"></p>
 </section>
-<section id="blob-파일-업로드" class="level1" data-number="3">
-<h1 data-number="3"><span class="header-section-number">3</span> Blob 파일 업로드</h1>
+<section id="디렉터리-추가" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="디렉터리-추가"><span class="header-section-number">2.2</span> 디렉터리 추가</h2>
+<p>컨테이너 내부로 접속하여 디렉터리를 추가할 수 있습니다. ::: {.callout-important} ## ⚠️ 주의사항</p>
+<p>네트워크 설정 중 <strong>Public network access</strong>가 <strong>Enabled from selected networks</strong>로 설정되어 있어야 합니다.</p>
+<p><code>Disable</code> 또는 <code>Secured by perimeter(Most restricted)</code>로 설정되어 있으면 <strong>컨테이너 내부로 접속할 수 없습니다</strong>. :::</p>
+<p>폴더 구조는 아래와 같은 구조로 되어있습니다.</p>
+<pre><code>rag-container
+ ├─ code
+ │   ├─ moduleA
+ │   ├─ moduleB
+ │   └─ moduleC
+ └─ docs
+     ├─ moduleA
+     ├─ moduleB
+     └─ moduleC</code></pre>
 </section>
-<section id="vm-내부에서-blob-파일-접근" class="level1" data-number="4">
-<h1 data-number="4"><span class="header-section-number">4</span> VM 내부에서 Blob 파일 접근</h1>
+<section id="blob-파일을-업로드합니다." class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="blob-파일을-업로드합니다."><span class="header-section-number">2.3</span> Blob 파일을 업로드합니다.</h2>
+<p><img src="./images/01-Data_Lake_Storage/6.png" class="img-fluid" alt="image"> 업로드 버튼을 이용해서 미리 다운로드 받은 코드 파일을 업로드합니다.</p>
+</section>
+</section>
+<section id="vm-내부에서-blob-파일-접근" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> VM 내부에서 Blob 파일 접근</h1>
+<p>vm 내부에 접속 후 아래와 같은 작업을 통해 영구적으로 Blob 파일에 마운트를 할 수 있습니다.</p>
+<p>Azure nfs 패키지를 설치합니다.</p>
+<pre><code>sudo apt-get update
+sudo apt-get install nfs-common</code></pre>
+<p>fstab 파일에 아래와 같이 추가합니다.</p>
+<pre><code>sudo vi /etc/fstab
+
+saaipoctestkrc001.blob.core.windows.net:/saaipoctestkrc001/bc-aipoc-test-krc001 /mnt/bc-aipoc-test-krc001 aznfs defaults,sec=sys,vers=3,nolock,proto=tcp,nofail,_netdev    0 0</code></pre>
+<p>saaipoctestkrc001 : Storage Account 이름 bc-aipoc-test-krc001 : Container 이름 /mnt/bc-aipoc-test-krc001 : 마운트 폴더 aznfs : Azure NFS 패키지 defaults,sec=sys,vers=3,nolock,proto=tcp,nofail,_netdev : NFS 패키지 설정 0 0 : 마운트 설정</p>
+<p>마운트를 합니다.</p>
+<pre><code>sudo mount -a</code></pre>
 
 
 </section>

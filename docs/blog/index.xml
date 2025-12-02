@@ -27,7 +27,7 @@
 <section id="클라우드-인프라-설정" class="level3" data-number="1.1">
 
 <ol type="1">
-<li><a href="../../../../docs/blog/posts/Azure_Cloud/01-클라우드 인프라 설정/01-Data_Lake_Storage.html">01-Data Lake Storage</a></li>
+<li><a href="../../../../docs/blog/posts/Azure_Cloud/01-클라우드_인프라_설정/01-Data_Lake_Storage.html">01-Data Lake Storage</a></li>
 </ol>
 
 
@@ -121,7 +121,7 @@
 </item>
 <item>
   <title>01-Data Lake Storage</title>
-  <link>https://dlwns0719.github.io/my_blog/docs/blog/posts/Azure_Cloud/01-클라우드 인프라 설정/01-Data_Lake_Storage.html</link>
+  <link>https://dlwns0719.github.io/my_blog/docs/blog/posts/Azure_Cloud/01-클라우드_인프라_설정/01-Data_Lake_Storage.html</link>
   <description><![CDATA[ 
 
 
@@ -138,7 +138,7 @@
 <h3 data-number="1.1.1" class="anchored" data-anchor-id="프로젝트-세부-정보"><span class="header-section-number">1.1.1</span> 프로젝트 세부 정보</h3>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="https://dlwns0719.github.io/my_blog/docs/blog/posts/Azure_Cloud/01-클라우드 인프라 설정/images/01-Data_Lake_Storage/1.png" class="img-fluid figure-img"></p>
+<p><img src="https://dlwns0719.github.io/my_blog/docs/blog/posts/Azure_Cloud/01-클라우드_인프라_설정/images/01-Data_Lake_Storage/1.png" class="img-fluid figure-img"></p>
 <figcaption>image</figcaption>
 </figure>
 </div>
@@ -159,7 +159,7 @@
 <h2 data-number="1.2" class="anchored" data-anchor-id="고급-설정"><span class="header-section-number">1.2</span> 고급 설정</h2>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="https://dlwns0719.github.io/my_blog/docs/blog/posts/Azure_Cloud/01-클라우드 인프라 설정/images/01-Data_Lake_Storage/2.png" class="img-fluid figure-img"></p>
+<p><img src="https://dlwns0719.github.io/my_blog/docs/blog/posts/Azure_Cloud/01-클라우드_인프라_설정/images/01-Data_Lake_Storage/2.png" class="img-fluid figure-img"></p>
 <figcaption>image</figcaption>
 </figure>
 </div>
@@ -197,7 +197,7 @@
 <h2 data-number="1.3" class="anchored" data-anchor-id="네트워킹-설정"><span class="header-section-number">1.3</span> 네트워킹 설정</h2>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="https://dlwns0719.github.io/my_blog/docs/blog/posts/Azure_Cloud/01-클라우드 인프라 설정/images/01-Data_Lake_Storage/3.png" class="img-fluid figure-img"></p>
+<p><img src="https://dlwns0719.github.io/my_blog/docs/blog/posts/Azure_Cloud/01-클라우드_인프라_설정/images/01-Data_Lake_Storage/3.png" class="img-fluid figure-img"></p>
 <figcaption>image</figcaption>
 </figure>
 </div>
@@ -247,7 +247,7 @@
 <h2 data-number="1.4" class="anchored" data-anchor-id="데이터-보호-설정"><span class="header-section-number">1.4</span> 데이터 보호 설정</h2>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="https://dlwns0719.github.io/my_blog/docs/blog/posts/Azure_Cloud/01-클라우드 인프라 설정/images/01-Data_Lake_Storage/4.png" class="img-fluid figure-img"></p>
+<p><img src="https://dlwns0719.github.io/my_blog/docs/blog/posts/Azure_Cloud/01-클라우드_인프라_설정/images/01-Data_Lake_Storage/4.png" class="img-fluid figure-img"></p>
 <figcaption>image</figcaption>
 </figure>
 </div>
@@ -271,22 +271,54 @@
 </section>
 </section>
 </section>
-<section id="컨테이너-생성" class="level1" data-number="2">
-<h1 data-number="2"><span class="header-section-number">2</span> 컨테이너 생성</h1>
+<section id="컨테이너-생성-blob-파일-업로드" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> 컨테이너 생성 &amp; Blob 파일 업로드</h1>
+<section id="azure-portal에서-컨테이너를-생성합니다." class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="azure-portal에서-컨테이너를-생성합니다."><span class="header-section-number">2.1</span> Azure Portal에서 컨테이너를 생성합니다.</h2>
+<p>bc-aipoc-test-krc001 이름의 컨테이너가 이미 존재하여 생성되지 않지만 아래와 같은 방법으로 컨테이너를 생성할 수 있습니다. <img src="https://dlwns0719.github.io/my_blog/docs/blog/posts/Azure_Cloud/01-클라우드_인프라_설정/images/01-Data_Lake_Storage/5.png" class="img-fluid" alt="image"></p>
 </section>
-<section id="blob-파일-업로드" class="level1" data-number="3">
-<h1 data-number="3"><span class="header-section-number">3</span> Blob 파일 업로드</h1>
+<section id="디렉터리-추가" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="디렉터리-추가"><span class="header-section-number">2.2</span> 디렉터리 추가</h2>
+<p>컨테이너 내부로 접속하여 디렉터리를 추가할 수 있습니다. ::: {.callout-important} ## ⚠️ 주의사항</p>
+<p>네트워크 설정 중 <strong>Public network access</strong>가 <strong>Enabled from selected networks</strong>로 설정되어 있어야 합니다.</p>
+<p><code>Disable</code> 또는 <code>Secured by perimeter(Most restricted)</code>로 설정되어 있으면 <strong>컨테이너 내부로 접속할 수 없습니다</strong>. :::</p>
+<p>폴더 구조는 아래와 같은 구조로 되어있습니다.</p>
+<pre><code>rag-container
+ ├─ code
+ │   ├─ moduleA
+ │   ├─ moduleB
+ │   └─ moduleC
+ └─ docs
+     ├─ moduleA
+     ├─ moduleB
+     └─ moduleC</code></pre>
 </section>
-<section id="vm-내부에서-blob-파일-접근" class="level1" data-number="4">
-<h1 data-number="4"><span class="header-section-number">4</span> VM 내부에서 Blob 파일 접근</h1>
+<section id="blob-파일을-업로드합니다." class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="blob-파일을-업로드합니다."><span class="header-section-number">2.3</span> Blob 파일을 업로드합니다.</h2>
+<p><img src="https://dlwns0719.github.io/my_blog/docs/blog/posts/Azure_Cloud/01-클라우드_인프라_설정/images/01-Data_Lake_Storage/6.png" class="img-fluid" alt="image"> 업로드 버튼을 이용해서 미리 다운로드 받은 코드 파일을 업로드합니다.</p>
+</section>
+</section>
+<section id="vm-내부에서-blob-파일-접근" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> VM 내부에서 Blob 파일 접근</h1>
+<p>vm 내부에 접속 후 아래와 같은 작업을 통해 영구적으로 Blob 파일에 마운트를 할 수 있습니다.</p>
+<p>Azure nfs 패키지를 설치합니다.</p>
+<pre><code>sudo apt-get update
+sudo apt-get install nfs-common</code></pre>
+<p>fstab 파일에 아래와 같이 추가합니다.</p>
+<pre><code>sudo vi /etc/fstab
+
+saaipoctestkrc001.blob.core.windows.net:/saaipoctestkrc001/bc-aipoc-test-krc001 /mnt/bc-aipoc-test-krc001 aznfs defaults,sec=sys,vers=3,nolock,proto=tcp,nofail,_netdev    0 0</code></pre>
+<p>saaipoctestkrc001 : Storage Account 이름 bc-aipoc-test-krc001 : Container 이름 /mnt/bc-aipoc-test-krc001 : 마운트 폴더 aznfs : Azure NFS 패키지 defaults,sec=sys,vers=3,nolock,proto=tcp,nofail,_netdev : NFS 패키지 설정 0 0 : 마운트 설정</p>
+<p>마운트를 합니다.</p>
+<pre><code>sudo mount -a</code></pre>
 
 
 </section>
 
  ]]></description>
   <category>Azure Cloud</category>
-  <guid>https://dlwns0719.github.io/my_blog/docs/blog/posts/Azure_Cloud/01-클라우드 인프라 설정/01-Data_Lake_Storage.html</guid>
-  <pubDate>Tue, 02 Dec 2025 07:33:28 GMT</pubDate>
+  <guid>https://dlwns0719.github.io/my_blog/docs/blog/posts/Azure_Cloud/01-클라우드_인프라_설정/01-Data_Lake_Storage.html</guid>
+  <pubDate>Tue, 02 Dec 2025 07:49:55 GMT</pubDate>
 </item>
 <item>
   <title>OpenAI 외 도구 호출 에이전트(Tool Calling Agent)</title>
@@ -962,7 +994,7 @@ font-style: inherit;">"qwen2.5(Ollama)"</span>)</span></code></pre></div></div>
 
  ]]></description>
   <guid>https://dlwns0719.github.io/my_blog/docs/blog/posts/RAG/15-Agent/04-Agent-More-LLMs.html</guid>
-  <pubDate>Tue, 02 Dec 2025 07:33:28 GMT</pubDate>
+  <pubDate>Tue, 02 Dec 2025 07:49:55 GMT</pubDate>
 </item>
 <item>
   <title>도구 (Tools)</title>
@@ -1802,7 +1834,7 @@ font-style: inherit;">"LangChain AI"</span>})</span></code></pre></div></div>
   <category>LangChain</category>
   <category>Prompt_Engineering</category>
   <guid>https://dlwns0719.github.io/my_blog/docs/blog/posts/RAG/15-Agent/01-Tools.html</guid>
-  <pubDate>Tue, 02 Dec 2025 07:33:28 GMT</pubDate>
+  <pubDate>Tue, 02 Dec 2025 07:49:55 GMT</pubDate>
 </item>
 <item>
   <title>Iteration 기능과 사람 개입(Human-in-the-loop)</title>
@@ -2150,7 +2182,7 @@ font-style: inherit;">"output"</span>])</span></code></pre></div></div>
 
  ]]></description>
   <guid>https://dlwns0719.github.io/my_blog/docs/blog/posts/RAG/15-Agent/05-Iter-Human-In-the-Loop.html</guid>
-  <pubDate>Tue, 02 Dec 2025 07:33:28 GMT</pubDate>
+  <pubDate>Tue, 02 Dec 2025 07:49:55 GMT</pubDate>
 </item>
 <item>
   <title>LLM 에 도구 바인딩(Binding Tools)</title>
@@ -3054,7 +3086,7 @@ font-style: inherit;">"output"</span>])</span></code></pre></div></div>
 
  ]]></description>
   <guid>https://dlwns0719.github.io/my_blog/docs/blog/posts/RAG/15-Agent/02-Bind-Tools.html</guid>
-  <pubDate>Tue, 02 Dec 2025 07:33:28 GMT</pubDate>
+  <pubDate>Tue, 02 Dec 2025 07:49:55 GMT</pubDate>
 </item>
 <item>
   <title>도구 호출 에이전트(Tool Calling Agent)</title>
@@ -4145,7 +4177,7 @@ font-style: inherit;">in</span> response:</span>
 
  ]]></description>
   <guid>https://dlwns0719.github.io/my_blog/docs/blog/posts/RAG/15-Agent/03-Agent.html</guid>
-  <pubDate>Tue, 02 Dec 2025 07:33:28 GMT</pubDate>
+  <pubDate>Tue, 02 Dec 2025 07:49:55 GMT</pubDate>
 </item>
 <item>
   <title>문맥 압축 검색기(ContextualCompressionRetriever)</title>
@@ -4705,7 +4737,7 @@ font-style: inherit;"># 압축된 문서를 예쁘게 출력합니다.</span></s
 
  ]]></description>
   <guid>https://dlwns0719.github.io/my_blog/docs/blog/posts/RAG/10-Retriever/02-ContextualCompressionRetriever.html</guid>
-  <pubDate>Tue, 02 Dec 2025 07:33:28 GMT</pubDate>
+  <pubDate>Tue, 02 Dec 2025 07:49:55 GMT</pubDate>
 </item>
 <item>
   <title>앙상블 검색기(Ensemble Retriever)</title>
@@ -5228,7 +5260,7 @@ font-style: inherit;"># 검색 결과인 docs를 출력합니다.</span></span><
 
  ]]></description>
   <guid>https://dlwns0719.github.io/my_blog/docs/blog/posts/RAG/10-Retriever/03-EnsembleRetriever.html</guid>
-  <pubDate>Tue, 02 Dec 2025 07:33:28 GMT</pubDate>
+  <pubDate>Tue, 02 Dec 2025 07:49:55 GMT</pubDate>
 </item>
 <item>
   <title>Parent Document Retriever</title>
@@ -5729,7 +5761,7 @@ font-style: inherit;">0</span>].page_content)</span></code></pre></div></div>
 
  ]]></description>
   <guid>https://dlwns0719.github.io/my_blog/docs/blog/posts/RAG/10-Retriever/05-ParentDocumentRetriever.html</guid>
-  <pubDate>Tue, 02 Dec 2025 07:33:28 GMT</pubDate>
+  <pubDate>Tue, 02 Dec 2025 07:49:55 GMT</pubDate>
 </item>
 <item>
   <title>MultiQueryRetriever</title>
@@ -6239,7 +6271,7 @@ font-style: inherit;">0</span>].page_content)</span></code></pre></div></div>
 
  ]]></description>
   <guid>https://dlwns0719.github.io/my_blog/docs/blog/posts/RAG/10-Retriever/06-MultiQueryRetriever.html</guid>
-  <pubDate>Tue, 02 Dec 2025 07:33:28 GMT</pubDate>
+  <pubDate>Tue, 02 Dec 2025 07:49:55 GMT</pubDate>
 </item>
 <item>
   <title>Ensemble Retriever Convex Combination(CC) 추가</title>
@@ -6788,7 +6820,7 @@ font-style: inherit;">"디지털 트랜스포메이션이란 무엇인가요?"</
 
  ]]></description>
   <guid>https://dlwns0719.github.io/my_blog/docs/blog/posts/RAG/10-Retriever/11-CC-EnsembleRetriever.html</guid>
-  <pubDate>Tue, 02 Dec 2025 07:33:28 GMT</pubDate>
+  <pubDate>Tue, 02 Dec 2025 07:49:55 GMT</pubDate>
 </item>
 <item>
   <title>셀프 쿼리(Self-querying)</title>
@@ -7489,7 +7521,7 @@ font-style: inherit;">"2023년도에 출시한 상품 중 평점이 4.5 이상�
 
  ]]></description>
   <guid>https://dlwns0719.github.io/my_blog/docs/blog/posts/RAG/10-Retriever/08-SelfQueryRetriever.html</guid>
-  <pubDate>Tue, 02 Dec 2025 07:33:28 GMT</pubDate>
+  <pubDate>Tue, 02 Dec 2025 07:49:55 GMT</pubDate>
 </item>
 <item>
   <title>한글 단어 리트리버 튜닝</title>
@@ -8550,7 +8582,7 @@ okt_bm25_faiss_37       : 금융보험은 장기적인 자산 관리와 위험 �
 
  ]]></description>
   <guid>https://dlwns0719.github.io/my_blog/docs/blog/posts/RAG/10-Retriever/10-Kiwi-BM25Retriever.html</guid>
-  <pubDate>Tue, 02 Dec 2025 07:33:28 GMT</pubDate>
+  <pubDate>Tue, 02 Dec 2025 07:49:55 GMT</pubDate>
 </item>
 <item>
   <title>시간 가중 벡터저장소 리트리버(TimeWeightedVectorStoreRetriever)</title>
@@ -8979,7 +9011,7 @@ font-style: inherit;">"테디노트"</span>))</span></code></pre></div></div>
 
  ]]></description>
   <guid>https://dlwns0719.github.io/my_blog/docs/blog/posts/RAG/10-Retriever/09-TimeWeightedVectorStoreRetriever.html</guid>
-  <pubDate>Tue, 02 Dec 2025 07:33:28 GMT</pubDate>
+  <pubDate>Tue, 02 Dec 2025 07:49:55 GMT</pubDate>
 </item>
 <item>
   <title>벡터스토어 기반 검색기(VectorStore-backed Retriever)</title>
@@ -9772,7 +9804,7 @@ font-style: inherit;">2</span>)</span></code></pre></div></div>
 
  ]]></description>
   <guid>https://dlwns0719.github.io/my_blog/docs/blog/posts/RAG/10-Retriever/01-VectorStoreRetriever.html</guid>
-  <pubDate>Tue, 02 Dec 2025 07:33:28 GMT</pubDate>
+  <pubDate>Tue, 02 Dec 2025 07:49:55 GMT</pubDate>
 </item>
 <item>
   <title>긴 문맥 재정렬(LongContextReorder)</title>
@@ -10261,7 +10293,7 @@ font-style: inherit;">print</span>(answer)</span></code></pre></div></div>
 
  ]]></description>
   <guid>https://dlwns0719.github.io/my_blog/docs/blog/posts/RAG/10-Retriever/04-LongContextReorder.html</guid>
-  <pubDate>Tue, 02 Dec 2025 07:33:28 GMT</pubDate>
+  <pubDate>Tue, 02 Dec 2025 07:49:55 GMT</pubDate>
 </item>
 <item>
   <title>다중 벡터저장소 검색기(MultiVectorRetriever)</title>
@@ -11713,7 +11745,7 @@ font-style: inherit;">print</span>(doc.page_content)</span></code></pre></div></
 
  ]]></description>
   <guid>https://dlwns0719.github.io/my_blog/docs/blog/posts/RAG/10-Retriever/07-MultiVectorRetriever.html</guid>
-  <pubDate>Tue, 02 Dec 2025 07:33:28 GMT</pubDate>
+  <pubDate>Tue, 02 Dec 2025 07:49:55 GMT</pubDate>
 </item>
 </channel>
 </rss>

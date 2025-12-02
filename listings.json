@@ -2,7 +2,7 @@
   {
     "listing": "/docs/blog/index.html",
     "items": [
-      "/docs/blog/posts/Azure_Cloud/01-클라우드 인프라 설정/01-Data_Lake_Storage.html",
+      "/docs/blog/posts/Azure_Cloud/01-클라우드_인프라_설정/01-Data_Lake_Storage.html",
       "/docs/blog/posts/RAG/15-Agent/04-Agent-More-LLMs.html",
       "/docs/blog/posts/RAG/15-Agent/01-Tools.html",
       "/docs/blog/posts/RAG/15-Agent/05-Iter-Human-In-the-Loop.html",
