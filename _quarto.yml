@@ -81,6 +81,7 @@ website: # 웹사이트 전체 설정
         contents:     
           - docs/blog/posts/RAG/index.qmd
           - docs/blog/posts/Prompt_Engineering/index.qmd
+          - docs/blog/posts/Azure_Cloud/index.qmd
 
 format: # 출력 형식 및 테마 설정
   html:
@@ -117,10 +118,3 @@ execute:
   freeze: auto  # re-render only when source changes
   cache: true
   daemon: true         # 렌더링 속도 향상 (선택)
-
-jupyter:
-  kernelspec:
-    name: python3
-    display_name: Python 3
-    language: python
-  kernel: .venv/bin/python
