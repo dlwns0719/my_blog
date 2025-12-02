@@ -52,7 +52,14 @@
 
 <section id="rag" class="level2" data-number="1">
 
-<section id="agent" class="level3" data-number="1.1">
+<section id="retriever" class="level3" data-number="1.1">
+
+<ol type="1">
+<li><a href="../../../../docs/blog/posts/RAG/10-Retriever/01-VectorStoreRetriever.html">01-VectorStoreRetriever</a></li>
+<li><a href="../../../../docs/blog/posts/RAG/10-Retriever/02-ContextualCompressionRetriever.html">02-ContextualCompressionRetriever</a></li>
+</ol>
+</section>
+<section id="agent" class="level3" data-number="1.2">
 
 <ol type="1">
 <li><a href="../../../../docs/blog/posts/RAG/15-Agent/01-Tools.html">01-Tools</a></li>
@@ -279,7 +286,7 @@
  ]]></description>
   <category>Azure Cloud</category>
   <guid>https://dlwns0719.github.io/my_blog/docs/blog/posts/Azure_Cloud/01-클라우드 인프라 설정/01-Data_Lake_Storage.html</guid>
-  <pubDate>Mon, 01 Dec 2025 05:01:00 GMT</pubDate>
+  <pubDate>Tue, 02 Dec 2025 07:28:25 GMT</pubDate>
 </item>
 <item>
   <title>OpenAI 외 도구 호출 에이전트(Tool Calling Agent)</title>
@@ -955,7 +962,7 @@ font-style: inherit;">"qwen2.5(Ollama)"</span>)</span></code></pre></div></div>
 
  ]]></description>
   <guid>https://dlwns0719.github.io/my_blog/docs/blog/posts/RAG/15-Agent/04-Agent-More-LLMs.html</guid>
-  <pubDate>Mon, 01 Dec 2025 05:01:00 GMT</pubDate>
+  <pubDate>Tue, 02 Dec 2025 07:28:25 GMT</pubDate>
 </item>
 <item>
   <title>도구 (Tools)</title>
@@ -1795,7 +1802,7 @@ font-style: inherit;">"LangChain AI"</span>})</span></code></pre></div></div>
   <category>LangChain</category>
   <category>Prompt_Engineering</category>
   <guid>https://dlwns0719.github.io/my_blog/docs/blog/posts/RAG/15-Agent/01-Tools.html</guid>
-  <pubDate>Mon, 01 Dec 2025 05:01:00 GMT</pubDate>
+  <pubDate>Tue, 02 Dec 2025 07:28:25 GMT</pubDate>
 </item>
 <item>
   <title>Iteration 기능과 사람 개입(Human-in-the-loop)</title>
@@ -2143,7 +2150,7 @@ font-style: inherit;">"output"</span>])</span></code></pre></div></div>
 
  ]]></description>
   <guid>https://dlwns0719.github.io/my_blog/docs/blog/posts/RAG/15-Agent/05-Iter-Human-In-the-Loop.html</guid>
-  <pubDate>Mon, 01 Dec 2025 05:01:00 GMT</pubDate>
+  <pubDate>Tue, 02 Dec 2025 07:28:25 GMT</pubDate>
 </item>
 <item>
   <title>LLM 에 도구 바인딩(Binding Tools)</title>
@@ -3047,7 +3054,7 @@ font-style: inherit;">"output"</span>])</span></code></pre></div></div>
 
  ]]></description>
   <guid>https://dlwns0719.github.io/my_blog/docs/blog/posts/RAG/15-Agent/02-Bind-Tools.html</guid>
-  <pubDate>Mon, 01 Dec 2025 05:01:00 GMT</pubDate>
+  <pubDate>Tue, 02 Dec 2025 07:28:25 GMT</pubDate>
 </item>
 <item>
   <title>도구 호출 에이전트(Tool Calling Agent)</title>
@@ -4138,7 +4145,7 @@ font-style: inherit;">in</span> response:</span>
 
  ]]></description>
   <guid>https://dlwns0719.github.io/my_blog/docs/blog/posts/RAG/15-Agent/03-Agent.html</guid>
-  <pubDate>Mon, 01 Dec 2025 05:01:00 GMT</pubDate>
+  <pubDate>Tue, 02 Dec 2025 07:28:25 GMT</pubDate>
 </item>
 <item>
   <title>문맥 압축 검색기(ContextualCompressionRetriever)</title>
@@ -4454,6 +4461,7 @@ font-style: inherit;"># 검색된 문서를 예쁘게 출력</span></span></code
 </section>
 <section id="llm-을-활용한-문서-필터링" class="level2" data-number="3">
 <h2 data-number="3" class="anchored" data-anchor-id="llm-을-활용한-문서-필터링"><span class="header-section-number">3</span> LLM 을 활용한 문서 필터링</h2>
+<p>–&gt; LLM 으로 할까? 임베딩으로 할까?</p>
 <section id="llmchainfilter" class="level3" data-number="3.1">
 <h3 data-number="3.1" class="anchored" data-anchor-id="llmchainfilter"><span class="header-section-number">3.1</span> <code>LLMChainFilter</code></h3>
 <p><code>LLMChainFilter</code>는 초기에 검색된 문서 중 어떤 문서를 필터링하고 어떤 문서를 반환할지 결정하기 위해 LLM 체인을 사용하는 보다 단순하지만 강력한 압축기입니다.</p>
@@ -4697,7 +4705,7 @@ font-style: inherit;"># 압축된 문서를 예쁘게 출력합니다.</span></s
 
  ]]></description>
   <guid>https://dlwns0719.github.io/my_blog/docs/blog/posts/RAG/10-Retriever/02-ContextualCompressionRetriever.html</guid>
-  <pubDate>Mon, 01 Dec 2025 05:01:00 GMT</pubDate>
+  <pubDate>Tue, 02 Dec 2025 07:28:25 GMT</pubDate>
 </item>
 <item>
   <title>앙상블 검색기(Ensemble Retriever)</title>
@@ -5220,7 +5228,7 @@ font-style: inherit;"># 검색 결과인 docs를 출력합니다.</span></span><
 
  ]]></description>
   <guid>https://dlwns0719.github.io/my_blog/docs/blog/posts/RAG/10-Retriever/03-EnsembleRetriever.html</guid>
-  <pubDate>Mon, 01 Dec 2025 05:01:00 GMT</pubDate>
+  <pubDate>Tue, 02 Dec 2025 07:28:25 GMT</pubDate>
 </item>
 <item>
   <title>Parent Document Retriever</title>
@@ -5721,7 +5729,7 @@ font-style: inherit;">0</span>].page_content)</span></code></pre></div></div>
 
  ]]></description>
   <guid>https://dlwns0719.github.io/my_blog/docs/blog/posts/RAG/10-Retriever/05-ParentDocumentRetriever.html</guid>
-  <pubDate>Mon, 01 Dec 2025 05:01:00 GMT</pubDate>
+  <pubDate>Tue, 02 Dec 2025 07:28:25 GMT</pubDate>
 </item>
 <item>
   <title>MultiQueryRetriever</title>
@@ -6231,7 +6239,7 @@ font-style: inherit;">0</span>].page_content)</span></code></pre></div></div>
 
  ]]></description>
   <guid>https://dlwns0719.github.io/my_blog/docs/blog/posts/RAG/10-Retriever/06-MultiQueryRetriever.html</guid>
-  <pubDate>Mon, 01 Dec 2025 05:01:00 GMT</pubDate>
+  <pubDate>Tue, 02 Dec 2025 07:28:25 GMT</pubDate>
 </item>
 <item>
   <title>Ensemble Retriever Convex Combination(CC) 추가</title>
@@ -6780,7 +6788,7 @@ font-style: inherit;">"디지털 트랜스포메이션이란 무엇인가요?"</
 
  ]]></description>
   <guid>https://dlwns0719.github.io/my_blog/docs/blog/posts/RAG/10-Retriever/11-CC-EnsembleRetriever.html</guid>
-  <pubDate>Mon, 01 Dec 2025 05:01:00 GMT</pubDate>
+  <pubDate>Tue, 02 Dec 2025 07:28:25 GMT</pubDate>
 </item>
 <item>
   <title>셀프 쿼리(Self-querying)</title>
@@ -7481,7 +7489,7 @@ font-style: inherit;">"2023년도에 출시한 상품 중 평점이 4.5 이상�
 
  ]]></description>
   <guid>https://dlwns0719.github.io/my_blog/docs/blog/posts/RAG/10-Retriever/08-SelfQueryRetriever.html</guid>
-  <pubDate>Mon, 01 Dec 2025 05:01:00 GMT</pubDate>
+  <pubDate>Tue, 02 Dec 2025 07:28:25 GMT</pubDate>
 </item>
 <item>
   <title>한글 단어 리트리버 튜닝</title>
@@ -8542,7 +8550,7 @@ okt_bm25_faiss_37       : 금융보험은 장기적인 자산 관리와 위험 �
 
  ]]></description>
   <guid>https://dlwns0719.github.io/my_blog/docs/blog/posts/RAG/10-Retriever/10-Kiwi-BM25Retriever.html</guid>
-  <pubDate>Mon, 01 Dec 2025 05:01:00 GMT</pubDate>
+  <pubDate>Tue, 02 Dec 2025 07:28:25 GMT</pubDate>
 </item>
 <item>
   <title>시간 가중 벡터저장소 리트리버(TimeWeightedVectorStoreRetriever)</title>
@@ -8971,7 +8979,7 @@ font-style: inherit;">"테디노트"</span>))</span></code></pre></div></div>
 
  ]]></description>
   <guid>https://dlwns0719.github.io/my_blog/docs/blog/posts/RAG/10-Retriever/09-TimeWeightedVectorStoreRetriever.html</guid>
-  <pubDate>Mon, 01 Dec 2025 05:01:00 GMT</pubDate>
+  <pubDate>Tue, 02 Dec 2025 07:28:25 GMT</pubDate>
 </item>
 <item>
   <title>벡터스토어 기반 검색기(VectorStore-backed Retriever)</title>
@@ -9764,7 +9772,7 @@ font-style: inherit;">2</span>)</span></code></pre></div></div>
 
  ]]></description>
   <guid>https://dlwns0719.github.io/my_blog/docs/blog/posts/RAG/10-Retriever/01-VectorStoreRetriever.html</guid>
-  <pubDate>Mon, 01 Dec 2025 05:01:00 GMT</pubDate>
+  <pubDate>Tue, 02 Dec 2025 07:28:25 GMT</pubDate>
 </item>
 <item>
   <title>긴 문맥 재정렬(LongContextReorder)</title>
@@ -9783,6 +9791,9 @@ font-style: inherit;">2</span>)</span></code></pre></div></div>
 <li>https://arxiv.org/abs/2307.03172</li>
 </ul>
 <p>이 문제를 피하기 위해, 검색 후 문서의 순서를 재배열하여 성능 저하를 방지할 수 있습니다.</p>
+<section id="문제의-원인" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="문제의-원인"><span class="header-section-number">1</span> 문제의 원인</h2>
+<p>LLM 은 두괄식으로 학습이 되어있어서 입력으로 들어온 텍스트에 대해 앞쪽 문서와 뒤쪽 문서를 중요하다고 생각한다. 그러나, Retreval 으로 가져온 결과들은 유사도 기반으로 정렬이 되어있는 문서이기 때문에 그대로 LLM 으로 입력을 했을 때 올바른 결과를 내어주지 못한다.</p>
 <ul>
 <li><code>Chroma</code> 벡터 저장소를 사용하여 텍스트 데이터를 저장하고 검색할 수 있는 <code>retriever</code>를 생성합니다.</li>
 <li><code>retriever</code>의 <code>invoke</code> 메서드를 사용하여 주어진 쿼리에 대해 관련성이 높은 문서를 검색합니다.</li>
@@ -9966,8 +9977,9 @@ font-style: inherit;"># 4개의 관련 문서가 시작과 끝에 위치하는�
 <span id="cb5-7">reordered_docs</span></code></pre></div></div>
 </details>
 </div>
-<section id="context-reordering을-사용하여-질의-응답-체인-생성" class="level2" data-number="1">
-<h2 data-number="1" class="anchored" data-anchor-id="context-reordering을-사용하여-질의-응답-체인-생성"><span class="header-section-number">1</span> Context Reordering을 사용하여 질의-응답 체인 생성</h2>
+</section>
+<section id="context-reordering을-사용하여-질의-응답-체인-생성" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="context-reordering을-사용하여-질의-응답-체인-생성"><span class="header-section-number">2</span> Context Reordering을 사용하여 질의-응답 체인 생성</h2>
 <div id="1f2ea0a4" class="cell">
 <details class="code-fold">
 <summary>코드</summary>
@@ -10249,7 +10261,7 @@ font-style: inherit;">print</span>(answer)</span></code></pre></div></div>
 
  ]]></description>
   <guid>https://dlwns0719.github.io/my_blog/docs/blog/posts/RAG/10-Retriever/04-LongContextReorder.html</guid>
-  <pubDate>Mon, 01 Dec 2025 05:01:00 GMT</pubDate>
+  <pubDate>Tue, 02 Dec 2025 07:28:25 GMT</pubDate>
 </item>
 <item>
   <title>다중 벡터저장소 검색기(MultiVectorRetriever)</title>
@@ -11701,7 +11713,7 @@ font-style: inherit;">print</span>(doc.page_content)</span></code></pre></div></
 
  ]]></description>
   <guid>https://dlwns0719.github.io/my_blog/docs/blog/posts/RAG/10-Retriever/07-MultiVectorRetriever.html</guid>
-  <pubDate>Mon, 01 Dec 2025 05:01:00 GMT</pubDate>
+  <pubDate>Tue, 02 Dec 2025 07:28:25 GMT</pubDate>
 </item>
 </channel>
 </rss>
