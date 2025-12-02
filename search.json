@@ -11,7 +11,7 @@
     "href": "docs/blog/index.html",
     "title": "Blog",
     "section": "",
-    "text": "Order By\n      Default\n      \n        Title\n      \n      \n        Date - Oldest\n      \n      \n        Date - Newest\n      \n      \n        Author\n      \n    \n  \n    \n      \n      \n    \n\n\n\n\n\n\n\n\n\n\n01-Data Lake Storage\n\n\n\n\n\n\nAzure Cloud\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nOpenAI 외 도구 호출 에이전트(Tool Calling Agent)\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n도구 (Tools)\n\n\n\n\n\n\nAI\n\nLangChain\n\nPrompt_Engineering\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nIteration 기능과 사람 개입(Human-in-the-loop)\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nLLM 에 도구 바인딩(Binding Tools)\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n도구 호출 에이전트(Tool Calling Agent)\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n문맥 압축 검색기(ContextualCompressionRetriever)\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n앙상블 검색기(Ensemble Retriever)\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nParent Document Retriever\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nMultiQueryRetriever\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nEnsemble Retriever Convex Combination(CC) 추가\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n셀프 쿼리(Self-querying)\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n한글 단어 리트리버 튜닝\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n시간 가중 벡터저장소 리트리버(TimeWeightedVectorStoreRetriever)\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n벡터스토어 기반 검색기(VectorStore-backed Retriever)\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n긴 문맥 재정렬(LongContextReorder)\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n다중 벡터저장소 검색기(MultiVectorRetriever)\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nPart 2 — 프롬프트 구조와 기능 탐구\n\n\n\n\n\n\nAI\n\nLangChain\n\nPrompt_Engineering\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nPart 1 — 프롬프트 구조와 기능 탐구\n\n\n\n\n\n\nAI\n\nLangChain\n\nPrompt_Engineering\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nPart 1 — 프롬프트 분석의 필요성과 가치\n\n\n\n\n\n\nAI\n\nLangChain\n\nPrompt_Engineering\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nPart 2 — 사용자 언어 읽기(프롬프트 구조와 유형)\n\n\n\n\n\n\nAI\n\nPrompt_Engineering\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nPart 3 — 대화 분석(사용자-AI 상호작용 매커니즘)\n\n\n\n\n\n\nAI\n\nPrompt_Engineering\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nPrompt_Engineering\n\n\nPrompt_Engineering Content List\n\n\n\nAzure Cloud\n\n\n\n\n\n\n\n\n\nNov 1, 2025\n\n\nJunhyun Lee\n\n\n\n\n\n\n\n\n\n\n\n\nRAG\n\n\nRAG Content List\n\n\n\nAI\n\nLangChain\n\nRAG\n\n\n\nRetrieval-Augmented Generation (RAG) 기술의 전체 구현 과정을 다루는 종합 가이드. LangChain을 활용한 RAG 시스템 구축, 문서 로딩, 임베딩, 벡터 저장소, 검색기, 그리고 고급 RAG 기법까지 단계별로 학습할 수 있는 실습 중심의 블로그 모음입니다.\n\n\n\n\n\nNov 1, 2025\n\n\nJunhyun Lee\n\n\n\n\n\n\n\n\n\n\n\n\nPrompt_Engineering\n\n\nPrompt_Engineering Content List\n\n\n\nAI\n\nLangChain\n\nRAG\n\n\n\n\n\n\n\n\n\nNov 1, 2025\n\n\nJunhyun Lee\n\n\n\n\n\nNo matching items",
+    "text": "Order By\n      Default\n      \n        Title\n      \n      \n        Date - Oldest\n      \n      \n        Date - Newest\n      \n      \n        Author\n      \n    \n  \n    \n      \n      \n    \n\n\n\n\n\n\n\n\n\n\n01-Data Lake Storage\n\n\n\n\n\n\nAzure Cloud\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nOpenAI 외 도구 호출 에이전트(Tool Calling Agent)\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n도구 (Tools)\n\n\n\n\n\n\nAI\n\nLangChain\n\nPrompt_Engineering\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nIteration 기능과 사람 개입(Human-in-the-loop)\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nLLM 에 도구 바인딩(Binding Tools)\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n도구 호출 에이전트(Tool Calling Agent)\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n문맥 압축 검색기(ContextualCompressionRetriever)\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n앙상블 검색기(Ensemble Retriever)\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nParent Document Retriever\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nMultiQueryRetriever\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nEnsemble Retriever Convex Combination(CC) 추가\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n셀프 쿼리(Self-querying)\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n한글 단어 리트리버 튜닝\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n시간 가중 벡터저장소 리트리버(TimeWeightedVectorStoreRetriever)\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n벡터스토어 기반 검색기(VectorStore-backed Retriever)\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n긴 문맥 재정렬(LongContextReorder)\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n다중 벡터저장소 검색기(MultiVectorRetriever)\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nPart 2 — 프롬프트 구조와 기능 탐구\n\n\n\n\n\n\nAI\n\nLangChain\n\nPrompt_Engineering\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nPart 1 — 프롬프트 구조와 기능 탐구\n\n\n\n\n\n\nAI\n\nLangChain\n\nPrompt_Engineering\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nPart 1 — 프롬프트 분석의 필요성과 가치\n\n\n\n\n\n\nAI\n\nLangChain\n\nPrompt_Engineering\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nPart 2 — 사용자 언어 읽기(프롬프트 구조와 유형)\n\n\n\n\n\n\nAI\n\nPrompt_Engineering\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nPart 3 — 대화 분석(사용자-AI 상호작용 매커니즘)\n\n\n\n\n\n\nAI\n\nPrompt_Engineering\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nAzure Cloud\n\n\nAzure Cloud Content List\n\n\n\nAzure Cloud\n\n\n\n\n\n\n\n\n\nNov 1, 2025\n\n\nJunhyun Lee\n\n\n\n\n\n\n\n\n\n\n\n\nRAG\n\n\nRAG Content List\n\n\n\nAI\n\nLangChain\n\nRAG\n\n\n\nRetrieval-Augmented Generation (RAG) 기술의 전체 구현 과정을 다루는 종합 가이드. LangChain을 활용한 RAG 시스템 구축, 문서 로딩, 임베딩, 벡터 저장소, 검색기, 그리고 고급 RAG 기법까지 단계별로 학습할 수 있는 실습 중심의 블로그 모음입니다.\n\n\n\n\n\nNov 1, 2025\n\n\nJunhyun Lee\n\n\n\n\n\n\n\n\n\n\n\n\nPrompt_Engineering\n\n\nPrompt_Engineering Content List\n\n\n\nAI\n\nLangChain\n\nRAG\n\n\n\n\n\n\n\n\n\nNov 1, 2025\n\n\nJunhyun Lee\n\n\n\n\n\nNo matching items",
     "crumbs": [
       "Blog",
       "Blog Posts"
@@ -405,25 +405,25 @@
   {
     "objectID": "docs/blog/posts/Azure_Cloud/index.html",
     "href": "docs/blog/posts/Azure_Cloud/index.html",
-    "title": "Prompt_Engineering",
+    "title": "Azure Cloud",
     "section": "",
     "text": "01-Data Lake Storage",
     "crumbs": [
       "Blog",
       "Blog Posts",
-      "Prompt_Engineering"
+      "Azure Cloud"
     ]
   },
   {
     "objectID": "docs/blog/posts/Azure_Cloud/index.html#azure-cloud",
     "href": "docs/blog/posts/Azure_Cloud/index.html#azure-cloud",
-    "title": "Prompt_Engineering",
+    "title": "Azure Cloud",
     "section": "",
     "text": "01-Data Lake Storage",
     "crumbs": [
       "Blog",
       "Blog Posts",
-      "Prompt_Engineering"
+      "Azure Cloud"
     ]
   },
   {
