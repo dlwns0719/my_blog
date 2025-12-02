@@ -1,6 +1,6 @@
 ---
-title: "Prompt_Engineering"
-subtitle: Prompt_Engineering Content List
+title: "Azure Cloud"
+subtitle: Azure Cloud Content List
 description: |
 categories:
   - Azure Cloud
