@@ -18,4 +18,4 @@ draft: False
 ## Azure Cloud
 
 ### 클라우드 인프라 설정
-1.  [01-Data Lake Storage](./01-클라우드 인프라 설정/01-Data_Lake_Storage.qmd)
+1.  [01-Data Lake Storage](./01-클라우드_인프라_설정/01-Data_Lake_Storage.qmd)
