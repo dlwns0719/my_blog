@@ -6,9 +6,8 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Junhyun Lee">
 
-<title>Prompt_Engineering – Junhyun Lee</title>
+<title>Part 3 — 세그먼트별 프롬프트 기획 – Junhyun Lee</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -24,31 +23,29 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="../../../../site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="../../../../site_libs/quarto-nav/headroom.min.js"></script>
-<script src="../../../../site_libs/clipboard/clipboard.min.js"></script>
-<script src="../../../../site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="../../../../site_libs/quarto-search/fuse.min.js"></script>
-<script src="../../../../site_libs/quarto-search/quarto-search.js"></script>
-<script src="../../../../site_libs/quarto-search/autocomplete-preset-algolia.umd.js"></script>
-<meta name="quarto:offset" content="../../../../">
-<link href="../../../../docs/blog/posts/Azure_Cloud/index.html" rel="next">
-<link href="../../../../docs/blog/posts/RAG/index.html" rel="prev">
-<script src="../../../../site_libs/quarto-html/quarto.js" type="module"></script>
-<script src="../../../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="../../../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
-<script src="../../../../site_libs/quarto-html/popper.min.js"></script>
-<script src="../../../../site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="../../../../site_libs/quarto-html/anchor.min.js"></script>
-<link href="../../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../../../site_libs/quarto-html/quarto-syntax-highlighting-065a5179aebd64318d7ea99d77b64a9e.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="../../../../site_libs/quarto-html/quarto-syntax-highlighting-dark-969ddfa49e00a70eb3423444dbc81f6c.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="../../../../site_libs/quarto-html/quarto-syntax-highlighting-065a5179aebd64318d7ea99d77b64a9e.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
-<script src="../../../../site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="../../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../../../site_libs/bootstrap/bootstrap-5a73818b025f47a6d9fdc61b5aee3d21.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../../../../site_libs/bootstrap/bootstrap-dark-0cc05e60083667b8b604a857b4577219.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="../../../../site_libs/bootstrap/bootstrap-5a73818b025f47a6d9fdc61b5aee3d21.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script src="../../../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../../../site_libs/quarto-search/quarto-search.js"></script>
+<script src="../../../../../site_libs/quarto-search/autocomplete-preset-algolia.umd.js"></script>
+<meta name="quarto:offset" content="../../../../../">
+<script src="../../../../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../../../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../../../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../../../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../../../site_libs/quarto-html/quarto-syntax-highlighting-065a5179aebd64318d7ea99d77b64a9e.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../../../../site_libs/quarto-html/quarto-syntax-highlighting-dark-969ddfa49e00a70eb3423444dbc81f6c.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../../../../site_libs/quarto-html/quarto-syntax-highlighting-065a5179aebd64318d7ea99d77b64a9e.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../../../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../../../site_libs/bootstrap/bootstrap-5a73818b025f47a6d9fdc61b5aee3d21.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../../../../site_libs/bootstrap/bootstrap-dark-0cc05e60083667b8b604a857b4577219.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../../../../site_libs/bootstrap/bootstrap-5a73818b025f47a6d9fdc61b5aee3d21.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -134,16 +131,22 @@ background: #EDF3F9;
 </style>
 
 
-<link rel="stylesheet" href="../../../../styles.css">
-<meta property="og:title" content="Prompt_Engineering – Junhyun Lee">
-<meta property="og:description" content="Prompt_Engineering Content List">
+<link rel="stylesheet" href="../../../../../styles.css">
+<meta property="og:title" content="Part 3 — 세그먼트별 프롬프트 기획 – Junhyun Lee">
+<meta property="og:image" content="https://dlwns0719.github.io/my_blog/docs/blog/posts/Prompt_Engineering/03-프롬프트_기획_전략/images/1.png">
 <meta property="og:site_name" content="Junhyun Lee">
-<meta name="twitter:title" content="Prompt_Engineering – Junhyun Lee">
-<meta name="twitter:description" content="Prompt_Engineering Content List">
-<meta name="twitter:card" content="summary">
+<meta property="og:image:alt" content="대화 분석 네가지 기준">
+<meta property="og:image:height" content="296">
+<meta property="og:image:width" content="758">
+<meta name="twitter:title" content="Part 3 — 세그먼트별 프롬프트 기획 – Junhyun Lee">
+<meta name="twitter:image" content="https://dlwns0719.github.io/my_blog/docs/blog/posts/Prompt_Engineering/03-프롬프트_기획_전략/images/1.png">
+<meta name="twitter:image:alt" content="대화 분석 네가지 기준">
+<meta name="twitter:image-height" content="296">
+<meta name="twitter:image-width" content="758">
+<meta name="twitter:card" content="summary_large_image">
 </head>
 
-<body class="nav-sidebar floating nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+<body class="nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
     const toggleBodyColorMode = (bsSheetEl) => {
       const mode = bsSheetEl.getAttribute("data-mode");
       const bodyEl = window.document.querySelector("body");
@@ -312,11 +315,11 @@ background: #EDF3F9;
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a href="../../../../index.html" class="navbar-brand navbar-brand-logo">
-    <img src="../../../.././images/logo.png" alt="" class="navbar-logo light-content">
-    <img src="../../../.././images/logo.png" alt="" class="navbar-logo dark-content">
+    <a href="../../../../../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../../../../.././images/logo.png" alt="" class="navbar-logo light-content">
+    <img src="../../../../.././images/logo.png" alt="" class="navbar-logo dark-content">
     </a>
-    <a class="navbar-brand" href="../../../../index.html">
+    <a class="navbar-brand" href="../../../../../index.html">
     <span class="navbar-title">Junhyun Lee</span>
     </a>
   </div>
@@ -327,17 +330,17 @@ background: #EDF3F9;
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link active" href="../../../../index.html" aria-current="page"> 
+    <a class="nav-link" href="../../../../../index.html"> 
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../../../docs/blog/index.html"> 
+    <a class="nav-link" href="../../../../../docs/blog/index.html"> 
 <span class="menu-text">Blog</span></a>
   </li>  
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../../../../about.html"> 
+    <a class="nav-link" href="../../../../../about.html"> 
 <span class="menu-text">Me</span></a>
   </li>  
   <li class="nav-item compact">
@@ -357,26 +360,12 @@ background: #EDF3F9;
 </div>
       </div> <!-- /container-fluid -->
     </nav>
-  <nav class="quarto-secondary-nav">
-    <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="사이드바 전환" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
-        <i class="bi bi-layout-text-sidebar-reverse"></i>
-      </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../../../docs/blog/index.html">Blog Posts</a></li><li class="breadcrumb-item"><a href="../../../../docs/blog/posts/Prompt_Engineering/index.html">Prompt_Engineering</a></li></ol></nav>
-        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="사이드바 전환" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
-        </a>
-      <button type="button" class="btn quarto-search-button" aria-label="검색" onclick="window.quartoOpenSearch();">
-        <i class="bi bi-search"></i>
-      </button>
-    </div>
-  </nav>
 </header>
 <!-- content -->
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
-    <div class="quarto-title column-body"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../../../docs/blog/index.html">Blog Posts</a></li><li class="breadcrumb-item"><a href="../../../../docs/blog/posts/Prompt_Engineering/index.html">Prompt_Engineering</a></li></ol></nav>
-      <h1 class="title">Prompt_Engineering</h1>
-            <p class="subtitle lead">Prompt_Engineering Content List</p>
+    <div class="quarto-title column-body">
+      <h1 class="title">Part 3 — 세그먼트별 프롬프트 기획</h1>
                                 <div class="quarto-categories">
                 <div class="quarto-category">AI</div>
                 <div class="quarto-category">Prompt_Engineering</div>
@@ -385,120 +374,233 @@ background: #EDF3F9;
   </div>
     
   
-  <div class="quarto-title-meta column-body">
+  <div class="quarto-title-meta">
 
-      <div>
-      <div class="quarto-title-meta-heading">저자</div>
-      <div class="quarto-title-meta-contents">
-               <p>Junhyun Lee </p>
-            </div>
-    </div>
       
-      <div>
-      <div class="quarto-title-meta-heading">공개</div>
-      <div class="quarto-title-meta-contents">
-        <p class="date">2025년 11월 01일</p>
-      </div>
-    </div>
     
       
     </div>
     
   
-  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
-    <div class="pt-lg-2 mt-2 text-left sidebar-header">
-      <a href="../../../../index.html" class="sidebar-logo-link">
-      </a>
-      </div>
-        <div class="mt-2 flex-shrink-0 align-items-center">
-        <div class="sidebar-search">
-        <div id="quarto-search" class="" title="검색"></div>
-        </div>
-        </div>
-    <div class="sidebar-menu-container"> 
-    <ul class="list-unstyled mt-1">
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a href="../../../../docs/blog/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Blog Posts</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="토글 섹션">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../../../docs/blog/posts/RAG/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">RAG</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../../../docs/blog/posts/Prompt_Engineering/index.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">Prompt_Engineering</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../../../docs/blog/posts/Azure_Cloud/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Azure Cloud</span></a>
-  </div>
-</li>
-      </ul>
-  </li>
-    </ul>
-    </div>
-</nav>
-<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">목차</h2>
    
   <ul>
-  <li><a href="#prompt_engineering" id="toc-prompt_engineering" class="nav-link active" data-scroll-target="#prompt_engineering"><span class="header-section-number">1</span> Prompt_Engineering</a>
+  <li><a href="#세그먼테이션-정의와-특징" id="toc-세그먼테이션-정의와-특징" class="nav-link active" data-scroll-target="#세그먼테이션-정의와-특징"><span class="header-section-number">1</span> 세그먼테이션 정의와 특징</a>
   <ul class="collapse">
-  <li><a href="#prompt-structure" id="toc-prompt-structure" class="nav-link" data-scroll-target="#prompt-structure"><span class="header-section-number">1.1</span> Prompt Structure</a></li>
-  <li><a href="#프롬프트의-이해" id="toc-프롬프트의-이해" class="nav-link" data-scroll-target="#프롬프트의-이해"><span class="header-section-number">1.2</span> 프롬프트의 이해</a></li>
-  <li><a href="#세그먼트별-프롬프트-기획" id="toc-세그먼트별-프롬프트-기획" class="nav-link" data-scroll-target="#세그먼트별-프롬프트-기획"><span class="header-section-number">1.3</span> 세그먼트별 프롬프트 기획</a></li>
+  <li><a href="#대화-분석-네-가지-기준" id="toc-대화-분석-네-가지-기준" class="nav-link" data-scroll-target="#대화-분석-네-가지-기준"><span class="header-section-number">1.1</span> 대화 분석 네 가지 기준</a></li>
+  <li><a href="#사용자-세그먼트-분류" id="toc-사용자-세그먼트-분류" class="nav-link" data-scroll-target="#사용자-세그먼트-분류"><span class="header-section-number">1.2</span> 사용자 세그먼트 분류</a></li>
+  <li><a href="#대표적인-3가지-유형" id="toc-대표적인-3가지-유형" class="nav-link" data-scroll-target="#대표적인-3가지-유형"><span class="header-section-number">1.3</span> 대표적인 3가지 유형</a>
+  <ul class="collapse">
+  <li><a href="#segment-1.-single-turn-information-seeking-si" id="toc-segment-1.-single-turn-information-seeking-si" class="nav-link" data-scroll-target="#segment-1.-single-turn-information-seeking-si"><span class="header-section-number">1.3.1</span> Segment 1. Single-Turn, Information Seeking (SI)</a></li>
+  <li><a href="#segment-2.-multi-turn-stance-preferred-misp-mosp" id="toc-segment-2.-multi-turn-stance-preferred-misp-mosp" class="nav-link" data-scroll-target="#segment-2.-multi-turn-stance-preferred-misp-mosp"><span class="header-section-number">1.3.2</span> Segment 2. Multi-Turn, Stance, Preferred (MISP, MOSP)</a></li>
+  <li><a href="#segment-3.-multi-turn-stance-unobserved-misu-mosu" id="toc-segment-3.-multi-turn-stance-unobserved-misu-mosu" class="nav-link" data-scroll-target="#segment-3.-multi-turn-stance-unobserved-misu-mosu"><span class="header-section-number">1.3.3</span> Segment 3. Multi-Turn, Stance, Unobserved (MISU, MOSU)</a></li>
+  </ul></li>
+  <li><a href="#일반적인-세그먼트-분포" id="toc-일반적인-세그먼트-분포" class="nav-link" data-scroll-target="#일반적인-세그먼트-분포"><span class="header-section-number">1.4</span> 일반적인 세그먼트 분포</a></li>
+  <li><a href="#세그먼트-활용법" id="toc-세그먼트-활용법" class="nav-link" data-scroll-target="#세그먼트-활용법"><span class="header-section-number">1.5</span> 세그먼트 활용법</a>
+  <ul class="collapse">
+  <li><a href="#사용자-발화-데이터-정량화" id="toc-사용자-발화-데이터-정량화" class="nav-link" data-scroll-target="#사용자-발화-데이터-정량화"><span class="header-section-number">1.5.1</span> 1. 사용자 발화 데이터 정량화</a></li>
+  <li><a href="#heavy-user-파악" id="toc-heavy-user-파악" class="nav-link" data-scroll-target="#heavy-user-파악"><span class="header-section-number">1.5.2</span> 2. Heavy User 파악</a></li>
+  <li><a href="#세그먼트별-ab-테스트" id="toc-세그먼트별-ab-테스트" class="nav-link" data-scroll-target="#세그먼트별-ab-테스트"><span class="header-section-number">1.5.3</span> 3. 세그먼트별 A/B 테스트</a></li>
+  <li><a href="#low-retention-그룹-원인-분석" id="toc-low-retention-그룹-원인-분석" class="nav-link" data-scroll-target="#low-retention-그룹-원인-분석"><span class="header-section-number">1.5.4</span> 4. Low Retention 그룹 원인 분석</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#세그먼트별-프롬프트-기획" id="toc-세그먼트별-프롬프트-기획" class="nav-link" data-scroll-target="#세그먼트별-프롬프트-기획"><span class="header-section-number">2</span> 세그먼트별 프롬프트 기획</a>
+  <ul class="collapse">
+  <li><a href="#segment-1.-single-turn-information-seeking-si-1" id="toc-segment-1.-single-turn-information-seeking-si-1" class="nav-link" data-scroll-target="#segment-1.-single-turn-information-seeking-si-1"><span class="header-section-number">2.1</span> Segment 1. Single-Turn, Information Seeking (SI)</a>
+  <ul class="collapse">
+  <li><a href="#프롬프트-기획-전략" id="toc-프롬프트-기획-전략" class="nav-link" data-scroll-target="#프롬프트-기획-전략"><span class="header-section-number">2.1.1</span> 프롬프트 기획 전략</a></li>
+  <li><a href="#예시-멀티턴-유도-사용자-만족을-위한-질문-생성" id="toc-예시-멀티턴-유도-사용자-만족을-위한-질문-생성" class="nav-link" data-scroll-target="#예시-멀티턴-유도-사용자-만족을-위한-질문-생성"><span class="header-section-number">2.1.2</span> 예시: 멀티턴 유도 &amp; 사용자 만족을 위한 질문 생성</a></li>
+  </ul></li>
+  <li><a href="#segment-2.-multi-turn-stance-preferred-misp-mosp-1" id="toc-segment-2.-multi-turn-stance-preferred-misp-mosp-1" class="nav-link" data-scroll-target="#segment-2.-multi-turn-stance-preferred-misp-mosp-1"><span class="header-section-number">2.2</span> Segment 2. Multi-Turn, Stance, Preferred (MISP, MOSP)</a>
+  <ul class="collapse">
+  <li><a href="#프롬프트-기획-전략-1" id="toc-프롬프트-기획-전략-1" class="nav-link" data-scroll-target="#프롬프트-기획-전략-1"><span class="header-section-number">2.2.1</span> 프롬프트 기획 전략</a></li>
+  <li><a href="#예시-캐릭터-챗봇" id="toc-예시-캐릭터-챗봇" class="nav-link" data-scroll-target="#예시-캐릭터-챗봇"><span class="header-section-number">2.2.2</span> 예시: 캐릭터 챗봇</a></li>
+  </ul></li>
   </ul></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
-<main class="content quarto-banner-title-block column-body" id="quarto-document-content">
+<main class="content quarto-banner-title-block" id="quarto-document-content">
 
 
 
 
 
 
-<section id="prompt_engineering" class="level2" data-number="1">
-<h2 data-number="1" class="anchored" data-anchor-id="prompt_engineering"><span class="header-section-number">1</span> Prompt_Engineering</h2>
-<section id="prompt-structure" class="level3" data-number="1.1">
-<h3 data-number="1.1" class="anchored" data-anchor-id="prompt-structure"><span class="header-section-number">1.1</span> Prompt Structure</h3>
-<ol type="1">
-<li><a href="../../../../docs/blog/posts/Prompt_Engineering/01-Prompt-Structure/01-Prompt-Structure.html">01-프롬프트 구조(1)</a></li>
-<li><a href="../../../../docs/blog/posts/Prompt_Engineering/01-Prompt-Structure/02-Prompt-Structure.html">02-프롬프트 구조(2)</a></li>
-</ol>
+<section id="세그먼테이션-정의와-특징" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> 세그먼테이션 정의와 특징</h1>
+<section id="대화-분석-네-가지-기준" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="대화-분석-네-가지-기준"><span class="header-section-number">1.1</span> 대화 분석 네 가지 기준</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="./images/1.png" class="img-fluid figure-img" alt="대화 분석 네가지 기준" width="800"></p>
+<figcaption>대화 분석 네가지 기준</figcaption>
+</figure>
+</div>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: left;">분류 기준</th>
+<th style="text-align: left;">구분</th>
+<th style="text-align: center;">약어</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">대화 턴 수</td>
+<td style="text-align: left;">싱글턴 vs 멀티턴</td>
+<td style="text-align: center;">S : M</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">행위 유형</td>
+<td style="text-align: left;">정보 검색 vs 기타 행위</td>
+<td style="text-align: center;">I : O</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">선호 구조</td>
+<td style="text-align: left;">선호 vs 비선호</td>
+<td style="text-align: center;">P : D</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">감정적 태도</td>
+<td style="text-align: left;">감정적 vs 비감정적 vs 발견되지 않음</td>
+<td style="text-align: center;">S : N : U</td>
+</tr>
+</tbody>
+</table>
 </section>
-<section id="프롬프트의-이해" class="level3" data-number="1.2">
-<h3 data-number="1.2" class="anchored" data-anchor-id="프롬프트의-이해"><span class="header-section-number">1.2</span> 프롬프트의 이해</h3>
-<ol type="1">
-<li><a href="../../../../docs/blog/posts/Prompt_Engineering/02-프롬프트의_이해/01-프롬프트분석.html">01-프롬프트 분석의 필요성과 가치</a></li>
-<li><a href="../../../../docs/blog/posts/Prompt_Engineering/02-프롬프트의_이해/02-사용자언어읽기.html">02-사용자 언어 읽기(프롬프트 구조와 유형)</a></li>
-<li><a href="../../../../docs/blog/posts/Prompt_Engineering/02-프롬프트의_이해/03-대화분석.html">03-대화 분석(사용자-AI 상호작용 매커니즘)</a></li>
-</ol>
+<section id="사용자-세그먼트-분류" class="level2" data-number="1.2">
+<h2 data-number="1.2" class="anchored" data-anchor-id="사용자-세그먼트-분류"><span class="header-section-number">1.2</span> 사용자 세그먼트 분류</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="./images/세그먼트.png" class="img-fluid figure-img" alt="사용자 세그먼트 분류" width="800"></p>
+<figcaption>사용자 세그먼트 분류</figcaption>
+</figure>
+</div>
+<p>프롬프트만으로 사용자의 성향을 예측해야 하는 상황에서 유용하게 활용할 수 있다. 이후 해당 세그먼트를 통한 프롬프트 인사이트를 소개할 예정이다.</p>
 </section>
-<section id="세그먼트별-프롬프트-기획" class="level3" data-number="1.3">
-<h3 data-number="1.3" class="anchored" data-anchor-id="세그먼트별-프롬프트-기획"><span class="header-section-number">1.3</span> 세그먼트별 프롬프트 기획</h3>
+<section id="대표적인-3가지-유형" class="level2" data-number="1.3">
+<h2 data-number="1.3" class="anchored" data-anchor-id="대표적인-3가지-유형"><span class="header-section-number">1.3</span> 대표적인 3가지 유형</h2>
+<section id="segment-1.-single-turn-information-seeking-si" class="level3" data-number="1.3.1">
+<h3 data-number="1.3.1" class="anchored" data-anchor-id="segment-1.-single-turn-information-seeking-si"><span class="header-section-number">1.3.1</span> Segment 1. Single-Turn, Information Seeking (SI)</h3>
+<ul>
+<li><strong>정보 검색형 사용자</strong></li>
+<li>즉흥적으로 문제를 해결하려는 경향</li>
+</ul>
+</section>
+<section id="segment-2.-multi-turn-stance-preferred-misp-mosp" class="level3" data-number="1.3.2">
+<h3 data-number="1.3.2" class="anchored" data-anchor-id="segment-2.-multi-turn-stance-preferred-misp-mosp"><span class="header-section-number">1.3.2</span> Segment 2. Multi-Turn, Stance, Preferred (MISP, MOSP)</h3>
+<ul>
+<li><strong>AI 친화적이고 사교적인 사용자</strong></li>
+<li>긍정적인 대화를 선호함</li>
+</ul>
+</section>
+<section id="segment-3.-multi-turn-stance-unobserved-misu-mosu" class="level3" data-number="1.3.3">
+<h3 data-number="1.3.3" class="anchored" data-anchor-id="segment-3.-multi-turn-stance-unobserved-misu-mosu"><span class="header-section-number">1.3.3</span> Segment 3. Multi-Turn, Stance, Unobserved (MISU, MOSU)</h3>
+<ul>
+<li><strong>새로운 아이디어를 고민하는 사용자</strong></li>
+<li>여러 턴의 대화를 통해 새로운 가능성을 탐구하는 유형</li>
+</ul>
+</section>
+</section>
+<section id="일반적인-세그먼트-분포" class="level2" data-number="1.4">
+<h2 data-number="1.4" class="anchored" data-anchor-id="일반적인-세그먼트-분포"><span class="header-section-number">1.4</span> 일반적인 세그먼트 분포</h2>
+<blockquote class="blockquote">
+<p><strong>Segment 1 &gt;&gt;&gt;&gt; Segment 2 &gt; Segment 3</strong></p>
+</blockquote>
+<p>정보 검색형 사용자(Segment 1)가 가장 많은 비중을 차지한다.</p>
+</section>
+<section id="세그먼트-활용법" class="level2" data-number="1.5">
+<h2 data-number="1.5" class="anchored" data-anchor-id="세그먼트-활용법"><span class="header-section-number">1.5</span> 세그먼트 활용법</h2>
+<section id="사용자-발화-데이터-정량화" class="level3" data-number="1.5.1">
+<h3 data-number="1.5.1" class="anchored" data-anchor-id="사용자-발화-데이터-정량화"><span class="header-section-number">1.5.1</span> 1. 사용자 발화 데이터 정량화</h3>
+<ul>
+<li>프롬프트 → LLM 분류 방식 활용</li>
+<li>사용자 발화 데이터를 세그먼트별로 분류하여 분포 파악 가능</li>
+</ul>
+</section>
+<section id="heavy-user-파악" class="level3" data-number="1.5.2">
+<h3 data-number="1.5.2" class="anchored" data-anchor-id="heavy-user-파악"><span class="header-section-number">1.5.2</span> 2. Heavy User 파악</h3>
+<ul>
+<li>현재 서비스의 <strong>Heavy User</strong>, <strong>Loyalty User</strong> 파악 가능</li>
+</ul>
+</section>
+<section id="세그먼트별-ab-테스트" class="level3" data-number="1.5.3">
+<h3 data-number="1.5.3" class="anchored" data-anchor-id="세그먼트별-ab-테스트"><span class="header-section-number">1.5.3</span> 3. 세그먼트별 A/B 테스트</h3>
+<ul>
+<li>어떤 프롬프트를 기획할 것인지 아이디에이션에 활용</li>
+</ul>
+</section>
+<section id="low-retention-그룹-원인-분석" class="level3" data-number="1.5.4">
+<h3 data-number="1.5.4" class="anchored" data-anchor-id="low-retention-그룹-원인-분석"><span class="header-section-number">1.5.4</span> 4. Low Retention 그룹 원인 분석</h3>
+<ul>
+<li>사용자 이탈의 원인을 분석 가능</li>
+<li>세그먼트를 지속적으로 추적하여, 어떤 환경적 요인이 특정 세그먼트의 이탈 또는 유입을 유발하는지 분석 가능</li>
+</ul>
+</section>
+</section>
+</section>
+<section id="세그먼트별-프롬프트-기획" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> 세그먼트별 프롬프트 기획</h1>
+<section id="segment-1.-single-turn-information-seeking-si-1" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="segment-1.-single-turn-information-seeking-si-1"><span class="header-section-number">2.1</span> Segment 1. Single-Turn, Information Seeking (SI)</h2>
+<blockquote class="blockquote">
+<p><strong>정보 검색형 사용자</strong> — 즉흥적으로 문제를 해결하려는 경향</p>
+</blockquote>
+<section id="프롬프트-기획-전략" class="level3" data-number="2.1.1">
+<h3 data-number="2.1.1" class="anchored" data-anchor-id="프롬프트-기획-전략"><span class="header-section-number">2.1.1</span> 프롬프트 기획 전략</h3>
 <ol type="1">
-<li><a href="../../../../docs/blog/posts/Prompt_Engineering/03-프롬프트_기획_전략/01-세그먼트별_프롬프트_기획.html">01-세그먼트별 프롬프트 기획</a></li>
+<li><strong>실시간 정보 검색 엔진 연동</strong> — 정보 검색형 사용자의 니즈 충족</li>
+<li><strong>Retention을 위한 멀티턴 유도 장치</strong> — 이탈 방지</li>
 </ol>
+<p>정보 검색형 사용자는 싱글턴으로 질문에 대한 답을 얻고 빠르게 이탈하는 특성이 있다. 이러한 사용자를 잡아두기 위해 <strong>동적으로 FAQ를 제공</strong>하는 방식으로 프롬프트를 기획하면, 자연스럽게 멀티턴 대화로 유도할 수 있다.</p>
+</section>
+<section id="예시-멀티턴-유도-사용자-만족을-위한-질문-생성" class="level3" data-number="2.1.2">
+<h3 data-number="2.1.2" class="anchored" data-anchor-id="예시-멀티턴-유도-사용자-만족을-위한-질문-생성"><span class="header-section-number">2.1.2</span> 예시: 멀티턴 유도 &amp; 사용자 만족을 위한 질문 생성</h3>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="./images/멀티턴유도.png" class="img-fluid figure-img" alt="멀티턴 유도 &amp; 사용자 만족을 위한 질문 생성" width="800"></p>
+<figcaption>멀티턴 유도 &amp; 사용자 만족을 위한 질문 생성</figcaption>
+</figure>
+</div>
+<ul>
+<li>호기심을 자극하는 장치로 활용</li>
+<li>실제로 클릭율이 매우 높음 → 사용자 만족도 향상에 기여</li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="segment-2.-multi-turn-stance-preferred-misp-mosp-1" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="segment-2.-multi-turn-stance-preferred-misp-mosp-1"><span class="header-section-number">2.2</span> Segment 2. Multi-Turn, Stance, Preferred (MISP, MOSP)</h2>
+<blockquote class="blockquote">
+<p><strong>AI 친화적이고 사교적인 사용자</strong> — 공감대와 유대감을 중요시하며, 긍정적인 대화를 선호</p>
+</blockquote>
+<section id="프롬프트-기획-전략-1" class="level3" data-number="2.2.1">
+<h3 data-number="2.2.1" class="anchored" data-anchor-id="프롬프트-기획-전략-1"><span class="header-section-number">2.2.1</span> 프롬프트 기획 전략</h3>
+<ol type="1">
+<li><strong>AI와 Affiliation 형성</strong> — Gamification 활용 (게임이 아닌 분야에 게임의 요소(점수, 보상, 경쟁, 레벨업 등)를 적용해 참여·동기·몰입을 높이는 기법)</li>
+<li><strong>페르소나 만들기</strong> — 프롬프트 게임, 캐릭터 챗봇</li>
+</ol>
+<p>이 세그먼트는 대화의 길이가 상당히 길고, 하고자 하는 바가 명확한 특성이 있다.</p>
+</section>
+<section id="예시-캐릭터-챗봇" class="level3" data-number="2.2.2">
+<h3 data-number="2.2.2" class="anchored" data-anchor-id="예시-캐릭터-챗봇"><span class="header-section-number">2.2.2</span> 예시: 캐릭터 챗봇</h3>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="./images/캐릭터챗봇.png" class="img-fluid figure-img" alt="캐릭터챗봇" width="800"></p>
+<figcaption>캐릭터챗봇</figcaption>
+</figure>
+</div>
+<p>캐릭터 챗봇을 통해 사용자와 유대감을 형성할 수 있다.</p>
 
 
+</section>
 </section>
 </section>
 
@@ -995,18 +1097,6 @@ document.querySelectorAll(".pymd span.co").forEach(el => {
   }
   loadGiscus();
 </script>
-<nav class="page-navigation column-body">
-  <div class="nav-page nav-page-previous">
-      <a href="../../../../docs/blog/posts/RAG/index.html" class="pagination-link" aria-label="RAG">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">RAG</span>
-      </a>          
-  </div>
-  <div class="nav-page nav-page-next">
-      <a href="../../../../docs/blog/posts/Azure_Cloud/index.html" class="pagination-link" aria-label="Azure Cloud">
-        <span class="nav-page-text">Azure Cloud</span> <i class="bi bi-arrow-right-short"></i>
-      </a>
-  </div>
-</nav>
 </div> <!-- /content -->
 <footer class="footer">
   <div class="nav-footer">
@@ -1016,7 +1106,7 @@ document.querySelectorAll(".pymd span.co").forEach(el => {
     <div class="nav-footer-center">
       <ul class="footer-items list-unstyled">
     <li class="nav-item">
-    <a class="nav-link" href="../../../../about.html">
+    <a class="nav-link" href="../../../../../about.html">
 <p>About</p>
 </a>
   </li>  

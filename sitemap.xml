@@ -10,7 +10,7 @@
   </url>
   <url>
     <loc>https://dlwns0719.github.io/my_blog/docs/blog/posts/Prompt_Engineering/02-프롬프트의_이해/03-대화분석.html</loc>
-    <lastmod>2025-12-02T07:26:28.432Z</lastmod>
+    <lastmod>2025-12-03T13:41:44.416Z</lastmod>
   </url>
   <url>
     <loc>https://dlwns0719.github.io/my_blog/docs/blog/posts/Prompt_Engineering/02-프롬프트의_이해/01-프롬프트분석.html</loc>
@@ -21,80 +21,84 @@
     <lastmod>2025-11-26T00:53:20.836Z</lastmod>
   </url>
   <url>
-    <loc>https://dlwns0719.github.io/my_blog/docs/blog/posts/RAG/10-Retriever/04-LongContextReorder.html</loc>
-    <lastmod>2025-12-02T07:26:28.439Z</lastmod>
-  </url>
-  <url>
-    <loc>https://dlwns0719.github.io/my_blog/docs/blog/posts/RAG/10-Retriever/09-TimeWeightedVectorStoreRetriever.html</loc>
-    <lastmod>2025-11-25T05:43:41.062Z</lastmod>
-  </url>
-  <url>
-    <loc>https://dlwns0719.github.io/my_blog/docs/blog/posts/RAG/10-Retriever/08-SelfQueryRetriever.html</loc>
-    <lastmod>2025-11-25T05:43:41.062Z</lastmod>
-  </url>
-  <url>
-    <loc>https://dlwns0719.github.io/my_blog/docs/blog/posts/RAG/10-Retriever/06-MultiQueryRetriever.html</loc>
+    <loc>https://dlwns0719.github.io/my_blog/docs/blog/posts/RAG/10-Retriever/07-MultiVectorRetriever.html</loc>
     <lastmod>2025-11-25T05:43:41.061Z</lastmod>
-  </url>
-  <url>
-    <loc>https://dlwns0719.github.io/my_blog/docs/blog/posts/RAG/10-Retriever/03-EnsembleRetriever.html</loc>
-    <lastmod>2025-12-02T07:26:28.439Z</lastmod>
-  </url>
-  <url>
-    <loc>https://dlwns0719.github.io/my_blog/docs/blog/posts/RAG/15-Agent/03-Agent.html</loc>
-    <lastmod>2025-11-20T00:33:57.350Z</lastmod>
-  </url>
-  <url>
-    <loc>https://dlwns0719.github.io/my_blog/docs/blog/posts/RAG/15-Agent/05-Iter-Human-In-the-Loop.html</loc>
-    <lastmod>2025-11-20T00:34:02.371Z</lastmod>
-  </url>
-  <url>
-    <loc>https://dlwns0719.github.io/my_blog/docs/blog/posts/RAG/15-Agent/04-Agent-More-LLMs.html</loc>
-    <lastmod>2025-11-28T05:30:46.208Z</lastmod>
-  </url>
-  <url>
-    <loc>https://dlwns0719.github.io/my_blog/docs/blog/posts/Azure_Cloud/index.html</loc>
-    <lastmod>2025-12-02T07:45:39.525Z</lastmod>
-  </url>
-  <url>
-    <loc>https://dlwns0719.github.io/my_blog/docs/blog/posts/Azure_Cloud/01-클라우드_인프라_설정/01-Data_Lake_Storage.html</loc>
-    <lastmod>2025-12-02T07:41:54.394Z</lastmod>
-  </url>
-  <url>
-    <loc>https://dlwns0719.github.io/my_blog/docs/blog/posts/RAG/index.html</loc>
-    <lastmod>2025-12-02T07:26:28.439Z</lastmod>
-  </url>
-  <url>
-    <loc>https://dlwns0719.github.io/my_blog/docs/blog/posts/RAG/15-Agent/01-Tools.html</loc>
-    <lastmod>2025-11-20T01:13:12.275Z</lastmod>
-  </url>
-  <url>
-    <loc>https://dlwns0719.github.io/my_blog/docs/blog/posts/RAG/15-Agent/02-Bind-Tools.html</loc>
-    <lastmod>2025-11-28T04:17:21.104Z</lastmod>
-  </url>
-  <url>
-    <loc>https://dlwns0719.github.io/my_blog/docs/blog/posts/RAG/10-Retriever/02-ContextualCompressionRetriever.html</loc>
-    <lastmod>2025-12-02T07:26:28.438Z</lastmod>
-  </url>
-  <url>
-    <loc>https://dlwns0719.github.io/my_blog/docs/blog/posts/RAG/10-Retriever/05-ParentDocumentRetriever.html</loc>
-    <lastmod>2025-11-25T05:43:41.060Z</lastmod>
-  </url>
-  <url>
-    <loc>https://dlwns0719.github.io/my_blog/docs/blog/posts/RAG/10-Retriever/11-CC-EnsembleRetriever.html</loc>
-    <lastmod>2025-11-25T05:43:41.063Z</lastmod>
-  </url>
-  <url>
-    <loc>https://dlwns0719.github.io/my_blog/docs/blog/posts/RAG/10-Retriever/10-Kiwi-BM25Retriever.html</loc>
-    <lastmod>2025-11-25T05:43:41.063Z</lastmod>
   </url>
   <url>
     <loc>https://dlwns0719.github.io/my_blog/docs/blog/posts/RAG/10-Retriever/01-VectorStoreRetriever.html</loc>
     <lastmod>2025-11-25T05:53:45.242Z</lastmod>
   </url>
   <url>
-    <loc>https://dlwns0719.github.io/my_blog/docs/blog/posts/RAG/10-Retriever/07-MultiVectorRetriever.html</loc>
+    <loc>https://dlwns0719.github.io/my_blog/docs/blog/posts/RAG/10-Retriever/10-Kiwi-BM25Retriever.html</loc>
+    <lastmod>2025-11-25T05:43:41.063Z</lastmod>
+  </url>
+  <url>
+    <loc>https://dlwns0719.github.io/my_blog/docs/blog/posts/RAG/10-Retriever/11-CC-EnsembleRetriever.html</loc>
+    <lastmod>2025-11-25T05:43:41.063Z</lastmod>
+  </url>
+  <url>
+    <loc>https://dlwns0719.github.io/my_blog/docs/blog/posts/RAG/10-Retriever/05-ParentDocumentRetriever.html</loc>
+    <lastmod>2025-11-25T05:43:41.060Z</lastmod>
+  </url>
+  <url>
+    <loc>https://dlwns0719.github.io/my_blog/docs/blog/posts/RAG/10-Retriever/02-ContextualCompressionRetriever.html</loc>
+    <lastmod>2025-12-03T13:41:39.152Z</lastmod>
+  </url>
+  <url>
+    <loc>https://dlwns0719.github.io/my_blog/docs/blog/posts/RAG/15-Agent/02-Bind-Tools.html</loc>
+    <lastmod>2025-11-28T04:17:21.104Z</lastmod>
+  </url>
+  <url>
+    <loc>https://dlwns0719.github.io/my_blog/docs/blog/posts/RAG/15-Agent/01-Tools.html</loc>
+    <lastmod>2025-11-20T01:13:12.275Z</lastmod>
+  </url>
+  <url>
+    <loc>https://dlwns0719.github.io/my_blog/docs/blog/posts/RAG/index.html</loc>
+    <lastmod>2025-12-03T13:41:39.154Z</lastmod>
+  </url>
+  <url>
+    <loc>https://dlwns0719.github.io/my_blog/docs/blog/posts/Azure_Cloud/01-클라우드_인프라_설정/01-Data_Lake_Storage.html</loc>
+    <lastmod>2025-12-03T13:41:39.142Z</lastmod>
+  </url>
+  <url>
+    <loc>https://dlwns0719.github.io/my_blog/docs/blog/posts/Azure_Cloud/index.html</loc>
+    <lastmod>2025-12-03T13:41:39.152Z</lastmod>
+  </url>
+  <url>
+    <loc>https://dlwns0719.github.io/my_blog/docs/blog/posts/RAG/15-Agent/04-Agent-More-LLMs.html</loc>
+    <lastmod>2025-11-28T05:30:46.208Z</lastmod>
+  </url>
+  <url>
+    <loc>https://dlwns0719.github.io/my_blog/docs/blog/posts/RAG/15-Agent/05-Iter-Human-In-the-Loop.html</loc>
+    <lastmod>2025-11-20T00:34:02.371Z</lastmod>
+  </url>
+  <url>
+    <loc>https://dlwns0719.github.io/my_blog/docs/blog/posts/RAG/15-Agent/03-Agent.html</loc>
+    <lastmod>2025-11-20T00:33:57.350Z</lastmod>
+  </url>
+  <url>
+    <loc>https://dlwns0719.github.io/my_blog/docs/blog/posts/RAG/10-Retriever/03-EnsembleRetriever.html</loc>
+    <lastmod>2025-12-03T13:41:39.153Z</lastmod>
+  </url>
+  <url>
+    <loc>https://dlwns0719.github.io/my_blog/docs/blog/posts/RAG/10-Retriever/06-MultiQueryRetriever.html</loc>
     <lastmod>2025-11-25T05:43:41.061Z</lastmod>
+  </url>
+  <url>
+    <loc>https://dlwns0719.github.io/my_blog/docs/blog/posts/RAG/10-Retriever/08-SelfQueryRetriever.html</loc>
+    <lastmod>2025-11-25T05:43:41.062Z</lastmod>
+  </url>
+  <url>
+    <loc>https://dlwns0719.github.io/my_blog/docs/blog/posts/RAG/10-Retriever/09-TimeWeightedVectorStoreRetriever.html</loc>
+    <lastmod>2025-11-25T05:43:41.062Z</lastmod>
+  </url>
+  <url>
+    <loc>https://dlwns0719.github.io/my_blog/docs/blog/posts/RAG/10-Retriever/04-LongContextReorder.html</loc>
+    <lastmod>2025-12-03T13:41:39.154Z</lastmod>
+  </url>
+  <url>
+    <loc>https://dlwns0719.github.io/my_blog/docs/blog/posts/Prompt_Engineering/03-프롬프트_기획_전략/01-세그먼트별_프롬프트_기획.html</loc>
+    <lastmod>2025-12-03T13:41:44.416Z</lastmod>
   </url>
   <url>
     <loc>https://dlwns0719.github.io/my_blog/docs/blog/posts/Prompt_Engineering/01-Prompt-Structure/01-Prompt-Structure.html</loc>
@@ -106,7 +110,7 @@
   </url>
   <url>
     <loc>https://dlwns0719.github.io/my_blog/docs/blog/posts/Prompt_Engineering/index.html</loc>
-    <lastmod>2025-12-02T07:26:28.438Z</lastmod>
+    <lastmod>2025-12-03T13:41:44.420Z</lastmod>
   </url>
   <url>
     <loc>https://dlwns0719.github.io/my_blog/index.html</loc>

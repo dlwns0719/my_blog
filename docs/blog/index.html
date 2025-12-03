@@ -109,7 +109,8 @@ i.async=1,i.src=n,c.parentNode.insertBefore(i,c)
 
     const options = {
       valueNames: ['listing-date','listing-title','listing-author','listing-subtitle','listing-image','listing-description','listing-categories',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
-      
+      page: 25,
+    pagination: { item: "<li class='page-item'><a class='page page-link' href='#'></a></li>" },
       searchColumns: ["listing-date","listing-title","listing-author","listing-subtitle","listing-image","listing-description","listing-categories"],
     };
 
@@ -506,7 +507,7 @@ window.Quarto = {
 <!--End mc_embed_signup-->
 </div></div>
         
-    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(25)</span></div><div class="category" data-category="QUk=">AI <span class="quarto-category-count">(8)</span></div><div class="category" data-category="QXp1cmUlMjBDbG91ZA==">Azure Cloud <span class="quarto-category-count">(2)</span></div><div class="category" data-category="TGFuZ0NoYWlu">LangChain <span class="quarto-category-count">(6)</span></div><div class="category" data-category="UHJvbXB0X0VuZ2luZWVyaW5n">Prompt_Engineering <span class="quarto-category-count">(6)</span></div><div class="category" data-category="UkFH">RAG <span class="quarto-category-count">(2)</span></div></div></div>
+    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(26)</span></div><div class="category" data-category="QUk=">AI <span class="quarto-category-count">(9)</span></div><div class="category" data-category="QXp1cmUlMjBDbG91ZA==">Azure Cloud <span class="quarto-category-count">(2)</span></div><div class="category" data-category="TGFuZ0NoYWlu">LangChain <span class="quarto-category-count">(5)</span></div><div class="category" data-category="UHJvbXB0X0VuZ2luZWVyaW5n">Prompt_Engineering <span class="quarto-category-count">(8)</span></div><div class="category" data-category="UkFH">RAG <span class="quarto-category-count">(1)</span></div></div></div>
 <!-- main -->
 <main class="content quarto-banner-title-block" id="quarto-document-content">
 
@@ -546,7 +547,7 @@ window.Quarto = {
     </div>
 </div>
 <div class="list quarto-listing-default">
-<div class="quarto-post image-right" data-index="0" data-categories="QXp1cmUlMjBDbG91ZA==" data-listing-file-modified-sort="1764661314394" data-listing-reading-time-sort="7" data-listing-word-count-sort="1317">
+<div class="quarto-post image-right" data-index="0" data-categories="QXp1cmUlMjBDbG91ZA==" data-listing-file-modified-sort="1764769299142" data-listing-reading-time-sort="7" data-listing-word-count-sort="1317">
 <div class="thumbnail"><a href="../../docs/blog/posts/Azure_Cloud/01-클라우드_인프라_설정/01-Data_Lake_Storage.html" class="no-external">
 
 <p class="card-img-top"><img src="posts/Azure_Cloud/01-클라우드_인프라_설정/images/01-Data_Lake_Storage/1.png"  class="thumbnail-image card-img"/></p>
@@ -692,7 +693,7 @@ LLM 모델이 도구(tool) 를 호출할 수 있으려면 chat 요청을 할 때
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="6" data-listing-file-modified-sort="1764660388438" data-listing-reading-time-sort="2" data-listing-word-count-sort="347">
+<div class="quarto-post image-right" data-index="6" data-listing-file-modified-sort="1764769299152" data-listing-reading-time-sort="2" data-listing-word-count-sort="347">
 <div class="thumbnail"><a href="../../docs/blog/posts/RAG/10-Retriever/02-ContextualCompressionRetriever.html" class="no-external">
 
 <p class="card-img-top"><img src="posts/RAG/10-Retriever/images/01-Contextual-Compression.jpeg"  class="thumbnail-image card-img"/></p>
@@ -714,7 +715,7 @@ LLM 모델이 도구(tool) 를 호출할 수 있으려면 chat 요청을 할 때
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="7" data-listing-file-modified-sort="1764660388439" data-listing-reading-time-sort="1" data-listing-word-count-sort="171">
+<div class="quarto-post image-right" data-index="7" data-listing-file-modified-sort="1764769299153" data-listing-reading-time-sort="1" data-listing-word-count-sort="171">
 <div class="thumbnail"><a href="../../docs/blog/posts/RAG/10-Retriever/03-EnsembleRetriever.html" class="no-external">
 
 <div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
@@ -890,7 +891,7 @@ written by@teddynote
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="15" data-listing-file-modified-sort="1764660388439" data-listing-reading-time-sort="1" data-listing-word-count-sort="155">
+<div class="quarto-post image-right" data-index="15" data-listing-file-modified-sort="1764769299154" data-listing-reading-time-sort="1" data-listing-word-count-sort="155">
 <div class="thumbnail"><a href="../../docs/blog/posts/RAG/10-Retriever/04-LongContextReorder.html" class="no-external">
 
 <div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
@@ -934,7 +935,36 @@ LangChain에서는 문서를 다양한 상황에서 효율적으로 쿼리할 �
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="17" data-categories="QUklMkNMYW5nQ2hhaW4lMkNQcm9tcHRfRW5naW5lZXJpbmc=" data-listing-file-modified-sort="1764118400836" data-listing-reading-time-sort="5" data-listing-word-count-sort="809">
+<div class="quarto-post image-right" data-index="17" data-categories="QUklMkNQcm9tcHRfRW5naW5lZXJpbmc=" data-listing-file-modified-sort="1764769304416" data-listing-reading-time-sort="3" data-listing-word-count-sort="405">
+<div class="thumbnail"><a href="../../docs/blog/posts/Prompt_Engineering/03-프롬프트_기획_전략/01-세그먼트별_프롬프트_기획.html" class="no-external">
+
+<p class="card-img-top"><img src="posts/Prompt_Engineering/03-프롬프트_기획_전략/images/1.png" alt="대화 분석 네가지 기준"  class="thumbnail-image card-img"/></p>
+
+</a></div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="../../docs/blog/posts/Prompt_Engineering/03-프롬프트_기획_전략/01-세그먼트별_프롬프트_기획.html" class="no-external">Part 3 — 세그먼트별 프롬프트 기획</a>
+</h3>
+<div class="listing-subtitle">
+<a href="../../docs/blog/posts/Prompt_Engineering/03-프롬프트_기획_전략/01-세그먼트별_프롬프트_기획.html" class="no-external"></a>
+</div>
+<div class="listing-categories">
+
+<div class="listing-category" onclick="window.quartoListingCategory('QUk='); return false;">AI</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('UHJvbXB0X0VuZ2luZWVyaW5n'); return false;">Prompt_Engineering</div>
+
+</div>
+<div class="delink listing-description"><a href="../../docs/blog/posts/Prompt_Engineering/03-프롬프트_기획_전략/01-세그먼트별_프롬프트_기획.html" class="no-external">
+프롬프트만으로 사용자의 성향을 예측해야 하는 상황에서 유용하게 활용할 수 있다. 이후 해당 세그먼트를 통한 프롬프트 인사이트를 소개할 예정이다.
+</a></div>
+</div>
+<div class="metadata">
+<a href="../../docs/blog/posts/Prompt_Engineering/03-프롬프트_기획_전략/01-세그먼트별_프롬프트_기획.html" class="no-external">
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="18" data-categories="QUklMkNMYW5nQ2hhaW4lMkNQcm9tcHRfRW5naW5lZXJpbmc=" data-listing-file-modified-sort="1764118400836" data-listing-reading-time-sort="5" data-listing-word-count-sort="809">
 <div class="thumbnail"><a href="../../docs/blog/posts/Prompt_Engineering/01-Prompt-Structure/02-Prompt-Structure.html" class="no-external">
 
 <div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
@@ -965,7 +995,7 @@ LangChain에서는 문서를 다양한 상황에서 효율적으로 쿼리할 �
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="18" data-categories="QUklMkNMYW5nQ2hhaW4lMkNQcm9tcHRfRW5naW5lZXJpbmc=" data-listing-file-modified-sort="1763913142268" data-listing-reading-time-sort="1" data-listing-word-count-sort="58">
+<div class="quarto-post image-right" data-index="19" data-categories="QUklMkNMYW5nQ2hhaW4lMkNQcm9tcHRfRW5naW5lZXJpbmc=" data-listing-file-modified-sort="1763913142268" data-listing-reading-time-sort="1" data-listing-word-count-sort="58">
 <div class="thumbnail"><a href="../../docs/blog/posts/Prompt_Engineering/01-Prompt-Structure/01-Prompt-Structure.html" class="no-external">
 
 <div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
@@ -996,7 +1026,7 @@ LangChain에서는 문서를 다양한 상황에서 효율적으로 쿼리할 �
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="19" data-categories="QUklMkNMYW5nQ2hhaW4lMkNQcm9tcHRfRW5naW5lZXJpbmc=" data-listing-file-modified-sort="1764305129074" data-listing-reading-time-sort="2" data-listing-word-count-sort="287">
+<div class="quarto-post image-right" data-index="20" data-categories="QUklMkNMYW5nQ2hhaW4lMkNQcm9tcHRfRW5naW5lZXJpbmc=" data-listing-file-modified-sort="1764305129074" data-listing-reading-time-sort="2" data-listing-word-count-sort="287">
 <div class="thumbnail"><a href="../../docs/blog/posts/Prompt_Engineering/02-프롬프트의_이해/01-프롬프트분석.html" class="no-external">
 
 <p class="card-img-top"><img src="posts/Prompt_Engineering/02-프롬프트의_이해/images/1.png" alt="ChatGPT 사용자 불만 사유 및 대응 방식 통계"  class="thumbnail-image card-img"/></p>
@@ -1027,7 +1057,7 @@ ChatGPT 사용자 경험 연구 결과, 많은 사용자들이 AI 답변에 불�
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="20" data-categories="QUklMkNQcm9tcHRfRW5naW5lZXJpbmc=" data-listing-file-modified-sort="1764660388432" data-listing-reading-time-sort="14" data-listing-word-count-sort="2616">
+<div class="quarto-post image-right" data-index="21" data-categories="QUklMkNQcm9tcHRfRW5naW5lZXJpbmc=" data-listing-file-modified-sort="1764660388432" data-listing-reading-time-sort="14" data-listing-word-count-sort="2616">
 <div class="thumbnail"><a href="../../docs/blog/posts/Prompt_Engineering/02-프롬프트의_이해/02-사용자언어읽기.html" class="no-external">
 
 <p class="card-img-top"><img src="posts/Prompt_Engineering/02-프롬프트의_이해/images/5.png" alt="곰과의 대화 결과"  class="thumbnail-image card-img"/></p>
@@ -1056,7 +1086,7 @@ ChatGPT 사용자 경험 연구 결과, 많은 사용자들이 AI 답변에 불�
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="21" data-categories="QUklMkNQcm9tcHRfRW5naW5lZXJpbmc=" data-listing-file-modified-sort="1764660388432" data-listing-reading-time-sort="9" data-listing-word-count-sort="1704">
+<div class="quarto-post image-right" data-index="22" data-categories="QUklMkNQcm9tcHRfRW5naW5lZXJpbmc=" data-listing-file-modified-sort="1764769304416" data-listing-reading-time-sort="6" data-listing-word-count-sort="1060">
 <div class="thumbnail"><a href="../../docs/blog/posts/Prompt_Engineering/02-프롬프트의_이해/03-대화분석.html" class="no-external">
 
 <p class="card-img-top"><img src="posts/Prompt_Engineering/02-프롬프트의_이해/images/1.png" alt="싱글턴"  class="thumbnail-image card-img"/></p>
@@ -1085,7 +1115,7 @@ ChatGPT 사용자 경험 연구 결과, 많은 사용자들이 AI 답변에 불�
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="22" data-categories="QXp1cmUlMjBDbG91ZA==" data-listing-date-sort="1761922800000" data-listing-file-modified-sort="1764661539525" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="8">
+<div class="quarto-post image-right" data-index="23" data-categories="QXp1cmUlMjBDbG91ZA==" data-listing-date-sort="1761922800000" data-listing-file-modified-sort="1764769299152" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="8">
 <div class="thumbnail"><a href="../../docs/blog/posts/Azure_Cloud/index.html" class="no-external">
 
 <div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
@@ -1128,7 +1158,7 @@ Junhyun Lee
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="23" data-categories="QUklMkNMYW5nQ2hhaW4lMkNSQUc=" data-listing-date-sort="1761922800000" data-listing-file-modified-sort="1764660388439" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="21">
+<div class="quarto-post image-right" data-index="24" data-categories="QUklMkNMYW5nQ2hhaW4lMkNSQUc=" data-listing-date-sort="1761922800000" data-listing-file-modified-sort="1764769299154" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="21">
 <div class="thumbnail"><a href="../../docs/blog/posts/RAG/index.html" class="no-external">
 
 <div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
@@ -1165,7 +1195,7 @@ Junhyun Lee
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="24" data-categories="QUklMkNMYW5nQ2hhaW4lMkNSQUc=" data-listing-date-sort="1761922800000" data-listing-file-modified-sort="1764660388438" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="27">
+<div class="quarto-post image-right" data-index="25" data-categories="QUklMkNQcm9tcHRfRW5naW5lZXJpbmc=" data-listing-date-sort="1761922800000" data-listing-file-modified-sort="1764769304420" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="34">
 <div class="thumbnail"><a href="../../docs/blog/posts/Prompt_Engineering/index.html" class="no-external">
 
 <div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
@@ -1182,9 +1212,7 @@ Junhyun Lee
 
 <div class="listing-category" onclick="window.quartoListingCategory('QUk='); return false;">AI</div>
 
-<div class="listing-category" onclick="window.quartoListingCategory('TGFuZ0NoYWlu'); return false;">LangChain</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('UkFH'); return false;">RAG</div>
+<div class="listing-category" onclick="window.quartoListingCategory('UHJvbXB0X0VuZ2luZWVyaW5n'); return false;">Prompt_Engineering</div>
 
 </div>
 <div class="delink listing-description"><a href="../../docs/blog/posts/Prompt_Engineering/index.html" class="no-external">
@@ -1203,6 +1231,12 @@ Junhyun Lee
 <li>01-프롬프트 분석의 필요성과 가치</li>
 <li>02-사용자 언어 읽기(프롬프트 구조와 유형)</li>
 <li>03-대화 분석(사용자-AI 상호작용 매커니즘)</li>
+</ol>
+</section>
+<section id="세그먼트별-프롬프트-기획" class="level3" data-number="1.3">
+
+<ol type="1">
+<li>01-세그먼트별 프롬프트 기획</li>
 </ol>
 
 
@@ -1223,6 +1257,9 @@ Junhyun Lee
 </div>
 </div>
 <div class="listing-no-matching d-none">No matching items</div>
+<nav id="listing-pagination" class="listing-pagination" aria-label="Page Navigation">
+  <ul class="pagination"></ul>
+</nav>
 </div></main> <!-- /main -->
 <script type="text/javascript">
 
