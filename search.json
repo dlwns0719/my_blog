@@ -672,21 +672,21 @@
     "href": "docs/blog/posts/Prompt_Engineering/03-프롬프트_기획_전략/01-세그먼트별_프롬프트_기획.html",
     "title": "Part 3 — 세그먼트별 프롬프트 기획",
     "section": "",
-    "text": "대화 분석 네가지 기준\n\n\n\n\n\n분류 기준\n구분\n약어\n\n\n\n\n대화 턴 수\n싱글턴 vs 멀티턴\nS : M\n\n\n행위 유형\n정보 검색 vs 기타 행위\nI : O\n\n\n선호 구조\n선호 vs 비선호\nP : D\n\n\n감정적 태도\n감정적 vs 비감정적 vs 발견되지 않음\nS : N : U\n\n\n\n\n\n\n\n\n\n사용자 세그먼트 분류\n\n\n프롬프트만으로 사용자의 성향을 예측해야 하는 상황에서 유용하게 활용할 수 있다. 이후 해당 세그먼트를 통한 프롬프트 인사이트를 소개할 예정이다.\n\n\n\n\n\n\n정보 검색형 사용자\n즉흥적으로 문제를 해결하려는 경향\n\n\n\n\n\nAI 친화적이고 사교적인 사용자\n긍정적인 대화를 선호함\n\n\n\n\n\n새로운 아이디어를 고민하는 사용자\n여러 턴의 대화를 통해 새로운 가능성을 탐구하는 유형\n\n\n\n\n\n\nSegment 1 &gt;&gt;&gt;&gt; Segment 2 &gt; Segment 3\n\n정보 검색형 사용자(Segment 1)가 가장 많은 비중을 차지한다.\n\n\n\n\n\n\n프롬프트 → LLM 분류 방식 활용\n사용자 발화 데이터를 세그먼트별로 분류하여 분포 파악 가능\n\n\n\n\n\n현재 서비스의 Heavy User, Loyalty User 파악 가능\n\n\n\n\n\n어떤 프롬프트를 기획할 것인지 아이디에이션에 활용\n\n\n\n\n\n사용자 이탈의 원인을 분석 가능\n세그먼트를 지속적으로 추적하여, 어떤 환경적 요인이 특정 세그먼트의 이탈 또는 유입을 유발하는지 분석 가능"
+    "text": "대화 분석 네가지 기준\n\n\n\n\n\n분류 기준\n구분\n약어\n\n\n\n\n대화 턴 수(Turn)\n싱글턴 vs 멀티턴\nS : M\n\n\n행위 유형(Action)\n정보 검색 vs 기타 행위\nI : O\n\n\n감정적 태도(Stance)\n감정적 vs 비감정적\nS : N\n\n\n선호 구조(Structure)\n선호 vs 비선호 vs 발견되지 않음\nP : D : U\n\n\n\n\n\n\n\n\n\n사용자 세그먼트 분류\n\n\n프롬프트만으로 사용자의 성향을 예측해야 하는 상황에서 유용하게 활용할 수 있습니다. 이후 해당 세그먼트를 통한 프롬프트 인사이트를 소개할 예정입니다.\n\n\n\n\n\n\n정보 검색형 사용자\n즉흥적으로 문제를 해결하려는 경향\n\n\n\n\n\nAI 친화적이고 사교적인 사용자\n긍정적인 대화를 선호함\n\n\n\n\n\n새로운 아이디어를 고민하는 사용자\n여러 턴의 대화를 통해 새로운 가능성을 탐구하는 유형\n\n\n\n\n\n\nSegment 1 &gt;&gt;&gt;&gt; Segment 2 &gt; Segment 3\n\n정보 검색형 사용자(Segment 1)가 가장 많은 비중을 차지한다.\n\n\n\n\n\n\n프롬프트 → LLM 분류 방식 활용\n사용자 발화 데이터를 세그먼트별로 분류하여 분포 파악 가능\n\n\n\n\n\n현재 서비스의 Heavy User, Loyalty User 파악 가능\n\n\n\n\n\n어떤 프롬프트를 기획할 것인지 아이디에이션에 활용\n\n\n\n\n\n사용자 이탈의 원인을 분석 가능\n세그먼트를 지속적으로 추적하여, 어떤 환경적 요인이 특정 세그먼트의 이탈 또는 유입을 유발하는지 분석 가능"
   },
   {
     "objectID": "docs/blog/posts/Prompt_Engineering/03-프롬프트_기획_전략/01-세그먼트별_프롬프트_기획.html#대화-분석-네-가지-기준",
     "href": "docs/blog/posts/Prompt_Engineering/03-프롬프트_기획_전략/01-세그먼트별_프롬프트_기획.html#대화-분석-네-가지-기준",
     "title": "Part 3 — 세그먼트별 프롬프트 기획",
     "section": "",
-    "text": "대화 분석 네가지 기준\n\n\n\n\n\n분류 기준\n구분\n약어\n\n\n\n\n대화 턴 수\n싱글턴 vs 멀티턴\nS : M\n\n\n행위 유형\n정보 검색 vs 기타 행위\nI : O\n\n\n선호 구조\n선호 vs 비선호\nP : D\n\n\n감정적 태도\n감정적 vs 비감정적 vs 발견되지 않음\nS : N : U"
+    "text": "대화 분석 네가지 기준\n\n\n\n\n\n분류 기준\n구분\n약어\n\n\n\n\n대화 턴 수(Turn)\n싱글턴 vs 멀티턴\nS : M\n\n\n행위 유형(Action)\n정보 검색 vs 기타 행위\nI : O\n\n\n감정적 태도(Stance)\n감정적 vs 비감정적\nS : N\n\n\n선호 구조(Structure)\n선호 vs 비선호 vs 발견되지 않음\nP : D : U"
   },
   {
     "objectID": "docs/blog/posts/Prompt_Engineering/03-프롬프트_기획_전략/01-세그먼트별_프롬프트_기획.html#사용자-세그먼트-분류",
     "href": "docs/blog/posts/Prompt_Engineering/03-프롬프트_기획_전략/01-세그먼트별_프롬프트_기획.html#사용자-세그먼트-분류",
     "title": "Part 3 — 세그먼트별 프롬프트 기획",
     "section": "",
-    "text": "사용자 세그먼트 분류\n\n\n프롬프트만으로 사용자의 성향을 예측해야 하는 상황에서 유용하게 활용할 수 있다. 이후 해당 세그먼트를 통한 프롬프트 인사이트를 소개할 예정이다."
+    "text": "사용자 세그먼트 분류\n\n\n프롬프트만으로 사용자의 성향을 예측해야 하는 상황에서 유용하게 활용할 수 있습니다. 이후 해당 세그먼트를 통한 프롬프트 인사이트를 소개할 예정입니다."
   },
   {
     "objectID": "docs/blog/posts/Prompt_Engineering/03-프롬프트_기획_전략/01-세그먼트별_프롬프트_기획.html#대표적인-3가지-유형",
