@@ -22,7 +22,11 @@ draft: False
 
 ## RAG
 
-### Agent
+### 10 - Retriever
+1.  [01-VectorStoreRetriever](./10-Retriever/01-VectorStoreRetriever.ipynb)
+2.  [02-ContextualCompressionRetriever](./10-Retriever/02-ContextualCompressionRetriever.ipynb)
+
+### 15 - Agent
 1.  [01-Tools](./15-Agent/01-Tools.qmd)
 2.  [02-Bind-Tools](./15-Agent/02-Bind-Tools.qmd)
 3.  [03-Agent](./15-Agent/03-Agent.qmd)
