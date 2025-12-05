@@ -23,8 +23,15 @@ draft: False
 ## RAG
 
 ### 10 - Retriever
-1.  [01-VectorStoreRetriever](./10-Retriever/01-VectorStoreRetriever.ipynb)
-2.  [02-ContextualCompressionRetriever](./10-Retriever/02-ContextualCompressionRetriever.ipynb)
+1.  [01-VectorStoreRetriever](./10-Retriever/01-VectorStoreRetriever.qmd)
+2.  [02-ContextualCompressionRetriever](./10-Retriever/02-ContextualCompressionRetriever.qmd)
+3.  [03-EnsembleRetriever](./10-Retriever/03-EnsembleRetriever.qmd)
+4.  [04-LongContextReorder.qmd](./10-Retriever/04-LongContextReorder.qmd)
+5.  [05-ParentDocumentRetriever](./10-Retriever/05-ParentDocumentRetriever.qmd)
+6.  [06-MultiQueryRetriever](./10-Retriever/06-MultiQueryRetriever.qmd)
+7.  [07-MultiVectorRetriever](./10-Retriever/07-MultiVectorRetriever.qmd)
+8.  [08-SelfQueryRetriever](./10-Retriever/08-SelfQueryRetriever.qmd)
+9.  [09-TimeWeightedVectorStoreRetriever](./10-Retriever/09-TimeWeightedVectorStoreRetriever.qmd)
 
 ### 15 - Agent
 1.  [01-Tools](./15-Agent/01-Tools.qmd)
