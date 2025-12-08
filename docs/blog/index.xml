@@ -10225,7 +10225,7 @@ saaipoctestkrc001.blob.core.windows.net:/saaipoctestkrc001/bc-aipoc-test-krc001 
  ]]></description>
   <category>Azure Cloud</category>
   <guid>https://dlwns0719.github.io/my_blog/docs/blog/posts/Azure_Cloud/01-클라우드_인프라_설정/01-Data_Lake_Storage.html</guid>
-  <pubDate>Fri, 05 Dec 2025 07:50:42 GMT</pubDate>
+  <pubDate>Mon, 08 Dec 2025 04:02:11 GMT</pubDate>
 </item>
 <item>
   <title>OpenAI 외 도구 호출 에이전트(Tool Calling Agent)</title>
@@ -10901,7 +10901,7 @@ font-style: inherit;">"qwen2.5(Ollama)"</span>)</span></code></pre></div></div>
 
  ]]></description>
   <guid>https://dlwns0719.github.io/my_blog/docs/blog/posts/RAG/15-Agent/04-Agent-More-LLMs.html</guid>
-  <pubDate>Fri, 05 Dec 2025 07:50:42 GMT</pubDate>
+  <pubDate>Mon, 08 Dec 2025 04:02:11 GMT</pubDate>
 </item>
 <item>
   <title>도구 (Tools)</title>
@@ -11741,7 +11741,7 @@ font-style: inherit;">"LangChain AI"</span>})</span></code></pre></div></div>
   <category>LangChain</category>
   <category>Prompt_Engineering</category>
   <guid>https://dlwns0719.github.io/my_blog/docs/blog/posts/RAG/15-Agent/01-Tools.html</guid>
-  <pubDate>Fri, 05 Dec 2025 07:50:42 GMT</pubDate>
+  <pubDate>Mon, 08 Dec 2025 04:02:11 GMT</pubDate>
 </item>
 <item>
   <title>Iteration 기능과 사람 개입(Human-in-the-loop)</title>
@@ -12089,7 +12089,7 @@ font-style: inherit;">"output"</span>])</span></code></pre></div></div>
 
  ]]></description>
   <guid>https://dlwns0719.github.io/my_blog/docs/blog/posts/RAG/15-Agent/05-Iter-Human-In-the-Loop.html</guid>
-  <pubDate>Fri, 05 Dec 2025 07:50:42 GMT</pubDate>
+  <pubDate>Mon, 08 Dec 2025 04:02:11 GMT</pubDate>
 </item>
 <item>
   <title>LLM 에 도구 바인딩(Binding Tools)</title>
@@ -12993,7 +12993,7 @@ font-style: inherit;">"output"</span>])</span></code></pre></div></div>
 
  ]]></description>
   <guid>https://dlwns0719.github.io/my_blog/docs/blog/posts/RAG/15-Agent/02-Bind-Tools.html</guid>
-  <pubDate>Fri, 05 Dec 2025 07:50:42 GMT</pubDate>
+  <pubDate>Mon, 08 Dec 2025 04:02:11 GMT</pubDate>
 </item>
 <item>
   <title>도구 호출 에이전트(Tool Calling Agent)</title>
@@ -14084,7 +14084,556 @@ font-style: inherit;">in</span> response:</span>
 
  ]]></description>
   <guid>https://dlwns0719.github.io/my_blog/docs/blog/posts/RAG/15-Agent/03-Agent.html</guid>
-  <pubDate>Fri, 05 Dec 2025 07:50:42 GMT</pubDate>
+  <pubDate>Mon, 08 Dec 2025 04:02:11 GMT</pubDate>
+</item>
+<item>
+  <title>Ensemble Retriever Convex Combination(CC) 추가</title>
+  <link>https://dlwns0719.github.io/my_blog/docs/blog/posts/RAG/10-Retriever/11-CC-EnsembleRetriever.html</link>
+  <description><![CDATA[ 
+
+
+
+
+
+
+<p><a href="https://github.com/teddylee777/langchain-teddynote">written by@teddynote</a></p>
+<ul>
+<li>참고글: <a href="https://velog.io/@autorag/%EB%9E%AD%EC%B2%B4%EC%9D%B8%EC%9D%98-Ensemble-Retriever-%EC%9D%B4%EA%B2%8C-%EB%8C%80%EC%B2%B4-%EB%AD%90%EC%A7%80">AutoRAG 가 게재한 알고리즘 방식의 차이 설명</a></li>
+</ul>
+<p>아래의 주석을 풀고 패키지를 업데이트 후 진행합니다.</p>
+<div id="cell-3" class="cell" data-execution_count="2">
+<details class="code-fold">
+<summary>코드</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># 업데이트 후 진행</span></span>
+<span id="cb1-2"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># !pip install -qU langchain-teddynote</span></span></code></pre></div></div>
+</details>
+</div>
+<div id="cell-4" class="cell" data-execution_count="3">
+<details class="code-fold">
+<summary>코드</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">from</span> dotenv <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> load_dotenv</span>
+<span id="cb2-2"></span>
+<span id="cb2-3">load_dotenv()</span></code></pre></div></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="3">
+<pre><code>True</code></pre>
+</div>
+</div>
+<section id="실험을-위한-사전-셋업" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="실험을-위한-사전-셋업"><span class="header-section-number">1</span> 실험을 위한 사전 셋업</h2>
+<div id="cell-6" class="cell" data-execution_count="5">
+<details class="code-fold">
+<summary>코드</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">from</span> langchain.retrievers <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> EnsembleRetriever <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">as</span> OriginalEnsembleRetriever</span>
+<span id="cb4-2"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">from</span> langchain_text_splitters <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> RecursiveCharacterTextSplitter</span>
+<span id="cb4-3"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">from</span> langchain_community.document_loaders <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> PDFPlumberLoader</span>
+<span id="cb4-4"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">from</span> langchain_community.vectorstores <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> FAISS</span>
+<span id="cb4-5"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">from</span> langchain_openai <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> OpenAIEmbeddings</span>
+<span id="cb4-6"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">from</span> langchain_teddynote.retrievers <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> KiwiBM25Retriever</span>
+<span id="cb4-7"></span>
+<span id="cb4-8"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># 문서 로드(Load Documents)</span></span>
+<span id="cb4-9">loader <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> PDFPlumberLoader(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"data/디지털정부혁신 추진계획.pdf"</span>)</span>
+<span id="cb4-10"></span>
+<span id="cb4-11"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># 문서 분할(Split Documents): 테스트를 위하여 작은 Chunk Size로 설정</span></span>
+<span id="cb4-12">text_splitter <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> RecursiveCharacterTextSplitter(chunk_size<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">100</span>, chunk_overlap<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>)</span>
+<span id="cb4-13">split_documents <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> loader.load_and_split(text_splitter)</span>
+<span id="cb4-14"></span>
+<span id="cb4-15"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># 임베딩(Embedding) 생성</span></span>
+<span id="cb4-16">embeddings <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> OpenAIEmbeddings(model<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"text-embedding-3-small"</span>)</span>
+<span id="cb4-17"></span>
+<span id="cb4-18"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># FaissRetriever 생성</span></span>
+<span id="cb4-19">faiss <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> FAISS.from_documents(</span>
+<span id="cb4-20">    documents<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>split_documents, embedding<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>embeddings</span>
+<span id="cb4-21">).as_retriever(search_kwargs<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>{<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"k"</span>: <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span>})</span>
+<span id="cb4-22"></span>
+<span id="cb4-23"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># KiwiBM25Retriever 생성(한글 형태소 분석기 + BM25 알고리즘)</span></span>
+<span id="cb4-24">bm25 <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> KiwiBM25Retriever.from_documents(documents<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>split_documents, embedding<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>embeddings)</span>
+<span id="cb4-25">bm25.k <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span></span>
+<span id="cb4-26"></span>
+<span id="cb4-27"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># LangChain 버전의 EnsembleRetriever</span></span>
+<span id="cb4-28">original_ensemble_retriever <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> OriginalEnsembleRetriever(retrievers<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>[faiss, bm25])</span></code></pre></div></div>
+</details>
+</div>
+<p>CC 방식과 RRF 방식의 EnsembleRetriever 생성</p>
+<div id="cell-8" class="cell" data-execution_count="6">
+<details class="code-fold">
+<summary>코드</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">from</span> langchain_teddynote.retrievers <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> (</span>
+<span id="cb5-2">    EnsembleRetriever,</span>
+<span id="cb5-3">    EnsembleMethod,</span>
+<span id="cb5-4">)</span>
+<span id="cb5-5"></span>
+<span id="cb5-6"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># RRF 방식의 EnsembleRetriever (기본값으로 RRF 가 설정되어 있음)</span></span>
+<span id="cb5-7">rrf_ensemble_retriever <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> EnsembleRetriever(</span>
+<span id="cb5-8">    retrievers<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>[faiss, bm25], method<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>EnsembleMethod.RRF</span>
+<span id="cb5-9">)</span>
+<span id="cb5-10"></span>
+<span id="cb5-11"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># CC 방식의 EnsembleRetriever</span></span>
+<span id="cb5-12">cc_ensemble_retriever <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> EnsembleRetriever(</span>
+<span id="cb5-13">    retrievers<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>[faiss, bm25], method<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>EnsembleMethod.CC  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># method 지정: CC</span></span>
+<span id="cb5-14">)</span></code></pre></div></div>
+</details>
+</div>
+</section>
+<section id="검색-결과-비교" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="검색-결과-비교"><span class="header-section-number">2</span> 검색 결과 비교</h2>
+<div id="cell-10" class="cell" data-execution_count="11">
+<details class="code-fold">
+<summary>코드</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">def</span> pretty_print(query):</span>
+<span id="cb6-2">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> i, (original_doc, cc_doc, rrf_doc) <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">enumerate</span>(</span>
+<span id="cb6-3">        <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">zip</span>(</span>
+<span id="cb6-4">            original_ensemble_retriever.invoke(query),</span>
+<span id="cb6-5">            cc_ensemble_retriever.invoke(query),</span>
+<span id="cb6-6">            rrf_ensemble_retriever.invoke(query),</span>
+<span id="cb6-7">        )</span>
+<span id="cb6-8">    ):</span>
+<span id="cb6-9">        <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(<span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"[</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>i<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">] [Original] Q: </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>query<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>, end<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="ch" style="color: #20794D;
+background-color: null;
+font-style: inherit;">\n\n</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>)</span>
+<span id="cb6-10">        <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(original_doc.page_content)</span>
+<span id="cb6-11">        <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"-"</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">100</span>)</span>
+<span id="cb6-12">        <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(<span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"[</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>i<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">] [RRF] Q: </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>query<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>, end<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="ch" style="color: #20794D;
+background-color: null;
+font-style: inherit;">\n\n</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>)</span>
+<span id="cb6-13">        <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(rrf_doc.page_content)</span>
+<span id="cb6-14">        <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"-"</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">100</span>)</span>
+<span id="cb6-15">        <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(<span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"[</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>i<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">] [CC] Q: </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>query<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>, end<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="ch" style="color: #20794D;
+background-color: null;
+font-style: inherit;">\n\n</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>)</span>
+<span id="cb6-16">        <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(cc_doc.page_content)</span>
+<span id="cb6-17">        <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"="</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">100</span>, end<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="ch" style="color: #20794D;
+background-color: null;
+font-style: inherit;">\n\n</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>)</span></code></pre></div></div>
+</details>
+</div>
+<ul>
+<li>검색 결과에 <code>"Original"</code> 과 <code>"RRF"</code> 는 차이가 없어야 합니다. (LangChain 그대로 구현)</li>
+<li>검색 결과에 <code>"CC"</code> 는 <code>"RRF"</code> 와 차이가 있을 수 있습니다.</li>
+</ul>
+<p><code>RRF</code> 와 <code>CC</code> 방식의 검색 결과 비교하여 문서에 적합한 방식을 차용하시길 바랍니다.</p>
+<div id="cell-12" class="cell" data-execution_count="12">
+<details class="code-fold">
+<summary>코드</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># 검색 결과 비교</span></span>
+<span id="cb7-2">pretty_print(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"디지털 트랜스포메이션이란 무엇인가요?"</span>)</span></code></pre></div></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[0] [Original] Q: 디지털 트랜스포메이션이란 무엇인가요?
+
+참고 1 디지털 정부혁신 추진전략
+디지털로 여는 좋은 세상
+□ 비전
+※ 부제 : 대한민국이 먼저 갑니다.
+□ 추진원칙 △ 최종 이용자의 관점에서
+△ 공공서비스 수준 향상을 목표로
+----------------------------------------------------------------------------------------------------
+[0] [RRF] Q: 디지털 트랜스포메이션이란 무엇인가요?
+
+참고 1 디지털 정부혁신 추진전략
+디지털로 여는 좋은 세상
+□ 비전
+※ 부제 : 대한민국이 먼저 갑니다.
+□ 추진원칙 △ 최종 이용자의 관점에서
+△ 공공서비스 수준 향상을 목표로
+----------------------------------------------------------------------------------------------------
+[0] [CC] Q: 디지털 트랜스포메이션이란 무엇인가요?
+
+○ (시스템) 디지털 신기술의 적기 도입과 활용 곤란
+- 기존 복잡한 용역개발 방식은 혁신주기가 짧은 디지털 전환에 부적합
+====================================================================================================
+
+[1] [Original] Q: 디지털 트랜스포메이션이란 무엇인가요?
+
+○ (시스템) 디지털 신기술의 적기 도입과 활용 곤란
+- 기존 복잡한 용역개발 방식은 혁신주기가 짧은 디지털 전환에 부적합
+----------------------------------------------------------------------------------------------------
+[1] [RRF] Q: 디지털 트랜스포메이션이란 무엇인가요?
+
+○ (시스템) 디지털 신기술의 적기 도입과 활용 곤란
+- 기존 복잡한 용역개발 방식은 혁신주기가 짧은 디지털 전환에 부적합
+----------------------------------------------------------------------------------------------------
+[1] [CC] Q: 디지털 트랜스포메이션이란 무엇인가요?
+
+○ (디지털 고지‧수납) 각종 고지서·안내문* 등을 온라인(공공‧민간)
+으로 받고, 간편하게 납부할 수 있도록 디지털 고지‧수납 활성화
+====================================================================================================
+
+[2] [Original] Q: 디지털 트랜스포메이션이란 무엇인가요?
+
+Ⅰ. 개 요
+□ 추진 배경
+○ 우리나라는 국가적 초고속 정보통신망 투자와 적극적인 공공정보화
+사업 추진에 힘입어 세계 최고수준의 전자정부를 구축‧운영
+----------------------------------------------------------------------------------------------------
+[2] [RRF] Q: 디지털 트랜스포메이션이란 무엇인가요?
+
+Ⅰ. 개 요
+□ 추진 배경
+○ 우리나라는 국가적 초고속 정보통신망 투자와 적극적인 공공정보화
+사업 추진에 힘입어 세계 최고수준의 전자정부를 구축‧운영
+----------------------------------------------------------------------------------------------------
+[2] [CC] Q: 디지털 트랜스포메이션이란 무엇인가요?
+
+참고 1 디지털 정부혁신 추진전략
+디지털로 여는 좋은 세상
+□ 비전
+※ 부제 : 대한민국이 먼저 갑니다.
+□ 추진원칙 △ 최종 이용자의 관점에서
+△ 공공서비스 수준 향상을 목표로
+====================================================================================================
+
+[3] [Original] Q: 디지털 트랜스포메이션이란 무엇인가요?
+
+○ (디지털 고지‧수납) 각종 고지서·안내문* 등을 온라인(공공‧민간)
+으로 받고, 간편하게 납부할 수 있도록 디지털 고지‧수납 활성화
+----------------------------------------------------------------------------------------------------
+[3] [RRF] Q: 디지털 트랜스포메이션이란 무엇인가요?
+
+○ (디지털 고지‧수납) 각종 고지서·안내문* 등을 온라인(공공‧민간)
+으로 받고, 간편하게 납부할 수 있도록 디지털 고지‧수납 활성화
+----------------------------------------------------------------------------------------------------
+[3] [CC] Q: 디지털 트랜스포메이션이란 무엇인가요?
+
+○ 오픈소스 중심의 디지털정부 생태계와 공공시장 수요를 바탕으로
+첨단 디지털 산업의 혁신 가속화와 글로벌 도약을 위한 전기 마련
+====================================================================================================
+
+[4] [Original] Q: 디지털 트랜스포메이션이란 무엇인가요?
+
+보다 안정성‧편의성이 높은 스마트폰 기반 디지털 신분증 도입
+* 학생증, 공무원증 등 이용대상과 목적이 명확한 분야부터 안전성 점검 후 단계적 확대
+----------------------------------------------------------------------------------------------------
+[4] [RRF] Q: 디지털 트랜스포메이션이란 무엇인가요?
+
+보다 안정성‧편의성이 높은 스마트폰 기반 디지털 신분증 도입
+* 학생증, 공무원증 등 이용대상과 목적이 명확한 분야부터 안전성 점검 후 단계적 확대
+----------------------------------------------------------------------------------------------------
+[4] [CC] Q: 디지털 트랜스포메이션이란 무엇인가요?
+
+디지털 정부혁신 추진계획
+2019. 10. 29.
+관계부처 합동
+====================================================================================================
+
+[5] [Original] Q: 디지털 트랜스포메이션이란 무엇인가요?
+
+○ 오픈소스 중심의 디지털정부 생태계와 공공시장 수요를 바탕으로
+첨단 디지털 산업의 혁신 가속화와 글로벌 도약을 위한 전기 마련
+----------------------------------------------------------------------------------------------------
+[5] [RRF] Q: 디지털 트랜스포메이션이란 무엇인가요?
+
+○ 오픈소스 중심의 디지털정부 생태계와 공공시장 수요를 바탕으로
+첨단 디지털 산업의 혁신 가속화와 글로벌 도약을 위한 전기 마련
+----------------------------------------------------------------------------------------------------
+[5] [CC] Q: 디지털 트랜스포메이션이란 무엇인가요?
+
+Ⅰ. 개 요
+□ 추진 배경
+○ 우리나라는 국가적 초고속 정보통신망 투자와 적극적인 공공정보화
+사업 추진에 힘입어 세계 최고수준의 전자정부를 구축‧운영
+====================================================================================================
+
+[6] [Original] Q: 디지털 트랜스포메이션이란 무엇인가요?
+
+디지털기기 사용이 어려운 분들이 차별없이 서비스를 받도록 지원하겠습니다.
+권익위,
+□1 국민의 소리 청취·분석 시스템 개선 (22년)
+각부처·지자체
+----------------------------------------------------------------------------------------------------
+[6] [RRF] Q: 디지털 트랜스포메이션이란 무엇인가요?
+
+디지털기기 사용이 어려운 분들이 차별없이 서비스를 받도록 지원하겠습니다.
+권익위,
+□1 국민의 소리 청취·분석 시스템 개선 (22년)
+각부처·지자체
+----------------------------------------------------------------------------------------------------
+[6] [CC] Q: 디지털 트랜스포메이션이란 무엇인가요?
+
+보다 안정성‧편의성이 높은 스마트폰 기반 디지털 신분증 도입
+* 학생증, 공무원증 등 이용대상과 목적이 명확한 분야부터 안전성 점검 후 단계적 확대
+====================================================================================================
+
+[7] [Original] Q: 디지털 트랜스포메이션이란 무엇인가요?
+
+디지털 정부혁신 추진계획
+2019. 10. 29.
+관계부처 합동
+----------------------------------------------------------------------------------------------------
+[7] [RRF] Q: 디지털 트랜스포메이션이란 무엇인가요?
+
+디지털 정부혁신 추진계획
+2019. 10. 29.
+관계부처 합동
+----------------------------------------------------------------------------------------------------
+[7] [CC] Q: 디지털 트랜스포메이션이란 무엇인가요?
+
+디지털기기 사용이 어려운 분들이 차별없이 서비스를 받도록 지원하겠습니다.
+권익위,
+□1 국민의 소리 청취·분석 시스템 개선 (22년)
+각부처·지자체
+====================================================================================================
+
+[8] [Original] Q: 디지털 트랜스포메이션이란 무엇인가요?
+
+참고 3 디지털 정부혁신 기대효과
+◈ 동 방안을 성공적으로 추진하는 경우, 정부 디지털 서비스에서 세계 최고
+----------------------------------------------------------------------------------------------------
+[8] [RRF] Q: 디지털 트랜스포메이션이란 무엇인가요?
+
+참고 3 디지털 정부혁신 기대효과
+◈ 동 방안을 성공적으로 추진하는 경우, 정부 디지털 서비스에서 세계 최고
+----------------------------------------------------------------------------------------------------
+[8] [CC] Q: 디지털 트랜스포메이션이란 무엇인가요?
+
+참고 3 디지털 정부혁신 기대효과
+◈ 동 방안을 성공적으로 추진하는 경우, 정부 디지털 서비스에서 세계 최고
+====================================================================================================
+</code></pre>
+</div>
+</div>
+
+
+</section>
+
+ ]]></description>
+  <guid>https://dlwns0719.github.io/my_blog/docs/blog/posts/RAG/10-Retriever/11-CC-EnsembleRetriever.html</guid>
+  <pubDate>Mon, 08 Dec 2025 04:02:11 GMT</pubDate>
 </item>
 <item>
   <title>한글 단어 리트리버 튜닝</title>
@@ -15145,194 +15694,7 @@ okt_bm25_faiss_37       : 금융보험은 장기적인 자산 관리와 위험 �
 
  ]]></description>
   <guid>https://dlwns0719.github.io/my_blog/docs/blog/posts/RAG/10-Retriever/10-Kiwi-BM25Retriever.html</guid>
-  <pubDate>Fri, 05 Dec 2025 07:50:42 GMT</pubDate>
-</item>
-<item>
-  <title>Part 3 — 세그먼트별 프롬프트 기획</title>
-  <link>https://dlwns0719.github.io/my_blog/docs/blog/posts/Prompt_Engineering/03-프롬프트_기획_전략/01-세그먼트별_프롬프트_기획.html</link>
-  <description><![CDATA[ 
-
-
-
-
-
-
-<section id="세그먼테이션-정의와-특징" class="level1" data-number="1">
-<h1 data-number="1"><span class="header-section-number">1</span> 세그먼테이션 정의와 특징</h1>
-<section id="대화-분석-네-가지-기준" class="level2" data-number="1.1">
-<h2 data-number="1.1" class="anchored" data-anchor-id="대화-분석-네-가지-기준"><span class="header-section-number">1.1</span> 대화 분석 네 가지 기준</h2>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="https://dlwns0719.github.io/my_blog/docs/blog/posts/Prompt_Engineering/03-프롬프트_기획_전략/images/1.png" class="img-fluid figure-img" alt="대화 분석 네가지 기준" width="800"></p>
-<figcaption>대화 분석 네가지 기준</figcaption>
-</figure>
-</div>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th style="text-align: left;">분류 기준</th>
-<th style="text-align: left;">구분</th>
-<th style="text-align: center;">약어</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">대화 턴 수(Turn)</td>
-<td style="text-align: left;">싱글턴 vs 멀티턴</td>
-<td style="text-align: center;">S : M</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">행위 유형(Action)</td>
-<td style="text-align: left;">정보 검색 vs 기타 행위</td>
-<td style="text-align: center;">I : O</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">감정적 태도(Stance)</td>
-<td style="text-align: left;">감정적 vs 비감정적</td>
-<td style="text-align: center;">S : N</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">선호 구조(Structure)</td>
-<td style="text-align: left;">선호 vs 비선호 vs 발견되지 않음</td>
-<td style="text-align: center;">P : D : U</td>
-</tr>
-</tbody>
-</table>
-</section>
-<section id="사용자-세그먼트-분류" class="level2" data-number="1.2">
-<h2 data-number="1.2" class="anchored" data-anchor-id="사용자-세그먼트-분류"><span class="header-section-number">1.2</span> 사용자 세그먼트 분류</h2>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="https://dlwns0719.github.io/my_blog/docs/blog/posts/Prompt_Engineering/03-프롬프트_기획_전략/images/세그먼트.png" class="img-fluid figure-img" alt="사용자 세그먼트 분류" width="800"></p>
-<figcaption>사용자 세그먼트 분류</figcaption>
-</figure>
-</div>
-<p>프롬프트만으로 사용자의 성향을 예측해야 하는 상황에서 유용하게 활용할 수 있습니다. 이후 해당 세그먼트를 통한 프롬프트 인사이트를 소개할 예정입니다.</p>
-</section>
-<section id="대표적인-3가지-유형" class="level2" data-number="1.3">
-<h2 data-number="1.3" class="anchored" data-anchor-id="대표적인-3가지-유형"><span class="header-section-number">1.3</span> 대표적인 3가지 유형</h2>
-<section id="segment-1.-single-turn-information-seeking-si" class="level3" data-number="1.3.1">
-<h3 data-number="1.3.1" class="anchored" data-anchor-id="segment-1.-single-turn-information-seeking-si"><span class="header-section-number">1.3.1</span> Segment 1. Single-Turn, Information Seeking (SI)</h3>
-<ul>
-<li><strong>정보 검색형 사용자</strong></li>
-<li>즉흥적으로 문제를 해결하려는 경향</li>
-</ul>
-</section>
-<section id="segment-2.-multi-turn-stance-preferred-misp-mosp" class="level3" data-number="1.3.2">
-<h3 data-number="1.3.2" class="anchored" data-anchor-id="segment-2.-multi-turn-stance-preferred-misp-mosp"><span class="header-section-number">1.3.2</span> Segment 2. Multi-Turn, Stance, Preferred (MISP, MOSP)</h3>
-<ul>
-<li><strong>AI 친화적이고 사교적인 사용자</strong></li>
-<li>긍정적인 대화를 선호함</li>
-</ul>
-</section>
-<section id="segment-3.-multi-turn-stance-unobserved-misu-mosu" class="level3" data-number="1.3.3">
-<h3 data-number="1.3.3" class="anchored" data-anchor-id="segment-3.-multi-turn-stance-unobserved-misu-mosu"><span class="header-section-number">1.3.3</span> Segment 3. Multi-Turn, Stance, Unobserved (MISU, MOSU)</h3>
-<ul>
-<li><strong>새로운 아이디어를 고민하는 사용자</strong></li>
-<li>여러 턴의 대화를 통해 새로운 가능성을 탐구하는 유형</li>
-</ul>
-</section>
-</section>
-<section id="일반적인-세그먼트-분포" class="level2" data-number="1.4">
-<h2 data-number="1.4" class="anchored" data-anchor-id="일반적인-세그먼트-분포"><span class="header-section-number">1.4</span> 일반적인 세그먼트 분포</h2>
-<blockquote class="blockquote">
-<p><strong>Segment 1 &gt;&gt;&gt;&gt; Segment 2 &gt; Segment 3</strong></p>
-</blockquote>
-<p>정보 검색형 사용자(Segment 1)가 가장 많은 비중을 차지한다.</p>
-</section>
-<section id="세그먼트-활용법" class="level2" data-number="1.5">
-<h2 data-number="1.5" class="anchored" data-anchor-id="세그먼트-활용법"><span class="header-section-number">1.5</span> 세그먼트 활용법</h2>
-<section id="사용자-발화-데이터-정량화" class="level3" data-number="1.5.1">
-<h3 data-number="1.5.1" class="anchored" data-anchor-id="사용자-발화-데이터-정량화"><span class="header-section-number">1.5.1</span> 1. 사용자 발화 데이터 정량화</h3>
-<ul>
-<li>프롬프트 → LLM 분류 방식 활용</li>
-<li>사용자 발화 데이터를 세그먼트별로 분류하여 분포 파악 가능</li>
-</ul>
-</section>
-<section id="heavy-user-파악" class="level3" data-number="1.5.2">
-<h3 data-number="1.5.2" class="anchored" data-anchor-id="heavy-user-파악"><span class="header-section-number">1.5.2</span> 2. Heavy User 파악</h3>
-<ul>
-<li>현재 서비스의 <strong>Heavy User</strong>, <strong>Loyalty User</strong> 파악 가능</li>
-</ul>
-</section>
-<section id="세그먼트별-ab-테스트" class="level3" data-number="1.5.3">
-<h3 data-number="1.5.3" class="anchored" data-anchor-id="세그먼트별-ab-테스트"><span class="header-section-number">1.5.3</span> 3. 세그먼트별 A/B 테스트</h3>
-<ul>
-<li>어떤 프롬프트를 기획할 것인지 아이디에이션에 활용</li>
-</ul>
-</section>
-<section id="low-retention-그룹-원인-분석" class="level3" data-number="1.5.4">
-<h3 data-number="1.5.4" class="anchored" data-anchor-id="low-retention-그룹-원인-분석"><span class="header-section-number">1.5.4</span> 4. Low Retention 그룹 원인 분석</h3>
-<ul>
-<li>사용자 이탈의 원인을 분석 가능</li>
-<li>세그먼트를 지속적으로 추적하여, 어떤 환경적 요인이 특정 세그먼트의 이탈 또는 유입을 유발하는지 분석 가능</li>
-</ul>
-</section>
-</section>
-</section>
-<section id="세그먼트별-프롬프트-기획" class="level1" data-number="2">
-<h1 data-number="2"><span class="header-section-number">2</span> 세그먼트별 프롬프트 기획</h1>
-<section id="segment-1.-single-turn-information-seeking-si-1" class="level2" data-number="2.1">
-<h2 data-number="2.1" class="anchored" data-anchor-id="segment-1.-single-turn-information-seeking-si-1"><span class="header-section-number">2.1</span> Segment 1. Single-Turn, Information Seeking (SI)</h2>
-<blockquote class="blockquote">
-<p><strong>정보 검색형 사용자</strong> — 즉흥적으로 문제를 해결하려는 경향</p>
-</blockquote>
-<section id="프롬프트-기획-전략" class="level3" data-number="2.1.1">
-<h3 data-number="2.1.1" class="anchored" data-anchor-id="프롬프트-기획-전략"><span class="header-section-number">2.1.1</span> 프롬프트 기획 전략</h3>
-<ol type="1">
-<li><strong>실시간 정보 검색 엔진 연동</strong> — 정보 검색형 사용자의 니즈 충족</li>
-<li><strong>Retention을 위한 멀티턴 유도 장치</strong> — 이탈 방지</li>
-</ol>
-<p>정보 검색형 사용자는 싱글턴으로 질문에 대한 답을 얻고 빠르게 이탈하는 특성이 있다. 이러한 사용자를 잡아두기 위해 <strong>동적으로 FAQ를 제공</strong>하는 방식으로 프롬프트를 기획하면, 자연스럽게 멀티턴 대화로 유도할 수 있다.</p>
-</section>
-<section id="예시-멀티턴-유도-사용자-만족을-위한-질문-생성" class="level3" data-number="2.1.2">
-<h3 data-number="2.1.2" class="anchored" data-anchor-id="예시-멀티턴-유도-사용자-만족을-위한-질문-생성"><span class="header-section-number">2.1.2</span> 예시: 멀티턴 유도 &amp; 사용자 만족을 위한 질문 생성</h3>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="https://dlwns0719.github.io/my_blog/docs/blog/posts/Prompt_Engineering/03-프롬프트_기획_전략/images/멀티턴유도.png" class="img-fluid figure-img" alt="멀티턴 유도 &amp; 사용자 만족을 위한 질문 생성" width="800"></p>
-<figcaption>멀티턴 유도 &amp; 사용자 만족을 위한 질문 생성</figcaption>
-</figure>
-</div>
-<ul>
-<li>호기심을 자극하는 장치로 활용</li>
-<li>실제로 클릭율이 매우 높음 → 사용자 만족도 향상에 기여</li>
-</ul>
-<hr>
-</section>
-</section>
-<section id="segment-2.-multi-turn-stance-preferred-misp-mosp-1" class="level2" data-number="2.2">
-<h2 data-number="2.2" class="anchored" data-anchor-id="segment-2.-multi-turn-stance-preferred-misp-mosp-1"><span class="header-section-number">2.2</span> Segment 2. Multi-Turn, Stance, Preferred (MISP, MOSP)</h2>
-<blockquote class="blockquote">
-<p><strong>AI 친화적이고 사교적인 사용자</strong> — 공감대와 유대감을 중요시하며, 긍정적인 대화를 선호</p>
-</blockquote>
-<section id="프롬프트-기획-전략-1" class="level3" data-number="2.2.1">
-<h3 data-number="2.2.1" class="anchored" data-anchor-id="프롬프트-기획-전략-1"><span class="header-section-number">2.2.1</span> 프롬프트 기획 전략</h3>
-<ol type="1">
-<li><strong>AI와 Affiliation 형성</strong> — Gamification 활용 (게임이 아닌 분야에 게임의 요소(점수, 보상, 경쟁, 레벨업 등)를 적용해 참여·동기·몰입을 높이는 기법)</li>
-<li><strong>페르소나 만들기</strong> — 프롬프트 게임, 캐릭터 챗봇</li>
-</ol>
-<p>이 세그먼트는 대화의 길이가 상당히 길고, 하고자 하는 바가 명확한 특성이 있다.</p>
-</section>
-<section id="예시-캐릭터-챗봇" class="level3" data-number="2.2.2">
-<h3 data-number="2.2.2" class="anchored" data-anchor-id="예시-캐릭터-챗봇"><span class="header-section-number">2.2.2</span> 예시: 캐릭터 챗봇</h3>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="https://dlwns0719.github.io/my_blog/docs/blog/posts/Prompt_Engineering/03-프롬프트_기획_전략/images/캐릭터챗봇.png" class="img-fluid figure-img" alt="캐릭터챗봇" width="800"></p>
-<figcaption>캐릭터챗봇</figcaption>
-</figure>
-</div>
-<p>캐릭터 챗봇을 통해 사용자와 유대감을 형성할 수 있다.</p>
-
-
-</section>
-</section>
-</section>
-
- ]]></description>
-  <category>AI</category>
-  <category>Prompt_Engineering</category>
-  <guid>https://dlwns0719.github.io/my_blog/docs/blog/posts/Prompt_Engineering/03-프롬프트_기획_전략/01-세그먼트별_프롬프트_기획.html</guid>
-  <pubDate>Fri, 05 Dec 2025 07:50:42 GMT</pubDate>
+  <pubDate>Mon, 08 Dec 2025 04:02:11 GMT</pubDate>
 </item>
 </channel>
 </rss>
