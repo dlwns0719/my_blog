@@ -10010,10 +10010,11 @@ font-style: inherit;">self</span>.standards.is_standardized(row)  </span></code>
 <li><a href="../../../../docs/blog/posts/Prompt_Engineering/02-프롬프트의_이해/03-대화분석.html">03-대화 분석(사용자-AI 상호작용 매커니즘)</a></li>
 </ol>
 </section>
-<section id="세그먼트별-프롬프트-기획" class="level3" data-number="1.3">
+<section id="프롬프트-기획-전략" class="level3" data-number="1.3">
 
 <ol type="1">
 <li><a href="../../../../docs/blog/posts/Prompt_Engineering/03-프롬프트_기획_전략/01-세그먼트별_프롬프트_기획.html">01-세그먼트별 프롬프트 기획</a></li>
+<li><a href="../../../../docs/blog/posts/Prompt_Engineering/03-프롬프트_기획_전략/02-프롬프트_기획_사례.html">02-프롬프트 기획 사례</a></li>
 </ol>
 
 
@@ -10225,7 +10226,7 @@ saaipoctestkrc001.blob.core.windows.net:/saaipoctestkrc001/bc-aipoc-test-krc001 
  ]]></description>
   <category>Azure Cloud</category>
   <guid>https://dlwns0719.github.io/my_blog/docs/blog/posts/Azure_Cloud/01-클라우드_인프라_설정/01-Data_Lake_Storage.html</guid>
-  <pubDate>Mon, 08 Dec 2025 04:02:11 GMT</pubDate>
+  <pubDate>Mon, 08 Dec 2025 04:09:15 GMT</pubDate>
 </item>
 <item>
   <title>OpenAI 외 도구 호출 에이전트(Tool Calling Agent)</title>
@@ -10901,7 +10902,7 @@ font-style: inherit;">"qwen2.5(Ollama)"</span>)</span></code></pre></div></div>
 
  ]]></description>
   <guid>https://dlwns0719.github.io/my_blog/docs/blog/posts/RAG/15-Agent/04-Agent-More-LLMs.html</guid>
-  <pubDate>Mon, 08 Dec 2025 04:02:11 GMT</pubDate>
+  <pubDate>Mon, 08 Dec 2025 04:09:15 GMT</pubDate>
 </item>
 <item>
   <title>도구 (Tools)</title>
@@ -11741,7 +11742,7 @@ font-style: inherit;">"LangChain AI"</span>})</span></code></pre></div></div>
   <category>LangChain</category>
   <category>Prompt_Engineering</category>
   <guid>https://dlwns0719.github.io/my_blog/docs/blog/posts/RAG/15-Agent/01-Tools.html</guid>
-  <pubDate>Mon, 08 Dec 2025 04:02:11 GMT</pubDate>
+  <pubDate>Mon, 08 Dec 2025 04:09:15 GMT</pubDate>
 </item>
 <item>
   <title>Iteration 기능과 사람 개입(Human-in-the-loop)</title>
@@ -12089,7 +12090,7 @@ font-style: inherit;">"output"</span>])</span></code></pre></div></div>
 
  ]]></description>
   <guid>https://dlwns0719.github.io/my_blog/docs/blog/posts/RAG/15-Agent/05-Iter-Human-In-the-Loop.html</guid>
-  <pubDate>Mon, 08 Dec 2025 04:02:11 GMT</pubDate>
+  <pubDate>Mon, 08 Dec 2025 04:09:15 GMT</pubDate>
 </item>
 <item>
   <title>LLM 에 도구 바인딩(Binding Tools)</title>
@@ -12993,7 +12994,7 @@ font-style: inherit;">"output"</span>])</span></code></pre></div></div>
 
  ]]></description>
   <guid>https://dlwns0719.github.io/my_blog/docs/blog/posts/RAG/15-Agent/02-Bind-Tools.html</guid>
-  <pubDate>Mon, 08 Dec 2025 04:02:11 GMT</pubDate>
+  <pubDate>Mon, 08 Dec 2025 04:09:15 GMT</pubDate>
 </item>
 <item>
   <title>도구 호출 에이전트(Tool Calling Agent)</title>
@@ -14084,7 +14085,7 @@ font-style: inherit;">in</span> response:</span>
 
  ]]></description>
   <guid>https://dlwns0719.github.io/my_blog/docs/blog/posts/RAG/15-Agent/03-Agent.html</guid>
-  <pubDate>Mon, 08 Dec 2025 04:02:11 GMT</pubDate>
+  <pubDate>Mon, 08 Dec 2025 04:09:15 GMT</pubDate>
 </item>
 <item>
   <title>Ensemble Retriever Convex Combination(CC) 추가</title>
@@ -14633,7 +14634,7 @@ font-style: inherit;">"디지털 트랜스포메이션이란 무엇인가요?"</
 
  ]]></description>
   <guid>https://dlwns0719.github.io/my_blog/docs/blog/posts/RAG/10-Retriever/11-CC-EnsembleRetriever.html</guid>
-  <pubDate>Mon, 08 Dec 2025 04:02:11 GMT</pubDate>
+  <pubDate>Mon, 08 Dec 2025 04:09:15 GMT</pubDate>
 </item>
 <item>
   <title>한글 단어 리트리버 튜닝</title>
@@ -15694,7 +15695,7 @@ okt_bm25_faiss_37       : 금융보험은 장기적인 자산 관리와 위험 �
 
  ]]></description>
   <guid>https://dlwns0719.github.io/my_blog/docs/blog/posts/RAG/10-Retriever/10-Kiwi-BM25Retriever.html</guid>
-  <pubDate>Mon, 08 Dec 2025 04:02:11 GMT</pubDate>
+  <pubDate>Mon, 08 Dec 2025 04:09:15 GMT</pubDate>
 </item>
 </channel>
 </rss>
