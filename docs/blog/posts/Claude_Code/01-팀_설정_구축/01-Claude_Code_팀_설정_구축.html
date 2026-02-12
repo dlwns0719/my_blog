@@ -6,8 +6,10 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="Junhyun Lee">
+<meta name="description" content="Anthropic의 Claude Code Max를 활용한 팀 개발 환경 구축 과정을 정리합니다. SSH 설정, 팀 설정 설치, 생산성 도구, bioSkills, SpecKit, Hook 시스템까지 실제 세팅 과정을 단계별로 기록한 실전 가이드입니다.">
 
-<title>Part 3 — 세그먼트별 프롬프트 기획 – Junhyun Lee</title>
+<title>Claude Code Max 팀 설정 완전 가이드 – Junhyun Lee</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -19,6 +21,41 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -132,18 +169,12 @@ background: #EDF3F9;
 
 
 <link rel="stylesheet" href="../../../../../styles.css">
-<meta property="og:title" content="Part 1 — 세그먼트별 프롬프트 기획 – Junhyun Lee">
-<meta property="og:image" content="https://dlwns0719.github.io/my_blog/docs/blog/posts/Prompt_Engineering/03-프롬프트_기획_전략/images/1.png">
+<meta property="og:title" content="Claude Code Max 팀 설정 완전 가이드 – Junhyun Lee">
+<meta property="og:description" content="Anthropic의 Claude Code Max를 활용한 팀 개발 환경 구축 과정을 정리합니다. SSH 설정, 팀 설정 설치, 생산성 도구, bioSkills, SpecKit, Hook 시스템까지 실제 세팅 과정을 단계별로 기록한 실전 가이드입니다.">
 <meta property="og:site_name" content="Junhyun Lee">
-<meta property="og:image:alt" content="대화 분석 네가지 기준">
-<meta property="og:image:height" content="296">
-<meta property="og:image:width" content="758">
-<meta name="twitter:title" content="Part 1 — 세그먼트별 프롬프트 기획 – Junhyun Lee">
-<meta name="twitter:image" content="https://dlwns0719.github.io/my_blog/docs/blog/posts/Prompt_Engineering/03-프롬프트_기획_전략/images/1.png">
-<meta name="twitter:image:alt" content="대화 분석 네가지 기준">
-<meta name="twitter:image-height" content="296">
-<meta name="twitter:image-width" content="758">
-<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Claude Code Max 팀 설정 완전 가이드 – Junhyun Lee">
+<meta name="twitter:description" content="Anthropic의 Claude Code Max를 활용한 팀 개발 환경 구축 과정을 정리합니다. SSH 설정, 팀 설정 설치, 생산성 도구, bioSkills, SpecKit, Hook 시스템까지 실제 세팅 과정을 단계별로 기록한 실전 가이드입니다.">
+<meta name="twitter:card" content="summary">
 </head>
 
 <body class="nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
@@ -364,25 +395,44 @@ background: #EDF3F9;
 <!-- content -->
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
-    <div class="quarto-title column-body">
-      <h1 class="title">Part 3 — 세그먼트별 프롬프트 기획</h1>
-                                <div class="quarto-categories">
+    <div class="quarto-title column-page-left">
+      <h1 class="title">Claude Code Max 팀 설정 완전 가이드</h1>
+            <p class="subtitle lead">SSH 클론부터 bioSkills 425개까지, 팀 개발 환경을 한 번에 구축하기</p>
+                  <div>
+        <div class="description">
+          <p>Anthropic의 Claude Code Max를 활용한 팀 개발 환경 구축 과정을 정리합니다. SSH 설정, 팀 설정 설치, 생산성 도구, bioSkills, SpecKit, Hook 시스템까지 실제 세팅 과정을 단계별로 기록한 실전 가이드입니다.</p>
+        </div>
+      </div>
+                          <div class="quarto-categories">
                 <div class="quarto-category">AI</div>
-                <div class="quarto-category">Prompt_Engineering</div>
+                <div class="quarto-category">Claude_Code</div>
+                <div class="quarto-category">DevOps</div>
               </div>
                   </div>
   </div>
     
   
-  <div class="quarto-title-meta">
+  <div class="quarto-title-meta column-page-left">
 
+      <div>
+      <div class="quarto-title-meta-heading">저자</div>
+      <div class="quarto-title-meta-contents">
+               <p>Junhyun Lee </p>
+            </div>
+    </div>
       
+      <div>
+      <div class="quarto-title-meta-heading">공개</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">2026년 02월 12일</p>
+      </div>
+    </div>
     
       
     </div>
     
   
-  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
@@ -390,217 +440,520 @@ background: #EDF3F9;
     <h2 id="toc-title">목차</h2>
    
   <ul>
-  <li><a href="#세그먼테이션-정의와-특징" id="toc-세그먼테이션-정의와-특징" class="nav-link active" data-scroll-target="#세그먼테이션-정의와-특징"><span class="header-section-number">1</span> 세그먼테이션 정의와 특징</a>
+  <li><a href="#claude-code-max-팀-설정-완전-가이드" id="toc-claude-code-max-팀-설정-완전-가이드" class="nav-link active" data-scroll-target="#claude-code-max-팀-설정-완전-가이드"><span class="header-section-number">1</span> Claude Code Max 팀 설정 완전 가이드</a>
   <ul class="collapse">
-  <li><a href="#대화-분석-네-가지-기준" id="toc-대화-분석-네-가지-기준" class="nav-link" data-scroll-target="#대화-분석-네-가지-기준"><span class="header-section-number">1.1</span> 대화 분석 네 가지 기준</a></li>
-  <li><a href="#사용자-세그먼트-분류" id="toc-사용자-세그먼트-분류" class="nav-link" data-scroll-target="#사용자-세그먼트-분류"><span class="header-section-number">1.2</span> 사용자 세그먼트 분류</a></li>
-  <li><a href="#대표적인-3가지-유형" id="toc-대표적인-3가지-유형" class="nav-link" data-scroll-target="#대표적인-3가지-유형"><span class="header-section-number">1.3</span> 대표적인 3가지 유형</a>
+  <li><a href="#배경" id="toc-배경" class="nav-link" data-scroll-target="#배경"><span class="header-section-number">1.1</span> 배경</a></li>
+  <li><a href="#단계-ssh를-이용한-private-레포-클론" id="toc-단계-ssh를-이용한-private-레포-클론" class="nav-link" data-scroll-target="#단계-ssh를-이용한-private-레포-클론"><span class="header-section-number">1.2</span> 1단계: SSH를 이용한 Private 레포 클론</a>
   <ul class="collapse">
-  <li><a href="#segment-1.-single-turn-information-seeking-si" id="toc-segment-1.-single-turn-information-seeking-si" class="nav-link" data-scroll-target="#segment-1.-single-turn-information-seeking-si"><span class="header-section-number">1.3.1</span> Segment 1. Single-Turn, Information Seeking (SI)</a></li>
-  <li><a href="#segment-2.-multi-turn-stance-preferred-misp-mosp" id="toc-segment-2.-multi-turn-stance-preferred-misp-mosp" class="nav-link" data-scroll-target="#segment-2.-multi-turn-stance-preferred-misp-mosp"><span class="header-section-number">1.3.2</span> Segment 2. Multi-Turn, Stance, Preferred (MISP, MOSP)</a></li>
-  <li><a href="#segment-3.-multi-turn-stance-unobserved-misu-mosu" id="toc-segment-3.-multi-turn-stance-unobserved-misu-mosu" class="nav-link" data-scroll-target="#segment-3.-multi-turn-stance-unobserved-misu-mosu"><span class="header-section-number">1.3.3</span> Segment 3. Multi-Turn, Stance, Unobserved (MISU, MOSU)</a></li>
+  <li><a href="#ssh-키-및-config-설정" id="toc-ssh-키-및-config-설정" class="nav-link" data-scroll-target="#ssh-키-및-config-설정"><span class="header-section-number">1.2.1</span> SSH 키 및 config 설정</a></li>
+  <li><a href="#클론-실행" id="toc-클론-실행" class="nav-link" data-scroll-target="#클론-실행"><span class="header-section-number">1.2.2</span> 클론 실행</a></li>
   </ul></li>
-  <li><a href="#일반적인-세그먼트-분포" id="toc-일반적인-세그먼트-분포" class="nav-link" data-scroll-target="#일반적인-세그먼트-분포"><span class="header-section-number">1.4</span> 일반적인 세그먼트 분포</a></li>
-  <li><a href="#세그먼트-활용법" id="toc-세그먼트-활용법" class="nav-link" data-scroll-target="#세그먼트-활용법"><span class="header-section-number">1.5</span> 세그먼트 활용법</a>
+  <li><a href="#단계-팀-기본-설정-설치-install.sh" id="toc-단계-팀-기본-설정-설치-install.sh" class="nav-link" data-scroll-target="#단계-팀-기본-설정-설치-install.sh"><span class="header-section-number">1.3</span> 2단계: 팀 기본 설정 설치 (install.sh)</a></li>
+  <li><a href="#단계-생산성-도구-설치" id="toc-단계-생산성-도구-설치" class="nav-link" data-scroll-target="#단계-생산성-도구-설치"><span class="header-section-number">1.4</span> 3단계: 생산성 도구 설치</a>
   <ul class="collapse">
-  <li><a href="#사용자-발화-데이터-정량화" id="toc-사용자-발화-데이터-정량화" class="nav-link" data-scroll-target="#사용자-발화-데이터-정량화"><span class="header-section-number">1.5.1</span> 1. 사용자 발화 데이터 정량화</a></li>
-  <li><a href="#heavy-user-파악" id="toc-heavy-user-파악" class="nav-link" data-scroll-target="#heavy-user-파악"><span class="header-section-number">1.5.2</span> 2. Heavy User 파악</a></li>
-  <li><a href="#세그먼트별-ab-테스트" id="toc-세그먼트별-ab-테스트" class="nav-link" data-scroll-target="#세그먼트별-ab-테스트"><span class="header-section-number">1.5.3</span> 3. 세그먼트별 A/B 테스트</a></li>
-  <li><a href="#low-retention-그룹-원인-분석" id="toc-low-retention-그룹-원인-분석" class="nav-link" data-scroll-target="#low-retention-그룹-원인-분석"><span class="header-section-number">1.5.4</span> 4. Low Retention 그룹 원인 분석</a></li>
+  <li><a href="#tmux-설정-.tmux.conf" id="toc-tmux-설정-.tmux.conf" class="nav-link" data-scroll-target="#tmux-설정-.tmux.conf"><span class="header-section-number">1.4.1</span> tmux 설정 (<code>~/.tmux.conf</code>)</a></li>
   </ul></li>
-  </ul></li>
-  <li><a href="#세그먼트별-프롬프트-기획" id="toc-세그먼트별-프롬프트-기획" class="nav-link" data-scroll-target="#세그먼트별-프롬프트-기획"><span class="header-section-number">2</span> 세그먼트별 프롬프트 기획</a>
+  <li><a href="#단계-bioskills-설치-바이오인포매틱스-425개-스킬" id="toc-단계-bioskills-설치-바이오인포매틱스-425개-스킬" class="nav-link" data-scroll-target="#단계-bioskills-설치-바이오인포매틱스-425개-스킬"><span class="header-section-number">1.5</span> 4단계: bioSkills 설치 (바이오인포매틱스 425개 스킬)</a>
   <ul class="collapse">
-  <li><a href="#segment-1.-single-turn-information-seeking-si-1" id="toc-segment-1.-single-turn-information-seeking-si-1" class="nav-link" data-scroll-target="#segment-1.-single-turn-information-seeking-si-1"><span class="header-section-number">2.1</span> Segment 1. Single-Turn, Information Seeking (SI)</a>
-  <ul class="collapse">
-  <li><a href="#프롬프트-기획-전략" id="toc-프롬프트-기획-전략" class="nav-link" data-scroll-target="#프롬프트-기획-전략"><span class="header-section-number">2.1.1</span> 프롬프트 기획 전략</a></li>
-  <li><a href="#예시-멀티턴-유도-사용자-만족을-위한-질문-생성" id="toc-예시-멀티턴-유도-사용자-만족을-위한-질문-생성" class="nav-link" data-scroll-target="#예시-멀티턴-유도-사용자-만족을-위한-질문-생성"><span class="header-section-number">2.1.2</span> 예시: 멀티턴 유도 &amp; 사용자 만족을 위한 질문 생성</a></li>
+  <li><a href="#주요-카테고리" id="toc-주요-카테고리" class="nav-link" data-scroll-target="#주요-카테고리"><span class="header-section-number">1.5.1</span> 주요 카테고리</a></li>
   </ul></li>
-  <li><a href="#segment-2.-multi-turn-stance-preferred-misp-mosp-1" id="toc-segment-2.-multi-turn-stance-preferred-misp-mosp-1" class="nav-link" data-scroll-target="#segment-2.-multi-turn-stance-preferred-misp-mosp-1"><span class="header-section-number">2.2</span> Segment 2. Multi-Turn, Stance, Preferred (MISP, MOSP)</a>
+  <li><a href="#단계-speckit-설치-spec-driven-development" id="toc-단계-speckit-설치-spec-driven-development" class="nav-link" data-scroll-target="#단계-speckit-설치-spec-driven-development"><span class="header-section-number">1.6</span> 5단계: SpecKit 설치 (Spec-Driven Development)</a>
   <ul class="collapse">
-  <li><a href="#프롬프트-기획-전략-1" id="toc-프롬프트-기획-전략-1" class="nav-link" data-scroll-target="#프롬프트-기획-전략-1"><span class="header-section-number">2.2.1</span> 프롬프트 기획 전략</a></li>
-  <li><a href="#예시-캐릭터-챗봇" id="toc-예시-캐릭터-챗봇" class="nav-link" data-scroll-target="#예시-캐릭터-챗봇"><span class="header-section-number">2.2.2</span> 예시: 캐릭터 챗봇</a></li>
+  <li><a href="#설치되는-슬래시-명령어-9개" id="toc-설치되는-슬래시-명령어-9개" class="nav-link" data-scroll-target="#설치되는-슬래시-명령어-9개"><span class="header-section-number">1.6.1</span> 설치되는 슬래시 명령어 (9개)</a></li>
   </ul></li>
+  <li><a href="#단계-hook-시스템" id="toc-단계-hook-시스템" class="nav-link" data-scroll-target="#단계-hook-시스템"><span class="header-section-number">1.7</span> 6단계: Hook 시스템</a>
+  <ul class="collapse">
+  <li><a href="#hook-구성" id="toc-hook-구성" class="nav-link" data-scroll-target="#hook-구성"><span class="header-section-number">1.7.1</span> Hook 구성</a></li>
+  <li><a href="#주요-hook-상세" id="toc-주요-hook-상세" class="nav-link" data-scroll-target="#주요-hook-상세"><span class="header-section-number">1.7.2</span> 주요 Hook 상세</a></li>
+  </ul></li>
+  <li><a href="#단계-설치-검증" id="toc-단계-설치-검증" class="nav-link" data-scroll-target="#단계-설치-검증"><span class="header-section-number">1.8</span> 7단계: 설치 검증</a></li>
+  <li><a href="#최종-설치-현황" id="toc-최종-설치-현황" class="nav-link" data-scroll-target="#최종-설치-현황"><span class="header-section-number">1.9</span> 최종 설치 현황</a></li>
+  <li><a href="#에이전트-목록" id="toc-에이전트-목록" class="nav-link" data-scroll-target="#에이전트-목록"><span class="header-section-number">1.10</span> 에이전트 목록</a></li>
+  <li><a href="#트러블슈팅" id="toc-트러블슈팅" class="nav-link" data-scroll-target="#트러블슈팅"><span class="header-section-number">1.11</span> 트러블슈팅</a>
+  <ul class="collapse">
+  <li><a href="#codiens-hook-도메인-수정" id="toc-codiens-hook-도메인-수정" class="nav-link" data-scroll-target="#codiens-hook-도메인-수정"><span class="header-section-number">1.11.1</span> Codiens Hook 도메인 수정</a></li>
+  <li><a href="#일반적인-문제-해결" id="toc-일반적인-문제-해결" class="nav-link" data-scroll-target="#일반적인-문제-해결"><span class="header-section-number">1.11.2</span> 일반적인 문제 해결</a></li>
+  </ul></li>
+  <li><a href="#마무리" id="toc-마무리" class="nav-link" data-scroll-target="#마무리"><span class="header-section-number">1.12</span> 마무리</a></li>
   </ul></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
-<main class="content quarto-banner-title-block" id="quarto-document-content">
+<main class="content quarto-banner-title-block column-page-left" id="quarto-document-content">
 
 
 
 
 
 
-<section id="세그먼테이션-정의와-특징" class="level1" data-number="1">
-<h1 data-number="1"><span class="header-section-number">1</span> 세그먼테이션 정의와 특징</h1>
-<section id="대화-분석-네-가지-기준" class="level2" data-number="1.1">
-<h2 data-number="1.1" class="anchored" data-anchor-id="대화-분석-네-가지-기준"><span class="header-section-number">1.1</span> 대화 분석 네 가지 기준</h2>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="./images/1.png" class="img-fluid figure-img" alt="대화 분석 네가지 기준" width="800"></p>
-<figcaption>대화 분석 네가지 기준</figcaption>
-</figure>
-</div>
+<section id="claude-code-max-팀-설정-완전-가이드" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Claude Code Max 팀 설정 완전 가이드</h1>
+<section id="배경" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="배경"><span class="header-section-number">1.1</span> 배경</h2>
+<p><a href="https://docs.anthropic.com/en/docs/claude-code">Claude Code</a>는 Anthropic에서 만든 CLI 기반 AI 코딩 어시스턴트입니다. 터미널에서 직접 실행되며, 코드 작성/수정, 디버깅, Git 작업, 테스트 등 소프트웨어 엔지니어링 전반을 지원합니다.</p>
+<p>이 포스트에서는 팀 전체가 동일한 Claude Code 환경을 사용할 수 있도록 <strong>팀 설정 레포지토리를 클론하고, 모든 도구를 설치하는 과정</strong>을 기록합니다.</p>
+<hr>
+</section>
+<section id="단계-ssh를-이용한-private-레포-클론" class="level2" data-number="1.2">
+<h2 data-number="1.2" class="anchored" data-anchor-id="단계-ssh를-이용한-private-레포-클론"><span class="header-section-number">1.2</span> 1단계: SSH를 이용한 Private 레포 클론</h2>
+<p>팀 설정 레포는 GitHub 조직의 private 레포이므로 SSH 인증이 필요합니다.</p>
+<section id="ssh-키-및-config-설정" class="level3" data-number="1.2.1">
+<h3 data-number="1.2.1" class="anchored" data-anchor-id="ssh-키-및-config-설정"><span class="header-section-number">1.2.1</span> SSH 키 및 config 설정</h3>
+<p><code>~/.ssh/config</code>에 조직용 호스트를 등록합니다:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1"></a><span class="ex">Host</span> seegene</span>
+<span id="cb1-2"><a href="#cb1-2"></a>  <span class="ex">User</span> git</span>
+<span id="cb1-3"><a href="#cb1-3"></a>  <span class="ex">HostName</span> github.com</span>
+<span id="cb1-4"><a href="#cb1-4"></a>  <span class="ex">Port</span> 22</span>
+<span id="cb1-5"><a href="#cb1-5"></a>  <span class="ex">IdentityFile</span> ~/.ssh/seegene</span></code></pre></div><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="클론-실행" class="level3" data-number="1.2.2">
+<h3 data-number="1.2.2" class="anchored" data-anchor-id="클론-실행"><span class="header-section-number">1.2.2</span> 클론 실행</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1"></a><span class="fu">git</span> clone git@seegene:seegene/claude-code-team-config.git</span></code></pre></div><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></div>
+<p>SSH 호스트 별칭(<code>seegene</code>)을 사용하면 HTTPS 인증 없이도 private 레포에 접근할 수 있습니다.</p>
+<hr>
+</section>
+</section>
+<section id="단계-팀-기본-설정-설치-install.sh" class="level2" data-number="1.3">
+<h2 data-number="1.3" class="anchored" data-anchor-id="단계-팀-기본-설정-설치-install.sh"><span class="header-section-number">1.3</span> 2단계: 팀 기본 설정 설치 (install.sh)</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1"></a><span class="bu">cd</span> claude-code-team-config</span>
+<span id="cb3-2"><a href="#cb3-2"></a><span class="ex">./install.sh</span></span></code></pre></div><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></div>
+<p>이 스크립트가 <code>~/.claude/</code>에 설치하는 항목:</p>
 <table class="caption-top table">
 <thead>
 <tr class="header">
-<th style="text-align: left;">분류 기준</th>
-<th style="text-align: left;">구분</th>
-<th style="text-align: center;">약어</th>
+<th>항목</th>
+<th>설명</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">대화 턴 수(Turn)</td>
-<td style="text-align: left;">싱글턴 vs 멀티턴</td>
-<td style="text-align: center;">S : M</td>
+<td><code>CLAUDE.md</code></td>
+<td>팀 공통 글로벌 지침 (한국어 응답, 코딩 스타일 등)</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">행위 유형(Action)</td>
-<td style="text-align: left;">정보 검색 vs 기타 행위</td>
-<td style="text-align: center;">I : O</td>
+<td><code>settings.json</code></td>
+<td>훅, 권한, Agent Teams 환경변수</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">감정적 태도(Stance)</td>
-<td style="text-align: left;">감정적 vs 비감정적</td>
-<td style="text-align: center;">S : N</td>
+<td><code>rules/</code> (9개)</td>
+<td>보안, 테스팅, Git 워크플로우 등 코딩 규칙</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">선호 구조(Structure)</td>
-<td style="text-align: left;">선호 vs 비선호 vs 발견되지 않음</td>
-<td style="text-align: center;">P : D : U</td>
+<td><code>agents/</code> (9개)</td>
+<td>planner, architect, tdd-guide 등 전문 에이전트</td>
+</tr>
+<tr class="odd">
+<td><code>commands/</code> (26개)</td>
+<td>/plan, /tdd, /code-review 등 슬래시 명령어</td>
+</tr>
+<tr class="even">
+<td><code>hooks/</code></td>
+<td>Prettier 자동 포맷, TypeScript 체크, Codiens 데이터 수집</td>
+</tr>
+</tbody>
+</table>
+<p>기존 설정이 있으면 <code>~/.claude/backup-YYYYMMDD-HHMMSS/</code>에 자동 백업됩니다.</p>
+<hr>
+</section>
+<section id="단계-생산성-도구-설치" class="level2" data-number="1.4">
+<h2 data-number="1.4" class="anchored" data-anchor-id="단계-생산성-도구-설치"><span class="header-section-number">1.4</span> 3단계: 생산성 도구 설치</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1"></a><span class="ex">brew</span> install tmux bat lsd fzf</span></code></pre></div><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></div>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>도구</th>
+<th>용도</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>tmux</strong></td>
+<td>Agent Teams 분할 창 모드에 필수</td>
+</tr>
+<tr class="even">
+<td><strong>bat</strong></td>
+<td>문법 강조가 되는 cat 대체</td>
+</tr>
+<tr class="odd">
+<td><strong>lsd</strong></td>
+<td>아이콘이 있는 ls 대체</td>
+</tr>
+<tr class="even">
+<td><strong>fzf</strong></td>
+<td>퍼지 검색 (Ctrl+R로 명령어 히스토리 검색)</td>
+</tr>
+</tbody>
+</table>
+<section id="tmux-설정-.tmux.conf" class="level3" data-number="1.4.1">
+<h3 data-number="1.4.1" class="anchored" data-anchor-id="tmux-설정-.tmux.conf"><span class="header-section-number">1.4.1</span> tmux 설정 (<code>~/.tmux.conf</code>)</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1"></a><span class="co"># 마우스 지원</span></span>
+<span id="cb5-2"><a href="#cb5-2"></a><span class="bu">set</span> <span class="at">-g</span> mouse on</span>
+<span id="cb5-3"><a href="#cb5-3"></a></span>
+<span id="cb5-4"><a href="#cb5-4"></a><span class="co"># 256색 지원</span></span>
+<span id="cb5-5"><a href="#cb5-5"></a><span class="bu">set</span> <span class="at">-g</span> default-terminal <span class="st">"screen-256color"</span></span>
+<span id="cb5-6"><a href="#cb5-6"></a><span class="bu">set</span> <span class="at">-ga</span> terminal-overrides <span class="st">",xterm-256color:Tc"</span></span>
+<span id="cb5-7"><a href="#cb5-7"></a></span>
+<span id="cb5-8"><a href="#cb5-8"></a><span class="co"># 패널 분할 (직관적)</span></span>
+<span id="cb5-9"><a href="#cb5-9"></a><span class="bu">bind</span> <span class="kw">|</span> <span class="ex">split-window</span> <span class="at">-h</span></span>
+<span id="cb5-10"><a href="#cb5-10"></a><span class="bu">bind</span> <span class="at">-</span> split-window <span class="at">-v</span></span>
+<span id="cb5-11"><a href="#cb5-11"></a></span>
+<span id="cb5-12"><a href="#cb5-12"></a><span class="co"># vim 스타일 패널 이동</span></span>
+<span id="cb5-13"><a href="#cb5-13"></a><span class="bu">bind</span> h select-pane <span class="at">-L</span></span>
+<span id="cb5-14"><a href="#cb5-14"></a><span class="bu">bind</span> j select-pane <span class="at">-D</span></span>
+<span id="cb5-15"><a href="#cb5-15"></a><span class="bu">bind</span> k select-pane <span class="at">-U</span></span>
+<span id="cb5-16"><a href="#cb5-16"></a><span class="bu">bind</span> l select-pane <span class="at">-R</span></span>
+<span id="cb5-17"><a href="#cb5-17"></a></span>
+<span id="cb5-18"><a href="#cb5-18"></a><span class="co"># 히스토리 크기</span></span>
+<span id="cb5-19"><a href="#cb5-19"></a><span class="bu">set</span> <span class="at">-g</span> history-limit 50000</span>
+<span id="cb5-20"><a href="#cb5-20"></a></span>
+<span id="cb5-21"><a href="#cb5-21"></a><span class="co"># 인덱스 1부터 시작</span></span>
+<span id="cb5-22"><a href="#cb5-22"></a><span class="bu">set</span> <span class="at">-g</span> base-index 1</span>
+<span id="cb5-23"><a href="#cb5-23"></a><span class="ex">setw</span> <span class="at">-g</span> pane-base-index 1</span></code></pre></div><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></div>
+<p>tmux는 Claude Code의 <strong>Agent Teams</strong> 기능에 필수입니다. 여러 에이전트가 각각 독립된 tmux 패널에서 동시에 작업하는 것을 시각적으로 확인할 수 있습니다.</p>
+<hr>
+</section>
+</section>
+<section id="단계-bioskills-설치-바이오인포매틱스-425개-스킬" class="level2" data-number="1.5">
+<h2 data-number="1.5" class="anchored" data-anchor-id="단계-bioskills-설치-바이오인포매틱스-425개-스킬"><span class="header-section-number">1.5</span> 4단계: bioSkills 설치 (바이오인포매틱스 425개 스킬)</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1"></a><span class="ex">./install-bioskills.sh</span></span></code></pre></div><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></div>
+<p><a href="https://github.com/GPTomics/bioSkills">GPTomics/bioSkills</a> 레포에서 바이오인포매틱스 전문 스킬을 설치합니다. 56개 카테고리, 425개 스킬이 <code>~/.claude/skills/</code>에 설치됩니다.</p>
+<section id="주요-카테고리" class="level3" data-number="1.5.1">
+<h3 data-number="1.5.1" class="anchored" data-anchor-id="주요-카테고리"><span class="header-section-number">1.5.1</span> 주요 카테고리</h3>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>카테고리</th>
+<th>스킬 예시</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>variant-calling</td>
+<td>GATK, DeepVariant, VCF 처리</td>
+</tr>
+<tr class="even">
+<td>single-cell</td>
+<td>scRNA-seq, trajectory, perturb-seq</td>
+</tr>
+<tr class="odd">
+<td>alignment</td>
+<td>SAM/BAM 처리, MSA, pairwise alignment</td>
+</tr>
+<tr class="even">
+<td>chip-seq</td>
+<td>peak calling, motif analysis</td>
+</tr>
+<tr class="odd">
+<td>spatial-transcriptomics</td>
+<td>공간 전사체 분석</td>
+</tr>
+<tr class="even">
+<td>workflows</td>
+<td>Nextflow, Snakemake, WDL 파이프라인</td>
+</tr>
+</tbody>
+</table>
+<p>설치 후 Claude Code에 자연어로 요청하면 해당 스킬이 자동 활성화됩니다:</p>
+<pre><code>"RNA-seq 카운트 데이터에서 차등 발현 유전자를 찾아줘"
+"BAM 파일에서 변이를 호출해줘"</code></pre>
+<hr>
+</section>
+</section>
+<section id="단계-speckit-설치-spec-driven-development" class="level2" data-number="1.6">
+<h2 data-number="1.6" class="anchored" data-anchor-id="단계-speckit-설치-spec-driven-development"><span class="header-section-number">1.6</span> 5단계: SpecKit 설치 (Spec-Driven Development)</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1"></a><span class="ex">./install-speckit.sh</span></span></code></pre></div><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></div>
+<p>GitHub의 <a href="https://github.com/github/spec-kit">spec-kit</a> 기반 Spec-Driven Development 도구를 설치합니다.</p>
+<section id="설치되는-슬래시-명령어-9개" class="level3" data-number="1.6.1">
+<h3 data-number="1.6.1" class="anchored" data-anchor-id="설치되는-슬래시-명령어-9개"><span class="header-section-number">1.6.1</span> 설치되는 슬래시 명령어 (9개)</h3>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>명령어</th>
+<th>기능</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>/speckit-constitution</code></td>
+<td>프로젝트 원칙 수립</td>
+</tr>
+<tr class="even">
+<td><code>/speckit-specify</code></td>
+<td>기능 명세 작성</td>
+</tr>
+<tr class="odd">
+<td><code>/speckit-plan</code></td>
+<td>구현 계획 생성</td>
+</tr>
+<tr class="even">
+<td><code>/speckit-tasks</code></td>
+<td>태스크 분해</td>
+</tr>
+<tr class="odd">
+<td><code>/speckit-taskstoissues</code></td>
+<td>태스크를 이슈로 변환</td>
+</tr>
+<tr class="even">
+<td><code>/speckit-implement</code></td>
+<td>명세 기반 구현</td>
+</tr>
+<tr class="odd">
+<td><code>/speckit-checklist</code></td>
+<td>QA 체크리스트 생성</td>
+</tr>
+<tr class="even">
+<td><code>/speckit-analyze</code></td>
+<td>기존 코드 분석</td>
+</tr>
+<tr class="odd">
+<td><code>/speckit-clarify</code></td>
+<td>요구사항 명확화</td>
+</tr>
+</tbody>
+</table>
+<hr>
+</section>
+</section>
+<section id="단계-hook-시스템" class="level2" data-number="1.7">
+<h2 data-number="1.7" class="anchored" data-anchor-id="단계-hook-시스템"><span class="header-section-number">1.7</span> 6단계: Hook 시스템</h2>
+<p>팀 설정에는 14개의 Hook이 포함되어 있습니다. Hook은 Claude Code의 도구 실행 전후에 자동으로 실행되는 스크립트입니다.</p>
+<section id="hook-구성" class="level3" data-number="1.7.1">
+<h3 data-number="1.7.1" class="anchored" data-anchor-id="hook-구성"><span class="header-section-number">1.7.1</span> Hook 구성</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 32%">
+<col style="width: 24%">
+<col style="width: 44%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>타이밍</th>
+<th>수량</th>
+<th>주요 동작</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>PreToolUse</strong></td>
+<td>4개</td>
+<td>dev 서버 tmux 강제, tmux 사용 알림, git push 일시정지, .md 생성 차단</td>
+</tr>
+<tr class="even">
+<td><strong>PostToolUse</strong></td>
+<td>5개</td>
+<td>PR URL 로그, Prettier 자동 포맷, TypeScript 체크, console.log 경고, Codiens 실시간 전송</td>
+</tr>
+<tr class="odd">
+<td><strong>Stop</strong></td>
+<td>3개</td>
+<td>console.log 최종 감사, MEMORY.md 리마인더, Codiens 세션 동기화</td>
+</tr>
+<tr class="even">
+<td><strong>UserPromptSubmit</strong></td>
+<td>1개</td>
+<td>학습 키워드 감지 시 MEMORY.md 업데이트 리마인더</td>
+</tr>
+<tr class="odd">
+<td><strong>PreCompact</strong></td>
+<td>1개</td>
+<td>컨텍스트 압축 전 MEMORY.md 강제 저장 알림</td>
 </tr>
 </tbody>
 </table>
 </section>
-<section id="사용자-세그먼트-분류" class="level2" data-number="1.2">
-<h2 data-number="1.2" class="anchored" data-anchor-id="사용자-세그먼트-분류"><span class="header-section-number">1.2</span> 사용자 세그먼트 분류</h2>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="./images/세그먼트.png" class="img-fluid figure-img" alt="사용자 세그먼트 분류" width="800"></p>
-<figcaption>사용자 세그먼트 분류</figcaption>
-</figure>
-</div>
-<p>프롬프트만으로 사용자의 성향을 예측해야 하는 상황에서 유용하게 활용할 수 있습니다. 이후 해당 세그먼트를 통한 프롬프트 인사이트를 소개할 예정입니다.</p>
-</section>
-<section id="대표적인-3가지-유형" class="level2" data-number="1.3">
-<h2 data-number="1.3" class="anchored" data-anchor-id="대표적인-3가지-유형"><span class="header-section-number">1.3</span> 대표적인 3가지 유형</h2>
-<section id="segment-1.-single-turn-information-seeking-si" class="level3" data-number="1.3.1">
-<h3 data-number="1.3.1" class="anchored" data-anchor-id="segment-1.-single-turn-information-seeking-si"><span class="header-section-number">1.3.1</span> Segment 1. Single-Turn, Information Seeking (SI)</h3>
+<section id="주요-hook-상세" class="level3" data-number="1.7.2">
+<h3 data-number="1.7.2" class="anchored" data-anchor-id="주요-hook-상세"><span class="header-section-number">1.7.2</span> 주요 Hook 상세</h3>
+<p><strong>코드 품질 Hook:</strong></p>
 <ul>
-<li><strong>정보 검색형 사용자</strong></li>
-<li>즉흥적으로 문제를 해결하려는 경향</li>
+<li><code>.ts/.tsx/.js/.jsx</code> 파일 편집 후 <strong>Prettier 자동 포맷</strong></li>
+<li><code>.ts/.tsx</code> 파일 편집 후 <strong>TypeScript 타입 체크</strong> (<code>tsc --noEmit</code>)</li>
+<li><code>console.log</code> 발견 시 경고, 세션 종료 시 최종 감사</li>
+<li><code>git push</code> 전 리뷰 일시정지 (Enter로 계속, Ctrl+C로 취소)</li>
 </ul>
-</section>
-<section id="segment-2.-multi-turn-stance-preferred-misp-mosp" class="level3" data-number="1.3.2">
-<h3 data-number="1.3.2" class="anchored" data-anchor-id="segment-2.-multi-turn-stance-preferred-misp-mosp"><span class="header-section-number">1.3.2</span> Segment 2. Multi-Turn, Stance, Preferred (MISP, MOSP)</h3>
+<p><strong>Codiens Hook (사용 데이터 수집):</strong></p>
 <ul>
-<li><strong>AI 친화적이고 사교적인 사용자</strong></li>
-<li>긍정적인 대화를 선호함</li>
+<li>도구 사용 시 실시간 데이터 전송 (<code>cc-sync-realtime.mjs</code>)</li>
+<li>세션 종료 시 전체 세션 데이터 동기화 (<code>cc-sync-session.mjs</code>)</li>
 </ul>
-</section>
-<section id="segment-3.-multi-turn-stance-unobserved-misu-mosu" class="level3" data-number="1.3.3">
-<h3 data-number="1.3.3" class="anchored" data-anchor-id="segment-3.-multi-turn-stance-unobserved-misu-mosu"><span class="header-section-number">1.3.3</span> Segment 3. Multi-Turn, Stance, Unobserved (MISU, MOSU)</h3>
+<p><strong>Memory Hook:</strong></p>
 <ul>
-<li><strong>새로운 아이디어를 고민하는 사용자</strong></li>
-<li>여러 턴의 대화를 통해 새로운 가능성을 탐구하는 유형</li>
-</ul>
-</section>
-</section>
-<section id="일반적인-세그먼트-분포" class="level2" data-number="1.4">
-<h2 data-number="1.4" class="anchored" data-anchor-id="일반적인-세그먼트-분포"><span class="header-section-number">1.4</span> 일반적인 세그먼트 분포</h2>
-<blockquote class="blockquote">
-<p><strong>Segment 1 &gt;&gt;&gt;&gt; Segment 2 &gt; Segment 3</strong></p>
-</blockquote>
-<p>정보 검색형 사용자(Segment 1)가 가장 많은 비중을 차지한다.</p>
-</section>
-<section id="세그먼트-활용법" class="level2" data-number="1.5">
-<h2 data-number="1.5" class="anchored" data-anchor-id="세그먼트-활용법"><span class="header-section-number">1.5</span> 세그먼트 활용법</h2>
-<section id="사용자-발화-데이터-정량화" class="level3" data-number="1.5.1">
-<h3 data-number="1.5.1" class="anchored" data-anchor-id="사용자-발화-데이터-정량화"><span class="header-section-number">1.5.1</span> 1. 사용자 발화 데이터 정량화</h3>
-<ul>
-<li>프롬프트 → LLM 분류 방식 활용</li>
-<li>사용자 발화 데이터를 세그먼트별로 분류하여 분포 파악 가능</li>
-</ul>
-</section>
-<section id="heavy-user-파악" class="level3" data-number="1.5.2">
-<h3 data-number="1.5.2" class="anchored" data-anchor-id="heavy-user-파악"><span class="header-section-number">1.5.2</span> 2. Heavy User 파악</h3>
-<ul>
-<li>현재 서비스의 <strong>Heavy User</strong>, <strong>Loyalty User</strong> 파악 가능</li>
-</ul>
-</section>
-<section id="세그먼트별-ab-테스트" class="level3" data-number="1.5.3">
-<h3 data-number="1.5.3" class="anchored" data-anchor-id="세그먼트별-ab-테스트"><span class="header-section-number">1.5.3</span> 3. 세그먼트별 A/B 테스트</h3>
-<ul>
-<li>어떤 프롬프트를 기획할 것인지 아이디에이션에 활용</li>
-</ul>
-</section>
-<section id="low-retention-그룹-원인-분석" class="level3" data-number="1.5.4">
-<h3 data-number="1.5.4" class="anchored" data-anchor-id="low-retention-그룹-원인-분석"><span class="header-section-number">1.5.4</span> 4. Low Retention 그룹 원인 분석</h3>
-<ul>
-<li>사용자 이탈의 원인을 분석 가능</li>
-<li>세그먼트를 지속적으로 추적하여, 어떤 환경적 요인이 특정 세그먼트의 이탈 또는 유입을 유발하는지 분석 가능</li>
-</ul>
-</section>
-</section>
-</section>
-<section id="세그먼트별-프롬프트-기획" class="level1" data-number="2">
-<h1 data-number="2"><span class="header-section-number">2</span> 세그먼트별 프롬프트 기획</h1>
-<section id="segment-1.-single-turn-information-seeking-si-1" class="level2" data-number="2.1">
-<h2 data-number="2.1" class="anchored" data-anchor-id="segment-1.-single-turn-information-seeking-si-1"><span class="header-section-number">2.1</span> Segment 1. Single-Turn, Information Seeking (SI)</h2>
-<blockquote class="blockquote">
-<p><strong>정보 검색형 사용자</strong> — 즉흥적으로 문제를 해결하려는 경향</p>
-</blockquote>
-<section id="프롬프트-기획-전략" class="level3" data-number="2.1.1">
-<h3 data-number="2.1.1" class="anchored" data-anchor-id="프롬프트-기획-전략"><span class="header-section-number">2.1.1</span> 프롬프트 기획 전략</h3>
-<ol type="1">
-<li><strong>실시간 정보 검색 엔진 연동</strong> — 정보 검색형 사용자의 니즈 충족</li>
-<li><strong>Retention을 위한 멀티턴 유도 장치</strong> — 이탈 방지</li>
-</ol>
-<p>정보 검색형 사용자는 싱글턴으로 질문에 대한 답을 얻고 빠르게 이탈하는 특성이 있다. 이러한 사용자를 잡아두기 위해 <strong>동적으로 FAQ를 제공</strong>하는 방식으로 프롬프트를 기획하면, 자연스럽게 멀티턴 대화로 유도할 수 있다.</p>
-</section>
-<section id="예시-멀티턴-유도-사용자-만족을-위한-질문-생성" class="level3" data-number="2.1.2">
-<h3 data-number="2.1.2" class="anchored" data-anchor-id="예시-멀티턴-유도-사용자-만족을-위한-질문-생성"><span class="header-section-number">2.1.2</span> 예시: 멀티턴 유도 &amp; 사용자 만족을 위한 질문 생성</h3>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="./images/멀티턴유도.png" class="img-fluid figure-img" alt="멀티턴 유도 &amp; 사용자 만족을 위한 질문 생성" width="800"></p>
-<figcaption>멀티턴 유도 &amp; 사용자 만족을 위한 질문 생성</figcaption>
-</figure>
-</div>
-<ul>
-<li>호기심을 자극하는 장치로 활용</li>
-<li>실제로 클릭율이 매우 높음 → 사용자 만족도 향상에 기여</li>
+<li>학습 키워드(“실수”, “오류”, “에러” 등) 감지 시 MEMORY.md 업데이트 리마인더</li>
+<li>컨텍스트 압축 전 학습 내용 강제 저장 알림</li>
 </ul>
 <hr>
 </section>
 </section>
-<section id="segment-2.-multi-turn-stance-preferred-misp-mosp-1" class="level2" data-number="2.2">
-<h2 data-number="2.2" class="anchored" data-anchor-id="segment-2.-multi-turn-stance-preferred-misp-mosp-1"><span class="header-section-number">2.2</span> Segment 2. Multi-Turn, Stance, Preferred (MISP, MOSP)</h2>
-<blockquote class="blockquote">
-<p><strong>AI 친화적이고 사교적인 사용자</strong> — 공감대와 유대감을 중요시하며, 긍정적인 대화를 선호</p>
-</blockquote>
-<section id="프롬프트-기획-전략-1" class="level3" data-number="2.2.1">
-<h3 data-number="2.2.1" class="anchored" data-anchor-id="프롬프트-기획-전략-1"><span class="header-section-number">2.2.1</span> 프롬프트 기획 전략</h3>
-<ol type="1">
-<li><strong>AI와 Affiliation 형성</strong> — Gamification 활용 (게임이 아닌 분야에 게임의 요소(점수, 보상, 경쟁, 레벨업 등)를 적용해 참여·동기·몰입을 높이는 기법)</li>
-<li><strong>페르소나 만들기</strong> — 프롬프트 게임, 캐릭터 챗봇</li>
-</ol>
-<p>이 세그먼트는 대화의 길이가 상당히 길고, 하고자 하는 바가 명확한 특성이 있다.</p>
+<section id="단계-설치-검증" class="level2" data-number="1.8">
+<h2 data-number="1.8" class="anchored" data-anchor-id="단계-설치-검증"><span class="header-section-number">1.8</span> 7단계: 설치 검증</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1"></a><span class="ex">./verify.sh</span></span></code></pre></div><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></div>
+<pre><code>[OK] CLAUDE.md (global instructions)
+[OK] settings.json
+[OK] settings.local.json (optional)
+[OK] rules/ (11 files)
+[OK] agents/ (9 files)
+[OK] commands/ (35 files)
+[OK] hooks/ (4 files)
+[OK] 전체 rule/agent/hooks.json 검증 통과</code></pre>
+<hr>
 </section>
-<section id="예시-캐릭터-챗봇" class="level3" data-number="2.2.2">
-<h3 data-number="2.2.2" class="anchored" data-anchor-id="예시-캐릭터-챗봇"><span class="header-section-number">2.2.2</span> 예시: 캐릭터 챗봇</h3>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="./images/캐릭터챗봇.png" class="img-fluid figure-img" alt="캐릭터챗봇" width="800"></p>
-<figcaption>캐릭터챗봇</figcaption>
-</figure>
-</div>
-<p>캐릭터 챗봇을 통해 사용자와 유대감을 형성할 수 있다.</p>
+<section id="최종-설치-현황" class="level2" data-number="1.9">
+<h2 data-number="1.9" class="anchored" data-anchor-id="최종-설치-현황"><span class="header-section-number">1.9</span> 최종 설치 현황</h2>
+<pre><code>~/.claude/
+├── CLAUDE.md                    # 팀 공통 글로벌 지침
+├── settings.json                # Claude Code 설정
+├── settings.local.json          # 개인별 설정
+├── rules/                       # 코딩 규칙 (11개)
+├── agents/                      # 전문 에이전트 (9개)
+├── commands/                    # 슬래시 명령어 (35개)
+├── hooks/                       # 훅 스크립트
+├── skills/                      # bioSkills (425개)
+├── templates/speckit/           # SpecKit 템플릿
+└── backup-YYYYMMDD-HHMMSS/     # 기존 설정 백업
+
+~/.tmux.conf                     # tmux 설정</code></pre>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>구분</th>
+<th>수량</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>에이전트</td>
+<td>9개</td>
+</tr>
+<tr class="even">
+<td>슬래시 명령어</td>
+<td>35개 (기본 26 + SpecKit 9)</td>
+</tr>
+<tr class="odd">
+<td>bioSkills</td>
+<td>425개</td>
+</tr>
+<tr class="even">
+<td>코딩 규칙 (rules)</td>
+<td>11개</td>
+</tr>
+<tr class="odd">
+<td>Hook</td>
+<td>14개</td>
+</tr>
+<tr class="even">
+<td><strong>합계</strong></td>
+<td><strong>494개</strong></td>
+</tr>
+</tbody>
+</table>
+<hr>
+</section>
+<section id="에이전트-목록" class="level2" data-number="1.10">
+<h2 data-number="1.10" class="anchored" data-anchor-id="에이전트-목록"><span class="header-section-number">1.10</span> 에이전트 목록</h2>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>에이전트</th>
+<th>용도</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>planner</code></td>
+<td>기능 구현 계획 수립</td>
+</tr>
+<tr class="even">
+<td><code>architect</code></td>
+<td>시스템 설계 및 아키텍처</td>
+</tr>
+<tr class="odd">
+<td><code>tdd-guide</code></td>
+<td>테스트 주도 개발 가이드</td>
+</tr>
+<tr class="even">
+<td><code>code-reviewer</code></td>
+<td>코드 품질/보안 리뷰</td>
+</tr>
+<tr class="odd">
+<td><code>security-reviewer</code></td>
+<td>보안 취약점 분석</td>
+</tr>
+<tr class="even">
+<td><code>build-error-resolver</code></td>
+<td>빌드 에러 해결</td>
+</tr>
+<tr class="odd">
+<td><code>e2e-runner</code></td>
+<td>Playwright E2E 테스팅</td>
+</tr>
+<tr class="even">
+<td><code>refactor-cleaner</code></td>
+<td>데드 코드 정리</td>
+</tr>
+<tr class="odd">
+<td><code>doc-updater</code></td>
+<td>문서 업데이트</td>
+</tr>
+</tbody>
+</table>
+<hr>
+</section>
+<section id="트러블슈팅" class="level2" data-number="1.11">
+<h2 data-number="1.11" class="anchored" data-anchor-id="트러블슈팅"><span class="header-section-number">1.11</span> 트러블슈팅</h2>
+<section id="codiens-hook-도메인-수정" class="level3" data-number="1.11.1">
+<h3 data-number="1.11.1" class="anchored" data-anchor-id="codiens-hook-도메인-수정"><span class="header-section-number">1.11.1</span> Codiens Hook 도메인 수정</h3>
+<p>설치 직후 Codiens 대시보드에 데이터가 전송되지 않는 문제가 있었습니다. 원인은 <code>~/.claude/hooks/lib/constants.mjs</code>의 API URL 도메인 오타:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb12-1"><a href="#cb12-1"></a><span class="co">// 수정 전 (오타)</span></span>
+<span id="cb12-2"><a href="#cb12-2"></a><span class="im">export</span> <span class="kw">const</span> API_BASE_URL <span class="op">=</span> <span class="bu">process</span><span class="op">.</span><span class="at">env</span><span class="op">.</span><span class="at">CC_API_URL</span> <span class="op">||</span> <span class="st">'https://tech.dev.srarch.net/api/claude-code'</span><span class="op">;</span></span>
+<span id="cb12-3"><a href="#cb12-3"></a></span>
+<span id="cb12-4"><a href="#cb12-4"></a><span class="co">// 수정 후</span></span>
+<span id="cb12-5"><a href="#cb12-5"></a><span class="im">export</span> <span class="kw">const</span> API_BASE_URL <span class="op">=</span> <span class="bu">process</span><span class="op">.</span><span class="at">env</span><span class="op">.</span><span class="at">CC_API_URL</span> <span class="op">||</span> <span class="st">'https://tech.dev.sgarch.net/api/claude-code'</span><span class="op">;</span></span></code></pre></div><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="일반적인-문제-해결" class="level3" data-number="1.11.2">
+<h3 data-number="1.11.2" class="anchored" data-anchor-id="일반적인-문제-해결"><span class="header-section-number">1.11.2</span> 일반적인 문제 해결</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>문제</th>
+<th>해결</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>SSH 클론 실패</td>
+<td><code>ssh -T git@seegene</code>으로 연결 확인</td>
+</tr>
+<tr class="even">
+<td>설정 미적용</td>
+<td>Claude Code 재시작 (<code>/exit</code> 후 <code>claude</code>)</td>
+</tr>
+<tr class="odd">
+<td>기존 설정 충돌</td>
+<td><code>./uninstall.sh --restore</code>로 백업 복원</td>
+</tr>
+<tr class="even">
+<td>tmux 오류</td>
+<td><code>tmux kill-server</code> 후 재시작</td>
+</tr>
+<tr class="odd">
+<td>Hook 오류</td>
+<td><code>which node</code>로 Node.js 확인 (Hook 실패해도 Claude Code에 영향 없음)</td>
+</tr>
+</tbody>
+</table>
+<hr>
+</section>
+</section>
+<section id="마무리" class="level2" data-number="1.12">
+<h2 data-number="1.12" class="anchored" data-anchor-id="마무리"><span class="header-section-number">1.12</span> 마무리</h2>
+<p>이 설정을 통해 팀 전체가 동일한 규칙, 에이전트, Hook 시스템을 공유하며 Claude Code를 활용할 수 있습니다. 특히 바이오인포매틱스 팀에게는 425개의 bioSkills가 큰 도움이 됩니다.</p>
+<p>다음 포스트에서는 실제 프로젝트에서 Claude Code의 에이전트와 슬래시 명령어를 활용하는 워크플로우를 다루겠습니다.</p>
 
 
-</section>
 </section>
 </section>
 

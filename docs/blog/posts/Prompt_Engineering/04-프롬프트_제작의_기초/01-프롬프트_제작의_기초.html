@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Part 3 — 세그먼트별 프롬프트 기획 – Junhyun Lee</title>
+<title>프롬프트 엔지니어링 기초 기법 (Basic) – Junhyun Lee</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -132,18 +132,10 @@ background: #EDF3F9;
 
 
 <link rel="stylesheet" href="../../../../../styles.css">
-<meta property="og:title" content="Part 1 — 세그먼트별 프롬프트 기획 – Junhyun Lee">
-<meta property="og:image" content="https://dlwns0719.github.io/my_blog/docs/blog/posts/Prompt_Engineering/03-프롬프트_기획_전략/images/1.png">
+<meta property="og:title" content="프롬프트 엔지니어링 기초 기법 (Basic) – Junhyun Lee">
 <meta property="og:site_name" content="Junhyun Lee">
-<meta property="og:image:alt" content="대화 분석 네가지 기준">
-<meta property="og:image:height" content="296">
-<meta property="og:image:width" content="758">
-<meta name="twitter:title" content="Part 1 — 세그먼트별 프롬프트 기획 – Junhyun Lee">
-<meta name="twitter:image" content="https://dlwns0719.github.io/my_blog/docs/blog/posts/Prompt_Engineering/03-프롬프트_기획_전략/images/1.png">
-<meta name="twitter:image:alt" content="대화 분석 네가지 기준">
-<meta name="twitter:image-height" content="296">
-<meta name="twitter:image-width" content="758">
-<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="프롬프트 엔지니어링 기초 기법 (Basic) – Junhyun Lee">
+<meta name="twitter:card" content="summary">
 </head>
 
 <body class="nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
@@ -365,7 +357,7 @@ background: #EDF3F9;
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Part 3 — 세그먼트별 프롬프트 기획</h1>
+      <h1 class="title">프롬프트 엔지니어링 기초 기법 (Basic)</h1>
                                 <div class="quarto-categories">
                 <div class="quarto-category">AI</div>
                 <div class="quarto-category">Prompt_Engineering</div>
@@ -390,38 +382,81 @@ background: #EDF3F9;
     <h2 id="toc-title">목차</h2>
    
   <ul>
-  <li><a href="#세그먼테이션-정의와-특징" id="toc-세그먼테이션-정의와-특징" class="nav-link active" data-scroll-target="#세그먼테이션-정의와-특징"><span class="header-section-number">1</span> 세그먼테이션 정의와 특징</a>
+  <li><a href="#프롬프트-엔지니어링-기초-기법" id="toc-프롬프트-엔지니어링-기초-기법" class="nav-link active" data-scroll-target="#프롬프트-엔지니어링-기초-기법"><span class="header-section-number">1</span> 프롬프트 엔지니어링 기초 기법</a>
   <ul class="collapse">
-  <li><a href="#대화-분석-네-가지-기준" id="toc-대화-분석-네-가지-기준" class="nav-link" data-scroll-target="#대화-분석-네-가지-기준"><span class="header-section-number">1.1</span> 대화 분석 네 가지 기준</a></li>
-  <li><a href="#사용자-세그먼트-분류" id="toc-사용자-세그먼트-분류" class="nav-link" data-scroll-target="#사용자-세그먼트-분류"><span class="header-section-number">1.2</span> 사용자 세그먼트 분류</a></li>
-  <li><a href="#대표적인-3가지-유형" id="toc-대표적인-3가지-유형" class="nav-link" data-scroll-target="#대표적인-3가지-유형"><span class="header-section-number">1.3</span> 대표적인 3가지 유형</a>
-  <ul class="collapse">
-  <li><a href="#segment-1.-single-turn-information-seeking-si" id="toc-segment-1.-single-turn-information-seeking-si" class="nav-link" data-scroll-target="#segment-1.-single-turn-information-seeking-si"><span class="header-section-number">1.3.1</span> Segment 1. Single-Turn, Information Seeking (SI)</a></li>
-  <li><a href="#segment-2.-multi-turn-stance-preferred-misp-mosp" id="toc-segment-2.-multi-turn-stance-preferred-misp-mosp" class="nav-link" data-scroll-target="#segment-2.-multi-turn-stance-preferred-misp-mosp"><span class="header-section-number">1.3.2</span> Segment 2. Multi-Turn, Stance, Preferred (MISP, MOSP)</a></li>
-  <li><a href="#segment-3.-multi-turn-stance-unobserved-misu-mosu" id="toc-segment-3.-multi-turn-stance-unobserved-misu-mosu" class="nav-link" data-scroll-target="#segment-3.-multi-turn-stance-unobserved-misu-mosu"><span class="header-section-number">1.3.3</span> Segment 3. Multi-Turn, Stance, Unobserved (MISU, MOSU)</a></li>
+  <li><a href="#학습-목표" id="toc-학습-목표" class="nav-link" data-scroll-target="#학습-목표"><span class="header-section-number">1.1</span> 학습 목표</a></li>
+  <li><a href="#목차" id="toc-목차" class="nav-link" data-scroll-target="#목차"><span class="header-section-number">1.2</span> 목차</a></li>
   </ul></li>
-  <li><a href="#일반적인-세그먼트-분포" id="toc-일반적인-세그먼트-분포" class="nav-link" data-scroll-target="#일반적인-세그먼트-분포"><span class="header-section-number">1.4</span> 일반적인 세그먼트 분포</a></li>
-  <li><a href="#세그먼트-활용법" id="toc-세그먼트-활용법" class="nav-link" data-scroll-target="#세그먼트-활용법"><span class="header-section-number">1.5</span> 세그먼트 활용법</a>
+  <li><a href="#zero-shot-prompting" id="toc-zero-shot-prompting" class="nav-link" data-scroll-target="#zero-shot-prompting"><span class="header-section-number">2</span> 01. Zero-Shot Prompting</a>
   <ul class="collapse">
-  <li><a href="#사용자-발화-데이터-정량화" id="toc-사용자-발화-데이터-정량화" class="nav-link" data-scroll-target="#사용자-발화-데이터-정량화"><span class="header-section-number">1.5.1</span> 1. 사용자 발화 데이터 정량화</a></li>
-  <li><a href="#heavy-user-파악" id="toc-heavy-user-파악" class="nav-link" data-scroll-target="#heavy-user-파악"><span class="header-section-number">1.5.2</span> 2. Heavy User 파악</a></li>
-  <li><a href="#세그먼트별-ab-테스트" id="toc-세그먼트별-ab-테스트" class="nav-link" data-scroll-target="#세그먼트별-ab-테스트"><span class="header-section-number">1.5.3</span> 3. 세그먼트별 A/B 테스트</a></li>
-  <li><a href="#low-retention-그룹-원인-분석" id="toc-low-retention-그룹-원인-분석" class="nav-link" data-scroll-target="#low-retention-그룹-원인-분석"><span class="header-section-number">1.5.4</span> 4. Low Retention 그룹 원인 분석</a></li>
+  <li><a href="#개념" id="toc-개념" class="nav-link" data-scroll-target="#개념"><span class="header-section-number">2.1</span> 개념</a></li>
+  <li><a href="#예시" id="toc-예시" class="nav-link" data-scroll-target="#예시"><span class="header-section-number">2.2</span> 예시</a>
+  <ul class="collapse">
+  <li><a href="#텍스트-분류-text-classification" id="toc-텍스트-분류-text-classification" class="nav-link" data-scroll-target="#텍스트-분류-text-classification"><span class="header-section-number">2.2.1</span> 텍스트 분류 (Text Classification)</a></li>
+  <li><a href="#번역-translation" id="toc-번역-translation" class="nav-link" data-scroll-target="#번역-translation"><span class="header-section-number">2.2.2</span> 번역 (Translation)</a></li>
+  <li><a href="#폐쇄형-질의응답-closed-question-answering" id="toc-폐쇄형-질의응답-closed-question-answering" class="nav-link" data-scroll-target="#폐쇄형-질의응답-closed-question-answering"><span class="header-section-number">2.2.3</span> 폐쇄형 질의응답 (Closed Question Answering)</a></li>
   </ul></li>
+  <li><a href="#instruction-tuning" id="toc-instruction-tuning" class="nav-link" data-scroll-target="#instruction-tuning"><span class="header-section-number">2.3</span> Instruction Tuning</a>
+  <ul class="collapse">
+  <li><a href="#기술-개요" id="toc-기술-개요" class="nav-link" data-scroll-target="#기술-개요"><span class="header-section-number">2.3.1</span> 기술 개요</a></li>
+  <li><a href="#기술의-장점" id="toc-기술의-장점" class="nav-link" data-scroll-target="#기술의-장점"><span class="header-section-number">2.3.2</span> 기술의 장점</a></li>
+  <li><a href="#연구-결과" id="toc-연구-결과" class="nav-link" data-scroll-target="#연구-결과"><span class="header-section-number">2.3.3</span> 연구 결과</a></li>
   </ul></li>
-  <li><a href="#세그먼트별-프롬프트-기획" id="toc-세그먼트별-프롬프트-기획" class="nav-link" data-scroll-target="#세그먼트별-프롬프트-기획"><span class="header-section-number">2</span> 세그먼트별 프롬프트 기획</a>
+  <li><a href="#rlhf-reinforcement-learning-from-human-feedback" id="toc-rlhf-reinforcement-learning-from-human-feedback" class="nav-link" data-scroll-target="#rlhf-reinforcement-learning-from-human-feedback"><span class="header-section-number">2.4</span> RLHF (Reinforcement Learning from Human Feedback)</a>
   <ul class="collapse">
-  <li><a href="#segment-1.-single-turn-information-seeking-si-1" id="toc-segment-1.-single-turn-information-seeking-si-1" class="nav-link" data-scroll-target="#segment-1.-single-turn-information-seeking-si-1"><span class="header-section-number">2.1</span> Segment 1. Single-Turn, Information Seeking (SI)</a>
-  <ul class="collapse">
-  <li><a href="#프롬프트-기획-전략" id="toc-프롬프트-기획-전략" class="nav-link" data-scroll-target="#프롬프트-기획-전략"><span class="header-section-number">2.1.1</span> 프롬프트 기획 전략</a></li>
-  <li><a href="#예시-멀티턴-유도-사용자-만족을-위한-질문-생성" id="toc-예시-멀티턴-유도-사용자-만족을-위한-질문-생성" class="nav-link" data-scroll-target="#예시-멀티턴-유도-사용자-만족을-위한-질문-생성"><span class="header-section-number">2.1.2</span> 예시: 멀티턴 유도 &amp; 사용자 만족을 위한 질문 생성</a></li>
-  </ul></li>
-  <li><a href="#segment-2.-multi-turn-stance-preferred-misp-mosp-1" id="toc-segment-2.-multi-turn-stance-preferred-misp-mosp-1" class="nav-link" data-scroll-target="#segment-2.-multi-turn-stance-preferred-misp-mosp-1"><span class="header-section-number">2.2</span> Segment 2. Multi-Turn, Stance, Preferred (MISP, MOSP)</a>
-  <ul class="collapse">
-  <li><a href="#프롬프트-기획-전략-1" id="toc-프롬프트-기획-전략-1" class="nav-link" data-scroll-target="#프롬프트-기획-전략-1"><span class="header-section-number">2.2.1</span> 프롬프트 기획 전략</a></li>
-  <li><a href="#예시-캐릭터-챗봇" id="toc-예시-캐릭터-챗봇" class="nav-link" data-scroll-target="#예시-캐릭터-챗봇"><span class="header-section-number">2.2.2</span> 예시: 캐릭터 챗봇</a></li>
+  <li><a href="#개념-1" id="toc-개념-1" class="nav-link" data-scroll-target="#개념-1"><span class="header-section-number">2.4.1</span> 개념</a></li>
+  <li><a href="#연구-배경" id="toc-연구-배경" class="nav-link" data-scroll-target="#연구-배경"><span class="header-section-number">2.4.2</span> 연구 배경</a></li>
   </ul></li>
   </ul></li>
+  <li><a href="#few-shot-prompting" id="toc-few-shot-prompting" class="nav-link" data-scroll-target="#few-shot-prompting"><span class="header-section-number">3</span> 02. Few-Shot Prompting</a>
+  <ul class="collapse">
+  <li><a href="#개념-2" id="toc-개념-2" class="nav-link" data-scroll-target="#개념-2"><span class="header-section-number">3.1</span> 개념</a></li>
+  <li><a href="#특징" id="toc-특징" class="nav-link" data-scroll-target="#특징"><span class="header-section-number">3.2</span> 특징</a></li>
+  <li><a href="#예시-1" id="toc-예시-1" class="nav-link" data-scroll-target="#예시-1"><span class="header-section-number">3.3</span> 예시</a></li>
+  <li><a href="#연구-결과-1" id="toc-연구-결과-1" class="nav-link" data-scroll-target="#연구-결과-1"><span class="header-section-number">3.4</span> 연구 결과</a>
+  <ul class="collapse">
+  <li><a href="#예시의-중요성" id="toc-예시의-중요성" class="nav-link" data-scroll-target="#예시의-중요성"><span class="header-section-number">3.4.1</span> 예시의 중요성</a></li>
+  <li><a href="#성능-비교" id="toc-성능-비교" class="nav-link" data-scroll-target="#성능-비교"><span class="header-section-number">3.4.2</span> 성능 비교</a></li>
+  <li><a href="#포맷-예시" id="toc-포맷-예시" class="nav-link" data-scroll-target="#포맷-예시"><span class="header-section-number">3.4.3</span> 포맷 예시</a></li>
+  </ul></li>
+  <li><a href="#한계점" id="toc-한계점" class="nav-link" data-scroll-target="#한계점"><span class="header-section-number">3.5</span> 한계점</a></li>
+  </ul></li>
+  <li><a href="#chain-of-thought-prompting" id="toc-chain-of-thought-prompting" class="nav-link" data-scroll-target="#chain-of-thought-prompting"><span class="header-section-number">4</span> 03. Chain-of-Thought Prompting</a>
+  <ul class="collapse">
+  <li><a href="#개념-3" id="toc-개념-3" class="nav-link" data-scroll-target="#개념-3"><span class="header-section-number">4.1</span> 개념</a></li>
+  <li><a href="#작동-방식" id="toc-작동-방식" class="nav-link" data-scroll-target="#작동-방식"><span class="header-section-number">4.2</span> 작동 방식</a>
+  <ul class="collapse">
+  <li><a href="#standard-prompting-vs-chain-of-thought-prompting" id="toc-standard-prompting-vs-chain-of-thought-prompting" class="nav-link" data-scroll-target="#standard-prompting-vs-chain-of-thought-prompting"><span class="header-section-number">4.2.1</span> Standard Prompting vs Chain-of-Thought Prompting</a></li>
+  </ul></li>
+  <li><a href="#연구-결과-2" id="toc-연구-결과-2" class="nav-link" data-scroll-target="#연구-결과-2"><span class="header-section-number">4.3</span> 연구 결과</a>
+  <ul class="collapse">
+  <li><a href="#모델-크기의-영향" id="toc-모델-크기의-영향" class="nav-link" data-scroll-target="#모델-크기의-영향"><span class="header-section-number">4.3.1</span> 모델 크기의 영향</a></li>
+  </ul></li>
+  <li><a href="#한계점-1" id="toc-한계점-1" class="nav-link" data-scroll-target="#한계점-1"><span class="header-section-number">4.4</span> 한계점</a></li>
+  </ul></li>
+  <li><a href="#zero-shot-chain-of-thought" id="toc-zero-shot-chain-of-thought" class="nav-link" data-scroll-target="#zero-shot-chain-of-thought"><span class="header-section-number">5</span> 04. Zero Shot Chain of Thought</a>
+  <ul class="collapse">
+  <li><a href="#개념-4" id="toc-개념-4" class="nav-link" data-scroll-target="#개념-4"><span class="header-section-number">5.1</span> 개념</a></li>
+  <li><a href="#연구-결과-3" id="toc-연구-결과-3" class="nav-link" data-scroll-target="#연구-결과-3"><span class="header-section-number">5.2</span> 연구 결과</a>
+  <ul class="collapse">
+  <li><a href="#다른-트리거-예시" id="toc-다른-트리거-예시" class="nav-link" data-scroll-target="#다른-트리거-예시"><span class="header-section-number">5.2.1</span> 다른 트리거 예시</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#self-consistency" id="toc-self-consistency" class="nav-link" data-scroll-target="#self-consistency"><span class="header-section-number">6</span> 05. Self-Consistency</a>
+  <ul class="collapse">
+  <li><a href="#개념-5" id="toc-개념-5" class="nav-link" data-scroll-target="#개념-5"><span class="header-section-number">6.1</span> 개념</a>
+  <ul class="collapse">
+  <li><a href="#핵심-아이디어" id="toc-핵심-아이디어" class="nav-link" data-scroll-target="#핵심-아이디어"><span class="header-section-number">6.1.1</span> 핵심 아이디어</a></li>
+  </ul></li>
+  <li><a href="#작동-방식-1" id="toc-작동-방식-1" class="nav-link" data-scroll-target="#작동-방식-1"><span class="header-section-number">6.2</span> 작동 방식</a></li>
+  <li><a href="#연구-결과-4" id="toc-연구-결과-4" class="nav-link" data-scroll-target="#연구-결과-4"><span class="header-section-number">6.3</span> 연구 결과</a>
+  <ul class="collapse">
+  <li><a href="#세-단계-프로세스" id="toc-세-단계-프로세스" class="nav-link" data-scroll-target="#세-단계-프로세스"><span class="header-section-number">6.3.1</span> 세 단계 프로세스</a></li>
+  <li><a href="#성능" id="toc-성능" class="nav-link" data-scroll-target="#성능"><span class="header-section-number">6.3.2</span> 성능</a></li>
+  </ul></li>
+  <li><a href="#한계점-2" id="toc-한계점-2" class="nav-link" data-scroll-target="#한계점-2"><span class="header-section-number">6.4</span> 한계점</a></li>
+  </ul></li>
+  <li><a href="#참고-문헌" id="toc-참고-문헌" class="nav-link" data-scroll-target="#참고-문헌"><span class="header-section-number">7</span> 참고 문헌</a></li>
   </ul>
 </nav>
     </div>
@@ -433,175 +468,310 @@ background: #EDF3F9;
 
 
 
-<section id="세그먼테이션-정의와-특징" class="level1" data-number="1">
-<h1 data-number="1"><span class="header-section-number">1</span> 세그먼테이션 정의와 특징</h1>
-<section id="대화-분석-네-가지-기준" class="level2" data-number="1.1">
-<h2 data-number="1.1" class="anchored" data-anchor-id="대화-분석-네-가지-기준"><span class="header-section-number">1.1</span> 대화 분석 네 가지 기준</h2>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="./images/1.png" class="img-fluid figure-img" alt="대화 분석 네가지 기준" width="800"></p>
-<figcaption>대화 분석 네가지 기준</figcaption>
-</figure>
-</div>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th style="text-align: left;">분류 기준</th>
-<th style="text-align: left;">구분</th>
-<th style="text-align: center;">약어</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">대화 턴 수(Turn)</td>
-<td style="text-align: left;">싱글턴 vs 멀티턴</td>
-<td style="text-align: center;">S : M</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">행위 유형(Action)</td>
-<td style="text-align: left;">정보 검색 vs 기타 행위</td>
-<td style="text-align: center;">I : O</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">감정적 태도(Stance)</td>
-<td style="text-align: left;">감정적 vs 비감정적</td>
-<td style="text-align: center;">S : N</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">선호 구조(Structure)</td>
-<td style="text-align: left;">선호 vs 비선호 vs 발견되지 않음</td>
-<td style="text-align: center;">P : D : U</td>
-</tr>
-</tbody>
-</table>
-</section>
-<section id="사용자-세그먼트-분류" class="level2" data-number="1.2">
-<h2 data-number="1.2" class="anchored" data-anchor-id="사용자-세그먼트-분류"><span class="header-section-number">1.2</span> 사용자 세그먼트 분류</h2>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="./images/세그먼트.png" class="img-fluid figure-img" alt="사용자 세그먼트 분류" width="800"></p>
-<figcaption>사용자 세그먼트 분류</figcaption>
-</figure>
-</div>
-<p>프롬프트만으로 사용자의 성향을 예측해야 하는 상황에서 유용하게 활용할 수 있습니다. 이후 해당 세그먼트를 통한 프롬프트 인사이트를 소개할 예정입니다.</p>
-</section>
-<section id="대표적인-3가지-유형" class="level2" data-number="1.3">
-<h2 data-number="1.3" class="anchored" data-anchor-id="대표적인-3가지-유형"><span class="header-section-number">1.3</span> 대표적인 3가지 유형</h2>
-<section id="segment-1.-single-turn-information-seeking-si" class="level3" data-number="1.3.1">
-<h3 data-number="1.3.1" class="anchored" data-anchor-id="segment-1.-single-turn-information-seeking-si"><span class="header-section-number">1.3.1</span> Segment 1. Single-Turn, Information Seeking (SI)</h3>
-<ul>
-<li><strong>정보 검색형 사용자</strong></li>
-<li>즉흥적으로 문제를 해결하려는 경향</li>
-</ul>
-</section>
-<section id="segment-2.-multi-turn-stance-preferred-misp-mosp" class="level3" data-number="1.3.2">
-<h3 data-number="1.3.2" class="anchored" data-anchor-id="segment-2.-multi-turn-stance-preferred-misp-mosp"><span class="header-section-number">1.3.2</span> Segment 2. Multi-Turn, Stance, Preferred (MISP, MOSP)</h3>
-<ul>
-<li><strong>AI 친화적이고 사교적인 사용자</strong></li>
-<li>긍정적인 대화를 선호함</li>
-</ul>
-</section>
-<section id="segment-3.-multi-turn-stance-unobserved-misu-mosu" class="level3" data-number="1.3.3">
-<h3 data-number="1.3.3" class="anchored" data-anchor-id="segment-3.-multi-turn-stance-unobserved-misu-mosu"><span class="header-section-number">1.3.3</span> Segment 3. Multi-Turn, Stance, Unobserved (MISU, MOSU)</h3>
-<ul>
-<li><strong>새로운 아이디어를 고민하는 사용자</strong></li>
-<li>여러 턴의 대화를 통해 새로운 가능성을 탐구하는 유형</li>
-</ul>
-</section>
-</section>
-<section id="일반적인-세그먼트-분포" class="level2" data-number="1.4">
-<h2 data-number="1.4" class="anchored" data-anchor-id="일반적인-세그먼트-분포"><span class="header-section-number">1.4</span> 일반적인 세그먼트 분포</h2>
-<blockquote class="blockquote">
-<p><strong>Segment 1 &gt;&gt;&gt;&gt; Segment 2 &gt; Segment 3</strong></p>
-</blockquote>
-<p>정보 검색형 사용자(Segment 1)가 가장 많은 비중을 차지한다.</p>
-</section>
-<section id="세그먼트-활용법" class="level2" data-number="1.5">
-<h2 data-number="1.5" class="anchored" data-anchor-id="세그먼트-활용법"><span class="header-section-number">1.5</span> 세그먼트 활용법</h2>
-<section id="사용자-발화-데이터-정량화" class="level3" data-number="1.5.1">
-<h3 data-number="1.5.1" class="anchored" data-anchor-id="사용자-발화-데이터-정량화"><span class="header-section-number">1.5.1</span> 1. 사용자 발화 데이터 정량화</h3>
-<ul>
-<li>프롬프트 → LLM 분류 방식 활용</li>
-<li>사용자 발화 데이터를 세그먼트별로 분류하여 분포 파악 가능</li>
-</ul>
-</section>
-<section id="heavy-user-파악" class="level3" data-number="1.5.2">
-<h3 data-number="1.5.2" class="anchored" data-anchor-id="heavy-user-파악"><span class="header-section-number">1.5.2</span> 2. Heavy User 파악</h3>
-<ul>
-<li>현재 서비스의 <strong>Heavy User</strong>, <strong>Loyalty User</strong> 파악 가능</li>
-</ul>
-</section>
-<section id="세그먼트별-ab-테스트" class="level3" data-number="1.5.3">
-<h3 data-number="1.5.3" class="anchored" data-anchor-id="세그먼트별-ab-테스트"><span class="header-section-number">1.5.3</span> 3. 세그먼트별 A/B 테스트</h3>
-<ul>
-<li>어떤 프롬프트를 기획할 것인지 아이디에이션에 활용</li>
-</ul>
-</section>
-<section id="low-retention-그룹-원인-분석" class="level3" data-number="1.5.4">
-<h3 data-number="1.5.4" class="anchored" data-anchor-id="low-retention-그룹-원인-분석"><span class="header-section-number">1.5.4</span> 4. Low Retention 그룹 원인 분석</h3>
-<ul>
-<li>사용자 이탈의 원인을 분석 가능</li>
-<li>세그먼트를 지속적으로 추적하여, 어떤 환경적 요인이 특정 세그먼트의 이탈 또는 유입을 유발하는지 분석 가능</li>
-</ul>
-</section>
-</section>
-</section>
-<section id="세그먼트별-프롬프트-기획" class="level1" data-number="2">
-<h1 data-number="2"><span class="header-section-number">2</span> 세그먼트별 프롬프트 기획</h1>
-<section id="segment-1.-single-turn-information-seeking-si-1" class="level2" data-number="2.1">
-<h2 data-number="2.1" class="anchored" data-anchor-id="segment-1.-single-turn-information-seeking-si-1"><span class="header-section-number">2.1</span> Segment 1. Single-Turn, Information Seeking (SI)</h2>
-<blockquote class="blockquote">
-<p><strong>정보 검색형 사용자</strong> — 즉흥적으로 문제를 해결하려는 경향</p>
-</blockquote>
-<section id="프롬프트-기획-전략" class="level3" data-number="2.1.1">
-<h3 data-number="2.1.1" class="anchored" data-anchor-id="프롬프트-기획-전략"><span class="header-section-number">2.1.1</span> 프롬프트 기획 전략</h3>
+<section id="프롬프트-엔지니어링-기초-기법" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> 프롬프트 엔지니어링 기초 기법</h1>
+<section id="학습-목표" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="학습-목표"><span class="header-section-number">1.1</span> 학습 목표</h2>
 <ol type="1">
-<li><strong>실시간 정보 검색 엔진 연동</strong> — 정보 검색형 사용자의 니즈 충족</li>
-<li><strong>Retention을 위한 멀티턴 유도 장치</strong> — 이탈 방지</li>
+<li>프롬프트 엔지니어링 기초 기법을 이해한다.</li>
+<li>연구 논문을 통해 각 프롬프트 엔지니어링 기법의 핵심과 한계를 이해한다.</li>
+<li>실습을 통해 각 프롬프트 엔지니어링 방법을 학습한다.</li>
 </ol>
-<p>정보 검색형 사용자는 싱글턴으로 질문에 대한 답을 얻고 빠르게 이탈하는 특성이 있다. 이러한 사용자를 잡아두기 위해 <strong>동적으로 FAQ를 제공</strong>하는 방식으로 프롬프트를 기획하면, 자연스럽게 멀티턴 대화로 유도할 수 있다.</p>
 </section>
-<section id="예시-멀티턴-유도-사용자-만족을-위한-질문-생성" class="level3" data-number="2.1.2">
-<h3 data-number="2.1.2" class="anchored" data-anchor-id="예시-멀티턴-유도-사용자-만족을-위한-질문-생성"><span class="header-section-number">2.1.2</span> 예시: 멀티턴 유도 &amp; 사용자 만족을 위한 질문 생성</h3>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="./images/멀티턴유도.png" class="img-fluid figure-img" alt="멀티턴 유도 &amp; 사용자 만족을 위한 질문 생성" width="800"></p>
-<figcaption>멀티턴 유도 &amp; 사용자 만족을 위한 질문 생성</figcaption>
-</figure>
-</div>
+<section id="목차" class="level2" data-number="1.2">
+<h2 data-number="1.2" class="anchored" data-anchor-id="목차"><span class="header-section-number">1.2</span> 목차</h2>
+<ol type="1">
+<li>Zero-Shot Prompting</li>
+<li>Few-Shot Prompting</li>
+<li>Chain-of-Thought Prompting</li>
+<li>Zero Shot Chain of Thought</li>
+<li>Self-Consistency</li>
+</ol>
+<hr>
+</section>
+</section>
+<section id="zero-shot-prompting" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> 01. Zero-Shot Prompting</h1>
+<section id="개념" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="개념"><span class="header-section-number">2.1</span> 개념</h2>
+<p><strong>Zero-Shot Prompting</strong>은 언어 모델에게 예제나 시연(Demonstrations)을 주지 않고 작업을 수행하는 방법입니다. 언어 모델이 기존 지식을 사용하여 작업을 추론하며, 대량의 데이터를 사전 학습했기 때문에 가능합니다.</p>
+<p>제로샷 프롬프트는 언어 모델의 강력한 기능 중 하나로, 최소한의 정보만으로도 다양한 작업을 수행할 수 있습니다. 특히 데이터가 없을때, 유용하게 사용 가능, 실무를 하면서 제일 많이 사용하는 기술이 제로샷이다. 이 기술은 특히 데이터가 부족한 상황에서 유용하게 활용됩니다.</p>
 <ul>
-<li>호기심을 자극하는 장치로 활용</li>
-<li>실제로 클릭율이 매우 높음 → 사용자 만족도 향상에 기여</li>
+<li>전통적인 Fine-tuning 방법과 비교설명: 예시가 주어질 떄 마다 Gradient를 계산해 weight 를 업데이트 한다.</li>
+<li></li>
+</ul>
+</section>
+<section id="예시" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="예시"><span class="header-section-number">2.2</span> 예시</h2>
+<section id="텍스트-분류-text-classification" class="level3" data-number="2.2.1">
+<h3 data-number="2.2.1" class="anchored" data-anchor-id="텍스트-분류-text-classification"><span class="header-section-number">2.2.1</span> 텍스트 분류 (Text Classification)</h3>
+<pre><code>다음 텍스트에서 긍정, 부정, 중립 중 하나로 분류해.
+텍스트: 나는 마라탕 맛이 그저 그랬어.
+Sentiment:</code></pre>
+</section>
+<section id="번역-translation" class="level3" data-number="2.2.2">
+<h3 data-number="2.2.2" class="anchored" data-anchor-id="번역-translation"><span class="header-section-number">2.2.2</span> 번역 (Translation)</h3>
+<pre><code>다음 한국어 단어를 영어로 번역해줘.
+단어: 인공 눈물</code></pre>
+</section>
+<section id="폐쇄형-질의응답-closed-question-answering" class="level3" data-number="2.2.3">
+<h3 data-number="2.2.3" class="anchored" data-anchor-id="폐쇄형-질의응답-closed-question-answering"><span class="header-section-number">2.2.3</span> 폐쇄형 질의응답 (Closed Question Answering)</h3>
+<pre><code>대한민국의 수도는 서울이야?</code></pre>
+</section>
+</section>
+<section id="instruction-tuning" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="instruction-tuning"><span class="header-section-number">2.3</span> Instruction Tuning</h2>
+<section id="기술-개요" class="level3" data-number="2.3.1">
+<h3 data-number="2.3.1" class="anchored" data-anchor-id="기술-개요"><span class="header-section-number">2.3.1</span> 기술 개요</h3>
+<ul>
+<li>언어 모델의 제로샷 능력을 향상시키기 위한 기술</li>
+<li>자연어 지시로 60개 이상의 NLP 데이터셋에 대해 모델을 미세 조정</li>
+<li>Instruction Tuning은 모델 크기가 충분할 때 효과적</li>
+</ul>
+</section>
+<section id="기술의-장점" class="level3" data-number="2.3.2">
+<h3 data-number="2.3.2" class="anchored" data-anchor-id="기술의-장점"><span class="header-section-number">2.3.2</span> 기술의 장점</h3>
+<ul>
+<li>지시에 따라 모델의 응답을 미세 조정할 수 있음</li>
+<li>챗봇이 더 정확하고 좋은 결과물을 얻어냄</li>
+<li>다수의 작업 클러스터에서 Instruction tuning 시 모델이 해보지 않은 작업에 대한 성능 향상</li>
+</ul>
+</section>
+<section id="연구-결과" class="level3" data-number="2.3.3">
+<h3 data-number="2.3.3" class="anchored" data-anchor-id="연구-결과"><span class="header-section-number">2.3.3</span> 연구 결과</h3>
+<p><strong>연구 논문</strong>: Finetuned Language Models are Zero-Shot Learners (2021)</p>
+<ul>
+<li>137B 파라미터 모델 FLAN은 제로샷 성능에서 기본 모델보다 우수함</li>
+<li>Instruction Tuning은 사전 학습 데이터 없이도 NLP 데이터셋에서 모델의 성능을 올림</li>
+<li>자연어 추론, 독해, 폐쇄형 QA, 번역 등 다양한 작업에서 우수한 성능을 보임</li>
+</ul>
+</section>
+</section>
+<section id="rlhf-reinforcement-learning-from-human-feedback" class="level2" data-number="2.4">
+<h2 data-number="2.4" class="anchored" data-anchor-id="rlhf-reinforcement-learning-from-human-feedback"><span class="header-section-number">2.4</span> RLHF (Reinforcement Learning from Human Feedback)</h2>
+<section id="개념-1" class="level3" data-number="2.4.1">
+<h3 data-number="2.4.1" class="anchored" data-anchor-id="개념-1"><span class="header-section-number">2.4.1</span> 개념</h3>
+<ul>
+<li>인간의 피드백을 활용하여 모델의 응답을 개선하는 방법</li>
+<li>Instruction Tuning과 RLHF를 함께 사용하여 모델의 성능 향상</li>
+<li>ChatGPT의 학습 방법</li>
+</ul>
+</section>
+<section id="연구-배경" class="level3" data-number="2.4.2">
+<h3 data-number="2.4.2" class="anchored" data-anchor-id="연구-배경"><span class="header-section-number">2.4.2</span> 연구 배경</h3>
+<p><strong>연구 논문</strong>: Deep Reinforcement Learning from Human Preferences (2017)</p>
+<ul>
+<li>인간 피드백을 이용한 강화 학습(RL)</li>
+<li>인간 선호도 기반 피드백으로 보상 함수 최적화</li>
+<li>기존 보상 함수 설계 대신, 인간 피드백을 사용하여 더 나은 성능 달성</li>
 </ul>
 <hr>
 </section>
 </section>
-<section id="segment-2.-multi-turn-stance-preferred-misp-mosp-1" class="level2" data-number="2.2">
-<h2 data-number="2.2" class="anchored" data-anchor-id="segment-2.-multi-turn-stance-preferred-misp-mosp-1"><span class="header-section-number">2.2</span> Segment 2. Multi-Turn, Stance, Preferred (MISP, MOSP)</h2>
-<blockquote class="blockquote">
-<p><strong>AI 친화적이고 사교적인 사용자</strong> — 공감대와 유대감을 중요시하며, 긍정적인 대화를 선호</p>
-</blockquote>
-<section id="프롬프트-기획-전략-1" class="level3" data-number="2.2.1">
-<h3 data-number="2.2.1" class="anchored" data-anchor-id="프롬프트-기획-전략-1"><span class="header-section-number">2.2.1</span> 프롬프트 기획 전략</h3>
+</section>
+<section id="few-shot-prompting" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> 02. Few-Shot Prompting</h1>
+<section id="개념-2" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="개념-2"><span class="header-section-number">3.1</span> 개념</h2>
+<p><strong>Few-Shot Prompting</strong>은 언어 모델에게 예제나 시연(Demonstrations)을 주며 작업을 수행하는 방법입니다. Zero-shot prompting은 복잡한 문제 수행에 한계가 있어, Few-shot prompting을 통해 모델의 성능을 향상시킬 수 있습니다.</p>
+</section>
+<section id="특징" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="특징"><span class="header-section-number">3.2</span> 특징</h2>
+<ul>
+<li>Few-shot prompting은 모델의 파라미터 수가 충분히 클 때 효과가 있음</li>
+<li>어렵고 복잡한 과제일수록, 예제를 많이 사용하여 해결할 수 있음</li>
+</ul>
+</section>
+<section id="예시-1" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="예시-1"><span class="header-section-number">3.3</span> 예시</h2>
+<pre><code>A "whatpu" is a small, furry animal native to Tanzania.
+An example of a sentence that uses the word whatpu is:
+We were traveling in Africa and we saw these very cute whatpus.
+
+To do a "farduddle" means to jump up and down really fast.
+An example of a sentence that uses the word farduddle is:</code></pre>
+<p><strong>출력</strong>: When we won the game, we all started to farduddle in celebration.</p>
+</section>
+<section id="연구-결과-1" class="level2" data-number="3.4">
+<h2 data-number="3.4" class="anchored" data-anchor-id="연구-결과-1"><span class="header-section-number">3.4</span> 연구 결과</h2>
+<p>Few-Shot Prompting 성능이 어느정도 인지 확인해보자.</p>
+<section id="예시의-중요성" class="level3" data-number="3.4.1">
+<h3 data-number="3.4.1" class="anchored" data-anchor-id="예시의-중요성"><span class="header-section-number">3.4.1</span> 예시의 중요성</h3>
+<p><strong>연구 논문</strong>: Rethinking the Role of Demonstrations: What Makes In-Context Learning Work? (2022)</p>
+<ul>
+<li>예시를 사용하면 모델의 성능을 향상시킴</li>
+<li>예시의 품질이 중요: 정답 라벨(Gold labels)이 가장 좋지만, 랜덤 예시도 모델의 추론에 도움이 됨</li>
+<li>프롬프트 포맷: 올바른 입력 라벨 형식을 유지하는 것이 중요</li>
+</ul>
+</section>
+<section id="성능-비교" class="level3" data-number="3.4.2">
+<h3 data-number="3.4.2" class="anchored" data-anchor-id="성능-비교"><span class="header-section-number">3.4.2</span> 성능 비교</h3>
+<ul>
+<li><strong>Gold labels</strong> (정답 라벨이 있는 예시): 모델 성능이 가장 높음</li>
+<li><strong>Random labels</strong> (랜덤 라벨이 있는 예시): 예시가 없는 경우보다는 성능이 좋음</li>
+<li><strong>No input label format</strong> (입력 라벨 형식 없음): 성능이 크게 저하</li>
+</ul>
+</section>
+<section id="포맷-예시" class="level3" data-number="3.4.3">
+<h3 data-number="3.4.3" class="anchored" data-anchor-id="포맷-예시"><span class="header-section-number">3.4.3</span> 포맷 예시</h3>
+<p><strong>올바른 포맷</strong>:</p>
+<pre><code>이건 정말 굉장해! // 긍정
+와 정말 나쁘다! // 부정
+그 영화 진짜 대박이더라. // 긍정
+아우 정말 끔찍해 // 부정</code></pre>
+<p><strong>랜덤 포맷</strong> (성능 저하):</p>
+<pre><code>부정 와 정말 나쁘다! 긍정
+이건 정말 굉장해! 긍정</code></pre>
+</section>
+</section>
+<section id="한계점" class="level2" data-number="3.5">
+<h2 data-number="3.5" class="anchored" data-anchor-id="한계점"><span class="header-section-number">3.5</span> 한계점</h2>
+<ul>
+<li>복잡한 추론(Reasoning) 문제는 잘 하지 못함</li>
+<li>예시를 제공해도 복잡한 수학 문제나 논리 문제에서는 정확한 답을 내지 못하는 경우가 많음</li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="chain-of-thought-prompting" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> 03. Chain-of-Thought Prompting</h1>
+<section id="개념-3" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="개념-3"><span class="header-section-number">4.1</span> 개념</h2>
+<p><strong>Chain-of-Thought Prompting (CoT)</strong>은 복잡한 과제 수행을 위해, LLM에게 더 자세한 안내 문구를 작성해주는 것입니다. 복잡한 산술(Arithmetic), 상식(Commonsense), 그리고 기호 추론(Symbolic reasoning) 작업에 사용하면 효율적입니다.</p>
+<p>답이 나오는 과정에 대해 설명한 예시를 보여주고, 문제를 풀기 위한 답을 생성할 때 예시와 같은 방식으로 LLM이 설명하도록 하는 방식입니다.</p>
+</section>
+<section id="작동-방식" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="작동-방식"><span class="header-section-number">4.2</span> 작동 방식</h2>
+<section id="standard-prompting-vs-chain-of-thought-prompting" class="level3" data-number="4.2.1">
+<h3 data-number="4.2.1" class="anchored" data-anchor-id="standard-prompting-vs-chain-of-thought-prompting"><span class="header-section-number">4.2.1</span> Standard Prompting vs Chain-of-Thought Prompting</h3>
+<p><strong>Standard Prompting</strong>:</p>
+<pre><code>Q: 카페테리아에 사과가 23개 있었습니다. 그들은 20개를 점심을 만드는 데 사용했고 6개를 더 샀습니다. 이제 사과가 몇 개 있습니까?
+A: 정답은 27입니다. ❌</code></pre>
+<p><strong>Chain-of-Thought Prompting</strong>:</p>
+<pre><code>Q: 카페테리아에 사과가 23개 있었습니다. 그들은 20개를 점심을 만드는 데 사용했고 6개를 더 샀습니다. 이제 사과가 몇 개 있습니까?
+A: 카페테리아에 원래 사과가 23개 있었습니다. 그들은 20개를 점심을 만드는 데 사용했습니다. 그래서 23 - 20 = 3개가 남았습니다. 그들은 6개를 더 샀기 때문에, 이제 3 + 6 = 9개가 있습니다. 정답은 9입니다. ✔</code></pre>
+</section>
+</section>
+<section id="연구-결과-2" class="level2" data-number="4.3">
+<h2 data-number="4.3" class="anchored" data-anchor-id="연구-결과-2"><span class="header-section-number">4.3</span> 연구 결과</h2>
+<p><strong>연구 논문</strong>: Chain-of-Thought Prompting Elicits Reasoning in Large Language Models (2022)</p>
+<ul>
+<li>산술, 기호, 상식 추론에서 CoT 기법의 성능이 좋음</li>
+<li>수학 단어 문제를 푸는 성능 비교:
+<ul>
+<li>Fine-tuned GPT-3 175B: 55%</li>
+<li>PaLM 540B (standard prompting): 18%</li>
+<li>PaLM 540B (chain-of-thought prompting): 57%</li>
+</ul></li>
+</ul>
+<section id="모델-크기의-영향" class="level3" data-number="4.3.1">
+<h3 data-number="4.3.1" class="anchored" data-anchor-id="모델-크기의-영향"><span class="header-section-number">4.3.1</span> 모델 크기의 영향</h3>
+<ul>
+<li>Chain of thought는 모델의 파라미터가 클 때 효과적인 기법</li>
+<li>일반적인 스케일링 곡선보다 더 높은 성능을 보임</li>
+<li>모델 크기가 증가할수록 CoT의 효과가 더욱 커짐</li>
+</ul>
+</section>
+</section>
+<section id="한계점-1" class="level2" data-number="4.4">
+<h2 data-number="4.4" class="anchored" data-anchor-id="한계점-1"><span class="header-section-number">4.4</span> 한계점</h2>
+<ul>
+<li>모델의 파라미터 수가 적은 모델에서는 기법의 성능이 떨어짐</li>
+<li>CoT는 100B 파라미터 이상의 모델에서만 성능 향상을 보임</li>
+<li>사람이 직접 사고의 과정을 문장으로 작성해야 하는 번거로움</li>
+<li>프롬프트의 완성도가 높지 않으면 결과가 좋지 않음</li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="zero-shot-chain-of-thought" class="level1" data-number="5">
+<h1 data-number="5"><span class="header-section-number">5</span> 04. Zero Shot Chain of Thought</h1>
+<section id="개념-4" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="개념-4"><span class="header-section-number">5.1</span> 개념</h2>
+<p><strong>Zero Shot Chain of Thought</strong>는 “단계적으로 생각해봐” (Let’s Think Step by Step)와 같은 트리거 문구를 사용하여 예시 없이도 Chain-of-Thought 추론을 유도하는 방법입니다.</p>
+</section>
+<section id="연구-결과-3" class="level2" data-number="5.2">
+<h2 data-number="5.2" class="anchored" data-anchor-id="연구-결과-3"><span class="header-section-number">5.2</span> 연구 결과</h2>
+<p><strong>연구 논문</strong>: Large Language Models are Zero-Shot Reasoners (2022)</p>
+<ul>
+<li>Zero-shot과 Zero-shot CoT의 성능 비교</li>
+<li>“Let’s think step by step”과 같은 트리거 문구를 사용하면 예시 없이도 추론 과정을 유도할 수 있음</li>
+<li>GSM8K(초등학교 수준의 수학 문제 데이터셋)에서 성능 향상을 보임</li>
+</ul>
+<section id="다른-트리거-예시" class="level3" data-number="5.2.1">
+<h3 data-number="5.2.1" class="anchored" data-anchor-id="다른-트리거-예시"><span class="header-section-number">5.2.1</span> 다른 트리거 예시</h3>
+<ul>
+<li>“단계적으로 생각해봐”</li>
+<li>“Let’s solve this step by step”</li>
+<li>“First, let’s think about…”</li>
+</ul>
+<hr>
+</section>
+</section>
+</section>
+<section id="self-consistency" class="level1" data-number="6">
+<h1 data-number="6"><span class="header-section-number">6</span> 05. Self-Consistency</h1>
+<section id="개념-5" class="level2" data-number="6.1">
+<h2 data-number="6.1" class="anchored" data-anchor-id="개념-5"><span class="header-section-number">6.1</span> 개념</h2>
+<p><strong>Self-Consistency</strong>는 Chain-of-thought prompting을 개선한 기법으로, 다양한 추론 경로를 만들어 그 중에서 가장 일관된 답변을 선택하는 방식입니다. 복잡한 산술 문제나 논리 문제에 효과적입니다.</p>
+<section id="핵심-아이디어" class="level3" data-number="6.1.1">
+<h3 data-number="6.1.1" class="anchored" data-anchor-id="핵심-아이디어"><span class="header-section-number">6.1.1</span> 핵심 아이디어</h3>
+<p>가장 많은 답이 정답일 확률이 높다는 단순한 아이디어를 기반으로 합니다.</p>
+<p><strong>예시</strong>: - 학생 A: 11 - 학생 B: 11 - 학생 C: 12 - 학생 D: 11 - 학생 E: 11 - <strong>최종 답: 11</strong> (다수결)</p>
+</section>
+</section>
+<section id="작동-방식-1" class="level2" data-number="6.2">
+<h2 data-number="6.2" class="anchored" data-anchor-id="작동-방식-1"><span class="header-section-number">6.2</span> 작동 방식</h2>
 <ol type="1">
-<li><strong>AI와 Affiliation 형성</strong> — Gamification 활용 (게임이 아닌 분야에 게임의 요소(점수, 보상, 경쟁, 레벨업 등)를 적용해 참여·동기·몰입을 높이는 기법)</li>
-<li><strong>페르소나 만들기</strong> — 프롬프트 게임, 캐릭터 챗봇</li>
+<li><strong>Chain of thought</strong>: 문제 제시</li>
+<li><strong>Sample a diverse set of reasoning paths</strong>: 다양한 추론 경로 샘플링</li>
+<li><strong>Marginalize out reasoning paths to aggregate final answers</strong>: 최종 답 선택</li>
 </ol>
-<p>이 세그먼트는 대화의 길이가 상당히 길고, 하고자 하는 바가 명확한 특성이 있다.</p>
 </section>
-<section id="예시-캐릭터-챗봇" class="level3" data-number="2.2.2">
-<h3 data-number="2.2.2" class="anchored" data-anchor-id="예시-캐릭터-챗봇"><span class="header-section-number">2.2.2</span> 예시: 캐릭터 챗봇</h3>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="./images/캐릭터챗봇.png" class="img-fluid figure-img" alt="캐릭터챗봇" width="800"></p>
-<figcaption>캐릭터챗봇</figcaption>
-</figure>
-</div>
-<p>캐릭터 챗봇을 통해 사용자와 유대감을 형성할 수 있다.</p>
+<section id="연구-결과-4" class="level2" data-number="6.3">
+<h2 data-number="6.3" class="anchored" data-anchor-id="연구-결과-4"><span class="header-section-number">6.3</span> 연구 결과</h2>
+<p><strong>연구 논문</strong>: Self-Consistency Improves Chain-of-Thought Reasoning in Language Models (2022)</p>
+<section id="세-단계-프로세스" class="level3" data-number="6.3.1">
+<h3 data-number="6.3.1" class="anchored" data-anchor-id="세-단계-프로세스"><span class="header-section-number">6.3.1</span> 세 단계 프로세스</h3>
+<ol type="1">
+<li><p><strong>1단계</strong>: CoT 프롬프트 엔지니어링으로 시작. 언어 모델에게 문제를 해결하는 과정을 단계별로 설명하도록 함.</p></li>
+<li><p><strong>2단계</strong>: 여러 가지 경로 샘플링. 새로운 문제에 대한 여러 계산 경로를 탐색.</p></li>
+<li><p><strong>3단계</strong>: 모델이 일관된 답변을 도출하기 위해 2단계 샘플링을 통해 나온 결과를 종합하여 추론. 가장 많이 생성된 답변을 선택.</p></li>
+</ol>
+</section>
+<section id="성능" class="level3" data-number="6.3.2">
+<h3 data-number="6.3.2" class="anchored" data-anchor-id="성능"><span class="header-section-number">6.3.2</span> 성능</h3>
+<ul>
+<li>수학 문제 정답을 맞춘 확률이 높음</li>
+<li>다수결 투표 방식의 정확도가 높음</li>
+<li>복잡한 추론 작업에서 비용 효율적</li>
+<li>다양한 추론 경로를 통한 높은 정확도</li>
+</ul>
+</section>
+</section>
+<section id="한계점-2" class="level2" data-number="6.4">
+<h2 data-number="6.4" class="anchored" data-anchor-id="한계점-2"><span class="header-section-number">6.4</span> 한계점</h2>
+<ul>
+<li>복잡한 추론 작업을 해결할 때 비용이 많이 듦</li>
+<li>복잡한 추론을 해결하려면, 상당한 양의 훈련 데이터 필요</li>
+<li>프롬프트가 명확하지 않거나 간결하지 않을 때, Self Consistency의 기법 성능이 저하됨</li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="참고-문헌" class="level1" data-number="7">
+<h1 data-number="7"><span class="header-section-number">7</span> 참고 문헌</h1>
+<ul>
+<li><p>Brown, T., Mann, B., Ryder, N., Subbiah, M., Kaplan, J. D., Dhariwal, P., … &amp; Amodei, D. (2020). Language models are few-shot learners. Advances in Neural Information Processing Systems, 33, 1877-1901.</p></li>
+<li><p>Christiano, P. F., Leike, J., Brown, T., Martic, M., Legg, S., &amp; Amodei, D. (2017). Deep reinforcement learning from human preferences. Advances in Neural Information Processing Systems, 30.</p></li>
+<li><p>Kojima, T., Gu, S. S., Reid, M., Matsuo, Y., &amp; Iwasawa, Y. (2022). Large language models are zero-shot reasoners. Advances in neural information processing systems, 35, 22199-22213.</p></li>
+<li><p>Wang, X., Wei, J., Schuurmans, D., Le, Q., Chi, E., Narang, S., … &amp; Zhou, D. (2022). Self-consistency improves chain of thought reasoning in language models. arXiv preprint arXiv:2203.11171.</p></li>
+<li><p>Wei, J., Bosma, M., Zhao, V. Y., Guu, K., Yu, A. W., Lester, B., … &amp; Le, Q. V. (2021). Finetuned language models are zero-shot learners. arXiv preprint arXiv:2109.01652.</p></li>
+<li><p>Wei, J., Wang, X., Schuurmans, D., Bosma, M., Xia, F., Chi, E., … &amp; Zhou, D. (2022). Chain-of-thought prompting elicits reasoning in large language models. Advances in Neural Information Processing Systems, 35, 24824-24837.</p></li>
+<li><p>Work, W. M. I. C. L. Rethinking the Role of Demonstrations: What Makes In-Context Learning Work?.</p></li>
+</ul>
 
 
-</section>
-</section>
 </section>
 
 </main> <!-- /main -->
