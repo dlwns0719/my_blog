@@ -1,5 +1,5 @@
 ---
-title: Part 3 — 세그먼트별 프롬프트 기획
+title: Part 2 — 프롬프트 기획 사례
 jupyter: python3
 categories:
   - AI

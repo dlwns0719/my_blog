@@ -1,0 +1,301 @@
+---
+title: 프롬프트 엔지니어링 기초 기법 (Basic)
+jupyter: python3
+categories:
+  - AI
+  - Prompt_Engineering
+---
+
+# 프롬프트 엔지니어링 기초 기법
+
+## 학습 목표
+
+1. 프롬프트 엔지니어링 기초 기법을 이해한다.
+2. 연구 논문을 통해 각 프롬프트 엔지니어링 기법의 핵심과 한계를 이해한다.
+3. 실습을 통해 각 프롬프트 엔지니어링 방법을 학습한다.
+
+## 목차
+
+1. Zero-Shot Prompting
+2. Few-Shot Prompting
+3. Chain-of-Thought Prompting
+4. Zero Shot Chain of Thought
+5. Self-Consistency
+
+---
+
+# 01. Zero-Shot Prompting
+
+## 개념
+
+**Zero-Shot Prompting**은 언어 모델에게 예제나 시연(Demonstrations)을 주지 않고 작업을 수행하는 방법입니다. 언어 모델이 기존 지식을 사용하여 작업을 추론하며, 대량의 데이터를 사전 학습했기 때문에 가능합니다.
+
+제로샷 프롬프트는 언어 모델의 강력한 기능 중 하나로, 최소한의 정보만으로도 다양한 작업을 수행할 수 있습니다. 특히 데이터가 없을때, 유용하게 사용 가능, 실무를 하면서 제일 많이 사용하는 기술이 제로샷이다.  이 기술은 특히 데이터가 부족한 상황에서 유용하게 활용됩니다.
+
+- 전통적인 Fine-tuning 방법과 비교설명: 예시가 주어질 떄 마다 Gradient를 계산해 weight 를 업데이트 한다. 
+- 
+
+## 예시
+
+### 텍스트 분류 (Text Classification)
+
+```
+다음 텍스트에서 긍정, 부정, 중립 중 하나로 분류해.
+텍스트: 나는 마라탕 맛이 그저 그랬어.
+Sentiment:
+```
+
+### 번역 (Translation)
+
+```
+다음 한국어 단어를 영어로 번역해줘.
+단어: 인공 눈물
+```
+
+### 폐쇄형 질의응답 (Closed Question Answering)
+
+```
+대한민국의 수도는 서울이야?
+```
+
+## Instruction Tuning
+
+### 기술 개요
+
+- 언어 모델의 제로샷 능력을 향상시키기 위한 기술
+- 자연어 지시로 60개 이상의 NLP 데이터셋에 대해 모델을 미세 조정
+- Instruction Tuning은 모델 크기가 충분할 때 효과적
+
+### 기술의 장점
+
+- 지시에 따라 모델의 응답을 미세 조정할 수 있음
+- 챗봇이 더 정확하고 좋은 결과물을 얻어냄
+- 다수의 작업 클러스터에서 Instruction tuning 시 모델이 해보지 않은 작업에 대한 성능 향상
+
+### 연구 결과
+
+**연구 논문**: Finetuned Language Models are Zero-Shot Learners (2021)
+
+- 137B 파라미터 모델 FLAN은 제로샷 성능에서 기본 모델보다 우수함
+- Instruction Tuning은 사전 학습 데이터 없이도 NLP 데이터셋에서 모델의 성능을 올림
+- 자연어 추론, 독해, 폐쇄형 QA, 번역 등 다양한 작업에서 우수한 성능을 보임
+
+## RLHF (Reinforcement Learning from Human Feedback)
+
+### 개념
+
+- 인간의 피드백을 활용하여 모델의 응답을 개선하는 방법
+- Instruction Tuning과 RLHF를 함께 사용하여 모델의 성능 향상
+- ChatGPT의 학습 방법
+
+### 연구 배경
+
+**연구 논문**: Deep Reinforcement Learning from Human Preferences (2017)
+
+- 인간 피드백을 이용한 강화 학습(RL)
+- 인간 선호도 기반 피드백으로 보상 함수 최적화
+- 기존 보상 함수 설계 대신, 인간 피드백을 사용하여 더 나은 성능 달성
+
+---
+
+# 02. Few-Shot Prompting
+
+## 개념
+
+**Few-Shot Prompting**은 언어 모델에게 예제나 시연(Demonstrations)을 주며 작업을 수행하는 방법입니다. Zero-shot prompting은 복잡한 문제 수행에 한계가 있어, Few-shot prompting을 통해 모델의 성능을 향상시킬 수 있습니다.
+
+## 특징
+
+- Few-shot prompting은 모델의 파라미터 수가 충분히 클 때 효과가 있음
+- 어렵고 복잡한 과제일수록, 예제를 많이 사용하여 해결할 수 있음
+
+## 예시
+
+```
+A "whatpu" is a small, furry animal native to Tanzania.
+An example of a sentence that uses the word whatpu is:
+We were traveling in Africa and we saw these very cute whatpus.
+
+To do a "farduddle" means to jump up and down really fast.
+An example of a sentence that uses the word farduddle is:
+```
+
+**출력**: When we won the game, we all started to farduddle in celebration.
+
+## 연구 결과
+Few-Shot Prompting 성능이 어느정도 인지 확인해보자.
+
+### 예시의 중요성
+
+**연구 논문**: Rethinking the Role of Demonstrations: What Makes In-Context Learning Work? (2022)
+
+- 예시를 사용하면 모델의 성능을 향상시킴
+- 예시의 품질이 중요: 정답 라벨(Gold labels)이 가장 좋지만, 랜덤 예시도 모델의 추론에 도움이 됨
+- 프롬프트 포맷: 올바른 입력 라벨 형식을 유지하는 것이 중요
+
+### 성능 비교
+
+- **Gold labels** (정답 라벨이 있는 예시): 모델 성능이 가장 높음
+- **Random labels** (랜덤 라벨이 있는 예시): 예시가 없는 경우보다는 성능이 좋음
+- **No input label format** (입력 라벨 형식 없음): 성능이 크게 저하
+
+### 포맷 예시
+
+**올바른 포맷**:
+```
+이건 정말 굉장해! // 긍정
+와 정말 나쁘다! // 부정
+그 영화 진짜 대박이더라. // 긍정
+아우 정말 끔찍해 // 부정
+```
+
+**랜덤 포맷** (성능 저하):
+```
+부정 와 정말 나쁘다! 긍정
+이건 정말 굉장해! 긍정
+```
+
+## 한계점
+
+- 복잡한 추론(Reasoning) 문제는 잘 하지 못함
+- 예시를 제공해도 복잡한 수학 문제나 논리 문제에서는 정확한 답을 내지 못하는 경우가 많음
+
+---
+
+# 03. Chain-of-Thought Prompting
+
+## 개념
+
+**Chain-of-Thought Prompting (CoT)**은 복잡한 과제 수행을 위해, LLM에게 더 자세한 안내 문구를 작성해주는 것입니다. 복잡한 산술(Arithmetic), 상식(Commonsense), 그리고 기호 추론(Symbolic reasoning) 작업에 사용하면 효율적입니다.
+
+답이 나오는 과정에 대해 설명한 예시를 보여주고, 문제를 풀기 위한 답을 생성할 때 예시와 같은 방식으로 LLM이 설명하도록 하는 방식입니다.
+
+## 작동 방식
+
+### Standard Prompting vs Chain-of-Thought Prompting
+
+**Standard Prompting**:
+```
+Q: 카페테리아에 사과가 23개 있었습니다. 그들은 20개를 점심을 만드는 데 사용했고 6개를 더 샀습니다. 이제 사과가 몇 개 있습니까?
+A: 정답은 27입니다. ❌
+```
+
+**Chain-of-Thought Prompting**:
+```
+Q: 카페테리아에 사과가 23개 있었습니다. 그들은 20개를 점심을 만드는 데 사용했고 6개를 더 샀습니다. 이제 사과가 몇 개 있습니까?
+A: 카페테리아에 원래 사과가 23개 있었습니다. 그들은 20개를 점심을 만드는 데 사용했습니다. 그래서 23 - 20 = 3개가 남았습니다. 그들은 6개를 더 샀기 때문에, 이제 3 + 6 = 9개가 있습니다. 정답은 9입니다. ✔
+```
+
+## 연구 결과
+
+**연구 논문**: Chain-of-Thought Prompting Elicits Reasoning in Large Language Models (2022)
+
+- 산술, 기호, 상식 추론에서 CoT 기법의 성능이 좋음
+- 수학 단어 문제를 푸는 성능 비교:
+  - Fine-tuned GPT-3 175B: 55%
+  - PaLM 540B (standard prompting): 18%
+  - PaLM 540B (chain-of-thought prompting): 57%
+
+### 모델 크기의 영향
+
+- Chain of thought는 모델의 파라미터가 클 때 효과적인 기법
+- 일반적인 스케일링 곡선보다 더 높은 성능을 보임
+- 모델 크기가 증가할수록 CoT의 효과가 더욱 커짐
+
+## 한계점
+
+- 모델의 파라미터 수가 적은 모델에서는 기법의 성능이 떨어짐
+- CoT는 100B 파라미터 이상의 모델에서만 성능 향상을 보임
+- 사람이 직접 사고의 과정을 문장으로 작성해야 하는 번거로움
+- 프롬프트의 완성도가 높지 않으면 결과가 좋지 않음
+
+---
+
+# 04. Zero Shot Chain of Thought
+
+## 개념
+
+**Zero Shot Chain of Thought**는 "단계적으로 생각해봐" (Let's Think Step by Step)와 같은 트리거 문구를 사용하여 예시 없이도 Chain-of-Thought 추론을 유도하는 방법입니다.
+
+## 연구 결과
+
+**연구 논문**: Large Language Models are Zero-Shot Reasoners (2022)
+
+- Zero-shot과 Zero-shot CoT의 성능 비교
+- "Let's think step by step"과 같은 트리거 문구를 사용하면 예시 없이도 추론 과정을 유도할 수 있음
+- GSM8K(초등학교 수준의 수학 문제 데이터셋)에서 성능 향상을 보임
+
+### 다른 트리거 예시
+
+- "단계적으로 생각해봐"
+- "Let's solve this step by step"
+- "First, let's think about..."
+
+---
+
+# 05. Self-Consistency
+
+## 개념
+
+**Self-Consistency**는 Chain-of-thought prompting을 개선한 기법으로, 다양한 추론 경로를 만들어 그 중에서 가장 일관된 답변을 선택하는 방식입니다. 복잡한 산술 문제나 논리 문제에 효과적입니다.
+
+### 핵심 아이디어
+
+가장 많은 답이 정답일 확률이 높다는 단순한 아이디어를 기반으로 합니다.
+
+**예시**:
+- 학생 A: 11
+- 학생 B: 11
+- 학생 C: 12
+- 학생 D: 11
+- 학생 E: 11
+- **최종 답: 11** (다수결)
+
+## 작동 방식
+
+1. **Chain of thought**: 문제 제시
+2. **Sample a diverse set of reasoning paths**: 다양한 추론 경로 샘플링
+3. **Marginalize out reasoning paths to aggregate final answers**: 최종 답 선택
+
+## 연구 결과
+
+**연구 논문**: Self-Consistency Improves Chain-of-Thought Reasoning in Language Models (2022)
+
+### 세 단계 프로세스
+
+1. **1단계**: CoT 프롬프트 엔지니어링으로 시작. 언어 모델에게 문제를 해결하는 과정을 단계별로 설명하도록 함.
+
+2. **2단계**: 여러 가지 경로 샘플링. 새로운 문제에 대한 여러 계산 경로를 탐색.
+
+3. **3단계**: 모델이 일관된 답변을 도출하기 위해 2단계 샘플링을 통해 나온 결과를 종합하여 추론. 가장 많이 생성된 답변을 선택.
+
+### 성능
+
+- 수학 문제 정답을 맞춘 확률이 높음
+- 다수결 투표 방식의 정확도가 높음
+- 복잡한 추론 작업에서 비용 효율적
+- 다양한 추론 경로를 통한 높은 정확도
+
+## 한계점
+
+- 복잡한 추론 작업을 해결할 때 비용이 많이 듦
+- 복잡한 추론을 해결하려면, 상당한 양의 훈련 데이터 필요
+- 프롬프트가 명확하지 않거나 간결하지 않을 때, Self Consistency의 기법 성능이 저하됨
+
+---
+
+# 참고 문헌
+
+- Brown, T., Mann, B., Ryder, N., Subbiah, M., Kaplan, J. D., Dhariwal, P., ... & Amodei, D. (2020). Language models are few-shot learners. Advances in Neural Information Processing Systems, 33, 1877-1901.
+
+- Christiano, P. F., Leike, J., Brown, T., Martic, M., Legg, S., & Amodei, D. (2017). Deep reinforcement learning from human preferences. Advances in Neural Information Processing Systems, 30.
+
+- Kojima, T., Gu, S. S., Reid, M., Matsuo, Y., & Iwasawa, Y. (2022). Large language models are zero-shot reasoners. Advances in neural information processing systems, 35, 22199-22213.
+
+- Wang, X., Wei, J., Schuurmans, D., Le, Q., Chi, E., Narang, S., ... & Zhou, D. (2022). Self-consistency improves chain of thought reasoning in language models. arXiv preprint arXiv:2203.11171.
+
+- Wei, J., Bosma, M., Zhao, V. Y., Guu, K., Yu, A. W., Lester, B., ... & Le, Q. V. (2021). Finetuned language models are zero-shot learners. arXiv preprint arXiv:2109.01652.
+
+- Wei, J., Wang, X., Schuurmans, D., Bosma, M., Xia, F., Chi, E., ... & Zhou, D. (2022). Chain-of-thought prompting elicits reasoning in large language models. Advances in Neural Information Processing Systems, 35, 24824-24837.
+
+- Work, W. M. I. C. L. Rethinking the Role of Demonstrations: What Makes In-Context Learning Work?.
