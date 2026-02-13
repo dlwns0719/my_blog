@@ -10,7 +10,1197 @@
 <atom:link href="https://dlwns0719.github.io/my_blog/docs/blog/index.xml" rel="self" type="application/rss+xml"/>
 <description>blog</description>
 <generator>quarto-1.8.25</generator>
-<lastBuildDate>Wed, 11 Feb 2026 15:00:00 GMT</lastBuildDate>
+<lastBuildDate>Thu, 12 Feb 2026 15:00:00 GMT</lastBuildDate>
+<item>
+  <title>대규모 코드베이스 메타데이터 추출: 분산 에이전트에서 하이브리드 파이프라인까지</title>
+  <dc:creator>Junhyun Lee</dc:creator>
+  <link>https://dlwns0719.github.io/my_blog/docs/blog/posts/Claude_Code/02-코드베이스_메타데이터_추출/01-코드베이스_메타데이터_추출.html</link>
+  <description><![CDATA[ 
+
+
+
+
+
+
+<section id="대규모-코드베이스-메타데이터-추출" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> 대규모 코드베이스 메타데이터 추출</h1>
+<section id="왜-코드베이스-메타데이터가-필요한가" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="왜-코드베이스-메타데이터가-필요한가"><span class="header-section-number">1.1</span> 왜 코드베이스 메타데이터가 필요한가</h2>
+<p>인실리코(in-silico) 알고리즘 코드를 분석하는 <strong>코드 설명 Agent</strong>를 구축하려면, Agent가 코드를 이해하기 위한 구조화된 메타데이터가 필요합니다.</p>
+<p>여기서 말하는 메타데이터란:</p>
+<ul>
+<li>모든 클래스/함수/변수의 <strong>물리명, 논리명, 데이터 타입, 기본값, 의미</strong></li>
+<li>모듈 간 <strong>입출력 연결 관계</strong></li>
+<li>파이프라인 <strong>단계 간 의존성</strong></li>
+<li>중간 산출물의 <strong>파일 스키마</strong> (구분자, 인코딩, 컬럼 정의)</li>
+<li>알고리즘 <strong>파라미터, 임계값, 허용 범위</strong></li>
+<li><strong>암묵적 규칙</strong> (코드에 명시되지 않은 관계, 상태 전이 조건)</li>
+</ul>
+<p>이 메타데이터를 14개 카테고리로 분류하여 <code>METADATA_INVESTIGATION.md</code>라는 단일 문서로 생성하는 것이 목표입니다.</p>
+<hr>
+</section>
+<section id="대상-automsa-파이프라인" class="level2" data-number="1.2">
+<h2 data-number="1.2" class="anchored" data-anchor-id="대상-automsa-파이프라인"><span class="header-section-number">1.2</span> 대상: AutoMSA 파이프라인</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 54%">
+<col style="width: 45%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>항목</th>
+<th>값</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>레포지토리</td>
+<td><code>insilico-core-automsa</code></td>
+</tr>
+<tr class="even">
+<td>Python 파일 수</td>
+<td>152개</td>
+</tr>
+<tr class="odd">
+<td>총 코드 줄 수</td>
+<td>~29,178줄</td>
+</tr>
+<tr class="even">
+<td>파이프라인 단계</td>
+<td>9개 서비스 (5 Step)</td>
+</tr>
+<tr class="odd">
+<td>역할</td>
+<td>유전자/단백질 키워드 기반 서열 수집, BLAST 확장, 대표 서열 선정, 다중 서열 정렬(MSA) 자동화</td>
+</tr>
+</tbody>
+</table>
+<p>파이프라인 구조:</p>
+<pre><code>AutoMSA -&gt; DRS -&gt; monoom -&gt; multiom -&gt; multiom-output -&gt; multitom -&gt; multiplex-excel</code></pre>
+<p>이 규모의 코드베이스에서 원자적 수준의 메타데이터를 추출하면 <strong>1,400개 이상의 항목</strong>이 나옵니다.</p>
+<hr>
+</section>
+<section id="차-시도-단일-에이전트-실패" class="level2" data-number="1.3">
+<h2 data-number="1.3" class="anchored" data-anchor-id="차-시도-단일-에이전트-실패"><span class="header-section-number">1.3</span> 1차 시도: 단일 에이전트 (실패)</h2>
+<section id="접근" class="level3" data-number="1.3.1">
+<h3 data-number="1.3.1" class="anchored" data-anchor-id="접근"><span class="header-section-number">1.3.1</span> 접근</h3>
+<p>하나의 Claude Code 에이전트에게 전체 152개 파일을 분석하라고 요청했습니다.</p>
+</section>
+<section id="결과" class="level3" data-number="1.3.2">
+<h3 data-number="1.3.2" class="anchored" data-anchor-id="결과"><span class="header-section-number">1.3.2</span> 결과</h3>
+<p><strong>Context window 한계에 도달.</strong> 약 50개 파일을 읽은 시점에서 컨텍스트가 부족해져, 나머지 100개 파일은 조사되지 않았습니다.</p>
+</section>
+<section id="교훈" class="level3" data-number="1.3.3">
+<h3 data-number="1.3.3" class="anchored" data-anchor-id="교훈"><span class="header-section-number">1.3.3</span> 교훈</h3>
+<blockquote class="blockquote">
+<p><strong>대규모 코드베이스는 단일 에이전트로 처리할 수 없다.</strong> Context window는 유한하고, 152개 파일 x 평균 192줄 = ~29K줄의 코드를 한 번에 읽고 분석하는 것은 불가능합니다.</p>
+</blockquote>
+<hr>
+</section>
+</section>
+<section id="차-시도-3개-분산-에이전트" class="level2" data-number="1.4">
+<h2 data-number="1.4" class="anchored" data-anchor-id="차-시도-3개-분산-에이전트"><span class="header-section-number">1.4</span> 2차 시도: 3개 분산 에이전트</h2>
+<section id="접근-1" class="level3" data-number="1.4.1">
+<h3 data-number="1.4.1" class="anchored" data-anchor-id="접근-1"><span class="header-section-number">1.4.1</span> 접근</h3>
+<p>14개 카테고리를 3개 그룹으로 나누어 병렬 실행:</p>
+<ul>
+<li>Agent A: Cat 1-3 (파이프라인 구조, 중간 산출물)</li>
+<li>Agent B: Cat 4-7 (입력/파라미터, DB, 품질)</li>
+<li>Agent C: Cat 8-14 (라이브러리, 환경, 인프라, 로깅, 기타)</li>
+</ul>
+</section>
+<section id="결과-1" class="level3" data-number="1.4.2">
+<h3 data-number="1.4.2" class="anchored" data-anchor-id="결과-1"><span class="header-section-number">1.4.2</span> 결과</h3>
+<p>3개 에이전트 모두 완료. 그러나 <strong>산출물의 형식이 프롬프트와 불일치</strong>:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>문제</th>
+<th>상세</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>N.1-N.4 구조 누락</td>
+<td>각 카테고리에 “추출 가능 이유”, “조사 대상 파일”, “해석 메타데이터” 섹션이 없음</td>
+</tr>
+<tr class="even">
+<td>테이블 헤더 영문</td>
+<td>한국어 8열 헤더 대신 영어 헤더 사용</td>
+</tr>
+<tr class="odd">
+<td>통계표 누락</td>
+<td>최종 카테고리별 항목 수 집계표 없음</td>
+</tr>
+<tr class="even">
+<td>품질 체크리스트 누락</td>
+<td>12개 항목 체크리스트 없음</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="교훈-1" class="level3" data-number="1.4.3">
+<h3 data-number="1.4.3" class="anchored" data-anchor-id="교훈-1"><span class="header-section-number">1.4.3</span> 교훈</h3>
+<blockquote class="blockquote">
+<p><strong>LLM은 추상적 규칙보다 구체적 예시를 훨씬 잘 따른다.</strong> 프롬프트에 “N.1, N.2, N.3, N.4 구조로 작성하세요”라고 써도, 실제 완성된 예시가 없으면 에이전트가 자의적으로 해석합니다.</p>
+</blockquote>
+<hr>
+</section>
+</section>
+<section id="차-시도-7개-분산-에이전트-형식-교정" class="level2" data-number="1.5">
+<h2 data-number="1.5" class="anchored" data-anchor-id="차-시도-7개-분산-에이전트-형식-교정"><span class="header-section-number">1.5</span> 3차 시도: 7개 분산 에이전트 + 형식 교정</h2>
+<section id="접근-2" class="level3" data-number="1.5.1">
+<h3 data-number="1.5.1" class="anchored" data-anchor-id="접근-2"><span class="header-section-number">1.5.1</span> 접근</h3>
+<ul>
+<li>참조 문서(multiom 레포의 METADATA_INVESTIGATION.md)를 Gold Standard로 제공</li>
+<li>7개 에이전트로 더 세밀하게 분할:
+<ul>
+<li>Cat 1 / Cat 2-3 / Cat 4 / Cat 5-6 / Cat 7-8 / Cat 9-11 / Cat 12-14</li>
+</ul></li>
+<li>각 에이전트에게 <strong>구체적 형식 예시</strong>와 <strong>참조 문서</strong>를 함께 전달</li>
+</ul>
+</section>
+<section id="결과-2" class="level3" data-number="1.5.2">
+<h3 data-number="1.5.2" class="anchored" data-anchor-id="결과-2"><span class="header-section-number">1.5.2</span> 결과</h3>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>카테고리</th>
+<th>항목 수</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1. 모듈 간 I/O</td>
+<td>213</td>
+</tr>
+<tr class="even">
+<td>2. 파이프라인 의존성</td>
+<td>62</td>
+</tr>
+<tr class="odd">
+<td>3. 중간 산출물</td>
+<td>218</td>
+</tr>
+<tr class="even">
+<td>4. 입력 JSON/UI</td>
+<td>128</td>
+</tr>
+<tr class="odd">
+<td>5. 알고리즘 파라미터</td>
+<td>129</td>
+</tr>
+<tr class="even">
+<td>6. DB 스키마/쿼리</td>
+<td>110</td>
+</tr>
+<tr class="odd">
+<td>7. 품질 규칙</td>
+<td>99</td>
+</tr>
+<tr class="even">
+<td>8. 라이브러리/API</td>
+<td>53</td>
+</tr>
+<tr class="odd">
+<td>9. 환경 변수</td>
+<td>35</td>
+</tr>
+<tr class="even">
+<td>10. 병렬 처리</td>
+<td>18</td>
+</tr>
+<tr class="odd">
+<td>11. 실행 모드</td>
+<td>45</td>
+</tr>
+<tr class="even">
+<td>12. 인프라</td>
+<td>44</td>
+</tr>
+<tr class="odd">
+<td>13. 로깅</td>
+<td>81</td>
+</tr>
+<tr class="even">
+<td>14. 기타</td>
+<td>176</td>
+</tr>
+<tr class="odd">
+<td><strong>합계</strong></td>
+<td><strong>1,411</strong></td>
+</tr>
+</tbody>
+</table>
+<p>형식은 올바르게 나왔으나, <strong>Cat 3의 파일 스키마가 누락</strong>되었습니다.</p>
+</section>
+<section id="교훈-2" class="level3" data-number="1.5.3">
+<h3 data-number="1.5.3" class="anchored" data-anchor-id="교훈-2"><span class="header-section-number">1.5.3</span> 교훈</h3>
+<blockquote class="blockquote">
+<p><strong>중요한 요구사항은 독립 섹션으로 분리해야 한다.</strong> Cat 3 설명 안에 “파일 스키마를 반드시 기술하세요”라고 묻어 놓으면 에이전트가 놓칩니다. <strong>CRITICAL</strong> 표시와 함께 별도 섹션으로 올려야 합니다.</p>
+</blockquote>
+<hr>
+</section>
+</section>
+<section id="cat-3-파일-스키마-보강-전용-에이전트" class="level2" data-number="1.6">
+<h2 data-number="1.6" class="anchored" data-anchor-id="cat-3-파일-스키마-보강-전용-에이전트"><span class="header-section-number">1.6</span> Cat 3 파일 스키마 보강: 전용 에이전트</h2>
+<p>Cat 3의 36개 중간 산출물 파일에 대해 전용 에이전트를 추가 투입했습니다.</p>
+<section id="추출한-파일-스키마-속성-9가지" class="level3" data-number="1.6.1">
+<h3 data-number="1.6.1" class="anchored" data-anchor-id="추출한-파일-스키마-속성-9가지"><span class="header-section-number">1.6.1</span> 추출한 파일 스키마 속성 (9가지)</h3>
+<p>각 파일에 대해:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 18%">
+<col style="width: 81%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>속성</th>
+<th>예시 (InExCrossInfo.txt)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>구분자</td>
+<td><code>\t</code> (탭)</td>
+</tr>
+<tr class="even">
+<td>인코딩</td>
+<td>UTF-8</td>
+</tr>
+<tr class="odd">
+<td>헤더 행</td>
+<td>없음</td>
+</tr>
+<tr class="even">
+<td>행 의미</td>
+<td>1행 = 1개 키-값 쌍</td>
+</tr>
+<tr class="odd">
+<td>정렬 순서</td>
+<td>dict 순회 순서</td>
+</tr>
+<tr class="even">
+<td>생성 함수</td>
+<td><code>get_in_ex_cross_info.py::output_default_in_ex_cross_file()</code></td>
+</tr>
+<tr class="odd">
+<td>소비 함수</td>
+<td><code>in_ex_param_info.py::InExParamInfo.__init__()</code></td>
+</tr>
+<tr class="even">
+<td>좌표 체계</td>
+<td>N/A</td>
+</tr>
+<tr class="odd">
+<td>컬럼 정의</td>
+<td>key(str) + value(str)</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="부록으로-추가된-내용" class="level3" data-number="1.6.2">
+<h3 data-number="1.6.2" class="anchored" data-anchor-id="부록으로-추가된-내용"><span class="header-section-number">1.6.2</span> 부록으로 추가된 내용</h3>
+<ul>
+<li>FASTA 헤더 타입 종합 정리 (SeqInfo 11가지 + MatchSeqInfo 4가지 헤더 형식)</li>
+<li>TSV 엔티티 컬럼 비교표 (IN/EX/CROSS 37개 컬럼 대조)</li>
+</ul>
+</section>
+<section id="최종-산출물" class="level3" data-number="1.6.3">
+<h3 data-number="1.6.3" class="anchored" data-anchor-id="최종-산출물"><span class="header-section-number">1.6.3</span> 최종 산출물</h3>
+<ul>
+<li><strong>3,782줄</strong>의 METADATA_INVESTIGATION.md</li>
+<li><strong>1,411개</strong> 원자적 메타데이터 항목</li>
+<li><strong>36개</strong> 파일 스키마 상세</li>
+<li>총 <strong>8개 에이전트</strong> 사용 (7개 카테고리 + 1개 파일 스키마)</li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="핵심-인사이트-1-분산-에이전트-프롬프트-설계-원칙" class="level2" data-number="1.7">
+<h2 data-number="1.7" class="anchored" data-anchor-id="핵심-인사이트-1-분산-에이전트-프롬프트-설계-원칙"><span class="header-section-number">1.7</span> 핵심 인사이트 1: 분산 에이전트 프롬프트 설계 원칙</h2>
+<p>이 경험에서 도출한 6가지 프롬프트 개선 원칙입니다.</p>
+<section id="원칙-1-분산-실행-프로토콜을-프롬프트에-명시하라" class="level3" data-number="1.7.1">
+<h3 data-number="1.7.1" class="anchored" data-anchor-id="원칙-1-분산-실행-프로토콜을-프롬프트에-명시하라"><span class="header-section-number">1.7.1</span> 원칙 1: 분산 실행 프로토콜을 프롬프트에 명시하라</h3>
+<p>단일 에이전트 전제의 프롬프트를 여러 에이전트에게 나눠주면 실패합니다. <strong>어떻게 나누고, 어떻게 합칠 것인지</strong>를 프롬프트 자체에 포함해야 합니다.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode numberSource markdown number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb2-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">## 분산 실행 프로토콜</span></span>
+<span id="cb2-2"></span>
+<span id="cb2-3"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">### 분할 단위</span></span>
+<span id="cb2-4"><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">- </span>Agent A: Cat 1-2 (파이프라인 구조)</span>
+<span id="cb2-5"><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">- </span>Agent B: Cat 3 (중간 산출물) -- 단독</span>
+<span id="cb2-6"><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">- </span>Agent C: Cat 4-5 (입력/파라미터)</span>
+<span id="cb2-7">...</span>
+<span id="cb2-8"></span>
+<span id="cb2-9"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">### 에이전트별 산출물 규칙</span></span>
+<span id="cb2-10"><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">- </span>파일명: <span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">`/tmp/{repo}_metadata/cat_{NN}.md`</span></span>
+<span id="cb2-11"><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">- </span>자기 완결적 (헤더 불필요, 카테고리 내용만)</span>
+<span id="cb2-12"><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">- </span>마지막에 <span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">`&lt;!-- ROW_COUNT: {숫자} --&gt;`</span> 주석 추가</span></code></pre></div></div>
+</section>
+<section id="원칙-2-카테고리별-대상-파일을-사전-매핑하라" class="level3" data-number="1.7.2">
+<h3 data-number="1.7.2" class="anchored" data-anchor-id="원칙-2-카테고리별-대상-파일을-사전-매핑하라"><span class="header-section-number">1.7.2</span> 원칙 2: 카테고리별 대상 파일을 사전 매핑하라</h3>
+<p>모든 에이전트가 152개 파일을 각자 탐색하면 토큰 낭비입니다. 파일을 미리 분류해서 에이전트 범위를 좁혀야 합니다.</p>
+</section>
+<section id="원칙-3-추상적-규칙-대신-완성된-예시를-제공하라" class="level3" data-number="1.7.3">
+<h3 data-number="1.7.3" class="anchored" data-anchor-id="원칙-3-추상적-규칙-대신-완성된-예시를-제공하라"><span class="header-section-number">1.7.3</span> 원칙 3: 추상적 규칙 대신 완성된 예시를 제공하라</h3>
+<p>“N.1-N.4 구조로 작성하세요”보다 <strong>실제 완성된 카테고리 1개를 통째로</strong> 예시로 보여주는 것이 효과적입니다.</p>
+</section>
+<section id="원칙-4-중요-요구사항은-독립-섹션-critical-표시로-분리하라" class="level3" data-number="1.7.4">
+<h3 data-number="1.7.4" class="anchored" data-anchor-id="원칙-4-중요-요구사항은-독립-섹션-critical-표시로-분리하라"><span class="header-section-number">1.7.4</span> 원칙 4: 중요 요구사항은 독립 섹션 + CRITICAL 표시로 분리하라</h3>
+<p>카테고리 설명 안에 묻어 놓으면 에이전트가 놓칩니다.</p>
+</section>
+<section id="원칙-5-레포-규모별-자동-분할-기준을-포함하라" class="level3" data-number="1.7.5">
+<h3 data-number="1.7.5" class="anchored" data-anchor-id="원칙-5-레포-규모별-자동-분할-기준을-포함하라"><span class="header-section-number">1.7.5</span> 원칙 5: 레포 규모별 자동 분할 기준을 포함하라</h3>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Python 파일 수</th>
+<th>권장 에이전트 수</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>~30개</td>
+<td>1 (단일)</td>
+</tr>
+<tr class="even">
+<td>30~80개</td>
+<td>3</td>
+</tr>
+<tr class="odd">
+<td>80~150개</td>
+<td>5~7</td>
+</tr>
+<tr class="even">
+<td>150개+</td>
+<td>7~10</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="원칙-6-오케스트레이터용-병합-체크리스트를-명시하라" class="level3" data-number="1.7.6">
+<h3 data-number="1.7.6" class="anchored" data-anchor-id="원칙-6-오케스트레이터용-병합-체크리스트를-명시하라"><span class="header-section-number">1.7.6</span> 원칙 6: 오케스트레이터용 병합 체크리스트를 명시하라</h3>
+<p>병합 단계에서 통계표 누락, 행 수 불일치가 발생합니다. 오케스트레이터가 따를 체크리스트가 필요합니다.</p>
+<hr>
+</section>
+</section>
+<section id="핵심-인사이트-2-llm-추출의-근본적-한계" class="level2" data-number="1.8">
+<h2 data-number="1.8" class="anchored" data-anchor-id="핵심-인사이트-2-llm-추출의-근본적-한계"><span class="header-section-number">1.8</span> 핵심 인사이트 2: LLM 추출의 근본적 한계</h2>
+<p>프롬프트를 아무리 정밀하게 만들어도 해결할 수 없는 문제가 있습니다.</p>
+<section id="비결정성non-determinism-문제" class="level3" data-number="1.8.1">
+<h3 data-number="1.8.1" class="anchored" data-anchor-id="비결정성non-determinism-문제"><span class="header-section-number">1.8.1</span> 비결정성(Non-determinism) 문제</h3>
+<p>같은 프롬프트 + 같은 코드로 두 번 실행하면:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>문제</th>
+<th>예시</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>행 수 불일치</td>
+<td>이번 1,411개, 다음번 1,380개</td>
+</tr>
+<tr class="even">
+<td>행 순서 변동</td>
+<td><code>uclust_pct_id</code>가 3번이었다가 7번</td>
+</tr>
+<tr class="odd">
+<td>논리명 흔들림</td>
+<td>“UCLUST Percent Identity” vs “UCLUST Identity Threshold”</td>
+</tr>
+<tr class="even">
+<td>누락/추가</td>
+<td>private 메서드 포함 여부가 달라짐</td>
+</tr>
+<tr class="odd">
+<td>카테고리 분류 흔들림</td>
+<td>같은 항목이 Cat 5에 갔다가 Cat 7에 감</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="왜-이것이-문제인가" class="level3" data-number="1.8.2">
+<h3 data-number="1.8.2" class="anchored" data-anchor-id="왜-이것이-문제인가"><span class="header-section-number">1.8.2</span> 왜 이것이 문제인가</h3>
+<p>코드 설명 Agent가 메타데이터를 참조할 때, <strong>실행마다 메타데이터가 달라지면 Agent의 응답도 불안정</strong>해집니다. 주기적으로 메타데이터를 갱신해야 하는 운영 환경에서는 치명적입니다.</p>
+</section>
+<section id="재현성-한계" class="level3" data-number="1.8.3">
+<h3 data-number="1.8.3" class="anchored" data-anchor-id="재현성-한계"><span class="header-section-number">1.8.3</span> 재현성 한계</h3>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>접근법</th>
+<th>재현성</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>정밀 프롬프트만</td>
+<td>~70%</td>
+</tr>
+<tr class="even">
+<td>프롬프트 + 참조 예시</td>
+<td>~80%</td>
+</tr>
+<tr class="odd">
+<td><strong>프롬프트로는 한계</strong></td>
+<td><strong>100%는 불가능</strong></td>
+</tr>
+</tbody>
+</table>
+<hr>
+</section>
+</section>
+<section id="핵심-인사이트-3-하이브리드-파이프라인이-정답이다" class="level2" data-number="1.9">
+<h2 data-number="1.9" class="anchored" data-anchor-id="핵심-인사이트-3-하이브리드-파이프라인이-정답이다"><span class="header-section-number">1.9</span> 핵심 인사이트 3: 하이브리드 파이프라인이 정답이다</h2>
+<section id="발견-8열-테이블의-75는-결정적으로-추출-가능하다" class="level3" data-number="1.9.1">
+<h3 data-number="1.9.1" class="anchored" data-anchor-id="발견-8열-테이블의-75는-결정적으로-추출-가능하다"><span class="header-section-number">1.9.1</span> 발견: 8열 테이블의 75%는 결정적으로 추출 가능하다</h3>
+<pre><code>| # | 파일 | 클래스/함수/변수 | 물리명 | 논리명 | 데이터 타입 | 값/기본값 | 의미 |
+     ├─────────────────────────────────────────┤  ├──────────────────┤
+           코드 파서로 100% 결정적 추출               LLM 해석 필요</code></pre>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>컬럼</th>
+<th>추출 방법</th>
+<th>결정적?</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>#</code></td>
+<td>자동 번호</td>
+<td>100%</td>
+</tr>
+<tr class="even">
+<td><code>파일</code></td>
+<td><code>glob("**/*.py")</code></td>
+<td>100%</td>
+</tr>
+<tr class="odd">
+<td><code>클래스/함수/변수</code></td>
+<td>Python AST</td>
+<td>100%</td>
+</tr>
+<tr class="even">
+<td><code>물리명</code></td>
+<td>Python AST</td>
+<td>100%</td>
+</tr>
+<tr class="odd">
+<td><strong><code>논리명</code></strong></td>
+<td><strong>LLM</strong></td>
+<td><strong>비결정적</strong></td>
+</tr>
+<tr class="even">
+<td><code>데이터 타입</code></td>
+<td>AST + type hints</td>
+<td>95%</td>
+</tr>
+<tr class="odd">
+<td><code>값/기본값</code></td>
+<td>AST</td>
+<td>100%</td>
+</tr>
+<tr class="even">
+<td><strong><code>의미</code></strong></td>
+<td><strong>LLM</strong></td>
+<td><strong>비결정적</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>8열 중 6열은 코드 파서, 2열만 LLM으로 채우면 됩니다.</strong></p>
+</section>
+<section id="하이브리드-아키텍처" class="level3" data-number="1.9.2">
+<h3 data-number="1.9.2" class="anchored" data-anchor-id="하이브리드-아키텍처"><span class="header-section-number">1.9.2</span> 하이브리드 아키텍처</h3>
+<pre><code>Phase 1: 결정적 추출 (Python AST 파서)
+───────────────────────────────────────
+  glob + ast.parse → 모든 클래스/함수/변수/상수 추출
+  ↓
+  규칙 기반 카테고리 분류 (rules.yaml)
+  ↓
+  skeleton.json (8열 중 6열 완성, 논리명/의미는 빈 칸)
+
+Phase 2: LLM 해석
+─────────────────
+  skeleton.json + 소스코드 컨텍스트 → Claude API
+  ↓
+  논리명 + 의미 + N.1/N.4 해석 메타데이터 생성
+  ↓
+  enriched.json (이전 실행 결과 참조하여 안정성 확보)
+
+Phase 3: 렌더링
+─────────────────
+  enriched.json + Jinja2 템플릿
+  ↓
+  METADATA_INVESTIGATION.md (항상 동일 구조)
+
+Phase 4: Diff 검증
+─────────────────
+  이전 버전과 비교 → 변경 리포트
+  ↓
+  안정성 점수, 신규/삭제/변경 항목 식별</code></pre>
+</section>
+<section id="phase-1-ast-추출기의-핵심" class="level3" data-number="1.9.3">
+<h3 data-number="1.9.3" class="anchored" data-anchor-id="phase-1-ast-추출기의-핵심"><span class="header-section-number">1.9.3</span> Phase 1: AST 추출기의 핵심</h3>
+<p>Python <code>ast</code> 모듈로 코드의 <strong>사실(fact)</strong>을 결정적으로 추출합니다:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> ast, glob, os</span>
+<span id="cb5-2"></span>
+<span id="cb5-3"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">class</span> PythonASTExtractor:</span>
+<span id="cb5-4">    <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">def</span> extract_all(<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>, repo_path: <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">str</span>) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-&gt;</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">list</span>[<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">dict</span>]:</span>
+<span id="cb5-5">        items <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> []</span>
+<span id="cb5-6">        <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># sorted()로 파일 순서 고정</span></span>
+<span id="cb5-7">        <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> py_file <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">sorted</span>(glob.glob(<span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>repo_path<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">/**/*.py"</span>, recursive<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">True</span>)):</span>
+<span id="cb5-8">            tree <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> ast.parse(<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">open</span>(py_file).read())</span>
+<span id="cb5-9">            <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> node <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> ast.walk(tree):</span>
+<span id="cb5-10">                <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">isinstance</span>(node, ast.ClassDef):</span>
+<span id="cb5-11">                    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> item <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> node.body:</span>
+<span id="cb5-12">                        <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">isinstance</span>(item, ast.AnnAssign):</span>
+<span id="cb5-13">                            items.append({</span>
+<span id="cb5-14">                                <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># id = 파일:줄번호:물리명 (실행 간 앵커)</span></span>
+<span id="cb5-15">                                <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"id"</span>: <span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>rel_path<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">:</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>item<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span>lineno<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">:</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>item<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span>target<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">id</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>,</span>
+<span id="cb5-16">                                <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"file"</span>: rel_path,</span>
+<span id="cb5-17">                                <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"line_number"</span>: item.lineno,</span>
+<span id="cb5-18">                                <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"structure"</span>: <span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>node<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span>name<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;"> field"</span>,</span>
+<span id="cb5-19">                                <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"physical_name"</span>: item.target.<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">id</span>,</span>
+<span id="cb5-20">                                <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"data_type"</span>: ast.unparse(item.annotation),</span>
+<span id="cb5-21">                                <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"default_value"</span>: ast.unparse(item.value) <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> item.value <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">else</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"-"</span>,</span>
+<span id="cb5-22">                                <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"logical_name"</span>: <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">""</span>,   <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># LLM이 채움</span></span>
+<span id="cb5-23">                                <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"meaning"</span>: <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">""</span>,        <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># LLM이 채움</span></span>
+<span id="cb5-24">                            })</span>
+<span id="cb5-25">        <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">return</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">sorted</span>(items, key<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">lambda</span> x: (x[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"file"</span>], x[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"line_number"</span>]))</span></code></pre></div></div>
+<p><strong>핵심:</strong> <code>id</code>가 <code>파일:줄번호:물리명</code>으로 구성되어, 코드가 동일하면 <strong>항상 동일한 ID</strong>가 생성됩니다. 이 ID가 실행 간 일관성의 앵커 역할을 합니다.</p>
+</section>
+<section id="phase-1-규칙-기반-카테고리-분류" class="level3" data-number="1.9.4">
+<h3 data-number="1.9.4" class="anchored" data-anchor-id="phase-1-규칙-기반-카테고리-분류"><span class="header-section-number">1.9.4</span> Phase 1: 규칙 기반 카테고리 분류</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode numberSource yaml number-lines code-with-copy"><code class="sourceCode yaml"><span id="cb6-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># rules.yaml</span></span>
+<span id="cb6-2"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">categories</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span></span>
+<span id="cb6-3"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">  </span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">-</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">id</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> </span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span></span>
+<span id="cb6-4"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">    </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">name</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> </span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"중간 산출물"</span></span>
+<span id="cb6-5"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">    </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">rules</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span></span>
+<span id="cb6-6"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">      </span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">-</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">type</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> </span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"file_path_match"</span></span>
+<span id="cb6-7"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">        </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">file_patterns</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> </span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">[</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"*/dto/*.py"</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">]</span></span>
+<span id="cb6-8"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">        </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">structure_types</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> </span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">[</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"class_field"</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">]</span></span>
+<span id="cb6-9"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">        </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">priority</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> </span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">20</span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">  # DTO 필드는 무조건 Cat 3</span></span>
+<span id="cb6-10"></span>
+<span id="cb6-11"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">  </span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">-</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">id</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> </span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">6</span></span>
+<span id="cb6-12"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">    </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">name</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> </span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"DB 스키마 및 쿼리"</span></span>
+<span id="cb6-13"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">    </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">rules</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span></span>
+<span id="cb6-14"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">      </span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">-</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">type</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> </span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"file_path_match"</span></span>
+<span id="cb6-15"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">        </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">file_patterns</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> </span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">[</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"*/repository/*.py"</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">,</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> </span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"*/entity/**/*.py"</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">]</span></span>
+<span id="cb6-16"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">        </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">priority</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> </span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">18</span></span>
+<span id="cb6-17"></span>
+<span id="cb6-18"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># 매칭되지 않은 항목은 Cat 14 (기타)</span></span>
+<span id="cb6-19"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">fallback_category</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> </span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">14</span></span></code></pre></div></div>
+<p>파일 경로, 구조 유형, 물리명 패턴으로 카테고리를 <strong>규칙 기반</strong>으로 분류합니다. LLM이 개입하지 않으므로 <strong>항상 동일한 분류 결과</strong>가 나옵니다.</p>
+</section>
+<section id="phase-2-이전-결과-참조-메커니즘" class="level3" data-number="1.9.5">
+<h3 data-number="1.9.5" class="anchored" data-anchor-id="phase-2-이전-결과-참조-메커니즘"><span class="header-section-number">1.9.5</span> Phase 2: 이전 결과 참조 메커니즘</h3>
+<p>LLM이 담당하는 <code>논리명</code>과 <code>의미</code>의 안정성을 확보하는 핵심 메커니즘:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">def</span> build_prompt(<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>, skeleton_items, previous_items):</span>
+<span id="cb7-2">    prompt <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"""</span></span>
+<span id="cb7-3"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">    ## 기존 항목 검증 (변경 불필요 시 그대로 유지)</span></span>
+<span id="cb7-4"></span>
+<span id="cb7-5"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">    아래 항목들은 이전 실행에서 이미 해석되었습니다.</span></span>
+<span id="cb7-6"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">    코드 변경으로 인해 의미가 달라진 항목만 수정하세요.</span></span>
+<span id="cb7-7"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">    **변경이 없으면 반드시 그대로 유지하세요.**</span></span>
+<span id="cb7-8"></span>
+<span id="cb7-9"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">    ## 신규 항목 해석 (새로 작성)</span></span>
+<span id="cb7-10"></span>
+<span id="cb7-11"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">    아래 항목들은 이전 실행에 없던 신규 항목입니다.</span></span>
+<span id="cb7-12"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">    logical_name(영문 Title Case)과 meaning(한글 1~2문장)을 작성하세요.</span></span>
+<span id="cb7-13"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">    """</span></span></code></pre></div></div>
+<p>이전 실행 결과를 <strong>명시적으로 제공</strong>하고 “변경 없으면 유지”를 지시하면, LLM이 담당하는 2열도 <strong>95%+ 안정성</strong>을 확보합니다.</p>
+</section>
+<section id="phase-3-jinja2-템플릿" class="level3" data-number="1.9.6">
+<h3 data-number="1.9.6" class="anchored" data-anchor-id="phase-3-jinja2-템플릿"><span class="header-section-number">1.9.6</span> Phase 3: Jinja2 템플릿</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode numberSource jinja2 number-lines code-with-copy"><code class="sourceCode"><span id="cb8-1">{% for cat in categories %}</span>
+<span id="cb8-2">## {{ cat.number }}. {{ cat.name }}</span>
+<span id="cb8-3"></span>
+<span id="cb8-4">### {{ cat.number }}.1 추출 가능 이유</span>
+<span id="cb8-5">{{ cat.rationale }}</span>
+<span id="cb8-6"></span>
+<span id="cb8-7">### {{ cat.number }}.2 조사 대상 파일 목록</span>
+<span id="cb8-8">{% for f in cat.files %}</span>
+<span id="cb8-9">- `{ f }`</span>
+<span id="cb8-10">{% endfor %}</span>
+<span id="cb8-11"></span>
+<span id="cb8-12">### {{ cat.number }}.3 상세 내용</span>
+<span id="cb8-13"></span>
+<span id="cb8-14">| # | 파일 | 클래스/함수/변수 | 물리명 | 논리명 | 데이터 타입 | 값/기본값 | 의미 |</span>
+<span id="cb8-15">|---|------|------------------|--------|--------|-------------|-----------|------|</span>
+<span id="cb8-16">{% for item in cat.items %}</span>
+<span id="cb8-17">| {{ item.number }} | `{ item.file }` | {{ item.structure }} | `{ item.physical_name }` | {{ item.logical_name }} | `{ item.data_type }` | {{ item.default }} | {{ item.meaning }} |</span>
+<span id="cb8-18">{% endfor %}</span>
+<span id="cb8-19"></span>
+<span id="cb8-20">### {{ cat.number }}.4 해석 메타데이터</span>
+<span id="cb8-21">{{ cat.interpretation }}</span>
+<span id="cb8-22">{% endfor %}</span></code></pre></div></div>
+<p>같은 JSON이 들어오면 <strong>항상 동일한 Markdown</strong>이 출력됩니다. 병합 과정의 ad-hoc 작업이 완전히 제거됩니다.</p>
+</section>
+<section id="phase-4-diff-검증" class="level3" data-number="1.9.7">
+<h3 data-number="1.9.7" class="anchored" data-anchor-id="phase-4-diff-검증"><span class="header-section-number">1.9.7</span> Phase 4: Diff 검증</h3>
+<pre><code>=== 메타데이터 변경 리포트 ===
+이전: 1,411개 -&gt; 현재: 1,423개 (+12)
+안정성 점수: 0.9915 (99.15%)
+
+[신규 추가] 12개:
+  + automsa/common/module/new_feature.py:15:threshold  (Cat 5)
+  ...
+
+[삭제] 0개
+[의미 변경] 0개
+[카테고리 이동] 0개</code></pre>
+<hr>
+</section>
+</section>
+<section id="비용시간재현성-비교" class="level2" data-number="1.10">
+<h2 data-number="1.10" class="anchored" data-anchor-id="비용시간재현성-비교"><span class="header-section-number">1.10</span> 비용/시간/재현성 비교</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 15%">
+<col style="width: 56%">
+<col style="width: 28%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>항목</th>
+<th>순수 LLM (7 에이전트)</th>
+<th>하이브리드</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Phase 1 (추출)</td>
+<td>-</td>
+<td><strong>30초</strong> (AST)</td>
+</tr>
+<tr class="even">
+<td>Phase 2 (해석)</td>
+<td>7 에이전트 x 5분 = <strong>35분</strong></td>
+<td>14 API 호출 x 30초 = <strong>7분</strong></td>
+</tr>
+<tr class="odd">
+<td>Phase 3 (렌더링)</td>
+<td>수동 병합 <strong>10분</strong></td>
+<td><strong>1초</strong> (Jinja2)</td>
+</tr>
+<tr class="even">
+<td>Phase 4 (검증)</td>
+<td>수동 확인</td>
+<td><strong>1초</strong> (자동)</td>
+</tr>
+<tr class="odd">
+<td><strong>총 시간</strong></td>
+<td><strong>~50분</strong></td>
+<td><strong>~8분</strong></td>
+</tr>
+<tr class="even">
+<td><strong>토큰 비용</strong></td>
+<td>~500K tokens</td>
+<td>~80K tokens (1/6)</td>
+</tr>
+<tr class="odd">
+<td><strong>재현성</strong></td>
+<td>~70%</td>
+<td><strong>~99%</strong></td>
+</tr>
+<tr class="even">
+<td><strong>코드 변경 시</strong></td>
+<td>전체 재실행</td>
+<td>변경분만 재실행</td>
+</tr>
+</tbody>
+</table>
+<hr>
+</section>
+<section id="점진적-도입-경로" class="level2" data-number="1.11">
+<h2 data-number="1.11" class="anchored" data-anchor-id="점진적-도입-경로"><span class="header-section-number">1.11</span> 점진적 도입 경로</h2>
+<p>한 번에 전체를 구축할 필요 없습니다:</p>
+<section id="step-1-ast-skeleton만-생성-즉시-효과" class="level3" data-number="1.11.1">
+<h3 data-number="1.11.1" class="anchored" data-anchor-id="step-1-ast-skeleton만-생성-즉시-효과"><span class="header-section-number">1.11.1</span> Step 1: AST Skeleton만 생성 (즉시 효과)</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10" style="background: #f1f3f5;"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">python</span> extractor.py phase1 /path/to/repo <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">--output</span> skeleton.json</span></code></pre></div></div>
+<p>이것만으로도 <strong>행 수, 행 순서, 카테고리 분류가 100% 고정</strong>됩니다. skeleton.json을 에이전트에게 전달하면, 에이전트는 빈 칸(논리명, 의미)만 채우면 됩니다.</p>
+<blockquote class="blockquote">
+<p>Step 1만으로 가장 큰 문제(비결정성)의 80%가 해결됩니다.</p>
+</blockquote>
+</section>
+<section id="step-2-llm-api-자동화-이전-결과-참조-1주" class="level3" data-number="1.11.2">
+<h3 data-number="1.11.2" class="anchored" data-anchor-id="step-2-llm-api-자동화-이전-결과-참조-1주"><span class="header-section-number">1.11.2</span> Step 2: LLM API 자동화 + 이전 결과 참조 (1주)</h3>
+<p>Claude API로 논리명/의미를 자동 채우고, previous.json 참조 메커니즘을 추가합니다.</p>
+</section>
+<section id="step-3-템플릿-diff-리포트-cicd-통합-2주" class="level3" data-number="1.11.3">
+<h3 data-number="1.11.3" class="anchored" data-anchor-id="step-3-템플릿-diff-리포트-cicd-통합-2주"><span class="header-section-number">1.11.3</span> Step 3: 템플릿 + Diff 리포트 + CI/CD 통합 (2주)</h3>
+<p>Jinja2 렌더링, Diff 검증을 완성하고, 코드 변경 시 자동 실행되도록 CI/CD에 통합합니다.</p>
+<hr>
+</section>
+</section>
+<section id="실전에서-배운-세부-교훈들" class="level2" data-number="1.12">
+<h2 data-number="1.12" class="anchored" data-anchor-id="실전에서-배운-세부-교훈들"><span class="header-section-number">1.12</span> 실전에서 배운 세부 교훈들</h2>
+<section id="에이전트-분할-시-cat-3은-항상-단독-할당" class="level3" data-number="1.12.1">
+<h3 data-number="1.12.1" class="anchored" data-anchor-id="에이전트-분할-시-cat-3은-항상-단독-할당"><span class="header-section-number">1.12.1</span> 에이전트 분할 시 Cat 3은 항상 단독 할당</h3>
+<p>Cat 3 (중간 산출물)은 DTO 필드 추출 + 파일 스키마 분석이 합쳐져 <strong>가장 분량이 큽니다</strong> (이번 작업에서 218개 항목 + 637줄 파일 스키마). 다른 카테고리와 묶으면 context window를 초과합니다.</p>
+</section>
+<section id="파일-스키마-추출은-ast만으로-부족" class="level3" data-number="1.12.2">
+<h3 data-number="1.12.2" class="anchored" data-anchor-id="파일-스키마-추출은-ast만으로-부족"><span class="header-section-number">1.12.2</span> 파일 스키마 추출은 AST만으로 부족</h3>
+<p>TSV/FASTA 파일의 스키마(구분자, 컬럼 순서, 생산/소비 함수)는 AST로 <strong>함수 시그니처</strong>는 추출할 수 있지만, <strong>실제 write 로직</strong> (f-string 안의 컬럼 순서, 조건부 컬럼 등)은 코드 흐름 분석이 필요합니다. 이 부분은 LLM이 여전히 필요합니다.</p>
+</section>
+<section id="병합-단계에서-빠지기-쉬운-항목들" class="level3" data-number="1.12.3">
+<h3 data-number="1.12.3" class="anchored" data-anchor-id="병합-단계에서-빠지기-쉬운-항목들"><span class="header-section-number">1.12.3</span> 병합 단계에서 빠지기 쉬운 항목들</h3>
+<ul>
+<li>통계표의 행 수 (에이전트가 <code>*</code>로 남겨두는 경우)</li>
+<li>파이프라인 구조 다이어그램</li>
+<li>전체 파일 목록 (상단)</li>
+<li>품질 검증 체크리스트 (하단)</li>
+</ul>
+<p>이들은 <strong>오케스트레이터(리더 에이전트 또는 스크립트)</strong>가 자동 생성해야 합니다.</p>
+</section>
+<section id="permission-모드-주의" class="level3" data-number="1.12.4">
+<h3 data-number="1.12.4" class="anchored" data-anchor-id="permission-모드-주의"><span class="header-section-number">1.12.4</span> Permission 모드 주의</h3>
+<p><code>bypassPermissions</code> 모드로 에이전트를 실행해도 <code>/tmp</code> 디렉토리 생성에 실패하는 경우가 있었습니다. 산출물 디렉토리는 <strong>에이전트 실행 전에 미리 생성</strong>해 두어야 합니다.</p>
+<hr>
+</section>
+</section>
+<section id="결론" class="level2" data-number="1.13">
+<h2 data-number="1.13" class="anchored" data-anchor-id="결론"><span class="header-section-number">1.13</span> 결론</h2>
+<p>대규모 코드베이스의 메타데이터를 주기적으로 추출해야 하는 상황에서:</p>
+<ol type="1">
+<li><strong>순수 LLM 접근은 한계가 있다</strong> – 비결정적이고, 비용이 높고, 느리다</li>
+<li><strong>코드 파서(AST)가 사실을 고정하고, LLM은 해석만 담당하는 하이브리드가 정답이다</strong></li>
+<li><strong>이전 실행 결과를 참조</strong>하면 LLM 해석의 안정성도 95%+로 올릴 수 있다</li>
+<li><strong>프롬프트 개선은 여전히 중요하지만</strong>, 아키텍처 변경 없이 프롬프트만으로는 근본 문제가 해결되지 않는다</li>
+</ol>
+<p>한마디로: <strong>“무엇을 추출할 것인가”는 프롬프트의 영역이지만, “어떻게 안정적으로 반복할 것인가”는 아키텍처의 영역이다.</strong></p>
+
+
+</section>
+</section>
+
+ ]]></description>
+  <category>AI</category>
+  <category>Claude_Code</category>
+  <category>Code_Analysis</category>
+  <category>Architecture</category>
+  <guid>https://dlwns0719.github.io/my_blog/docs/blog/posts/Claude_Code/02-코드베이스_메타데이터_추출/01-코드베이스_메타데이터_추출.html</guid>
+  <pubDate>Thu, 12 Feb 2026 15:00:00 GMT</pubDate>
+</item>
 <item>
   <title>Claude Code</title>
   <dc:creator>Junhyun Lee</dc:creator>
@@ -28,6 +1218,12 @@
 
 <ol type="1">
 <li><a href="../../../../docs/blog/posts/Claude_Code/01-팀_설정_구축/01-Claude_Code_팀_설정_구축.html">01-Claude Code Max 팀 설정 완전 가이드</a></li>
+</ol>
+</section>
+<section id="코드베이스-분석" class="level3" data-number="1.2">
+
+<ol start="2" type="1">
+<li><a href="../../../../docs/blog/posts/Claude_Code/02-코드베이스_메타데이터_추출/01-코드베이스_메타데이터_추출.html">02-코드베이스 메타데이터 추출: LLM 비결정성과 하이브리드 파이프라인</a></li>
 </ol>
 
 
@@ -10894,7 +12090,7 @@ saaipoctestkrc001.blob.core.windows.net:/saaipoctestkrc001/bc-aipoc-test-krc001 
  ]]></description>
   <category>Azure Cloud</category>
   <guid>https://dlwns0719.github.io/my_blog/docs/blog/posts/Azure_Cloud/01-클라우드_인프라_설정/01-Data_Lake_Storage.html</guid>
-  <pubDate>Thu, 12 Feb 2026 08:45:25 GMT</pubDate>
+  <pubDate>Fri, 13 Feb 2026 01:15:45 GMT</pubDate>
 </item>
 <item>
   <title>OpenAI 외 도구 호출 에이전트(Tool Calling Agent)</title>
@@ -11570,7 +12766,7 @@ font-style: inherit;">"qwen2.5(Ollama)"</span>)</span></code></pre></div></div>
 
  ]]></description>
   <guid>https://dlwns0719.github.io/my_blog/docs/blog/posts/RAG/15-Agent/04-Agent-More-LLMs.html</guid>
-  <pubDate>Thu, 12 Feb 2026 08:45:25 GMT</pubDate>
+  <pubDate>Fri, 13 Feb 2026 01:15:45 GMT</pubDate>
 </item>
 <item>
   <title>도구 (Tools)</title>
@@ -12410,7 +13606,7 @@ font-style: inherit;">"LangChain AI"</span>})</span></code></pre></div></div>
   <category>LangChain</category>
   <category>Prompt_Engineering</category>
   <guid>https://dlwns0719.github.io/my_blog/docs/blog/posts/RAG/15-Agent/01-Tools.html</guid>
-  <pubDate>Thu, 12 Feb 2026 08:45:25 GMT</pubDate>
+  <pubDate>Fri, 13 Feb 2026 01:15:45 GMT</pubDate>
 </item>
 <item>
   <title>Iteration 기능과 사람 개입(Human-in-the-loop)</title>
@@ -12758,7 +13954,7 @@ font-style: inherit;">"output"</span>])</span></code></pre></div></div>
 
  ]]></description>
   <guid>https://dlwns0719.github.io/my_blog/docs/blog/posts/RAG/15-Agent/05-Iter-Human-In-the-Loop.html</guid>
-  <pubDate>Thu, 12 Feb 2026 08:45:25 GMT</pubDate>
+  <pubDate>Fri, 13 Feb 2026 01:15:45 GMT</pubDate>
 </item>
 <item>
   <title>LLM 에 도구 바인딩(Binding Tools)</title>
@@ -13662,1098 +14858,7 @@ font-style: inherit;">"output"</span>])</span></code></pre></div></div>
 
  ]]></description>
   <guid>https://dlwns0719.github.io/my_blog/docs/blog/posts/RAG/15-Agent/02-Bind-Tools.html</guid>
-  <pubDate>Thu, 12 Feb 2026 08:45:25 GMT</pubDate>
-</item>
-<item>
-  <title>도구 호출 에이전트(Tool Calling Agent)</title>
-  <link>https://dlwns0719.github.io/my_blog/docs/blog/posts/RAG/15-Agent/03-Agent.html</link>
-  <description><![CDATA[ 
-
-
-
-
-
-
-<p>도구 호출을 사용하면 모델이 하나 이상의 <strong>도구(tool)</strong> 가 <strong>호출되어야 하는 시기를 감지하고 해당 도구에 전달해야 하는 입력</strong> 으로 전달할 수 있습니다.</p>
-<p>API 호출에서 도구를 설명하고 모델이 이러한 도구를 호출하기 위한 인수가 포함된 JSON과 같은 구조화된 객체를 출력하도록 지능적으로 선택할 수 있습니다.</p>
-<p>도구 API 의 목표는 일반 텍스트 완성이나 채팅 API를 사용하여 수행할 수 있는 것보다 더 안정적으로 유효하고 유용한 <strong>도구 호출(tool call)</strong> 을 반환하는 것입니다.</p>
-<p>이러한 구조화된 출력을 도구 호출 채팅 모델에 여러 도구를 바인딩하고 모델이 호출할 도구를 선택할 수 있다는 사실과 결합하여 쿼리가 해결될 때까지 반복적으로 도구를 호출하고 결과를 수신하는 에이전트를 만들 수 있습니다.</p>
-<p>이것은 OpenAI 의 특정 도구 호출 스타일에 맞게 설계된 OpenAI 도구 에이전트의 보다 <strong>일반화된 버전</strong> 입니다.</p>
-<p>이 에이전트는 LangChain의 ToolCall 인터페이스를 사용하여 OpenAI 외에도 <code>Anthropic</code>, <code>Google Gemini</code>, <code>Mistral</code>과 같은 더 광범위한 공급자 구현을 지원합니다.</p>
-<p><strong>참고 링크</strong></p>
-<ul>
-<li><a href="https://python.langchain.com/v0.1/docs/modules/agents/agent_types/tool_calling/">LangChain 공식 도큐먼트</a></li>
-</ul>
-<p><img src="https://dlwns0719.github.io/my_blog/docs/blog/posts/RAG/15-Agent/assets/agent-concept.png" class="img-fluid"></p>
-<div id="a7c58715" class="cell" data-execution_count="1">
-<details class="code-fold">
-<summary>코드</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># API 키를 환경변수로 관리하기 위한 설정 파일</span></span>
-<span id="cb1-2"><span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">from</span> dotenv <span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">import</span> load_dotenv</span>
-<span id="cb1-3"></span>
-<span id="cb1-4"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># API 키 정보 로드</span></span>
-<span id="cb1-5">load_dotenv()</span></code></pre></div></div>
-</details>
-</div>
-<div id="6e56c40a" class="cell" data-execution_count="2">
-<details class="code-fold">
-<summary>코드</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># LangSmith 추적을 설정합니다. https://smith.langchain.com</span></span>
-<span id="cb2-2"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># !pip install -qU langchain-teddynote</span></span>
-<span id="cb2-3"><span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">from</span> langchain_teddynote <span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">import</span> logging</span>
-<span id="cb2-4"></span>
-<span id="cb2-5"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># 프로젝트 이름을 입력합니다.</span></span>
-<span id="cb2-6">logging.langsmith(<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"CH15-Agents"</span>)</span></code></pre></div></div>
-</details>
-</div>
-<div id="2047d1e0" class="cell" data-execution_count="3">
-<details class="code-fold">
-<summary>코드</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">from</span> langchain.tools <span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">import</span> tool</span>
-<span id="cb3-2"><span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">from</span> typing <span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">import</span> List, Dict, Annotated</span>
-<span id="cb3-3"><span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">from</span> langchain_teddynote.tools <span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">import</span> GoogleNews</span>
-<span id="cb3-4"><span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">from</span> langchain_experimental.utilities <span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">import</span> PythonREPL</span>
-<span id="cb3-5"></span>
-<span id="cb3-6"></span>
-<span id="cb3-7"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># 도구 생성</span></span>
-<span id="cb3-8"><span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">@tool</span></span>
-<span id="cb3-9"><span class="kw" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">def</span> search_news(query: <span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">str</span>) <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">-&gt;</span> List[Dict[<span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">str</span>, <span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">str</span>]]:</span>
-<span id="cb3-10">    <span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">"""Search Google News by input keyword"""</span></span>
-<span id="cb3-11">    news_tool <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> GoogleNews()</span>
-<span id="cb3-12">    <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">return</span> news_tool.search_by_keyword(query, k<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">5</span>)</span>
-<span id="cb3-13"></span>
-<span id="cb3-14"></span>
-<span id="cb3-15"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># 도구 생성</span></span>
-<span id="cb3-16"><span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">@tool</span></span>
-<span id="cb3-17"><span class="kw" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">def</span> python_repl_tool(</span>
-<span id="cb3-18">    code: Annotated[<span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">str</span>, <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"The python code to execute to generate your chart."</span>],</span>
-<span id="cb3-19">):</span>
-<span id="cb3-20">    <span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">"""Use this to execute python code. If you want to see the output of a value,</span></span>
-<span id="cb3-21"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">    you should print it out with `print(...)`. This is visible to the user."""</span></span>
-<span id="cb3-22">    result <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">""</span></span>
-<span id="cb3-23">    <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">try</span>:</span>
-<span id="cb3-24">        result <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> PythonREPL().run(code)</span>
-<span id="cb3-25">    <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">except</span> <span class="pp" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">BaseException</span> <span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">as</span> e:</span>
-<span id="cb3-26">        <span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">print</span>(<span class="ss" style="color: #20794D;
-background-color: null;
-font-style: inherit;">f"Failed to execute. Error: </span><span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">{</span><span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">repr</span>(e)<span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">}</span><span class="ss" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span>)</span>
-<span id="cb3-27">    <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">finally</span>:</span>
-<span id="cb3-28">        <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">return</span> result</span>
-<span id="cb3-29"></span>
-<span id="cb3-30"></span>
-<span id="cb3-31"><span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">print</span>(<span class="ss" style="color: #20794D;
-background-color: null;
-font-style: inherit;">f"도구 이름: </span><span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">{</span>search_news<span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">.</span>name<span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">}</span><span class="ss" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span>)</span>
-<span id="cb3-32"><span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">print</span>(<span class="ss" style="color: #20794D;
-background-color: null;
-font-style: inherit;">f"도구 설명: </span><span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">{</span>search_news<span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">.</span>description<span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">}</span><span class="ss" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span>)</span>
-<span id="cb3-33"><span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">print</span>(<span class="ss" style="color: #20794D;
-background-color: null;
-font-style: inherit;">f"도구 이름: </span><span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">{</span>python_repl_tool<span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">.</span>name<span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">}</span><span class="ss" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span>)</span>
-<span id="cb3-34"><span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">print</span>(<span class="ss" style="color: #20794D;
-background-color: null;
-font-style: inherit;">f"도구 설명: </span><span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">{</span>python_repl_tool<span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">.</span>description<span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">}</span><span class="ss" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span>)</span></code></pre></div></div>
-</details>
-</div>
-<div id="ee789017" class="cell" data-execution_count="4">
-<details class="code-fold">
-<summary>코드</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># tools 정의</span></span>
-<span id="cb4-2">tools <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> [search_news, python_repl_tool]</span></code></pre></div></div>
-</details>
-</div>
-<section id="agent-프롬프트-생성" class="level2" data-number="1">
-<h2 data-number="1" class="anchored" data-anchor-id="agent-프롬프트-생성"><span class="header-section-number">1</span> Agent 프롬프트 생성</h2>
-<ul>
-<li><code>chat_history</code> : 이전 대화 내용을 저장하는 변수 (멀티턴을 지원하지 않는다면, 생략 가능합니다.)</li>
-<li><code>agent_scratchpad</code> : 에이전트가 임시로 저장하는 변수</li>
-<li><code>input</code> : 사용자의 입력</li>
-</ul>
-<div id="b9ab9d67" class="cell" data-execution_count="5">
-<details class="code-fold">
-<summary>코드</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">from</span> langchain_core.prompts <span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">import</span> ChatPromptTemplate</span>
-<span id="cb5-2"></span>
-<span id="cb5-3"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># 프롬프트 생성</span></span>
-<span id="cb5-4"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># 프롬프트는 에이전트에게 모델이 수행할 작업을 설명하는 텍스트를 제공합니다. (도구의 이름과 역할을 입력)</span></span>
-<span id="cb5-5">prompt <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> ChatPromptTemplate.from_messages(</span>
-<span id="cb5-6">    [</span>
-<span id="cb5-7">        (</span>
-<span id="cb5-8">            <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"system"</span>,</span>
-<span id="cb5-9">            <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"You are a helpful assistant. "</span></span>
-<span id="cb5-10">            <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"Make sure to use the `search_news` tool for searching keyword related news."</span>,</span>
-<span id="cb5-11">        ),</span>
-<span id="cb5-12">        (<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"placeholder"</span>, <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span><span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">{chat_history}</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span>),</span>
-<span id="cb5-13">        (<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"human"</span>, <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span><span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">{input}</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span>),</span>
-<span id="cb5-14">        (<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"placeholder"</span>, <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span><span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">{agent_scratchpad}</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span>),</span>
-<span id="cb5-15">    ]</span>
-<span id="cb5-16">)</span></code></pre></div></div>
-</details>
-</div>
-</section>
-<section id="agent-생성" class="level2" data-number="2">
-<h2 data-number="2" class="anchored" data-anchor-id="agent-생성"><span class="header-section-number">2</span> Agent 생성</h2>
-<div id="b26ef43d" class="cell" data-execution_count="6">
-<details class="code-fold">
-<summary>코드</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">from</span> langchain_openai <span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">import</span> ChatOpenAI</span>
-<span id="cb6-2"><span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">from</span> langchain.agents <span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">import</span> create_tool_calling_agent</span>
-<span id="cb6-3"></span>
-<span id="cb6-4"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># LLM 정의</span></span>
-<span id="cb6-5">llm <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> ChatOpenAI(model<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"gpt-4o-mini"</span>, temperature<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0</span>)</span>
-<span id="cb6-6"></span>
-<span id="cb6-7"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># Agent 생성</span></span>
-<span id="cb6-8">agent <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> create_tool_calling_agent(llm, tools, prompt)</span></code></pre></div></div>
-</details>
-</div>
-</section>
-<section id="agentexecutor" class="level2" data-number="3">
-<h2 data-number="3" class="anchored" data-anchor-id="agentexecutor"><span class="header-section-number">3</span> AgentExecutor</h2>
-<p>AgentExecutor는 도구를 사용하는 에이전트를 실행하는 클래스입니다.</p>
-<p><strong>주요 속성</strong> - <code>agent</code>: 실행 루프의 각 단계에서 계획을 생성하고 행동을 결정하는 에이전트 - <code>tools</code>: 에이전트가 사용할 수 있는 유효한 도구 목록 - <code>return_intermediate_steps</code>: 최종 출력과 함께 에이전트의 중간 단계 경로를 반환할지 여부 - <code>max_iterations</code>: 실행 루프를 종료하기 전 최대 단계 수 - <code>max_execution_time</code>: 실행 루프에 소요될 수 있는 최대 시간 - <code>early_stopping_method</code>: 에이전트가 <code>AgentFinish</code>를 반환하지 않을 때 사용할 조기 종료 방법. (“force” or “generate”) - <code>"force"</code> 는 시간 또는 반복 제한에 도달하여 중지되었다는 문자열을 반환합니다. - <code>"generate"</code> 는 에이전트의 LLM 체인을 마지막으로 한 번 호출하여 이전 단계에 따라 최종 답변을 생성합니다. - <code>handle_parsing_errors</code>: 에이전트의 출력 파서에서 발생한 오류 처리 방법. (True, False, 또는 오류 처리 함수) - <code>trim_intermediate_steps</code>: 중간 단계를 트리밍하는 방법. (-1 trim 하지 않음, 또는 트리밍 함수)</p>
-<p><strong>주요 메서드</strong> 1. <code>invoke</code>: 에이전트 실행 2. <code>stream</code>: 최종 출력에 도달하는 데 필요한 단계를 스트리밍</p>
-<p><strong>주요 기능</strong> 1. <strong>도구 검증</strong>: 에이전트와 호환되는 도구인지 확인 2. <strong>실행 제어</strong>: 최대 반복 횟수 및 실행 시간 제한 설정 가능 3. <strong>오류 처리</strong>: 출력 파싱 오류에 대한 다양한 처리 옵션 제공 4. <strong>중간 단계 관리</strong>: 중간 단계 트리밍 및 반환 옵션 5. <strong>비동기 지원</strong>: 비동기 실행 및 스트리밍 지원</p>
-<p><strong>최적화 팁</strong> - <code>max_iterations</code>와 <code>max_execution_time</code>을 적절히 설정하여 실행 시간 관리 - <code>trim_intermediate_steps</code>를 활용하여 메모리 사용량 최적화 - 복잡한 작업의 경우 <code>stream</code> 메서드를 사용하여 단계별 결과 모니터링</p>
-<div id="c14d2a84" class="cell" data-execution_count="7">
-<details class="code-fold">
-<summary>코드</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">from</span> langchain.agents <span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">import</span> AgentExecutor</span>
-<span id="cb7-2"></span>
-<span id="cb7-3"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># AgentExecutor 생성</span></span>
-<span id="cb7-4">agent_executor <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> AgentExecutor(</span>
-<span id="cb7-5">    agent<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span>agent,</span>
-<span id="cb7-6">    tools<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span>tools,</span>
-<span id="cb7-7">    verbose<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">True</span>,</span>
-<span id="cb7-8">    max_iterations<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">10</span>,</span>
-<span id="cb7-9">    max_execution_time<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">10</span>,</span>
-<span id="cb7-10">    handle_parsing_errors<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">True</span>,</span>
-<span id="cb7-11">)</span>
-<span id="cb7-12"></span>
-<span id="cb7-13"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># AgentExecutor 실행</span></span>
-<span id="cb7-14">result <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> agent_executor.invoke({<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"input"</span>: <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"AI 투자와 관련된 뉴스를 검색해 주세요."</span>})</span>
-<span id="cb7-15"></span>
-<span id="cb7-16"><span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">print</span>(<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"Agent 실행 결과:"</span>)</span>
-<span id="cb7-17"><span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">print</span>(result[<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"output"</span>])</span></code></pre></div></div>
-</details>
-</div>
-</section>
-<section id="stream-출력으로-단계별-결과-확인" class="level2" data-number="4">
-<h2 data-number="4" class="anchored" data-anchor-id="stream-출력으로-단계별-결과-확인"><span class="header-section-number">4</span> Stream 출력으로 단계별 결과 확인</h2>
-<p>AgentExecutor의 <code>stream()</code> 메소드를 사용하여 에이전트의 중간 단계를 스트리밍할 것입니다.</p>
-<p><code>stream()</code>의 출력은 (Action, Observation) 쌍 사이에서 번갈아 나타나며, 최종적으로 에이전트가 목표를 달성했다면 답변으로 마무리됩니다.</p>
-<p>다음과 같은 형태로 보일 것입니다.</p>
-<ol type="1">
-<li>Action 출력</li>
-<li>Observation 출력</li>
-<li>Action 출력</li>
-<li>Observation 출력</li>
-</ol>
-<p>… (목표 달성까지 계속) …</p>
-<p>그 다음, 최종 목표가 달성되면 에이전트는 최종 답변을 출력할 것입니다.</p>
-<p>이러한 출력의 내용은 다음과 같이 요약됩니다.</p>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 44%">
-<col style="width: 55%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>출력</th>
-<th>내용</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Action</td>
-<td><code>actions</code>: AgentAction 또는 그 하위 클래스<br><code>messages</code>: 액션 호출에 해당하는 채팅 메시지</td>
-</tr>
-<tr class="even">
-<td>Observation</td>
-<td><code>steps</code>: 현재 액션과 그 관찰을 포함한 에이전트가 지금까지 수행한 작업의 기록<br><code>messages</code>: 함수 호출 결과(즉, 관찰)를 포함한 채팅 메시지</td>
-</tr>
-<tr class="odd">
-<td>Final Answer</td>
-<td><code>output</code>: AgentFinish<br><code>messages</code>: 최종 출력을 포함한 채팅 메시지</td>
-</tr>
-</tbody>
-</table>
-<pre><code>
-::: {#bf7b4031 .cell execution_count=8}
-``` {.python .cell-code}
-from langchain.agents import AgentExecutor
-
-# AgentExecutor 생성
-agent_executor = AgentExecutor(
-    agent=agent,
-    tools=tools,
-    verbose=False,
-    handle_parsing_errors=True,
-)</code></pre>
-<p>:::</p>
-<div id="642b7a0f" class="cell" data-execution_count="9">
-<details class="code-fold">
-<summary>코드</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># 스트리밍 모드로 실행합니다</span></span>
-<span id="cb9-2">result <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> agent_executor.stream({<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"input"</span>: <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"AI 투자와 관련된 뉴스를 검색해 주세요."</span>})</span>
-<span id="cb9-3"></span>
-<span id="cb9-4"><span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">for</span> step <span class="kw" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">in</span> result:</span>
-<span id="cb9-5">    <span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># 중간 단계 출력</span></span>
-<span id="cb9-6">    <span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">print</span>(step)</span>
-<span id="cb9-7">    <span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">print</span>(<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"==="</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">*</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">20</span>)</span></code></pre></div></div>
-</details>
-</div>
-<section id="중간-단계-출력을-사용자-정의-함수로-출력" class="level3" data-number="4.1">
-<h3 data-number="4.1" class="anchored" data-anchor-id="중간-단계-출력을-사용자-정의-함수로-출력"><span class="header-section-number">4.1</span> 중간 단계 출력을 사용자 정의 함수로 출력</h3>
-<p>다음의 3개 함수를 정의하고 이를 통해 중간 단계 출력을 사용자 정의합니다.</p>
-<ul>
-<li><code>tool_callback</code>: 도구 호출 출력을 처리하는 함수</li>
-<li><code>observation_callback</code>: 관찰(Observation) 출력을 처리하는 함수</li>
-<li><code>result_callback</code>: 최종 답변 출력을 처리하는 함수</li>
-</ul>
-<div id="90683519" class="cell" data-execution_count="10">
-<details class="code-fold">
-<summary>코드</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10" style="background: #f1f3f5;"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb10-1"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># 업데이트</span></span>
-<span id="cb10-2"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># !pip install -U langchain-teddynote</span></span></code></pre></div></div>
-</details>
-</div>
-<p>아래는 Agent 의 중간 단계 과정을 깔끔하게 출력하기 위하여 사용되는 콜백 함수입니다.</p>
-<p>이 콜백 함수는 Streamlit 에서 중간 단계를 출력하여 사용자에게 제공할 때 유용할 수 있습니다.</p>
-<div id="16505aa1" class="cell" data-execution_count="11">
-<details class="code-fold">
-<summary>코드</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11" style="background: #f1f3f5;"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb11-1"><span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">from</span> langchain_teddynote.messages <span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">import</span> AgentStreamParser</span>
-<span id="cb11-2"></span>
-<span id="cb11-3">agent_stream_parser <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> AgentStreamParser()</span></code></pre></div></div>
-</details>
-</div>
-<p>스트리밍 방식으로 Agent 의 응답 과정을 확인합니다.</p>
-<div id="a23a18cc" class="cell" data-execution_count="12">
-<details class="code-fold">
-<summary>코드</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12" style="background: #f1f3f5;"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb12-1"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># 질의에 대한 답변을 스트리밍으로 출력 요청</span></span>
-<span id="cb12-2">result <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> agent_executor.stream(</span>
-<span id="cb12-3">    {<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"input"</span>: <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"matplotlib 을 사용하여 pie 차트를 그리는 코드를 작성하고 실행하세요."</span>}</span>
-<span id="cb12-4">)</span>
-<span id="cb12-5"></span>
-<span id="cb12-6"><span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">for</span> step <span class="kw" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">in</span> result:</span>
-<span id="cb12-7">    <span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># 중간 단계를 parser 를 사용하여 단계별로 출력</span></span>
-<span id="cb12-8">    <span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># print(step)</span></span>
-<span id="cb12-9">    agent_stream_parser.process_agent_steps(step)</span></code></pre></div></div>
-</details>
-</div>
-<p>다음은 callback 을 수정하여 사용하는 방법입니다.</p>
-<div id="d52ccb95" class="cell" data-execution_count="13">
-<details class="code-fold">
-<summary>코드</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13" style="background: #f1f3f5;"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb13-1"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># AgentCallbacks와 AgentStreamParser를 langchain_teddynote.messages에서 가져옵니다.</span></span>
-<span id="cb13-2"><span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">from</span> langchain_teddynote.messages <span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">import</span> AgentCallbacks, AgentStreamParser</span>
-<span id="cb13-3"></span>
-<span id="cb13-4"></span>
-<span id="cb13-5"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># 도구 호출 시 실행되는 콜백 함수입니다.</span></span>
-<span id="cb13-6"><span class="kw" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">def</span> tool_callback(tool) <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">-&gt;</span> <span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">None</span>:</span>
-<span id="cb13-7">    <span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">print</span>(<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"&lt;&lt;&lt;&lt;&lt;&lt;&lt; 도구 호출 &gt;&gt;&gt;&gt;&gt;&gt;"</span>)</span>
-<span id="cb13-8">    <span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">print</span>(<span class="ss" style="color: #20794D;
-background-color: null;
-font-style: inherit;">f"Tool: </span><span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">{</span>tool<span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">.</span>get(<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'tool'</span>)<span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">}</span><span class="ss" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span>)  <span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># 사용된 도구의 이름을 출력합니다.</span></span>
-<span id="cb13-9">    <span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">print</span>(<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"&lt;&lt;&lt;&lt;&lt;&lt;&lt; 도구 호출 &gt;&gt;&gt;&gt;&gt;&gt;"</span>)</span>
-<span id="cb13-10"></span>
-<span id="cb13-11"></span>
-<span id="cb13-12"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># 관찰 결과를 출력하는 콜백 함수입니다.</span></span>
-<span id="cb13-13"><span class="kw" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">def</span> observation_callback(observation) <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">-&gt;</span> <span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">None</span>:</span>
-<span id="cb13-14">    <span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">print</span>(<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"&lt;&lt;&lt;&lt;&lt;&lt;&lt; 관찰 내용 &gt;&gt;&gt;&gt;&gt;&gt;"</span>)</span>
-<span id="cb13-15">    <span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">print</span>(</span>
-<span id="cb13-16">        <span class="ss" style="color: #20794D;
-background-color: null;
-font-style: inherit;">f"Observation: </span><span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">{</span>observation<span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">.</span>get(<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'observation'</span>)[<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0</span>]<span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">}</span><span class="ss" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span></span>
-<span id="cb13-17">    )  <span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># 관찰 내용을 출력합니다.</span></span>
-<span id="cb13-18">    <span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">print</span>(<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"&lt;&lt;&lt;&lt;&lt;&lt;&lt; 관찰 내용 &gt;&gt;&gt;&gt;&gt;&gt;"</span>)</span>
-<span id="cb13-19"></span>
-<span id="cb13-20"></span>
-<span id="cb13-21"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># 최종 결과를 출력하는 콜백 함수입니다.</span></span>
-<span id="cb13-22"><span class="kw" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">def</span> result_callback(result: <span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">str</span>) <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">-&gt;</span> <span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">None</span>:</span>
-<span id="cb13-23">    <span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">print</span>(<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"&lt;&lt;&lt;&lt;&lt;&lt;&lt; 최종 답변 &gt;&gt;&gt;&gt;&gt;&gt;"</span>)</span>
-<span id="cb13-24">    <span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">print</span>(result)  <span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># 최종 답변을 출력합니다.</span></span>
-<span id="cb13-25">    <span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">print</span>(<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"&lt;&lt;&lt;&lt;&lt;&lt;&lt; 최종 답변 &gt;&gt;&gt;&gt;&gt;&gt;"</span>)</span>
-<span id="cb13-26"></span>
-<span id="cb13-27"></span>
-<span id="cb13-28"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># AgentCallbacks 객체를 생성하여 각 단계별 콜백 함수를 설정합니다.</span></span>
-<span id="cb13-29">agent_callbacks <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> AgentCallbacks(</span>
-<span id="cb13-30">    tool_callback<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span>tool_callback,</span>
-<span id="cb13-31">    observation_callback<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span>observation_callback,</span>
-<span id="cb13-32">    result_callback<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span>result_callback,</span>
-<span id="cb13-33">)</span>
-<span id="cb13-34"></span>
-<span id="cb13-35"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># AgentStreamParser 객체를 생성하여 에이전트의 실행 과정을 파싱합니다.</span></span>
-<span id="cb13-36">agent_stream_parser <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> AgentStreamParser(agent_callbacks)</span></code></pre></div></div>
-</details>
-</div>
-<p>아래의 출력 내용을 확인해 보면 중간 내용의 출력 값이 내가 변경한 콜백 함수의 출력 값으로 변경된 것을 확인할 수 있습니다.</p>
-<div id="9bc6f347" class="cell" data-execution_count="14">
-<details class="code-fold">
-<summary>코드</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14" style="background: #f1f3f5;"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb14-1"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># 질의에 대한 답변을 스트리밍으로 출력 요청</span></span>
-<span id="cb14-2">result <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> agent_executor.stream({<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"input"</span>: <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"AI 투자관련 뉴스를 검색해 주세요."</span>})</span>
-<span id="cb14-3"></span>
-<span id="cb14-4"><span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">for</span> step <span class="kw" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">in</span> result:</span>
-<span id="cb14-5">    <span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># 중간 단계를 parser 를 사용하여 단계별로 출력</span></span>
-<span id="cb14-6">    agent_stream_parser.process_agent_steps(step)</span></code></pre></div></div>
-</details>
-</div>
-</section>
-</section>
-<section id="이전-대화내용-기억하는-agent" class="level2" data-number="5">
-<h2 data-number="5" class="anchored" data-anchor-id="이전-대화내용-기억하는-agent"><span class="header-section-number">5</span> 이전 대화내용 기억하는 Agent</h2>
-<p>이전의 대화내용을 기억하기 위해서는 <code>RunnableWithMessageHistory</code> 를 사용하여 <code>AgentExecutor</code> 를 감싸줍니다.</p>
-<p><code>RunnableWithMessageHistory</code> 에 대한 자세한 내용은 아래 링크를 참고해 주세요.</p>
-<p><strong>참고</strong> - <a href="https://wikidocs.net/254682">RunnableWithMessageHistory</a></p>
-<div id="b306df6b" class="cell" data-execution_count="15">
-<details class="code-fold">
-<summary>코드</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15" style="background: #f1f3f5;"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb15-1"><span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">from</span> langchain_community.chat_message_histories <span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">import</span> ChatMessageHistory</span>
-<span id="cb15-2"><span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">from</span> langchain_core.runnables.history <span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">import</span> RunnableWithMessageHistory</span>
-<span id="cb15-3"></span>
-<span id="cb15-4"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># session_id 를 저장할 딕셔너리 생성</span></span>
-<span id="cb15-5">store <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> {}</span>
-<span id="cb15-6"></span>
-<span id="cb15-7"></span>
-<span id="cb15-8"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># session_id 를 기반으로 세션 기록을 가져오는 함수</span></span>
-<span id="cb15-9"><span class="kw" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">def</span> get_session_history(session_ids):</span>
-<span id="cb15-10">    <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">if</span> session_ids <span class="kw" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">not</span> <span class="kw" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">in</span> store:  <span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># session_id 가 store에 없는 경우</span></span>
-<span id="cb15-11">        <span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># 새로운 ChatMessageHistory 객체를 생성하여 store에 저장</span></span>
-<span id="cb15-12">        store[session_ids] <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> ChatMessageHistory()</span>
-<span id="cb15-13">    <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">return</span> store[session_ids]  <span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># 해당 세션 ID에 대한 세션 기록 반환</span></span>
-<span id="cb15-14"></span>
-<span id="cb15-15"></span>
-<span id="cb15-16"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># 채팅 메시지 기록이 추가된 에이전트를 생성합니다.</span></span>
-<span id="cb15-17">agent_with_chat_history <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> RunnableWithMessageHistory(</span>
-<span id="cb15-18">    agent_executor,</span>
-<span id="cb15-19">    <span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># 대화 session_id</span></span>
-<span id="cb15-20">    get_session_history,</span>
-<span id="cb15-21">    <span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># 프롬프트의 질문이 입력되는 key: "input"</span></span>
-<span id="cb15-22">    input_messages_key<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"input"</span>,</span>
-<span id="cb15-23">    <span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># 프롬프트의 메시지가 입력되는 key: "chat_history"</span></span>
-<span id="cb15-24">    history_messages_key<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"chat_history"</span>,</span>
-<span id="cb15-25">)</span></code></pre></div></div>
-</details>
-</div>
-<div id="300db801" class="cell" data-execution_count="16">
-<details class="code-fold">
-<summary>코드</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16" style="background: #f1f3f5;"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb16-1"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># 질의에 대한 답변을 스트리밍으로 출력 요청</span></span>
-<span id="cb16-2">response <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> agent_with_chat_history.stream(</span>
-<span id="cb16-3">    {<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"input"</span>: <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"안녕? 내 이름은 테디야!"</span>},</span>
-<span id="cb16-4">    <span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># session_id 설정</span></span>
-<span id="cb16-5">    config<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span>{<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"configurable"</span>: {<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"session_id"</span>: <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"abc123"</span>}},</span>
-<span id="cb16-6">)</span>
-<span id="cb16-7"></span>
-<span id="cb16-8"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># 출력 확인</span></span>
-<span id="cb16-9"><span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">for</span> step <span class="kw" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">in</span> response:</span>
-<span id="cb16-10">    agent_stream_parser.process_agent_steps(step)</span></code></pre></div></div>
-</details>
-</div>
-<div id="f6f55bd5" class="cell" data-execution_count="17">
-<details class="code-fold">
-<summary>코드</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17" style="background: #f1f3f5;"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb17-1"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># 질의에 대한 답변을 스트리밍으로 출력 요청</span></span>
-<span id="cb17-2">response <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> agent_with_chat_history.stream(</span>
-<span id="cb17-3">    {<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"input"</span>: <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"내 이름이 뭐라고?"</span>},</span>
-<span id="cb17-4">    <span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># session_id 설정</span></span>
-<span id="cb17-5">    config<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span>{<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"configurable"</span>: {<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"session_id"</span>: <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"abc123"</span>}},</span>
-<span id="cb17-6">)</span>
-<span id="cb17-7"></span>
-<span id="cb17-8"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># 출력 확인</span></span>
-<span id="cb17-9"><span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">for</span> step <span class="kw" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">in</span> response:</span>
-<span id="cb17-10">    agent_stream_parser.process_agent_steps(step)</span></code></pre></div></div>
-</details>
-</div>
-<div id="e73e5e75" class="cell" data-execution_count="18">
-<details class="code-fold">
-<summary>코드</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18" style="background: #f1f3f5;"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb18-1"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># 질의에 대한 답변을 스트리밍으로 출력 요청</span></span>
-<span id="cb18-2">response <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> agent_with_chat_history.stream(</span>
-<span id="cb18-3">    {</span>
-<span id="cb18-4">        <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"input"</span>: <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"내 이메일 주소는 teddy@teddynote.com 이야. 회사 이름은 테디노트 주식회사야."</span></span>
-<span id="cb18-5">    },</span>
-<span id="cb18-6">    <span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># session_id 설정</span></span>
-<span id="cb18-7">    config<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span>{<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"configurable"</span>: {<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"session_id"</span>: <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"abc123"</span>}},</span>
-<span id="cb18-8">)</span>
-<span id="cb18-9"></span>
-<span id="cb18-10"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># 출력 확인</span></span>
-<span id="cb18-11"><span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">for</span> step <span class="kw" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">in</span> response:</span>
-<span id="cb18-12">    agent_stream_parser.process_agent_steps(step)</span></code></pre></div></div>
-</details>
-</div>
-<div id="cdf4fde2" class="cell" data-execution_count="19">
-<details class="code-fold">
-<summary>코드</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19" style="background: #f1f3f5;"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb19-1"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># 질의에 대한 답변을 스트리밍으로 출력 요청</span></span>
-<span id="cb19-2">response <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> agent_with_chat_history.stream(</span>
-<span id="cb19-3">    {</span>
-<span id="cb19-4">        <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"input"</span>: <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"최신 뉴스 5개를 검색해서 이메일의 본문으로 작성해줘. "</span></span>
-<span id="cb19-5">        <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"수신인에는 `셜리 상무님` 그리고, 발신인에는 내 인적정보를 적어줘."</span></span>
-<span id="cb19-6">        <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"정중한 어조로 작성하고, 메일의 시작과 끝에는 적절한 인사말과 맺음말을 적어줘."</span></span>
-<span id="cb19-7">    },</span>
-<span id="cb19-8">    <span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># session_id 설정</span></span>
-<span id="cb19-9">    config<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span>{<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"configurable"</span>: {<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"session_id"</span>: <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"abc123"</span>}},</span>
-<span id="cb19-10">)</span>
-<span id="cb19-11"></span>
-<span id="cb19-12"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># 출력 확인</span></span>
-<span id="cb19-13"><span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">for</span> step <span class="kw" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">in</span> response:</span>
-<span id="cb19-14">    agent_stream_parser.process_agent_steps(step)</span></code></pre></div></div>
-</details>
-</div>
-<div id="4417861b" class="cell" data-execution_count="20">
-<details class="code-fold">
-<summary>코드</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20" style="background: #f1f3f5;"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb20-1"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># 질의에 대한 답변을 스트리밍으로 출력 요청</span></span>
-<span id="cb20-2">response <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> agent_with_chat_history.stream(</span>
-<span id="cb20-3">    {</span>
-<span id="cb20-4">        <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"input"</span>: <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"내 이름이 뭐야?"</span></span>
-<span id="cb20-5">    },</span>
-<span id="cb20-6">    <span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># session_id 설정</span></span>
-<span id="cb20-7">    config<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span>{<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"configurable"</span>: {<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"session_id"</span>: <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"def456"</span>}},</span>
-<span id="cb20-8">)</span>
-<span id="cb20-9"></span>
-<span id="cb20-10"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># 출력 확인</span></span>
-<span id="cb20-11"><span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">for</span> step <span class="kw" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">in</span> response:</span>
-<span id="cb20-12">    agent_stream_parser.process_agent_steps(step)</span></code></pre></div></div>
-</details>
-</div>
-
-
-</section>
-
- ]]></description>
-  <guid>https://dlwns0719.github.io/my_blog/docs/blog/posts/RAG/15-Agent/03-Agent.html</guid>
-  <pubDate>Thu, 12 Feb 2026 08:45:25 GMT</pubDate>
+  <pubDate>Fri, 13 Feb 2026 01:15:45 GMT</pubDate>
 </item>
 </channel>
 </rss>
