@@ -1,0 +1,1686 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ko" xml:lang="ko"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.25">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Junhyun Lee">
+<meta name="description" content="Claude Code의 분산 에이전트로 대규모 코드베이스(AutoMSA, 152 Python 파일)의 메타데이터를 전수 추출한 실전 경험입니다. 단일 에이전트 실패, 형식 불일치, 원자적 디테일 소실까지 – 각 시행착오에서 도출한 설계 원칙을 정리합니다.">
+
+<title>LLM 에이전트로 코드 메타데이터 추출하기: 시행착오와 설계 원칙 – Junhyun Lee</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../../../site_libs/quarto-search/quarto-search.js"></script>
+<script src="../../../../../site_libs/quarto-search/autocomplete-preset-algolia.umd.js"></script>
+<meta name="quarto:offset" content="../../../../../">
+<script src="../../../../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../../../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../../../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../../../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../../../site_libs/quarto-html/quarto-syntax-highlighting-065a5179aebd64318d7ea99d77b64a9e.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../../../../site_libs/quarto-html/quarto-syntax-highlighting-dark-969ddfa49e00a70eb3423444dbc81f6c.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../../../../site_libs/quarto-html/quarto-syntax-highlighting-065a5179aebd64318d7ea99d77b64a9e.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../../../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../../../site_libs/bootstrap/bootstrap-5a73818b025f47a6d9fdc61b5aee3d21.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../../../../site_libs/bootstrap/bootstrap-dark-0cc05e60083667b8b604a857b4577219.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../../../../site_libs/bootstrap/bootstrap-5a73818b025f47a6d9fdc61b5aee3d21.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "algolia": {
+    "application-id": "DUOR1DRC9D",
+    "search-only-api-key": "f264da5dea684ffb9e9b4a574af3ed61",
+    "index-name": "prod_QUARTO",
+    "analytics-events": true,
+    "show-logo": true,
+    "libDir": "site_libs"
+  },
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": true,
+  "language": {
+    "search-no-results-text": "일치 없음",
+    "search-matching-documents-text": "일치된 문서",
+    "search-copy-link-title": "검색 링크 복사",
+    "search-hide-matches-text": "추가 검색 결과 숨기기",
+    "search-more-match-text": "추가 검색결과",
+    "search-more-matches-text": "추가 검색결과",
+    "search-clear-button-title": "제거",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "취소",
+    "search-submit-button-title": "검색",
+    "search-label": "검색"
+  }
+}</script>
+<script src="https://cdn.jsdelivr.net/npm/algoliasearch@4.5.1/dist/algoliasearch-lite.umd.js"></script>
+
+
+<script type="text/javascript">
+var ALGOLIA_INSIGHTS_SRC = "https://cdn.jsdelivr.net/npm/search-insights/dist/search-insights.iife.min.js";
+!function(e,a,t,n,s,i,c){e.AlgoliaAnalyticsObject=s,e[s]=e[s]||function(){
+(e[s].queue=e[s].queue||[]).push(arguments)},i=a.createElement(t),c=a.getElementsByTagName(t)[0],
+i.async=1,i.src=n,c.parentNode.insertBefore(i,c)
+}(window,document,"script",ALGOLIA_INSIGHTS_SRC,"aa");
+</script>
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@algolia/autocomplete-plugin-algolia-insights">
+
+</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-6W0EKFMWBN"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-6W0EKFMWBN', { 'anonymize_ip': true});
+</script>
+<style>
+
+      .quarto-title-block .quarto-title-banner h1,
+      .quarto-title-block .quarto-title-banner h2,
+      .quarto-title-block .quarto-title-banner h3,
+      .quarto-title-block .quarto-title-banner h4,
+      .quarto-title-block .quarto-title-banner h5,
+      .quarto-title-block .quarto-title-banner h6
+      {
+        color: black;
+      }
+
+      .quarto-title-block .quarto-title-banner {
+        color: black;
+background: #EDF3F9;
+      }
+</style>
+<style>
+.custom-footer { 
+  text-align: center; 
+  font-size: 0.8em; 
+  color: #666; 
+  margin-top: 2rem; 
+}
+</style>
+
+
+<link rel="stylesheet" href="../../../../../styles.css">
+<meta property="og:title" content="LLM 에이전트로 코드 메타데이터 추출하기: 시행착오와 설계 원칙 – Junhyun Lee">
+<meta property="og:description" content="Claude Code의 분산 에이전트로 대규모 코드베이스(AutoMSA, 152 Python 파일)의 메타데이터를 전수 추출한 실전 경험입니다. 단일 에이전트 실패, 형식 불일치, 원자적 디테일 소실까지 – 각 시행착오에서 도출한 설계 원칙을 정리합니다.">
+<meta property="og:site_name" content="Junhyun Lee">
+<meta name="twitter:title" content="LLM 에이전트로 코드 메타데이터 추출하기: 시행착오와 설계 원칙 – Junhyun Lee">
+<meta name="twitter:description" content="Claude Code의 분산 에이전트로 대규모 코드베이스(AutoMSA, 152 Python 파일)의 메타데이터를 전수 추출한 실전 경험입니다. 단일 에이전트 실패, 형식 불일치, 원자적 디테일 소실까지 – 각 시행착오에서 도출한 설계 원칙을 정리합니다.">
+<meta name="twitter:card" content="summary">
+</head>
+
+<body class="nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="../../../../../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../../../../.././images/logo.png" alt="" class="navbar-logo light-content">
+    <img src="../../../../.././images/logo.png" alt="" class="navbar-logo dark-content">
+    </a>
+    <a class="navbar-brand" href="../../../../../index.html">
+    <span class="navbar-title">Junhyun Lee</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="검색"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="탐색 전환" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../../../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../../../docs/blog/index.html"> 
+<span class="menu-text">Blog</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../../../about.html"> 
+<span class="menu-text">Me</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/dlwns0719"> <i class="bi bi-github" role="img" aria-label="Github">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/in/dlwns0719/"> <i class="bi bi-linkedin" role="img" aria-label="Linkedin">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="다크 모드 전환"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-page-left">
+      <h1 class="title">LLM 에이전트로 코드 메타데이터 추출하기: 시행착오와 설계 원칙</h1>
+            <p class="subtitle lead">152개 Python 파일에서 1,411개 항목을 추출하며 배운 것들</p>
+                  <div>
+        <div class="description">
+          <p>Claude Code의 분산 에이전트로 대규모 코드베이스(AutoMSA, 152 Python 파일)의 메타데이터를 전수 추출한 실전 경험입니다. 단일 에이전트 실패, 형식 불일치, 원자적 디테일 소실까지 – 각 시행착오에서 도출한 설계 원칙을 정리합니다.</p>
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">Agent</div>
+                <div class="quarto-category">Code_Analysis</div>
+                <div class="quarto-category">Prompt_Engineering</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta column-page-left">
+
+      <div>
+      <div class="quarto-title-meta-heading">저자</div>
+      <div class="quarto-title-meta-contents">
+               <p>Junhyun Lee </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">공개</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">2026년 02월 13일</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">목차</h2>
+   
+  <ul>
+  <li><a href="#llm-에이전트로-코드-메타데이터-추출하기" id="toc-llm-에이전트로-코드-메타데이터-추출하기" class="nav-link active" data-scroll-target="#llm-에이전트로-코드-메타데이터-추출하기"><span class="header-section-number">1</span> LLM 에이전트로 코드 메타데이터 추출하기</a>
+  <ul class="collapse">
+  <li><a href="#왜-코드베이스-메타데이터가-필요한가" id="toc-왜-코드베이스-메타데이터가-필요한가" class="nav-link" data-scroll-target="#왜-코드베이스-메타데이터가-필요한가"><span class="header-section-number">1.1</span> 왜 코드베이스 메타데이터가 필요한가</a></li>
+  <li><a href="#대상-automsa-파이프라인" id="toc-대상-automsa-파이프라인" class="nav-link" data-scroll-target="#대상-automsa-파이프라인"><span class="header-section-number">1.2</span> 대상: AutoMSA 파이프라인</a></li>
+  <li><a href="#차-시도-단일-에이전트-실패" id="toc-차-시도-단일-에이전트-실패" class="nav-link" data-scroll-target="#차-시도-단일-에이전트-실패"><span class="header-section-number">1.3</span> 1차 시도: 단일 에이전트 (실패)</a>
+  <ul class="collapse">
+  <li><a href="#접근" id="toc-접근" class="nav-link" data-scroll-target="#접근"><span class="header-section-number">1.3.1</span> 접근</a></li>
+  <li><a href="#결과" id="toc-결과" class="nav-link" data-scroll-target="#결과"><span class="header-section-number">1.3.2</span> 결과</a></li>
+  <li><a href="#교훈" id="toc-교훈" class="nav-link" data-scroll-target="#교훈"><span class="header-section-number">1.3.3</span> 교훈</a></li>
+  </ul></li>
+  <li><a href="#차-시도-3개-분산-에이전트" id="toc-차-시도-3개-분산-에이전트" class="nav-link" data-scroll-target="#차-시도-3개-분산-에이전트"><span class="header-section-number">1.4</span> 2차 시도: 3개 분산 에이전트</a>
+  <ul class="collapse">
+  <li><a href="#접근-1" id="toc-접근-1" class="nav-link" data-scroll-target="#접근-1"><span class="header-section-number">1.4.1</span> 접근</a></li>
+  <li><a href="#결과-1" id="toc-결과-1" class="nav-link" data-scroll-target="#결과-1"><span class="header-section-number">1.4.2</span> 결과</a></li>
+  <li><a href="#교훈-1" id="toc-교훈-1" class="nav-link" data-scroll-target="#교훈-1"><span class="header-section-number">1.4.3</span> 교훈</a></li>
+  </ul></li>
+  <li><a href="#차-시도-7개-분산-에이전트-형식-교정" id="toc-차-시도-7개-분산-에이전트-형식-교정" class="nav-link" data-scroll-target="#차-시도-7개-분산-에이전트-형식-교정"><span class="header-section-number">1.5</span> 3차 시도: 7개 분산 에이전트 + 형식 교정</a>
+  <ul class="collapse">
+  <li><a href="#접근-2" id="toc-접근-2" class="nav-link" data-scroll-target="#접근-2"><span class="header-section-number">1.5.1</span> 접근</a></li>
+  <li><a href="#결과-2" id="toc-결과-2" class="nav-link" data-scroll-target="#결과-2"><span class="header-section-number">1.5.2</span> 결과</a></li>
+  <li><a href="#교훈-2" id="toc-교훈-2" class="nav-link" data-scroll-target="#교훈-2"><span class="header-section-number">1.5.3</span> 교훈</a></li>
+  </ul></li>
+  <li><a href="#cat-3-파일-스키마-보강-전용-에이전트" id="toc-cat-3-파일-스키마-보강-전용-에이전트" class="nav-link" data-scroll-target="#cat-3-파일-스키마-보강-전용-에이전트"><span class="header-section-number">1.6</span> Cat 3 파일 스키마 보강: 전용 에이전트</a>
+  <ul class="collapse">
+  <li><a href="#추출한-파일-스키마-속성-9가지" id="toc-추출한-파일-스키마-속성-9가지" class="nav-link" data-scroll-target="#추출한-파일-스키마-속성-9가지"><span class="header-section-number">1.6.1</span> 추출한 파일 스키마 속성 (9가지)</a></li>
+  <li><a href="#부록으로-추가된-내용" id="toc-부록으로-추가된-내용" class="nav-link" data-scroll-target="#부록으로-추가된-내용"><span class="header-section-number">1.6.2</span> 부록으로 추가된 내용</a></li>
+  <li><a href="#최종-산출물" id="toc-최종-산출물" class="nav-link" data-scroll-target="#최종-산출물"><span class="header-section-number">1.6.3</span> 최종 산출물</a></li>
+  </ul></li>
+  <li><a href="#차-시도-읽기요약합성-방식의-실패" id="toc-차-시도-읽기요약합성-방식의-실패" class="nav-link" data-scroll-target="#차-시도-읽기요약합성-방식의-실패"><span class="header-section-number">1.7</span> 4차 시도: “읽기→요약→합성” 방식의 실패</a>
+  <ul class="collapse">
+  <li><a href="#접근-읽기-에이전트-합성" id="toc-접근-읽기-에이전트-합성" class="nav-link" data-scroll-target="#접근-읽기-에이전트-합성"><span class="header-section-number">1.7.1</span> 접근: 읽기 에이전트 + 합성</a></li>
+  <li><a href="#결과-cat-3이-16개-항목으로-축소" id="toc-결과-cat-3이-16개-항목으로-축소" class="nav-link" data-scroll-target="#결과-cat-3이-16개-항목으로-축소"><span class="header-section-number">1.7.2</span> 결과: Cat 3이 16개 항목으로 축소</a></li>
+  <li><a href="#근본-원인-분석" id="toc-근본-원인-분석" class="nav-link" data-scroll-target="#근본-원인-분석"><span class="header-section-number">1.7.3</span> 근본 원인 분석</a></li>
+  <li><a href="#교훈-읽기-에이전트는-추출-에이전트가-아니다" id="toc-교훈-읽기-에이전트는-추출-에이전트가-아니다" class="nav-link" data-scroll-target="#교훈-읽기-에이전트는-추출-에이전트가-아니다"><span class="header-section-number">1.7.4</span> 교훈: “읽기 에이전트”는 “추출 에이전트”가 아니다</a></li>
+  </ul></li>
+  <li><a href="#설계-원칙-정리" id="toc-설계-원칙-정리" class="nav-link" data-scroll-target="#설계-원칙-정리"><span class="header-section-number">1.8</span> 설계 원칙 정리</a>
+  <ul class="collapse">
+  <li><a href="#프롬프트-설계-원칙-6가지" id="toc-프롬프트-설계-원칙-6가지" class="nav-link" data-scroll-target="#프롬프트-설계-원칙-6가지"><span class="header-section-number">1.8.1</span> 프롬프트 설계 원칙 (6가지)</a></li>
+  <li><a href="#에이전트-역할-설계-원칙-3가지" id="toc-에이전트-역할-설계-원칙-3가지" class="nav-link" data-scroll-target="#에이전트-역할-설계-원칙-3가지"><span class="header-section-number">1.8.2</span> 에이전트 역할 설계 원칙 (3가지)</a></li>
+  <li><a href="#llm-추출의-근본적-한계" id="toc-llm-추출의-근본적-한계" class="nav-link" data-scroll-target="#llm-추출의-근본적-한계"><span class="header-section-number">1.8.3</span> LLM 추출의 근본적 한계</a></li>
+  </ul></li>
+  <li><a href="#실전에서-배운-세부-교훈들" id="toc-실전에서-배운-세부-교훈들" class="nav-link" data-scroll-target="#실전에서-배운-세부-교훈들"><span class="header-section-number">1.9</span> 실전에서 배운 세부 교훈들</a>
+  <ul class="collapse">
+  <li><a href="#파일-스키마-추출은-특별-취급이-필요하다" id="toc-파일-스키마-추출은-특별-취급이-필요하다" class="nav-link" data-scroll-target="#파일-스키마-추출은-특별-취급이-필요하다"><span class="header-section-number">1.9.1</span> 파일 스키마 추출은 특별 취급이 필요하다</a></li>
+  <li><a href="#병합-단계에서-빠지기-쉬운-항목들" id="toc-병합-단계에서-빠지기-쉬운-항목들" class="nav-link" data-scroll-target="#병합-단계에서-빠지기-쉬운-항목들"><span class="header-section-number">1.9.2</span> 병합 단계에서 빠지기 쉬운 항목들</a></li>
+  <li><a href="#permission-모드-주의" id="toc-permission-모드-주의" class="nav-link" data-scroll-target="#permission-모드-주의"><span class="header-section-number">1.9.3</span> Permission 모드 주의</a></li>
+  </ul></li>
+  <li><a href="#결론" id="toc-결론" class="nav-link" data-scroll-target="#결론"><span class="header-section-number">1.10</span> 결론</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block column-page-left" id="quarto-document-content">
+
+
+
+
+
+
+<section id="llm-에이전트로-코드-메타데이터-추출하기" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> LLM 에이전트로 코드 메타데이터 추출하기</h1>
+<section id="왜-코드베이스-메타데이터가-필요한가" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="왜-코드베이스-메타데이터가-필요한가"><span class="header-section-number">1.1</span> 왜 코드베이스 메타데이터가 필요한가</h2>
+<p>인실리코(in-silico) 알고리즘 코드를 분석하는 <strong>코드 설명 Agent</strong>를 구축하려면, Agent가 코드를 이해하기 위한 구조화된 메타데이터가 필요합니다.</p>
+<p>여기서 말하는 메타데이터란:</p>
+<ul>
+<li>모든 클래스/함수/변수의 <strong>물리명, 논리명, 데이터 타입, 기본값, 의미</strong></li>
+<li>모듈 간 <strong>입출력 연결 관계</strong></li>
+<li>파이프라인 <strong>단계 간 의존성</strong></li>
+<li>중간 산출물의 <strong>파일 스키마</strong> (구분자, 인코딩, 컬럼 정의)</li>
+<li>알고리즘 <strong>파라미터, 임계값, 허용 범위</strong></li>
+<li><strong>암묵적 규칙</strong> (코드에 명시되지 않은 관계, 상태 전이 조건)</li>
+</ul>
+<p>이 메타데이터를 14개 카테고리로 분류하여 <code>METADATA_INVESTIGATION.md</code>라는 단일 문서로 생성하는 것이 목표입니다.</p>
+<hr>
+</section>
+<section id="대상-automsa-파이프라인" class="level2" data-number="1.2">
+<h2 data-number="1.2" class="anchored" data-anchor-id="대상-automsa-파이프라인"><span class="header-section-number">1.2</span> 대상: AutoMSA 파이프라인</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 54%">
+<col style="width: 45%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>항목</th>
+<th>값</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>레포지토리</td>
+<td><code>insilico-core-automsa</code></td>
+</tr>
+<tr class="even">
+<td>Python 파일 수</td>
+<td>152개</td>
+</tr>
+<tr class="odd">
+<td>총 코드 줄 수</td>
+<td>~29,178줄</td>
+</tr>
+<tr class="even">
+<td>파이프라인 단계</td>
+<td>9개 서비스 (5 Step)</td>
+</tr>
+<tr class="odd">
+<td>역할</td>
+<td>유전자/단백질 키워드 기반 서열 수집, BLAST 확장, 대표 서열 선정, 다중 서열 정렬(MSA) 자동화</td>
+</tr>
+</tbody>
+</table>
+<p>파이프라인 구조:</p>
+<pre><code>AutoMSA -&gt; DRS -&gt; monoom -&gt; multiom -&gt; multiom-output -&gt; multitom -&gt; multiplex-excel</code></pre>
+<p>이 규모의 코드베이스에서 원자적 수준의 메타데이터를 추출하면 <strong>1,400개 이상의 항목</strong>이 나옵니다.</p>
+<hr>
+</section>
+<section id="차-시도-단일-에이전트-실패" class="level2" data-number="1.3">
+<h2 data-number="1.3" class="anchored" data-anchor-id="차-시도-단일-에이전트-실패"><span class="header-section-number">1.3</span> 1차 시도: 단일 에이전트 (실패)</h2>
+<section id="접근" class="level3" data-number="1.3.1">
+<h3 data-number="1.3.1" class="anchored" data-anchor-id="접근"><span class="header-section-number">1.3.1</span> 접근</h3>
+<p>하나의 Claude Code 에이전트에게 전체 152개 파일을 분석하라고 요청했습니다.</p>
+</section>
+<section id="결과" class="level3" data-number="1.3.2">
+<h3 data-number="1.3.2" class="anchored" data-anchor-id="결과"><span class="header-section-number">1.3.2</span> 결과</h3>
+<p><strong>Context window 한계에 도달.</strong> 약 50개 파일을 읽은 시점에서 컨텍스트가 부족해져, 나머지 100개 파일은 조사되지 않았습니다.</p>
+</section>
+<section id="교훈" class="level3" data-number="1.3.3">
+<h3 data-number="1.3.3" class="anchored" data-anchor-id="교훈"><span class="header-section-number">1.3.3</span> 교훈</h3>
+<blockquote class="blockquote">
+<p><strong>대규모 코드베이스는 단일 에이전트로 처리할 수 없다.</strong> Context window는 유한하고, 152개 파일 x 평균 192줄 = ~29K줄의 코드를 한 번에 읽고 분석하는 것은 불가능합니다.</p>
+</blockquote>
+<hr>
+</section>
+</section>
+<section id="차-시도-3개-분산-에이전트" class="level2" data-number="1.4">
+<h2 data-number="1.4" class="anchored" data-anchor-id="차-시도-3개-분산-에이전트"><span class="header-section-number">1.4</span> 2차 시도: 3개 분산 에이전트</h2>
+<section id="접근-1" class="level3" data-number="1.4.1">
+<h3 data-number="1.4.1" class="anchored" data-anchor-id="접근-1"><span class="header-section-number">1.4.1</span> 접근</h3>
+<p>14개 카테고리를 3개 그룹으로 나누어 병렬 실행:</p>
+<ul>
+<li>Agent A: Cat 1-3 (파이프라인 구조, 중간 산출물)</li>
+<li>Agent B: Cat 4-7 (입력/파라미터, DB, 품질)</li>
+<li>Agent C: Cat 8-14 (라이브러리, 환경, 인프라, 로깅, 기타)</li>
+</ul>
+</section>
+<section id="결과-1" class="level3" data-number="1.4.2">
+<h3 data-number="1.4.2" class="anchored" data-anchor-id="결과-1"><span class="header-section-number">1.4.2</span> 결과</h3>
+<p>3개 에이전트 모두 완료. 그러나 <strong>산출물의 형식이 프롬프트와 불일치</strong>:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>문제</th>
+<th>상세</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>N.1-N.4 구조 누락</td>
+<td>각 카테고리에 “추출 가능 이유”, “조사 대상 파일”, “해석 메타데이터” 섹션이 없음</td>
+</tr>
+<tr class="even">
+<td>테이블 헤더 영문</td>
+<td>한국어 8열 헤더 대신 영어 헤더 사용</td>
+</tr>
+<tr class="odd">
+<td>통계표 누락</td>
+<td>최종 카테고리별 항목 수 집계표 없음</td>
+</tr>
+<tr class="even">
+<td>품질 체크리스트 누락</td>
+<td>12개 항목 체크리스트 없음</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="교훈-1" class="level3" data-number="1.4.3">
+<h3 data-number="1.4.3" class="anchored" data-anchor-id="교훈-1"><span class="header-section-number">1.4.3</span> 교훈</h3>
+<blockquote class="blockquote">
+<p><strong>LLM은 추상적 규칙보다 구체적 예시를 훨씬 잘 따른다.</strong> 프롬프트에 “N.1, N.2, N.3, N.4 구조로 작성하세요”라고 써도, 실제 완성된 예시가 없으면 에이전트가 자의적으로 해석합니다.</p>
+</blockquote>
+<hr>
+</section>
+</section>
+<section id="차-시도-7개-분산-에이전트-형식-교정" class="level2" data-number="1.5">
+<h2 data-number="1.5" class="anchored" data-anchor-id="차-시도-7개-분산-에이전트-형식-교정"><span class="header-section-number">1.5</span> 3차 시도: 7개 분산 에이전트 + 형식 교정</h2>
+<section id="접근-2" class="level3" data-number="1.5.1">
+<h3 data-number="1.5.1" class="anchored" data-anchor-id="접근-2"><span class="header-section-number">1.5.1</span> 접근</h3>
+<ul>
+<li>참조 문서(multiom 레포의 METADATA_INVESTIGATION.md)를 Gold Standard로 제공</li>
+<li>7개 에이전트로 더 세밀하게 분할:
+<ul>
+<li>Cat 1 / Cat 2-3 / Cat 4 / Cat 5-6 / Cat 7-8 / Cat 9-11 / Cat 12-14</li>
+</ul></li>
+<li>각 에이전트에게 <strong>구체적 형식 예시</strong>와 <strong>참조 문서</strong>를 함께 전달</li>
+</ul>
+</section>
+<section id="결과-2" class="level3" data-number="1.5.2">
+<h3 data-number="1.5.2" class="anchored" data-anchor-id="결과-2"><span class="header-section-number">1.5.2</span> 결과</h3>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>카테고리</th>
+<th>항목 수</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1. 모듈 간 I/O</td>
+<td>213</td>
+</tr>
+<tr class="even">
+<td>2. 파이프라인 의존성</td>
+<td>62</td>
+</tr>
+<tr class="odd">
+<td>3. 중간 산출물</td>
+<td>218</td>
+</tr>
+<tr class="even">
+<td>4. 입력 JSON/UI</td>
+<td>128</td>
+</tr>
+<tr class="odd">
+<td>5. 알고리즘 파라미터</td>
+<td>129</td>
+</tr>
+<tr class="even">
+<td>6. DB 스키마/쿼리</td>
+<td>110</td>
+</tr>
+<tr class="odd">
+<td>7. 품질 규칙</td>
+<td>99</td>
+</tr>
+<tr class="even">
+<td>8. 라이브러리/API</td>
+<td>53</td>
+</tr>
+<tr class="odd">
+<td>9. 환경 변수</td>
+<td>35</td>
+</tr>
+<tr class="even">
+<td>10. 병렬 처리</td>
+<td>18</td>
+</tr>
+<tr class="odd">
+<td>11. 실행 모드</td>
+<td>45</td>
+</tr>
+<tr class="even">
+<td>12. 인프라</td>
+<td>44</td>
+</tr>
+<tr class="odd">
+<td>13. 로깅</td>
+<td>81</td>
+</tr>
+<tr class="even">
+<td>14. 기타</td>
+<td>176</td>
+</tr>
+<tr class="odd">
+<td><strong>합계</strong></td>
+<td><strong>1,411</strong></td>
+</tr>
+</tbody>
+</table>
+<p>형식은 올바르게 나왔으나, <strong>Cat 3의 파일 스키마가 누락</strong>되었습니다.</p>
+</section>
+<section id="교훈-2" class="level3" data-number="1.5.3">
+<h3 data-number="1.5.3" class="anchored" data-anchor-id="교훈-2"><span class="header-section-number">1.5.3</span> 교훈</h3>
+<blockquote class="blockquote">
+<p><strong>중요한 요구사항은 독립 섹션으로 분리해야 한다.</strong> Cat 3 설명 안에 “파일 스키마를 반드시 기술하세요”라고 묻어 놓으면 에이전트가 놓칩니다. <strong>CRITICAL</strong> 표시와 함께 별도 섹션으로 올려야 합니다.</p>
+</blockquote>
+<hr>
+</section>
+</section>
+<section id="cat-3-파일-스키마-보강-전용-에이전트" class="level2" data-number="1.6">
+<h2 data-number="1.6" class="anchored" data-anchor-id="cat-3-파일-스키마-보강-전용-에이전트"><span class="header-section-number">1.6</span> Cat 3 파일 스키마 보강: 전용 에이전트</h2>
+<p>Cat 3의 36개 중간 산출물 파일에 대해 전용 에이전트를 추가 투입했습니다.</p>
+<section id="추출한-파일-스키마-속성-9가지" class="level3" data-number="1.6.1">
+<h3 data-number="1.6.1" class="anchored" data-anchor-id="추출한-파일-스키마-속성-9가지"><span class="header-section-number">1.6.1</span> 추출한 파일 스키마 속성 (9가지)</h3>
+<p>각 파일에 대해:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 18%">
+<col style="width: 81%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>속성</th>
+<th>예시 (InExCrossInfo.txt)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>구분자</td>
+<td><code>\t</code> (탭)</td>
+</tr>
+<tr class="even">
+<td>인코딩</td>
+<td>UTF-8</td>
+</tr>
+<tr class="odd">
+<td>헤더 행</td>
+<td>없음</td>
+</tr>
+<tr class="even">
+<td>행 의미</td>
+<td>1행 = 1개 키-값 쌍</td>
+</tr>
+<tr class="odd">
+<td>정렬 순서</td>
+<td>dict 순회 순서</td>
+</tr>
+<tr class="even">
+<td>생성 함수</td>
+<td><code>get_in_ex_cross_info.py::output_default_in_ex_cross_file()</code></td>
+</tr>
+<tr class="odd">
+<td>소비 함수</td>
+<td><code>in_ex_param_info.py::InExParamInfo.__init__()</code></td>
+</tr>
+<tr class="even">
+<td>좌표 체계</td>
+<td>N/A</td>
+</tr>
+<tr class="odd">
+<td>컬럼 정의</td>
+<td>key(str) + value(str)</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="부록으로-추가된-내용" class="level3" data-number="1.6.2">
+<h3 data-number="1.6.2" class="anchored" data-anchor-id="부록으로-추가된-내용"><span class="header-section-number">1.6.2</span> 부록으로 추가된 내용</h3>
+<ul>
+<li>FASTA 헤더 타입 종합 정리 (SeqInfo 11가지 + MatchSeqInfo 4가지 헤더 형식)</li>
+<li>TSV 엔티티 컬럼 비교표 (IN/EX/CROSS 37개 컬럼 대조)</li>
+</ul>
+</section>
+<section id="최종-산출물" class="level3" data-number="1.6.3">
+<h3 data-number="1.6.3" class="anchored" data-anchor-id="최종-산출물"><span class="header-section-number">1.6.3</span> 최종 산출물</h3>
+<ul>
+<li><strong>3,782줄</strong>의 METADATA_INVESTIGATION.md</li>
+<li><strong>1,411개</strong> 원자적 메타데이터 항목</li>
+<li><strong>36개</strong> 파일 스키마 상세</li>
+<li>총 <strong>8개 에이전트</strong> 사용 (7개 카테고리 + 1개 파일 스키마)</li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="차-시도-읽기요약합성-방식의-실패" class="level2" data-number="1.7">
+<h2 data-number="1.7" class="anchored" data-anchor-id="차-시도-읽기요약합성-방식의-실패"><span class="header-section-number">1.7</span> 4차 시도: “읽기→요약→합성” 방식의 실패</h2>
+<p>7개 에이전트 방식(3차 시도)이 성공한 후, 32개 레포지토리를 대량 처리하기 위해 <strong>다른 접근법</strong>을 시도했습니다. 이 시도에서 발견한 실패 모드는 앞의 3가지 시도와는 질적으로 다른 문제였습니다.</p>
+<section id="접근-읽기-에이전트-합성" class="level3" data-number="1.7.1">
+<h3 data-number="1.7.1" class="anchored" data-anchor-id="접근-읽기-에이전트-합성"><span class="header-section-number">1.7.1</span> 접근: 읽기 에이전트 + 합성</h3>
+<pre><code>Phase 1: 5개 백그라운드 에이전트가 파일 그룹별로 전체 코드를 읽음
+         (core, enum/dto, entity, common modules, pipeline steps)
+         ↓
+Phase 2: 각 에이전트가 읽은 내용의 "요약"을 반환
+         ↓
+Phase 3: 메인 에이전트가 요약을 기반으로 METADATA_INVESTIGATION.md 합성</code></pre>
+<p>이 접근법은 합리적으로 보였습니다. 152개 파일을 5개로 나눠 병렬 읽기, 요약, 합성. 그러나 <strong>결과는 참담했습니다.</strong></p>
+</section>
+<section id="결과-cat-3이-16개-항목으로-축소" class="level3" data-number="1.7.2">
+<h3 data-number="1.7.2" class="anchored" data-anchor-id="결과-cat-3이-16개-항목으로-축소"><span class="header-section-number">1.7.2</span> 결과: Cat 3이 16개 항목으로 축소</h3>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>지표</th>
+<th>7개 추출 에이전트 (3차)</th>
+<th>5개 읽기 에이전트 + 합성</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>총 항목 수</td>
+<td>1,411</td>
+<td><strong>436</strong> (69% 감소)</td>
+</tr>
+<tr class="even">
+<td>Cat 3 항목 수</td>
+<td>218</td>
+<td><strong>16</strong> (93% 감소)</td>
+</tr>
+<tr class="odd">
+<td>Cat 3 파일 스키마</td>
+<td>36개 상세 기술</td>
+<td><strong>0</strong></td>
+</tr>
+<tr class="even">
+<td>DTO 필드 추출</td>
+<td>개별 행으로 전수</td>
+<td><strong>완전 누락</strong></td>
+</tr>
+</tbody>
+</table>
+<p>Cat 3에 들어갔어야 할 항목들이 대량 누락되었습니다:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 47%">
+<col style="width: 26%">
+<col style="width: 26%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>누락된 항목 유형</th>
+<th>예상 규모</th>
+<th>실제 추출</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>DTO 클래스 전체 필드 (SeqInfo 859줄, MatchSeqInfo 1273줄 등)</td>
+<td>200+ 필드</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>Entity Enum 필드 (25개 파일)</td>
+<td>300+ 필드</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td>중간 파일 스키마 (컬럼 정의)</td>
+<td>수십 개</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>단계 간 반환값</td>
+<td>30+ 항목</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="근본-원인-분석" class="level3" data-number="1.7.3">
+<h3 data-number="1.7.3" class="anchored" data-anchor-id="근본-원인-분석"><span class="header-section-number">1.7.3</span> 근본 원인 분석</h3>
+<p><strong>원인 1: 2단계 간접 처리에서 정보 소실</strong></p>
+<p>읽기 에이전트가 <code>MatchSeqInfo</code> 클래스(1,273줄)를 읽으면, 요약에는 이렇게 돌아옵니다:</p>
+<pre><code>MatchSeqInfo: 매칭 서열 정보를 나타내는 포괄적 클래스.
+1273줄. 여러 헤더 형식, 정렬 상세, 어셈블리/분류 정보 포함.
+다수의 getter/setter 메서드.</code></pre>
+<p>이 요약으로는 <code>score</code>, <code>gene</code>, <code>product</code>, <code>pct_id</code>, <code>coverage</code> 같은 <strong>개별 필드</strong>를 원자적 행으로 추출할 수 없습니다. <strong>요약은 구조를 전달하지만, 원자적 항목을 전달하지 못합니다.</strong></p>
+<p><strong>원인 2: 컨텍스트 압박에 의한 카테고리 범위 축소</strong></p>
+<p>합성 에이전트는 14개 카테고리를 모두 작성해야 합니다. 요약 기반으로 남은 컨텍스트가 빠듯하면 <strong>초기 카테고리를 빨리 끝내고 넘어가려는 경향</strong>이 생깁니다. Cat 3이 첫 번째 쓰기 배치에 포함되어 있었고, 뒤에 11개 카테고리가 남아있다는 압박에 요약 모드로 전환되었습니다.</p>
+<p><strong>원인 3: 카테고리 범위를 좁게 재해석</strong></p>
+<p>프롬프트는 Cat 3에 “모델 클래스의 모든 필드”, “메서드 반환값”, “메모리 상 상태 변수”를 명시적으로 요구합니다. 그러나 합성 에이전트는 <strong>“중간 산출물 = 디스크에 기록되는 파일”</strong>로 좁게 해석하여, DTO 필드/Entity Enum/반환값을 전부 누락시켰습니다.</p>
+<p><strong>원인 4: 카테고리 간 중복 회피 과잉 적용</strong></p>
+<p>프롬프트는 “주 카테고리에 배치하고 비고에 관련 카테고리를 표기”라고 명시합니다. 그러나 합성 에이전트는 DTO 필드를 Cat 5(파라미터)나 Cat 1(I/O)에 분산 배치해야 한다고 판단하여, Cat 3에서는 파일 경로만 나열했습니다.</p>
+</section>
+<section id="교훈-읽기-에이전트는-추출-에이전트가-아니다" class="level3" data-number="1.7.4">
+<h3 data-number="1.7.4" class="anchored" data-anchor-id="교훈-읽기-에이전트는-추출-에이전트가-아니다"><span class="header-section-number">1.7.4</span> 교훈: “읽기 에이전트”는 “추출 에이전트”가 아니다</h3>
+<pre><code>읽기 에이전트 (Reading Agent)
++---------------------------------------------+
+| 입력: "이 파일들을 읽어라"                    |
+| 출력: 파일 내용의 요약 (구조적, 서술적)        |
+| 한계: 원자적 항목 추출을 하지 않음             |
++---------------------------------------------+
+
+추출 에이전트 (Extraction Agent)
++---------------------------------------------+
+| 입력: "이 파일에서 Cat N의 메타데이터를 추출하라" |
+| 출력: 구조화된 테이블 (행 = 원자적 항목)        |
+| 강점: 목적이 명확하므로 원자적 디테일 유지      |
++---------------------------------------------+</code></pre>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 36%">
+<col style="width: 30%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>비교 항목</th>
+<th>읽기 + 합성</th>
+<th>직접 추출</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>에이전트 역할</td>
+<td>“파일을 읽고 요약하라”</td>
+<td>“Cat N의 메타데이터를 추출하라”</td>
+</tr>
+<tr class="even">
+<td>정보 흐름</td>
+<td>코드 -&gt; 요약 -&gt; 테이블 (2단계)</td>
+<td>코드 -&gt; 테이블 (1단계)</td>
+</tr>
+<tr class="odd">
+<td>원자적 디테일</td>
+<td>요약에서 소실</td>
+<td>직접 보존</td>
+</tr>
+<tr class="even">
+<td>Cat 3 결과</td>
+<td>16개 항목</td>
+<td>218개 항목</td>
+</tr>
+<tr class="odd">
+<td>실패 지점</td>
+<td>요약 &lt;-&gt; 합성 사이의 간극</td>
+<td>없음 (단일 변환)</td>
+</tr>
+</tbody>
+</table>
+<blockquote class="blockquote">
+<p><strong>에이전트에게 “읽어라”와 “추출하라”는 전혀 다른 지시입니다.</strong> 메타데이터 추출에서는 에이전트가 카테고리를 인식한 상태에서 직접 원자적 항목을 추출해야 합니다. 읽기 에이전트의 요약을 합성하는 것은 “전화 게임(Chinese whispers)”과 같아서, 단계마다 정보가 소실됩니다.</p>
+</blockquote>
+<hr>
+</section>
+</section>
+<section id="설계-원칙-정리" class="level2" data-number="1.8">
+<h2 data-number="1.8" class="anchored" data-anchor-id="설계-원칙-정리"><span class="header-section-number">1.8</span> 설계 원칙 정리</h2>
+<p>4번의 시행착오에서 도출한 원칙들을 종합합니다.</p>
+<section id="프롬프트-설계-원칙-6가지" class="level3" data-number="1.8.1">
+<h3 data-number="1.8.1" class="anchored" data-anchor-id="프롬프트-설계-원칙-6가지"><span class="header-section-number">1.8.1</span> 프롬프트 설계 원칙 (6가지)</h3>
+<section id="원칙-1-분산-실행-프로토콜을-프롬프트에-명시하라" class="level4" data-number="1.8.1.1">
+<h4 data-number="1.8.1.1" class="anchored" data-anchor-id="원칙-1-분산-실행-프로토콜을-프롬프트에-명시하라"><span class="header-section-number">1.8.1.1</span> 원칙 1: 분산 실행 프로토콜을 프롬프트에 명시하라</h4>
+<p>단일 에이전트 전제의 프롬프트를 여러 에이전트에게 나눠주면 실패합니다. <strong>어떻게 나누고, 어떻게 합칠 것인지</strong>를 프롬프트 자체에 포함해야 합니다.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode numberSource markdown number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb5-1"><a href="#cb5-1"></a><span class="fu">## 분산 실행 프로토콜</span></span>
+<span id="cb5-2"><a href="#cb5-2"></a></span>
+<span id="cb5-3"><a href="#cb5-3"></a><span class="fu">### 분할 단위</span></span>
+<span id="cb5-4"><a href="#cb5-4"></a><span class="ss">- </span>Agent A: Cat 1-2 (파이프라인 구조)</span>
+<span id="cb5-5"><a href="#cb5-5"></a><span class="ss">- </span>Agent B: Cat 3 (중간 산출물) -- 단독</span>
+<span id="cb5-6"><a href="#cb5-6"></a><span class="ss">- </span>Agent C: Cat 4-5 (입력/파라미터)</span>
+<span id="cb5-7"><a href="#cb5-7"></a>...</span>
+<span id="cb5-8"><a href="#cb5-8"></a></span>
+<span id="cb5-9"><a href="#cb5-9"></a><span class="fu">### 에이전트별 산출물 규칙</span></span>
+<span id="cb5-10"><a href="#cb5-10"></a><span class="ss">- </span>파일명: <span class="in">`/tmp/{repo}_metadata/cat_{NN}.md`</span></span>
+<span id="cb5-11"><a href="#cb5-11"></a><span class="ss">- </span>자기 완결적 (헤더 불필요, 카테고리 내용만)</span>
+<span id="cb5-12"><a href="#cb5-12"></a><span class="ss">- </span>마지막에 <span class="in">`&lt;!-- ROW_COUNT: {숫자} --&gt;`</span> 주석 추가</span></code></pre></div><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="원칙-2-카테고리별-대상-파일을-사전-매핑하라" class="level4" data-number="1.8.1.2">
+<h4 data-number="1.8.1.2" class="anchored" data-anchor-id="원칙-2-카테고리별-대상-파일을-사전-매핑하라"><span class="header-section-number">1.8.1.2</span> 원칙 2: 카테고리별 대상 파일을 사전 매핑하라</h4>
+<p>모든 에이전트가 152개 파일을 각자 탐색하면 토큰 낭비입니다. 파일을 미리 분류해서 에이전트 범위를 좁혀야 합니다.</p>
+</section>
+<section id="원칙-3-추상적-규칙-대신-완성된-예시를-제공하라" class="level4" data-number="1.8.1.3">
+<h4 data-number="1.8.1.3" class="anchored" data-anchor-id="원칙-3-추상적-규칙-대신-완성된-예시를-제공하라"><span class="header-section-number">1.8.1.3</span> 원칙 3: 추상적 규칙 대신 완성된 예시를 제공하라</h4>
+<p>“N.1-N.4 구조로 작성하세요”보다 <strong>실제 완성된 카테고리 1개를 통째로</strong> 예시로 보여주는 것이 효과적입니다.</p>
+</section>
+<section id="원칙-4-중요-요구사항은-독립-섹션-critical-표시로-분리하라" class="level4" data-number="1.8.1.4">
+<h4 data-number="1.8.1.4" class="anchored" data-anchor-id="원칙-4-중요-요구사항은-독립-섹션-critical-표시로-분리하라"><span class="header-section-number">1.8.1.4</span> 원칙 4: 중요 요구사항은 독립 섹션 + CRITICAL 표시로 분리하라</h4>
+<p>카테고리 설명 안에 묻어 놓으면 에이전트가 놓칩니다.</p>
+</section>
+<section id="원칙-5-레포-규모별-자동-분할-기준을-포함하라" class="level4" data-number="1.8.1.5">
+<h4 data-number="1.8.1.5" class="anchored" data-anchor-id="원칙-5-레포-규모별-자동-분할-기준을-포함하라"><span class="header-section-number">1.8.1.5</span> 원칙 5: 레포 규모별 자동 분할 기준을 포함하라</h4>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Python 파일 수</th>
+<th>권장 에이전트 수</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>~30개</td>
+<td>1 (단일)</td>
+</tr>
+<tr class="even">
+<td>30~80개</td>
+<td>3</td>
+</tr>
+<tr class="odd">
+<td>80~150개</td>
+<td>5~7</td>
+</tr>
+<tr class="even">
+<td>150개+</td>
+<td>7~10</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="원칙-6-오케스트레이터용-병합-체크리스트를-명시하라" class="level4" data-number="1.8.1.6">
+<h4 data-number="1.8.1.6" class="anchored" data-anchor-id="원칙-6-오케스트레이터용-병합-체크리스트를-명시하라"><span class="header-section-number">1.8.1.6</span> 원칙 6: 오케스트레이터용 병합 체크리스트를 명시하라</h4>
+<p>병합 단계에서 통계표 누락, 행 수 불일치가 발생합니다. 오케스트레이터가 따를 체크리스트가 필요합니다.</p>
+</section>
+</section>
+<section id="에이전트-역할-설계-원칙-3가지" class="level3" data-number="1.8.2">
+<h3 data-number="1.8.2" class="anchored" data-anchor-id="에이전트-역할-설계-원칙-3가지"><span class="header-section-number">1.8.2</span> 에이전트 역할 설계 원칙 (3가지)</h3>
+<section id="원칙-7-에이전트에게는-추출을-시켜라-읽기를-시키지-마라" class="level4" data-number="1.8.2.1">
+<h4 data-number="1.8.2.1" class="anchored" data-anchor-id="원칙-7-에이전트에게는-추출을-시켜라-읽기를-시키지-마라"><span class="header-section-number">1.8.2.1</span> 원칙 7: 에이전트에게는 “추출”을 시켜라, “읽기”를 시키지 마라</h4>
+<p>“이 파일들을 읽어라”가 아니라 “이 파일에서 Cat N의 메타데이터를 추출하라”로 지시해야 원자적 디테일이 보존됩니다.</p>
+</section>
+<section id="원칙-8-cat-3은-항상-단독-에이전트에-할당하라" class="level4" data-number="1.8.2.2">
+<h4 data-number="1.8.2.2" class="anchored" data-anchor-id="원칙-8-cat-3은-항상-단독-에이전트에-할당하라"><span class="header-section-number">1.8.2.2</span> 원칙 8: Cat 3은 항상 단독 에이전트에 할당하라</h4>
+<p>Cat 3 (중간 산출물)은 DTO 필드 추출 + 파일 스키마 분석이 합쳐져 <strong>가장 분량이 큽니다</strong> (218개 항목 + 637줄 파일 스키마). 다른 카테고리와 묶으면 context window를 초과합니다.</p>
+</section>
+<section id="원칙-9-대량-처리-시-레포-크기에-따라-전략을-나눠라" class="level4" data-number="1.8.2.3">
+<h4 data-number="1.8.2.3" class="anchored" data-anchor-id="원칙-9-대량-처리-시-레포-크기에-따라-전략을-나눠라"><span class="header-section-number">1.8.2.3</span> 원칙 9: 대량 처리 시 레포 크기에 따라 전략을 나눠라</h4>
+<pre><code>for repo in repos:
+    if repo.file_count &lt; 30:
+        single_extraction_agent(repo)
+    else:
+        parallel_extraction_agents(repo, categories)</code></pre>
+</section>
+</section>
+<section id="llm-추출의-근본적-한계" class="level3" data-number="1.8.3">
+<h3 data-number="1.8.3" class="anchored" data-anchor-id="llm-추출의-근본적-한계"><span class="header-section-number">1.8.3</span> LLM 추출의 근본적 한계</h3>
+<p>프롬프트를 아무리 정밀하게 만들어도 해결할 수 없는 문제가 있습니다.</p>
+<section id="비결정성non-determinism-문제" class="level4" data-number="1.8.3.1">
+<h4 data-number="1.8.3.1" class="anchored" data-anchor-id="비결정성non-determinism-문제"><span class="header-section-number">1.8.3.1</span> 비결정성(Non-determinism) 문제</h4>
+<p>같은 프롬프트 + 같은 코드로 두 번 실행하면:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>문제</th>
+<th>예시</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>행 수 불일치</td>
+<td>이번 1,411개, 다음번 1,380개</td>
+</tr>
+<tr class="even">
+<td>행 순서 변동</td>
+<td><code>uclust_pct_id</code>가 3번이었다가 7번</td>
+</tr>
+<tr class="odd">
+<td>논리명 흔들림</td>
+<td>“UCLUST Percent Identity” vs “UCLUST Identity Threshold”</td>
+</tr>
+<tr class="even">
+<td>누락/추가</td>
+<td>private 메서드 포함 여부가 달라짐</td>
+</tr>
+<tr class="odd">
+<td>카테고리 분류 흔들림</td>
+<td>같은 항목이 Cat 5에 갔다가 Cat 7에 감</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="왜-이것이-문제인가" class="level4" data-number="1.8.3.2">
+<h4 data-number="1.8.3.2" class="anchored" data-anchor-id="왜-이것이-문제인가"><span class="header-section-number">1.8.3.2</span> 왜 이것이 문제인가</h4>
+<p>코드 설명 Agent가 메타데이터를 참조할 때, <strong>실행마다 메타데이터가 달라지면 Agent의 응답도 불안정</strong>해집니다. 주기적으로 메타데이터를 갱신해야 하는 운영 환경에서는 치명적입니다.</p>
+</section>
+<section id="재현성-한계" class="level4" data-number="1.8.3.3">
+<h4 data-number="1.8.3.3" class="anchored" data-anchor-id="재현성-한계"><span class="header-section-number">1.8.3.3</span> 재현성 한계</h4>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>접근법</th>
+<th>재현성</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>정밀 프롬프트만</td>
+<td>~70%</td>
+</tr>
+<tr class="even">
+<td>프롬프트 + 참조 예시</td>
+<td>~80%</td>
+</tr>
+<tr class="odd">
+<td><strong>프롬프트로는 한계</strong></td>
+<td><strong>100%는 불가능</strong></td>
+</tr>
+</tbody>
+</table>
+<hr>
+</section>
+</section>
+</section>
+<section id="실전에서-배운-세부-교훈들" class="level2" data-number="1.9">
+<h2 data-number="1.9" class="anchored" data-anchor-id="실전에서-배운-세부-교훈들"><span class="header-section-number">1.9</span> 실전에서 배운 세부 교훈들</h2>
+<section id="파일-스키마-추출은-특별-취급이-필요하다" class="level3" data-number="1.9.1">
+<h3 data-number="1.9.1" class="anchored" data-anchor-id="파일-스키마-추출은-특별-취급이-필요하다"><span class="header-section-number">1.9.1</span> 파일 스키마 추출은 특별 취급이 필요하다</h3>
+<p>TSV/FASTA 파일의 스키마(구분자, 컬럼 순서, 생산/소비 함수)는 코드의 <strong>실제 write 로직</strong> (f-string 안의 컬럼 순서, 조건부 컬럼 등)을 분석해야 합니다. 단순 추출로는 불가능하며, 전용 에이전트가 코드 흐름을 따라가야 합니다.</p>
+</section>
+<section id="병합-단계에서-빠지기-쉬운-항목들" class="level3" data-number="1.9.2">
+<h3 data-number="1.9.2" class="anchored" data-anchor-id="병합-단계에서-빠지기-쉬운-항목들"><span class="header-section-number">1.9.2</span> 병합 단계에서 빠지기 쉬운 항목들</h3>
+<ul>
+<li>통계표의 행 수 (에이전트가 <code>*</code>로 남겨두는 경우)</li>
+<li>파이프라인 구조 다이어그램</li>
+<li>전체 파일 목록 (상단)</li>
+<li>품질 검증 체크리스트 (하단)</li>
+</ul>
+<p>이들은 <strong>오케스트레이터(리더 에이전트 또는 스크립트)</strong>가 자동 생성해야 합니다.</p>
+</section>
+<section id="permission-모드-주의" class="level3" data-number="1.9.3">
+<h3 data-number="1.9.3" class="anchored" data-anchor-id="permission-모드-주의"><span class="header-section-number">1.9.3</span> Permission 모드 주의</h3>
+<p><code>bypassPermissions</code> 모드로 에이전트를 실행해도 <code>/tmp</code> 디렉토리 생성에 실패하는 경우가 있었습니다. 산출물 디렉토리는 <strong>에이전트 실행 전에 미리 생성</strong>해 두어야 합니다.</p>
+<hr>
+</section>
+</section>
+<section id="결론" class="level2" data-number="1.10">
+<h2 data-number="1.10" class="anchored" data-anchor-id="결론"><span class="header-section-number">1.10</span> 결론</h2>
+<p>4번의 시행착오에서 배운 핵심:</p>
+<ol type="1">
+<li><strong>대규모 코드베이스는 단일 에이전트로 처리할 수 없다</strong> – Context window의 물리적 한계</li>
+<li><strong>LLM은 추상적 규칙보다 구체적 예시를 따른다</strong> – Gold Standard 참조 문서가 필수</li>
+<li><strong>중요 요구사항은 독립 섹션으로 분리해야 한다</strong> – 프롬프트 안에 묻히면 누락됨</li>
+<li><strong>“읽어라”와 “추출하라”는 근본적으로 다른 지시다</strong> – 요약 기반 합성은 원자적 디테일을 체계적으로 소실시킨다</li>
+<li><strong>순수 LLM 접근은 비결정적이다</strong> – 프롬프트 개선만으로는 100% 재현성을 달성할 수 없다</li>
+<li><strong>에이전트의 역할 설계가 결과 품질을 결정한다</strong> – 같은 코드를 봐도 역할에 따라 전혀 다른 출력이 나온다</li>
+</ol>
+<p>한마디로: <strong>“무엇을 추출할 것인가”는 프롬프트의 영역이지만, “에이전트에게 무엇을 시킬 것인가”는 역할 설계의 영역이다.</strong></p>
+<p>이 한계를 인식한 후 설계한 해결책 – AST 코드 파서와 LLM을 결합한 하이브리드 파이프라인 – 은 <a href="../../../../../docs/blog/posts/Agent/01-코드분석/02-하이브리드_파이프라인_설계.html">다음 글</a>에서 다룹니다.</p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script type="text/javascript">
+
+// replace cmd keyboard shortcut w/ control on non-Mac platforms
+const kPlatformMac = typeof navigator !== 'undefined' ? /Mac/.test(navigator.platform) : false;
+if (!kPlatformMac) {
+   var kbds = document.querySelectorAll("kbd")
+   kbds.forEach(function(kbd) {
+      kbd.innerHTML = kbd.innerHTML.replace(/⌘/g, '⌃');
+   });
+}
+
+// tweak headings in pymd
+document.querySelectorAll(".pymd span.co").forEach(el => {
+   if (!el.innerText.startsWith("#|")) {
+      el.style.fontWeight = 1000;
+   }
+});
+
+</script>
+<!-- Begin Mailchimp Signup Form -->
+<div id="mc_embed_signup" style="padding-bottom: 1em; max-width: 400px;" class="ms-auto me-auto">
+  <p style="font-weight: 600; margin-bottom: 0;">Subscribe</p>
+  <span style="font-size: 0.9em;">Enjoy this blog? Get notified of new posts by email:</span>
+<form action="https://quarto.us14.list-manage.com/subscribe/post?u=c79fb56a311ae347fbe916740&amp;id=ec05dfca03" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate="">
+    <div id="mc_embed_signup_scroll">
+	
+        <div class="input-group mt-1 mb-2">
+        <input type="email" class="form-control" placeholder="Email Address" aria-label="Email Address" name="EMAIL" style="font-size: 0.8em; padding: .2em;">
+        </div>              
+
+	<div id="mce-responses" class="clear foot">
+		<div class="response" id="mce-error-response" style="display:none"></div>
+		<div class="response" id="mce-success-response" style="display:none"></div>
+	</div>    <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+    <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_c79fb56a311ae347fbe916740_ec05dfca03" tabindex="-1" value=""></div>
+        <div class="optionalParent">
+            <div class="clear foot" style="display: flex; align-items: center; justify-content: center;">
+              
+              
+                <input type="submit" value="Subscribe" name="subscribe" style="min-width: 150px; font-size: 0.8em;" id="mc-embedded-subscribe" class="button btn btn-light btn-sm ms-auto me-auto">
+            </div>
+        </div>
+    </div>
+</form>
+</div>
+
+<!--End mc_embed_signup-->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "복사완료!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "복사완료!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/dlwns0719\.github\.io\/my_blog");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<input type="hidden" id="giscus-base-theme" value="light">
+<input type="hidden" id="giscus-alt-theme" value="dark">
+<script>
+  function loadGiscus() {
+    // Function to get the theme based on body class
+    const getTheme = () => {
+      let baseTheme = document.getElementById('giscus-base-theme').value;
+      let altTheme = document.getElementById('giscus-alt-theme').value;
+      if (authorPrefersDark) {
+          [baseTheme, altTheme] = [altTheme, baseTheme];
+      }
+      return document.body.classList.contains('quarto-dark') ? altTheme : baseTheme;
+    };
+    const script = document.createElement("script");
+    script.src = "https://giscus.app/client.js";
+    script.async = true;
+    script.dataset.repo = "kmink3225/blog";
+    script.dataset.repoId = "R_kgDOLCZyDg";
+    script.dataset.category = "Blog";
+    script.dataset.categoryId = "";
+    script.dataset.mapping = "title";
+    script.dataset.reactionsEnabled = "1";
+    script.dataset.emitMetadata = "0";
+    script.dataset.inputPosition = "top";
+    script.dataset.theme = getTheme();
+    script.dataset.lang = "en";
+    script.crossOrigin = "anonymous";
+    // Append the script to the desired div instead of at the end of the body
+    document.getElementById("quarto-content").appendChild(script);
+  }
+  loadGiscus();
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Junhyun Lee</p>
+</div>   
+    <div class="nav-footer-center">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item">
+    <a class="nav-link" href="../../../../../about.html">
+<p>About</p>
+</a>
+  </li>  
+</ul>
+    </div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/dlwns0719/my_blog">
+      <i class="bi bi-github" role="img">
+</i> 
+    </a>
+  </li>  
+</ul>
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>
