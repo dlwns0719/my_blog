@@ -1,0 +1,25 @@
+---
+title: "Agent"
+subtitle: Agent Development Content List
+description: |
+  AI Agent 개발 과정에서의 설계 결정, 시행착오, 아키텍처 패턴을 다루는 블로그 모음입니다.
+  코드분석 Agent, 업무 자동화 Agent 등 다양한 Agent 프로젝트의 실전 경험을 정리합니다.
+categories:
+  - AI
+  - Agent
+author: Junhyun Lee
+date: 02/19/2026
+format:
+  html:
+    page-layout: full
+    code-fold: true
+    toc: true
+    number-sections: true
+draft: False
+---
+
+## Agent
+
+### 코드분석 Agent
+1. [메타데이터 추출 시행착오와 설계 원칙](./01-코드분석/01-메타데이터_시행착오와_설계_원칙.qmd)
+2. [하이브리드 파이프라인 설계: AST + LLM 자동화](./01-코드분석/02-하이브리드_파이프라인_설계.qmd)
