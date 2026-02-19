@@ -79,6 +79,7 @@ website: # 웹사이트 전체 설정
       - section: "Blog Posts"
         href: docs/blog/index.qmd  #블로그 메인 페이지로 이동
         contents:
+          - docs/blog/posts/Agent/index.qmd
           - docs/blog/posts/Claude_Code/index.qmd
           - docs/blog/posts/RAG/index.qmd
           - docs/blog/posts/Prompt_Engineering/index.qmd
