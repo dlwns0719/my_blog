@@ -483,7 +483,7 @@ background: #EDF3F9;
 <h1 data-number="1"><span class="header-section-number">1</span> 하이브리드 메타데이터 추출 파이프라인</h1>
 <section id="문제-정의-왜-순수-llm이-안-되는가" class="level2" data-number="1.1">
 <h2 data-number="1.1" class="anchored" data-anchor-id="문제-정의-왜-순수-llm이-안-되는가"><span class="header-section-number">1.1</span> 문제 정의: 왜 순수 LLM이 안 되는가</h2>
-<p><a href="../../../../../docs/blog/posts/Agent/01-코드분석/01-메타데이터_시행착오와_설계_원칙.html">이전 글</a>에서 4번의 시행착오를 통해 발견한 순수 LLM 접근의 한계:</p>
+<p><a href="../../../../../docs/blog/posts/Agent/01-코드분석/01-메타데이터_시행착오와_설계_원칙.html">이전 글</a>에서 시행착오를 통해 발견한 순수 LLM 접근의 한계:</p>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 50%">
@@ -502,15 +502,15 @@ background: #EDF3F9;
 </tr>
 <tr class="even">
 <td><strong>높은 비용</strong></td>
-<td>7 에이전트 x ~500K tokens, 매 실행마다 전체 재처리</td>
+<td>12 에이전트 x ~100K tokens, 매 실행마다 전체 재처리</td>
 </tr>
 <tr class="odd">
 <td><strong>느린 속도</strong></td>
-<td>~50분/레포 (32개 레포 = ~27시간)</td>
+<td>~36분/레포 (32개 레포 = ~19시간)</td>
 </tr>
 <tr class="even">
 <td><strong>디테일 소실</strong></td>
-<td>읽기-합성 방식에서 원자적 항목의 93%가 누락될 수 있음</td>
+<td>읽기-합성 방식에서 원자적 항목의 93%가 누락될 수 있음 (추출 방식으로 해결 가능하나 비결정성 잔존)</td>
 </tr>
 </tbody>
 </table>

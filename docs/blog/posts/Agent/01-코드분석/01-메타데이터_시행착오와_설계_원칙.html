@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Junhyun Lee">
-<meta name="description" content="Claude Code의 분산 에이전트로 대규모 코드베이스(AutoMSA, 152 Python 파일)의 메타데이터를 전수 추출한 실전 경험입니다. 단일 에이전트 실패, 형식 불일치, 원자적 디테일 소실까지 – 각 시행착오에서 도출한 설계 원칙을 정리합니다.">
+<meta name="description" content="Claude Code의 분산 에이전트로 대규모 코드베이스(AutoMSA, 152 Python 파일)의 메타데이터를 전수 추출한 실전 경험입니다. 단일 에이전트 실패, 형식 불일치, 원자적 디테일 소실까지 – 4번의 시행착오에서 도출한 설계 원칙을 정리합니다.">
 
 <title>LLM 에이전트로 코드 메타데이터 추출하기: 시행착오와 설계 원칙 – Junhyun Lee</title>
 <style>
@@ -170,10 +170,10 @@ background: #EDF3F9;
 
 <link rel="stylesheet" href="../../../../../styles.css">
 <meta property="og:title" content="LLM 에이전트로 코드 메타데이터 추출하기: 시행착오와 설계 원칙 – Junhyun Lee">
-<meta property="og:description" content="Claude Code의 분산 에이전트로 대규모 코드베이스(AutoMSA, 152 Python 파일)의 메타데이터를 전수 추출한 실전 경험입니다. 단일 에이전트 실패, 형식 불일치, 원자적 디테일 소실까지 – 각 시행착오에서 도출한 설계 원칙을 정리합니다.">
+<meta property="og:description" content="Claude Code의 분산 에이전트로 대규모 코드베이스(AutoMSA, 152 Python 파일)의 메타데이터를 전수 추출한 실전 경험입니다. 단일 에이전트 실패, 형식 불일치, 원자적 디테일 소실까지 – 4번의 시행착오에서 도출한 설계 원칙을 정리합니다.">
 <meta property="og:site_name" content="Junhyun Lee">
 <meta name="twitter:title" content="LLM 에이전트로 코드 메타데이터 추출하기: 시행착오와 설계 원칙 – Junhyun Lee">
-<meta name="twitter:description" content="Claude Code의 분산 에이전트로 대규모 코드베이스(AutoMSA, 152 Python 파일)의 메타데이터를 전수 추출한 실전 경험입니다. 단일 에이전트 실패, 형식 불일치, 원자적 디테일 소실까지 – 각 시행착오에서 도출한 설계 원칙을 정리합니다.">
+<meta name="twitter:description" content="Claude Code의 분산 에이전트로 대규모 코드베이스(AutoMSA, 152 Python 파일)의 메타데이터를 전수 추출한 실전 경험입니다. 단일 에이전트 실패, 형식 불일치, 원자적 디테일 소실까지 – 4번의 시행착오에서 도출한 설계 원칙을 정리합니다.">
 <meta name="twitter:card" content="summary">
 </head>
 
@@ -397,10 +397,10 @@ background: #EDF3F9;
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-page-left">
       <h1 class="title">LLM 에이전트로 코드 메타데이터 추출하기: 시행착오와 설계 원칙</h1>
-            <p class="subtitle lead">152개 Python 파일에서 1,411개 항목을 추출하며 배운 것들</p>
+            <p class="subtitle lead">152개 Python 파일에서 2,499개 메타데이터를 추출하기까지</p>
                   <div>
         <div class="description">
-          <p>Claude Code의 분산 에이전트로 대규모 코드베이스(AutoMSA, 152 Python 파일)의 메타데이터를 전수 추출한 실전 경험입니다. 단일 에이전트 실패, 형식 불일치, 원자적 디테일 소실까지 – 각 시행착오에서 도출한 설계 원칙을 정리합니다.</p>
+          <p>Claude Code의 분산 에이전트로 대규모 코드베이스(AutoMSA, 152 Python 파일)의 메타데이터를 전수 추출한 실전 경험입니다. 단일 에이전트 실패, 형식 불일치, 원자적 디테일 소실까지 – 4번의 시행착오에서 도출한 설계 원칙을 정리합니다.</p>
         </div>
       </div>
                           <div class="quarto-categories">
@@ -456,38 +456,35 @@ background: #EDF3F9;
   <li><a href="#결과-1" id="toc-결과-1" class="nav-link" data-scroll-target="#결과-1"><span class="header-section-number">1.4.2</span> 결과</a></li>
   <li><a href="#교훈-1" id="toc-교훈-1" class="nav-link" data-scroll-target="#교훈-1"><span class="header-section-number">1.4.3</span> 교훈</a></li>
   </ul></li>
-  <li><a href="#차-시도-7개-분산-에이전트-형식-교정" id="toc-차-시도-7개-분산-에이전트-형식-교정" class="nav-link" data-scroll-target="#차-시도-7개-분산-에이전트-형식-교정"><span class="header-section-number">1.5</span> 3차 시도: 7개 분산 에이전트 + 형식 교정</a>
+  <li><a href="#차-시도-읽기요약합성-방식의-실패" id="toc-차-시도-읽기요약합성-방식의-실패" class="nav-link" data-scroll-target="#차-시도-읽기요약합성-방식의-실패"><span class="header-section-number">1.5</span> 3차 시도: “읽기→요약→합성” 방식의 실패</a>
   <ul class="collapse">
-  <li><a href="#접근-2" id="toc-접근-2" class="nav-link" data-scroll-target="#접근-2"><span class="header-section-number">1.5.1</span> 접근</a></li>
-  <li><a href="#결과-2" id="toc-결과-2" class="nav-link" data-scroll-target="#결과-2"><span class="header-section-number">1.5.2</span> 결과</a></li>
-  <li><a href="#교훈-2" id="toc-교훈-2" class="nav-link" data-scroll-target="#교훈-2"><span class="header-section-number">1.5.3</span> 교훈</a></li>
+  <li><a href="#접근-읽기-에이전트-합성" id="toc-접근-읽기-에이전트-합성" class="nav-link" data-scroll-target="#접근-읽기-에이전트-합성"><span class="header-section-number">1.5.1</span> 접근: 읽기 에이전트 + 합성</a></li>
+  <li><a href="#결과-cat-3이-16개-항목으로-축소" id="toc-결과-cat-3이-16개-항목으로-축소" class="nav-link" data-scroll-target="#결과-cat-3이-16개-항목으로-축소"><span class="header-section-number">1.5.2</span> 결과: Cat 3이 16개 항목으로 축소</a></li>
+  <li><a href="#근본-원인-분석" id="toc-근본-원인-분석" class="nav-link" data-scroll-target="#근본-원인-분석"><span class="header-section-number">1.5.3</span> 근본 원인 분석</a></li>
+  <li><a href="#교훈-읽기-에이전트는-추출-에이전트가-아니다" id="toc-교훈-읽기-에이전트는-추출-에이전트가-아니다" class="nav-link" data-scroll-target="#교훈-읽기-에이전트는-추출-에이전트가-아니다"><span class="header-section-number">1.5.4</span> 교훈: “읽기 에이전트”는 “추출 에이전트”가 아니다</a></li>
   </ul></li>
-  <li><a href="#cat-3-파일-스키마-보강-전용-에이전트" id="toc-cat-3-파일-스키마-보강-전용-에이전트" class="nav-link" data-scroll-target="#cat-3-파일-스키마-보강-전용-에이전트"><span class="header-section-number">1.6</span> Cat 3 파일 스키마 보강: 전용 에이전트</a>
+  <li><a href="#차-시도-12개-추출-에이전트-성공" id="toc-차-시도-12개-추출-에이전트-성공" class="nav-link" data-scroll-target="#차-시도-12개-추출-에이전트-성공"><span class="header-section-number">1.6</span> 4차 시도: 12개 추출 에이전트 (성공)</a>
   <ul class="collapse">
-  <li><a href="#추출한-파일-스키마-속성-9가지" id="toc-추출한-파일-스키마-속성-9가지" class="nav-link" data-scroll-target="#추출한-파일-스키마-속성-9가지"><span class="header-section-number">1.6.1</span> 추출한 파일 스키마 속성 (9가지)</a></li>
-  <li><a href="#부록으로-추가된-내용" id="toc-부록으로-추가된-내용" class="nav-link" data-scroll-target="#부록으로-추가된-내용"><span class="header-section-number">1.6.2</span> 부록으로 추가된 내용</a></li>
-  <li><a href="#최종-산출물" id="toc-최종-산출물" class="nav-link" data-scroll-target="#최종-산출물"><span class="header-section-number">1.6.3</span> 최종 산출물</a></li>
+  <li><a href="#접근-카테고리-기반-분산-추출" id="toc-접근-카테고리-기반-분산-추출" class="nav-link" data-scroll-target="#접근-카테고리-기반-분산-추출"><span class="header-section-number">1.6.1</span> 접근: 카테고리 기반 분산 추출</a></li>
+  <li><a href="#에이전트별-프롬프트-설계" id="toc-에이전트별-프롬프트-설계" class="nav-link" data-scroll-target="#에이전트별-프롬프트-설계"><span class="header-section-number">1.6.2</span> 에이전트별 프롬프트 설계</a></li>
+  <li><a href="#cat-3-토큰-제한-사고와-해결" id="toc-cat-3-토큰-제한-사고와-해결" class="nav-link" data-scroll-target="#cat-3-토큰-제한-사고와-해결"><span class="header-section-number">1.6.3</span> Cat 3 토큰 제한 사고와 해결</a></li>
+  <li><a href="#결과-2" id="toc-결과-2" class="nav-link" data-scroll-target="#결과-2"><span class="header-section-number">1.6.4</span> 결과</a></li>
+  <li><a href="#번의-시도-비교" id="toc-번의-시도-비교" class="nav-link" data-scroll-target="#번의-시도-비교"><span class="header-section-number">1.6.5</span> 4번의 시도 비교</a></li>
+  <li><a href="#교훈-2" id="toc-교훈-2" class="nav-link" data-scroll-target="#교훈-2"><span class="header-section-number">1.6.6</span> 교훈</a></li>
   </ul></li>
-  <li><a href="#차-시도-읽기요약합성-방식의-실패" id="toc-차-시도-읽기요약합성-방식의-실패" class="nav-link" data-scroll-target="#차-시도-읽기요약합성-방식의-실패"><span class="header-section-number">1.7</span> 4차 시도: “읽기→요약→합성” 방식의 실패</a>
+  <li><a href="#설계-원칙-정리" id="toc-설계-원칙-정리" class="nav-link" data-scroll-target="#설계-원칙-정리"><span class="header-section-number">1.7</span> 설계 원칙 정리</a>
   <ul class="collapse">
-  <li><a href="#접근-읽기-에이전트-합성" id="toc-접근-읽기-에이전트-합성" class="nav-link" data-scroll-target="#접근-읽기-에이전트-합성"><span class="header-section-number">1.7.1</span> 접근: 읽기 에이전트 + 합성</a></li>
-  <li><a href="#결과-cat-3이-16개-항목으로-축소" id="toc-결과-cat-3이-16개-항목으로-축소" class="nav-link" data-scroll-target="#결과-cat-3이-16개-항목으로-축소"><span class="header-section-number">1.7.2</span> 결과: Cat 3이 16개 항목으로 축소</a></li>
-  <li><a href="#근본-원인-분석" id="toc-근본-원인-분석" class="nav-link" data-scroll-target="#근본-원인-분석"><span class="header-section-number">1.7.3</span> 근본 원인 분석</a></li>
-  <li><a href="#교훈-읽기-에이전트는-추출-에이전트가-아니다" id="toc-교훈-읽기-에이전트는-추출-에이전트가-아니다" class="nav-link" data-scroll-target="#교훈-읽기-에이전트는-추출-에이전트가-아니다"><span class="header-section-number">1.7.4</span> 교훈: “읽기 에이전트”는 “추출 에이전트”가 아니다</a></li>
+  <li><a href="#프롬프트-설계-원칙-6가지" id="toc-프롬프트-설계-원칙-6가지" class="nav-link" data-scroll-target="#프롬프트-설계-원칙-6가지"><span class="header-section-number">1.7.1</span> 프롬프트 설계 원칙 (6가지)</a></li>
+  <li><a href="#에이전트-역할-설계-원칙-3가지" id="toc-에이전트-역할-설계-원칙-3가지" class="nav-link" data-scroll-target="#에이전트-역할-설계-원칙-3가지"><span class="header-section-number">1.7.2</span> 에이전트 역할 설계 원칙 (3가지)</a></li>
+  <li><a href="#llm-추출의-근본적-한계" id="toc-llm-추출의-근본적-한계" class="nav-link" data-scroll-target="#llm-추출의-근본적-한계"><span class="header-section-number">1.7.3</span> LLM 추출의 근본적 한계</a></li>
   </ul></li>
-  <li><a href="#설계-원칙-정리" id="toc-설계-원칙-정리" class="nav-link" data-scroll-target="#설계-원칙-정리"><span class="header-section-number">1.8</span> 설계 원칙 정리</a>
+  <li><a href="#실전에서-배운-세부-교훈들" id="toc-실전에서-배운-세부-교훈들" class="nav-link" data-scroll-target="#실전에서-배운-세부-교훈들"><span class="header-section-number">1.8</span> 실전에서 배운 세부 교훈들</a>
   <ul class="collapse">
-  <li><a href="#프롬프트-설계-원칙-6가지" id="toc-프롬프트-설계-원칙-6가지" class="nav-link" data-scroll-target="#프롬프트-설계-원칙-6가지"><span class="header-section-number">1.8.1</span> 프롬프트 설계 원칙 (6가지)</a></li>
-  <li><a href="#에이전트-역할-설계-원칙-3가지" id="toc-에이전트-역할-설계-원칙-3가지" class="nav-link" data-scroll-target="#에이전트-역할-설계-원칙-3가지"><span class="header-section-number">1.8.2</span> 에이전트 역할 설계 원칙 (3가지)</a></li>
-  <li><a href="#llm-추출의-근본적-한계" id="toc-llm-추출의-근본적-한계" class="nav-link" data-scroll-target="#llm-추출의-근본적-한계"><span class="header-section-number">1.8.3</span> LLM 추출의 근본적 한계</a></li>
+  <li><a href="#파일-스키마-추출은-특별-취급이-필요하다" id="toc-파일-스키마-추출은-특별-취급이-필요하다" class="nav-link" data-scroll-target="#파일-스키마-추출은-특별-취급이-필요하다"><span class="header-section-number">1.8.1</span> 파일 스키마 추출은 특별 취급이 필요하다</a></li>
+  <li><a href="#병합-단계에서-빠지기-쉬운-항목들" id="toc-병합-단계에서-빠지기-쉬운-항목들" class="nav-link" data-scroll-target="#병합-단계에서-빠지기-쉬운-항목들"><span class="header-section-number">1.8.2</span> 병합 단계에서 빠지기 쉬운 항목들</a></li>
+  <li><a href="#permission-모드-주의" id="toc-permission-모드-주의" class="nav-link" data-scroll-target="#permission-모드-주의"><span class="header-section-number">1.8.3</span> Permission 모드 주의</a></li>
   </ul></li>
-  <li><a href="#실전에서-배운-세부-교훈들" id="toc-실전에서-배운-세부-교훈들" class="nav-link" data-scroll-target="#실전에서-배운-세부-교훈들"><span class="header-section-number">1.9</span> 실전에서 배운 세부 교훈들</a>
-  <ul class="collapse">
-  <li><a href="#파일-스키마-추출은-특별-취급이-필요하다" id="toc-파일-스키마-추출은-특별-취급이-필요하다" class="nav-link" data-scroll-target="#파일-스키마-추출은-특별-취급이-필요하다"><span class="header-section-number">1.9.1</span> 파일 스키마 추출은 특별 취급이 필요하다</a></li>
-  <li><a href="#병합-단계에서-빠지기-쉬운-항목들" id="toc-병합-단계에서-빠지기-쉬운-항목들" class="nav-link" data-scroll-target="#병합-단계에서-빠지기-쉬운-항목들"><span class="header-section-number">1.9.2</span> 병합 단계에서 빠지기 쉬운 항목들</a></li>
-  <li><a href="#permission-모드-주의" id="toc-permission-모드-주의" class="nav-link" data-scroll-target="#permission-모드-주의"><span class="header-section-number">1.9.3</span> Permission 모드 주의</a></li>
-  </ul></li>
-  <li><a href="#결론" id="toc-결론" class="nav-link" data-scroll-target="#결론"><span class="header-section-number">1.10</span> 결론</a></li>
+  <li><a href="#결론" id="toc-결론" class="nav-link" data-scroll-target="#결론"><span class="header-section-number">1.9</span> 결론</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -555,7 +552,7 @@ background: #EDF3F9;
 </table>
 <p>파이프라인 구조:</p>
 <pre><code>AutoMSA -&gt; DRS -&gt; monoom -&gt; multiom -&gt; multiom-output -&gt; multitom -&gt; multiplex-excel</code></pre>
-<p>이 규모의 코드베이스에서 원자적 수준의 메타데이터를 추출하면 <strong>1,400개 이상의 항목</strong>이 나옵니다.</p>
+<p>이 규모의 코드베이스에서 원자적 수준의 메타데이터를 추출하면 <strong>2,500개 이상의 항목</strong>이 나옵니다.</p>
 <hr>
 </section>
 <section id="차-시도-단일-에이전트-실패" class="level2" data-number="1.3">
@@ -629,181 +626,11 @@ background: #EDF3F9;
 <hr>
 </section>
 </section>
-<section id="차-시도-7개-분산-에이전트-형식-교정" class="level2" data-number="1.5">
-<h2 data-number="1.5" class="anchored" data-anchor-id="차-시도-7개-분산-에이전트-형식-교정"><span class="header-section-number">1.5</span> 3차 시도: 7개 분산 에이전트 + 형식 교정</h2>
-<section id="접근-2" class="level3" data-number="1.5.1">
-<h3 data-number="1.5.1" class="anchored" data-anchor-id="접근-2"><span class="header-section-number">1.5.1</span> 접근</h3>
-<ul>
-<li>참조 문서(multiom 레포의 METADATA_INVESTIGATION.md)를 Gold Standard로 제공</li>
-<li>7개 에이전트로 더 세밀하게 분할:
-<ul>
-<li>Cat 1 / Cat 2-3 / Cat 4 / Cat 5-6 / Cat 7-8 / Cat 9-11 / Cat 12-14</li>
-</ul></li>
-<li>각 에이전트에게 <strong>구체적 형식 예시</strong>와 <strong>참조 문서</strong>를 함께 전달</li>
-</ul>
-</section>
-<section id="결과-2" class="level3" data-number="1.5.2">
-<h3 data-number="1.5.2" class="anchored" data-anchor-id="결과-2"><span class="header-section-number">1.5.2</span> 결과</h3>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>카테고리</th>
-<th>항목 수</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>1. 모듈 간 I/O</td>
-<td>213</td>
-</tr>
-<tr class="even">
-<td>2. 파이프라인 의존성</td>
-<td>62</td>
-</tr>
-<tr class="odd">
-<td>3. 중간 산출물</td>
-<td>218</td>
-</tr>
-<tr class="even">
-<td>4. 입력 JSON/UI</td>
-<td>128</td>
-</tr>
-<tr class="odd">
-<td>5. 알고리즘 파라미터</td>
-<td>129</td>
-</tr>
-<tr class="even">
-<td>6. DB 스키마/쿼리</td>
-<td>110</td>
-</tr>
-<tr class="odd">
-<td>7. 품질 규칙</td>
-<td>99</td>
-</tr>
-<tr class="even">
-<td>8. 라이브러리/API</td>
-<td>53</td>
-</tr>
-<tr class="odd">
-<td>9. 환경 변수</td>
-<td>35</td>
-</tr>
-<tr class="even">
-<td>10. 병렬 처리</td>
-<td>18</td>
-</tr>
-<tr class="odd">
-<td>11. 실행 모드</td>
-<td>45</td>
-</tr>
-<tr class="even">
-<td>12. 인프라</td>
-<td>44</td>
-</tr>
-<tr class="odd">
-<td>13. 로깅</td>
-<td>81</td>
-</tr>
-<tr class="even">
-<td>14. 기타</td>
-<td>176</td>
-</tr>
-<tr class="odd">
-<td><strong>합계</strong></td>
-<td><strong>1,411</strong></td>
-</tr>
-</tbody>
-</table>
-<p>형식은 올바르게 나왔으나, <strong>Cat 3의 파일 스키마가 누락</strong>되었습니다.</p>
-</section>
-<section id="교훈-2" class="level3" data-number="1.5.3">
-<h3 data-number="1.5.3" class="anchored" data-anchor-id="교훈-2"><span class="header-section-number">1.5.3</span> 교훈</h3>
-<blockquote class="blockquote">
-<p><strong>중요한 요구사항은 독립 섹션으로 분리해야 한다.</strong> Cat 3 설명 안에 “파일 스키마를 반드시 기술하세요”라고 묻어 놓으면 에이전트가 놓칩니다. <strong>CRITICAL</strong> 표시와 함께 별도 섹션으로 올려야 합니다.</p>
-</blockquote>
-<hr>
-</section>
-</section>
-<section id="cat-3-파일-스키마-보강-전용-에이전트" class="level2" data-number="1.6">
-<h2 data-number="1.6" class="anchored" data-anchor-id="cat-3-파일-스키마-보강-전용-에이전트"><span class="header-section-number">1.6</span> Cat 3 파일 스키마 보강: 전용 에이전트</h2>
-<p>Cat 3의 36개 중간 산출물 파일에 대해 전용 에이전트를 추가 투입했습니다.</p>
-<section id="추출한-파일-스키마-속성-9가지" class="level3" data-number="1.6.1">
-<h3 data-number="1.6.1" class="anchored" data-anchor-id="추출한-파일-스키마-속성-9가지"><span class="header-section-number">1.6.1</span> 추출한 파일 스키마 속성 (9가지)</h3>
-<p>각 파일에 대해:</p>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 18%">
-<col style="width: 81%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>속성</th>
-<th>예시 (InExCrossInfo.txt)</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>구분자</td>
-<td><code>\t</code> (탭)</td>
-</tr>
-<tr class="even">
-<td>인코딩</td>
-<td>UTF-8</td>
-</tr>
-<tr class="odd">
-<td>헤더 행</td>
-<td>없음</td>
-</tr>
-<tr class="even">
-<td>행 의미</td>
-<td>1행 = 1개 키-값 쌍</td>
-</tr>
-<tr class="odd">
-<td>정렬 순서</td>
-<td>dict 순회 순서</td>
-</tr>
-<tr class="even">
-<td>생성 함수</td>
-<td><code>get_in_ex_cross_info.py::output_default_in_ex_cross_file()</code></td>
-</tr>
-<tr class="odd">
-<td>소비 함수</td>
-<td><code>in_ex_param_info.py::InExParamInfo.__init__()</code></td>
-</tr>
-<tr class="even">
-<td>좌표 체계</td>
-<td>N/A</td>
-</tr>
-<tr class="odd">
-<td>컬럼 정의</td>
-<td>key(str) + value(str)</td>
-</tr>
-</tbody>
-</table>
-</section>
-<section id="부록으로-추가된-내용" class="level3" data-number="1.6.2">
-<h3 data-number="1.6.2" class="anchored" data-anchor-id="부록으로-추가된-내용"><span class="header-section-number">1.6.2</span> 부록으로 추가된 내용</h3>
-<ul>
-<li>FASTA 헤더 타입 종합 정리 (SeqInfo 11가지 + MatchSeqInfo 4가지 헤더 형식)</li>
-<li>TSV 엔티티 컬럼 비교표 (IN/EX/CROSS 37개 컬럼 대조)</li>
-</ul>
-</section>
-<section id="최종-산출물" class="level3" data-number="1.6.3">
-<h3 data-number="1.6.3" class="anchored" data-anchor-id="최종-산출물"><span class="header-section-number">1.6.3</span> 최종 산출물</h3>
-<ul>
-<li><strong>3,782줄</strong>의 METADATA_INVESTIGATION.md</li>
-<li><strong>1,411개</strong> 원자적 메타데이터 항목</li>
-<li><strong>36개</strong> 파일 스키마 상세</li>
-<li>총 <strong>8개 에이전트</strong> 사용 (7개 카테고리 + 1개 파일 스키마)</li>
-</ul>
-<hr>
-</section>
-</section>
-<section id="차-시도-읽기요약합성-방식의-실패" class="level2" data-number="1.7">
-<h2 data-number="1.7" class="anchored" data-anchor-id="차-시도-읽기요약합성-방식의-실패"><span class="header-section-number">1.7</span> 4차 시도: “읽기→요약→합성” 방식의 실패</h2>
-<p>7개 에이전트 방식(3차 시도)이 성공한 후, 32개 레포지토리를 대량 처리하기 위해 <strong>다른 접근법</strong>을 시도했습니다. 이 시도에서 발견한 실패 모드는 앞의 3가지 시도와는 질적으로 다른 문제였습니다.</p>
-<section id="접근-읽기-에이전트-합성" class="level3" data-number="1.7.1">
-<h3 data-number="1.7.1" class="anchored" data-anchor-id="접근-읽기-에이전트-합성"><span class="header-section-number">1.7.1</span> 접근: 읽기 에이전트 + 합성</h3>
+<section id="차-시도-읽기요약합성-방식의-실패" class="level2" data-number="1.5">
+<h2 data-number="1.5" class="anchored" data-anchor-id="차-시도-읽기요약합성-방식의-실패"><span class="header-section-number">1.5</span> 3차 시도: “읽기→요약→합성” 방식의 실패</h2>
+<p>2차 시도에서 형식 문제를 경험한 후, 32개 레포지토리를 효율적으로 대량 처리하기 위해 <strong>다른 접근법</strong>을 시도했습니다. 이 시도에서 발견한 실패 모드는 앞의 시도들과는 질적으로 다른 문제였습니다.</p>
+<section id="접근-읽기-에이전트-합성" class="level3" data-number="1.5.1">
+<h3 data-number="1.5.1" class="anchored" data-anchor-id="접근-읽기-에이전트-합성"><span class="header-section-number">1.5.1</span> 접근: 읽기 에이전트 + 합성</h3>
 <pre><code>Phase 1: 5개 백그라운드 에이전트가 파일 그룹별로 전체 코드를 읽음
          (core, enum/dto, entity, common modules, pipeline steps)
          ↓
@@ -812,35 +639,35 @@ Phase 2: 각 에이전트가 읽은 내용의 "요약"을 반환
 Phase 3: 메인 에이전트가 요약을 기반으로 METADATA_INVESTIGATION.md 합성</code></pre>
 <p>이 접근법은 합리적으로 보였습니다. 152개 파일을 5개로 나눠 병렬 읽기, 요약, 합성. 그러나 <strong>결과는 참담했습니다.</strong></p>
 </section>
-<section id="결과-cat-3이-16개-항목으로-축소" class="level3" data-number="1.7.2">
-<h3 data-number="1.7.2" class="anchored" data-anchor-id="결과-cat-3이-16개-항목으로-축소"><span class="header-section-number">1.7.2</span> 결과: Cat 3이 16개 항목으로 축소</h3>
+<section id="결과-cat-3이-16개-항목으로-축소" class="level3" data-number="1.5.2">
+<h3 data-number="1.5.2" class="anchored" data-anchor-id="결과-cat-3이-16개-항목으로-축소"><span class="header-section-number">1.5.2</span> 결과: Cat 3이 16개 항목으로 축소</h3>
 <table class="caption-top table">
 <thead>
 <tr class="header">
 <th>지표</th>
-<th>7개 추출 에이전트 (3차)</th>
-<th>5개 읽기 에이전트 + 합성</th>
+<th>4차 시도 (12개 추출 에이전트)</th>
+<th>3차: 5개 읽기 에이전트 + 합성</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td>총 항목 수</td>
-<td>1,411</td>
-<td><strong>436</strong> (69% 감소)</td>
+<td><strong>2,499+</strong></td>
+<td><strong>436</strong></td>
 </tr>
 <tr class="even">
 <td>Cat 3 항목 수</td>
-<td>218</td>
-<td><strong>16</strong> (93% 감소)</td>
+<td><strong>325+</strong></td>
+<td><strong>16</strong></td>
 </tr>
 <tr class="odd">
 <td>Cat 3 파일 스키마</td>
-<td>36개 상세 기술</td>
+<td><strong>35개</strong></td>
 <td><strong>0</strong></td>
 </tr>
 <tr class="even">
 <td>DTO 필드 추출</td>
-<td>개별 행으로 전수</td>
+<td><strong>개별 행으로 전수</strong></td>
 <td><strong>완전 누락</strong></td>
 </tr>
 </tbody>
@@ -883,8 +710,8 @@ Phase 3: 메인 에이전트가 요약을 기반으로 METADATA_INVESTIGATION.md
 </tbody>
 </table>
 </section>
-<section id="근본-원인-분석" class="level3" data-number="1.7.3">
-<h3 data-number="1.7.3" class="anchored" data-anchor-id="근본-원인-분석"><span class="header-section-number">1.7.3</span> 근본 원인 분석</h3>
+<section id="근본-원인-분석" class="level3" data-number="1.5.3">
+<h3 data-number="1.5.3" class="anchored" data-anchor-id="근본-원인-분석"><span class="header-section-number">1.5.3</span> 근본 원인 분석</h3>
 <p><strong>원인 1: 2단계 간접 처리에서 정보 소실</strong></p>
 <p>읽기 에이전트가 <code>MatchSeqInfo</code> 클래스(1,273줄)를 읽으면, 요약에는 이렇게 돌아옵니다:</p>
 <pre><code>MatchSeqInfo: 매칭 서열 정보를 나타내는 포괄적 클래스.
@@ -898,8 +725,8 @@ Phase 3: 메인 에이전트가 요약을 기반으로 METADATA_INVESTIGATION.md
 <p><strong>원인 4: 카테고리 간 중복 회피 과잉 적용</strong></p>
 <p>프롬프트는 “주 카테고리에 배치하고 비고에 관련 카테고리를 표기”라고 명시합니다. 그러나 합성 에이전트는 DTO 필드를 Cat 5(파라미터)나 Cat 1(I/O)에 분산 배치해야 한다고 판단하여, Cat 3에서는 파일 경로만 나열했습니다.</p>
 </section>
-<section id="교훈-읽기-에이전트는-추출-에이전트가-아니다" class="level3" data-number="1.7.4">
-<h3 data-number="1.7.4" class="anchored" data-anchor-id="교훈-읽기-에이전트는-추출-에이전트가-아니다"><span class="header-section-number">1.7.4</span> 교훈: “읽기 에이전트”는 “추출 에이전트”가 아니다</h3>
+<section id="교훈-읽기-에이전트는-추출-에이전트가-아니다" class="level3" data-number="1.5.4">
+<h3 data-number="1.5.4" class="anchored" data-anchor-id="교훈-읽기-에이전트는-추출-에이전트가-아니다"><span class="header-section-number">1.5.4</span> 교훈: “읽기 에이전트”는 “추출 에이전트”가 아니다</h3>
 <pre><code>읽기 에이전트 (Reading Agent)
 +---------------------------------------------+
 | 입력: "이 파일들을 읽어라"                    |
@@ -915,15 +742,15 @@ Phase 3: 메인 에이전트가 요약을 기반으로 METADATA_INVESTIGATION.md
 +---------------------------------------------+</code></pre>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 33%">
-<col style="width: 36%">
-<col style="width: 30%">
+<col style="width: 23%">
+<col style="width: 41%">
+<col style="width: 34%">
 </colgroup>
 <thead>
 <tr class="header">
 <th>비교 항목</th>
-<th>읽기 + 합성</th>
-<th>직접 추출</th>
+<th>읽기 + 합성 (3차)</th>
+<th>직접 추출 (4차)</th>
 </tr>
 </thead>
 <tbody>
@@ -945,9 +772,14 @@ Phase 3: 메인 에이전트가 요약을 기반으로 METADATA_INVESTIGATION.md
 <tr class="even">
 <td>Cat 3 결과</td>
 <td>16개 항목</td>
-<td>218개 항목</td>
+<td><strong>325개</strong></td>
 </tr>
 <tr class="odd">
+<td>총 항목 수</td>
+<td>436개</td>
+<td><strong>2,499개</strong></td>
+</tr>
+<tr class="even">
 <td>실패 지점</td>
 <td>요약 &lt;-&gt; 합성 사이의 간극</td>
 <td>없음 (단일 변환)</td>
@@ -960,41 +792,292 @@ Phase 3: 메인 에이전트가 요약을 기반으로 METADATA_INVESTIGATION.md
 <hr>
 </section>
 </section>
-<section id="설계-원칙-정리" class="level2" data-number="1.8">
-<h2 data-number="1.8" class="anchored" data-anchor-id="설계-원칙-정리"><span class="header-section-number">1.8</span> 설계 원칙 정리</h2>
-<p>4번의 시행착오에서 도출한 원칙들을 종합합니다.</p>
-<section id="프롬프트-설계-원칙-6가지" class="level3" data-number="1.8.1">
-<h3 data-number="1.8.1" class="anchored" data-anchor-id="프롬프트-설계-원칙-6가지"><span class="header-section-number">1.8.1</span> 프롬프트 설계 원칙 (6가지)</h3>
-<section id="원칙-1-분산-실행-프로토콜을-프롬프트에-명시하라" class="level4" data-number="1.8.1.1">
-<h4 data-number="1.8.1.1" class="anchored" data-anchor-id="원칙-1-분산-실행-프로토콜을-프롬프트에-명시하라"><span class="header-section-number">1.8.1.1</span> 원칙 1: 분산 실행 프로토콜을 프롬프트에 명시하라</h4>
-<p>단일 에이전트 전제의 프롬프트를 여러 에이전트에게 나눠주면 실패합니다. <strong>어떻게 나누고, 어떻게 합칠 것인지</strong>를 프롬프트 자체에 포함해야 합니다.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode numberSource markdown number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb5-1"><a href="#cb5-1"></a><span class="fu">## 분산 실행 프로토콜</span></span>
-<span id="cb5-2"><a href="#cb5-2"></a></span>
-<span id="cb5-3"><a href="#cb5-3"></a><span class="fu">### 분할 단위</span></span>
-<span id="cb5-4"><a href="#cb5-4"></a><span class="ss">- </span>Agent A: Cat 1-2 (파이프라인 구조)</span>
-<span id="cb5-5"><a href="#cb5-5"></a><span class="ss">- </span>Agent B: Cat 3 (중간 산출물) -- 단독</span>
-<span id="cb5-6"><a href="#cb5-6"></a><span class="ss">- </span>Agent C: Cat 4-5 (입력/파라미터)</span>
-<span id="cb5-7"><a href="#cb5-7"></a>...</span>
-<span id="cb5-8"><a href="#cb5-8"></a></span>
-<span id="cb5-9"><a href="#cb5-9"></a><span class="fu">### 에이전트별 산출물 규칙</span></span>
-<span id="cb5-10"><a href="#cb5-10"></a><span class="ss">- </span>파일명: <span class="in">`/tmp/{repo}_metadata/cat_{NN}.md`</span></span>
-<span id="cb5-11"><a href="#cb5-11"></a><span class="ss">- </span>자기 완결적 (헤더 불필요, 카테고리 내용만)</span>
-<span id="cb5-12"><a href="#cb5-12"></a><span class="ss">- </span>마지막에 <span class="in">`&lt;!-- ROW_COUNT: {숫자} --&gt;`</span> 주석 추가</span></code></pre></div><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></div>
+<section id="차-시도-12개-추출-에이전트-성공" class="level2" data-number="1.6">
+<h2 data-number="1.6" class="anchored" data-anchor-id="차-시도-12개-추출-에이전트-성공"><span class="header-section-number">1.6</span> 4차 시도: 12개 추출 에이전트 (성공)</h2>
+<p>1~3차의 실패에서 도출한 교훈을 모두 반영한 최종 시도입니다.</p>
+<section id="접근-카테고리-기반-분산-추출" class="level3" data-number="1.6.1">
+<h3 data-number="1.6.1" class="anchored" data-anchor-id="접근-카테고리-기반-분산-추출"><span class="header-section-number">1.6.1</span> 접근: 카테고리 기반 분산 추출</h3>
+<p>1~3차 시행착오에서 배운 핵심을 적용했습니다:</p>
+<ul>
+<li><strong>원칙 7 적용</strong>: “읽기” 에이전트가 아닌 “추출” 에이전트 사용</li>
+<li><strong>원칙 8 적용</strong>: Cat 3은 3개 서브 에이전트로 분할</li>
+<li><strong>원칙 2 적용</strong>: 카테고리별 대상 파일을 사전 매핑</li>
+</ul>
+<pre><code>8+1 카테고리 에이전트 (Phase 1: 병렬 실행)
+──────────────────────────────────────────
+  Agent 1: Cat 1 (모듈 간 I/O)
+  Agent 2: Cat 2 (파이프라인 의존성)
+  Agent 3: Cat 3 (중간 산출물) -- 단독 → 토큰 초과로 실패
+  Agent 4: Cat 4-5 (입력/파라미터)
+  Agent 5: Cat 6-7 (DB/품질규칙)
+  Agent 6: Cat 8-9 (라이브러리/환경변수)
+  Agent 7: Cat 10-11 (병렬처리/실행모드)
+  Agent 8: Cat 12-14 (인프라/로깅/기타)
+  Agent 9: Cat 3 파일 스키마 전용
+
+Cat 3 재시도 (Phase 2: 3개 서브 에이전트 병렬)
+──────────────────────────────────────────
+  Agent 3a: SeqInfo DTO 필드 (53개)
+  Agent 3b: MatchSeqInfo + 기타 DTO/Enum (272개)
+  Agent 3c: Entity 필드 + 상태변수 + N.1/N.2/N.4
+
+병합 (Phase 3)
+──────────────────────────────────────────
+  Python 스크립트로 12개 산출물 → METADATA_INVESTIGATION.md</code></pre>
 </section>
-<section id="원칙-2-카테고리별-대상-파일을-사전-매핑하라" class="level4" data-number="1.8.1.2">
-<h4 data-number="1.8.1.2" class="anchored" data-anchor-id="원칙-2-카테고리별-대상-파일을-사전-매핑하라"><span class="header-section-number">1.8.1.2</span> 원칙 2: 카테고리별 대상 파일을 사전 매핑하라</h4>
+<section id="에이전트별-프롬프트-설계" class="level3" data-number="1.6.2">
+<h3 data-number="1.6.2" class="anchored" data-anchor-id="에이전트별-프롬프트-설계"><span class="header-section-number">1.6.2</span> 에이전트별 프롬프트 설계</h3>
+<p>각 에이전트에게 다음을 명시적으로 제공했습니다:</p>
+<ol type="1">
+<li><strong>담당 카테고리</strong>: “당신은 Cat 6-7 (DB 스키마/품질 규칙)만 담당합니다”</li>
+<li><strong>대상 파일 경로</strong>: 읽어야 할 파일 목록을 사전 지정</li>
+<li><strong>출력 형식</strong>: 8열 테이블 + N.1~N.4 구조</li>
+<li><strong>출력 위치</strong>: <code>/tmp/automsa_metadata/cat_06_07.md</code></li>
+<li><strong>원자적 완전성 강조</strong>: “모든 필드를 개별 행으로, 축약 없이”</li>
+</ol>
+</section>
+<section id="cat-3-토큰-제한-사고와-해결" class="level3" data-number="1.6.3">
+<h3 data-number="1.6.3" class="anchored" data-anchor-id="cat-3-토큰-제한-사고와-해결"><span class="header-section-number">1.6.3</span> Cat 3 토큰 제한 사고와 해결</h3>
+<p>Cat 3 단독 에이전트가 <strong>출력 토큰 제한(32K)을 초과</strong>하여 실패했습니다. Cat 3은 DTO 클래스(SeqInfo 859줄, MatchSeqInfo 1,273줄)의 수백 개 필드를 개별 행으로 추출해야 하므로, 단일 에이전트로는 출력량이 부족합니다.</p>
+<p>해결: Cat 3을 3개 서브 에이전트로 분할하여 재시도했습니다.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 46%">
+<col style="width: 20%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>서브 에이전트</th>
+<th>담당</th>
+<th>추출 결과</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Cat 3a</td>
+<td>SeqInfo DTO 필드</td>
+<td>53개</td>
+</tr>
+<tr class="even">
+<td>Cat 3b</td>
+<td>MatchSeqInfo + 10개 DTO + 12개 Enum</td>
+<td>272개</td>
+</tr>
+<tr class="odd">
+<td>Cat 3c</td>
+<td>Entity 필드 + 상태변수 + N.1/N.2/N.4</td>
+<td>Entity 14개 클래스 + State 44개</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="결과-2" class="level3" data-number="1.6.4">
+<h3 data-number="1.6.4" class="anchored" data-anchor-id="결과-2"><span class="header-section-number">1.6.4</span> 결과</h3>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>항목</th>
+<th>수치</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>총 항목 수</strong></td>
+<td><strong>2,499+</strong></td>
+</tr>
+<tr class="even">
+<td>산출물 크기</td>
+<td>594KB, 6,063줄</td>
+</tr>
+<tr class="odd">
+<td>사용 에이전트</td>
+<td>12개 (9 + 3 재시도)</td>
+</tr>
+<tr class="even">
+<td>Wall clock 시간</td>
+<td>~36분 (병렬 실행)</td>
+</tr>
+<tr class="odd">
+<td>병목 에이전트</td>
+<td>Cat 6-7 (~33분, DB 스키마가 가장 복잡)</td>
+</tr>
+</tbody>
+</table>
+<p>카테고리별 집계:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>카테고리</th>
+<th>항목 수</th>
+<th>비고</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1. 모듈 간 I/O</td>
+<td>286</td>
+<td>파일 경로, 포맷, CLI 인자</td>
+</tr>
+<tr class="even">
+<td>2. 파이프라인 의존성</td>
+<td>247</td>
+<td>실행 순서, 상태 전이</td>
+</tr>
+<tr class="odd">
+<td>3. 중간 산출물</td>
+<td>325+</td>
+<td>DTO/Entity/State + 35 파일 스키마</td>
+</tr>
+<tr class="even">
+<td>4. 입력 JSON/UI</td>
+<td>206</td>
+<td>Input 클래스 필드</td>
+</tr>
+<tr class="odd">
+<td>5. 알고리즘 파라미터</td>
+<td>138</td>
+<td>Constants, 임계값</td>
+</tr>
+<tr class="even">
+<td>6. DB 스키마/쿼리</td>
+<td>297</td>
+<td>13개 테이블, 175개 Entity Enum 컬럼</td>
+</tr>
+<tr class="odd">
+<td>7. 품질 규칙</td>
+<td>111</td>
+<td>7단계 EX 필터, 검증 로직</td>
+</tr>
+<tr class="even">
+<td>8. 라이브러리/API</td>
+<td>205</td>
+<td>pyproject.toml 의존성, 외부 API</td>
+</tr>
+<tr class="odd">
+<td>9. 환경 변수</td>
+<td>183</td>
+<td>Config, 경로 구성</td>
+</tr>
+<tr class="even">
+<td>10. 병렬 처리</td>
+<td>49</td>
+<td>외부 도구 스레딩 (VSEARCH/MAFFT)</td>
+</tr>
+<tr class="odd">
+<td>11. 실행 모드</td>
+<td>113</td>
+<td>DesignType별 분기</td>
+</tr>
+<tr class="even">
+<td>12. 인프라</td>
+<td>150</td>
+<td>CI/CD, ACR, Nexus</td>
+</tr>
+<tr class="odd">
+<td>13. 로깅</td>
+<td>79</td>
+<td>모듈별 로거</td>
+</tr>
+<tr class="even">
+<td>14. 기타</td>
+<td>110</td>
+<td>유틸리티, 헬퍼</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="번의-시도-비교" class="level3" data-number="1.6.5">
+<h3 data-number="1.6.5" class="anchored" data-anchor-id="번의-시도-비교"><span class="header-section-number">1.6.5</span> 4번의 시도 비교</h3>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>시도</th>
+<th>에이전트 구성</th>
+<th>항목 수</th>
+<th>시간</th>
+<th>실패 원인</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1차</td>
+<td>단일 1개</td>
+<td>259</td>
+<td>~50분</td>
+<td>Context window 한계</td>
+</tr>
+<tr class="even">
+<td>2차</td>
+<td>3개 분산</td>
+<td>(형식 불일치)</td>
+<td>~30분</td>
+<td>형식 불일치, 예시 부재</td>
+</tr>
+<tr class="odd">
+<td>3차</td>
+<td>5 읽기 + 합성</td>
+<td>436</td>
+<td>~40분</td>
+<td>요약에서 원자적 디테일 소실</td>
+</tr>
+<tr class="even">
+<td><strong>4차</strong></td>
+<td><strong>12개 추출</strong></td>
+<td><strong>2,499+</strong></td>
+<td><strong>~36분</strong></td>
+<td>-</td>
+</tr>
+</tbody>
+</table>
+<p>3차 대비 <strong>5.7배</strong>, 1차 대비 <strong>9.6배</strong> 증가. 시간은 병렬 실행 덕분에 오히려 단축되었습니다.</p>
+</section>
+<section id="교훈-2" class="level3" data-number="1.6.6">
+<h3 data-number="1.6.6" class="anchored" data-anchor-id="교훈-2"><span class="header-section-number">1.6.6</span> 교훈</h3>
+<blockquote class="blockquote">
+<p><strong>에이전트 역할 설계가 결과 품질의 핵심이다.</strong> 같은 코드를 같은 LLM이 보더라도, “읽기 에이전트”에게 시키면 436개, “추출 에이전트”에게 시키면 2,499개가 나옵니다. 프롬프트보다 에이전트 역할 설계가 더 큰 영향을 미칩니다.</p>
+</blockquote>
+<blockquote class="blockquote">
+<p><strong>대용량 카테고리는 출력 토큰 제한을 고려해 분할해야 한다.</strong> Cat 3처럼 200개 이상의 행을 개별 추출해야 하는 경우, 단일 에이전트의 출력 토큰 한계(32K)를 초과할 수 있습니다. 클래스 단위로 서브 에이전트를 분할하면 해결됩니다.</p>
+</blockquote>
+<hr>
+</section>
+</section>
+<section id="설계-원칙-정리" class="level2" data-number="1.7">
+<h2 data-number="1.7" class="anchored" data-anchor-id="설계-원칙-정리"><span class="header-section-number">1.7</span> 설계 원칙 정리</h2>
+<p>4번의 시행착오에서 도출한 원칙들을 종합합니다.</p>
+<section id="프롬프트-설계-원칙-6가지" class="level3" data-number="1.7.1">
+<h3 data-number="1.7.1" class="anchored" data-anchor-id="프롬프트-설계-원칙-6가지"><span class="header-section-number">1.7.1</span> 프롬프트 설계 원칙 (6가지)</h3>
+<section id="원칙-1-분산-실행-프로토콜을-프롬프트에-명시하라" class="level4" data-number="1.7.1.1">
+<h4 data-number="1.7.1.1" class="anchored" data-anchor-id="원칙-1-분산-실행-프로토콜을-프롬프트에-명시하라"><span class="header-section-number">1.7.1.1</span> 원칙 1: 분산 실행 프로토콜을 프롬프트에 명시하라</h4>
+<p>단일 에이전트 전제의 프롬프트를 여러 에이전트에게 나눠주면 실패합니다. <strong>어떻게 나누고, 어떻게 합칠 것인지</strong>를 프롬프트 자체에 포함해야 합니다.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode numberSource markdown number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb6-1"><a href="#cb6-1"></a><span class="fu">## 분산 실행 프로토콜</span></span>
+<span id="cb6-2"><a href="#cb6-2"></a></span>
+<span id="cb6-3"><a href="#cb6-3"></a><span class="fu">### 분할 단위</span></span>
+<span id="cb6-4"><a href="#cb6-4"></a><span class="ss">- </span>Agent A: Cat 1-2 (파이프라인 구조)</span>
+<span id="cb6-5"><a href="#cb6-5"></a><span class="ss">- </span>Agent B: Cat 3 (중간 산출물) -- 단독</span>
+<span id="cb6-6"><a href="#cb6-6"></a><span class="ss">- </span>Agent C: Cat 4-5 (입력/파라미터)</span>
+<span id="cb6-7"><a href="#cb6-7"></a>...</span>
+<span id="cb6-8"><a href="#cb6-8"></a></span>
+<span id="cb6-9"><a href="#cb6-9"></a><span class="fu">### 에이전트별 산출물 규칙</span></span>
+<span id="cb6-10"><a href="#cb6-10"></a><span class="ss">- </span>파일명: <span class="in">`/tmp/{repo}_metadata/cat_{NN}.md`</span></span>
+<span id="cb6-11"><a href="#cb6-11"></a><span class="ss">- </span>자기 완결적 (헤더 불필요, 카테고리 내용만)</span>
+<span id="cb6-12"><a href="#cb6-12"></a><span class="ss">- </span>마지막에 <span class="in">`&lt;!-- ROW_COUNT: {숫자} --&gt;`</span> 주석 추가</span></code></pre></div><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="원칙-2-카테고리별-대상-파일을-사전-매핑하라" class="level4" data-number="1.7.1.2">
+<h4 data-number="1.7.1.2" class="anchored" data-anchor-id="원칙-2-카테고리별-대상-파일을-사전-매핑하라"><span class="header-section-number">1.7.1.2</span> 원칙 2: 카테고리별 대상 파일을 사전 매핑하라</h4>
 <p>모든 에이전트가 152개 파일을 각자 탐색하면 토큰 낭비입니다. 파일을 미리 분류해서 에이전트 범위를 좁혀야 합니다.</p>
 </section>
-<section id="원칙-3-추상적-규칙-대신-완성된-예시를-제공하라" class="level4" data-number="1.8.1.3">
-<h4 data-number="1.8.1.3" class="anchored" data-anchor-id="원칙-3-추상적-규칙-대신-완성된-예시를-제공하라"><span class="header-section-number">1.8.1.3</span> 원칙 3: 추상적 규칙 대신 완성된 예시를 제공하라</h4>
+<section id="원칙-3-추상적-규칙-대신-완성된-예시를-제공하라" class="level4" data-number="1.7.1.3">
+<h4 data-number="1.7.1.3" class="anchored" data-anchor-id="원칙-3-추상적-규칙-대신-완성된-예시를-제공하라"><span class="header-section-number">1.7.1.3</span> 원칙 3: 추상적 규칙 대신 완성된 예시를 제공하라</h4>
 <p>“N.1-N.4 구조로 작성하세요”보다 <strong>실제 완성된 카테고리 1개를 통째로</strong> 예시로 보여주는 것이 효과적입니다.</p>
 </section>
-<section id="원칙-4-중요-요구사항은-독립-섹션-critical-표시로-분리하라" class="level4" data-number="1.8.1.4">
-<h4 data-number="1.8.1.4" class="anchored" data-anchor-id="원칙-4-중요-요구사항은-독립-섹션-critical-표시로-분리하라"><span class="header-section-number">1.8.1.4</span> 원칙 4: 중요 요구사항은 독립 섹션 + CRITICAL 표시로 분리하라</h4>
+<section id="원칙-4-중요-요구사항은-독립-섹션-critical-표시로-분리하라" class="level4" data-number="1.7.1.4">
+<h4 data-number="1.7.1.4" class="anchored" data-anchor-id="원칙-4-중요-요구사항은-독립-섹션-critical-표시로-분리하라"><span class="header-section-number">1.7.1.4</span> 원칙 4: 중요 요구사항은 독립 섹션 + CRITICAL 표시로 분리하라</h4>
 <p>카테고리 설명 안에 묻어 놓으면 에이전트가 놓칩니다.</p>
 </section>
-<section id="원칙-5-레포-규모별-자동-분할-기준을-포함하라" class="level4" data-number="1.8.1.5">
-<h4 data-number="1.8.1.5" class="anchored" data-anchor-id="원칙-5-레포-규모별-자동-분할-기준을-포함하라"><span class="header-section-number">1.8.1.5</span> 원칙 5: 레포 규모별 자동 분할 기준을 포함하라</h4>
+<section id="원칙-5-레포-규모별-자동-분할-기준을-포함하라" class="level4" data-number="1.7.1.5">
+<h4 data-number="1.7.1.5" class="anchored" data-anchor-id="원칙-5-레포-규모별-자동-분할-기준을-포함하라"><span class="header-section-number">1.7.1.5</span> 원칙 5: 레포 규모별 자동 분할 기준을 포함하라</h4>
 <table class="caption-top table">
 <thead>
 <tr class="header">
@@ -1022,23 +1105,23 @@ Phase 3: 메인 에이전트가 요약을 기반으로 METADATA_INVESTIGATION.md
 </tbody>
 </table>
 </section>
-<section id="원칙-6-오케스트레이터용-병합-체크리스트를-명시하라" class="level4" data-number="1.8.1.6">
-<h4 data-number="1.8.1.6" class="anchored" data-anchor-id="원칙-6-오케스트레이터용-병합-체크리스트를-명시하라"><span class="header-section-number">1.8.1.6</span> 원칙 6: 오케스트레이터용 병합 체크리스트를 명시하라</h4>
+<section id="원칙-6-오케스트레이터용-병합-체크리스트를-명시하라" class="level4" data-number="1.7.1.6">
+<h4 data-number="1.7.1.6" class="anchored" data-anchor-id="원칙-6-오케스트레이터용-병합-체크리스트를-명시하라"><span class="header-section-number">1.7.1.6</span> 원칙 6: 오케스트레이터용 병합 체크리스트를 명시하라</h4>
 <p>병합 단계에서 통계표 누락, 행 수 불일치가 발생합니다. 오케스트레이터가 따를 체크리스트가 필요합니다.</p>
 </section>
 </section>
-<section id="에이전트-역할-설계-원칙-3가지" class="level3" data-number="1.8.2">
-<h3 data-number="1.8.2" class="anchored" data-anchor-id="에이전트-역할-설계-원칙-3가지"><span class="header-section-number">1.8.2</span> 에이전트 역할 설계 원칙 (3가지)</h3>
-<section id="원칙-7-에이전트에게는-추출을-시켜라-읽기를-시키지-마라" class="level4" data-number="1.8.2.1">
-<h4 data-number="1.8.2.1" class="anchored" data-anchor-id="원칙-7-에이전트에게는-추출을-시켜라-읽기를-시키지-마라"><span class="header-section-number">1.8.2.1</span> 원칙 7: 에이전트에게는 “추출”을 시켜라, “읽기”를 시키지 마라</h4>
+<section id="에이전트-역할-설계-원칙-3가지" class="level3" data-number="1.7.2">
+<h3 data-number="1.7.2" class="anchored" data-anchor-id="에이전트-역할-설계-원칙-3가지"><span class="header-section-number">1.7.2</span> 에이전트 역할 설계 원칙 (3가지)</h3>
+<section id="원칙-7-에이전트에게는-추출을-시켜라-읽기를-시키지-마라" class="level4" data-number="1.7.2.1">
+<h4 data-number="1.7.2.1" class="anchored" data-anchor-id="원칙-7-에이전트에게는-추출을-시켜라-읽기를-시키지-마라"><span class="header-section-number">1.7.2.1</span> 원칙 7: 에이전트에게는 “추출”을 시켜라, “읽기”를 시키지 마라</h4>
 <p>“이 파일들을 읽어라”가 아니라 “이 파일에서 Cat N의 메타데이터를 추출하라”로 지시해야 원자적 디테일이 보존됩니다.</p>
 </section>
-<section id="원칙-8-cat-3은-항상-단독-에이전트에-할당하라" class="level4" data-number="1.8.2.2">
-<h4 data-number="1.8.2.2" class="anchored" data-anchor-id="원칙-8-cat-3은-항상-단독-에이전트에-할당하라"><span class="header-section-number">1.8.2.2</span> 원칙 8: Cat 3은 항상 단독 에이전트에 할당하라</h4>
-<p>Cat 3 (중간 산출물)은 DTO 필드 추출 + 파일 스키마 분석이 합쳐져 <strong>가장 분량이 큽니다</strong> (218개 항목 + 637줄 파일 스키마). 다른 카테고리와 묶으면 context window를 초과합니다.</p>
+<section id="원칙-8-cat-3은-항상-단독-에이전트에-할당하라" class="level4" data-number="1.7.2.2">
+<h4 data-number="1.7.2.2" class="anchored" data-anchor-id="원칙-8-cat-3은-항상-단독-에이전트에-할당하라"><span class="header-section-number">1.7.2.2</span> 원칙 8: Cat 3은 항상 단독 에이전트에 할당하라</h4>
+<p>Cat 3 (중간 산출물)은 DTO 필드 추출 + 파일 스키마 분석이 합쳐져 <strong>가장 분량이 큽니다</strong> (200개 이상의 항목 + 파일 스키마). 다른 카테고리와 묶으면 context window를 초과합니다.</p>
 </section>
-<section id="원칙-9-대량-처리-시-레포-크기에-따라-전략을-나눠라" class="level4" data-number="1.8.2.3">
-<h4 data-number="1.8.2.3" class="anchored" data-anchor-id="원칙-9-대량-처리-시-레포-크기에-따라-전략을-나눠라"><span class="header-section-number">1.8.2.3</span> 원칙 9: 대량 처리 시 레포 크기에 따라 전략을 나눠라</h4>
+<section id="원칙-9-대량-처리-시-레포-크기에-따라-전략을-나눠라" class="level4" data-number="1.7.2.3">
+<h4 data-number="1.7.2.3" class="anchored" data-anchor-id="원칙-9-대량-처리-시-레포-크기에-따라-전략을-나눠라"><span class="header-section-number">1.7.2.3</span> 원칙 9: 대량 처리 시 레포 크기에 따라 전략을 나눠라</h4>
 <pre><code>for repo in repos:
     if repo.file_count &lt; 30:
         single_extraction_agent(repo)
@@ -1046,11 +1129,11 @@ Phase 3: 메인 에이전트가 요약을 기반으로 METADATA_INVESTIGATION.md
         parallel_extraction_agents(repo, categories)</code></pre>
 </section>
 </section>
-<section id="llm-추출의-근본적-한계" class="level3" data-number="1.8.3">
-<h3 data-number="1.8.3" class="anchored" data-anchor-id="llm-추출의-근본적-한계"><span class="header-section-number">1.8.3</span> LLM 추출의 근본적 한계</h3>
+<section id="llm-추출의-근본적-한계" class="level3" data-number="1.7.3">
+<h3 data-number="1.7.3" class="anchored" data-anchor-id="llm-추출의-근본적-한계"><span class="header-section-number">1.7.3</span> LLM 추출의 근본적 한계</h3>
 <p>프롬프트를 아무리 정밀하게 만들어도 해결할 수 없는 문제가 있습니다.</p>
-<section id="비결정성non-determinism-문제" class="level4" data-number="1.8.3.1">
-<h4 data-number="1.8.3.1" class="anchored" data-anchor-id="비결정성non-determinism-문제"><span class="header-section-number">1.8.3.1</span> 비결정성(Non-determinism) 문제</h4>
+<section id="비결정성non-determinism-문제" class="level4" data-number="1.7.3.1">
+<h4 data-number="1.7.3.1" class="anchored" data-anchor-id="비결정성non-determinism-문제"><span class="header-section-number">1.7.3.1</span> 비결정성(Non-determinism) 문제</h4>
 <p>같은 프롬프트 + 같은 코드로 두 번 실행하면:</p>
 <table class="caption-top table">
 <colgroup>
@@ -1066,7 +1149,7 @@ Phase 3: 메인 에이전트가 요약을 기반으로 METADATA_INVESTIGATION.md
 <tbody>
 <tr class="odd">
 <td>행 수 불일치</td>
-<td>이번 1,411개, 다음번 1,380개</td>
+<td>이번 1,400개, 다음번 1,380개</td>
 </tr>
 <tr class="even">
 <td>행 순서 변동</td>
@@ -1087,12 +1170,12 @@ Phase 3: 메인 에이전트가 요약을 기반으로 METADATA_INVESTIGATION.md
 </tbody>
 </table>
 </section>
-<section id="왜-이것이-문제인가" class="level4" data-number="1.8.3.2">
-<h4 data-number="1.8.3.2" class="anchored" data-anchor-id="왜-이것이-문제인가"><span class="header-section-number">1.8.3.2</span> 왜 이것이 문제인가</h4>
+<section id="왜-이것이-문제인가" class="level4" data-number="1.7.3.2">
+<h4 data-number="1.7.3.2" class="anchored" data-anchor-id="왜-이것이-문제인가"><span class="header-section-number">1.7.3.2</span> 왜 이것이 문제인가</h4>
 <p>코드 설명 Agent가 메타데이터를 참조할 때, <strong>실행마다 메타데이터가 달라지면 Agent의 응답도 불안정</strong>해집니다. 주기적으로 메타데이터를 갱신해야 하는 운영 환경에서는 치명적입니다.</p>
 </section>
-<section id="재현성-한계" class="level4" data-number="1.8.3.3">
-<h4 data-number="1.8.3.3" class="anchored" data-anchor-id="재현성-한계"><span class="header-section-number">1.8.3.3</span> 재현성 한계</h4>
+<section id="재현성-한계" class="level4" data-number="1.7.3.3">
+<h4 data-number="1.7.3.3" class="anchored" data-anchor-id="재현성-한계"><span class="header-section-number">1.7.3.3</span> 재현성 한계</h4>
 <table class="caption-top table">
 <thead>
 <tr class="header">
@@ -1119,14 +1202,14 @@ Phase 3: 메인 에이전트가 요약을 기반으로 METADATA_INVESTIGATION.md
 </section>
 </section>
 </section>
-<section id="실전에서-배운-세부-교훈들" class="level2" data-number="1.9">
-<h2 data-number="1.9" class="anchored" data-anchor-id="실전에서-배운-세부-교훈들"><span class="header-section-number">1.9</span> 실전에서 배운 세부 교훈들</h2>
-<section id="파일-스키마-추출은-특별-취급이-필요하다" class="level3" data-number="1.9.1">
-<h3 data-number="1.9.1" class="anchored" data-anchor-id="파일-스키마-추출은-특별-취급이-필요하다"><span class="header-section-number">1.9.1</span> 파일 스키마 추출은 특별 취급이 필요하다</h3>
+<section id="실전에서-배운-세부-교훈들" class="level2" data-number="1.8">
+<h2 data-number="1.8" class="anchored" data-anchor-id="실전에서-배운-세부-교훈들"><span class="header-section-number">1.8</span> 실전에서 배운 세부 교훈들</h2>
+<section id="파일-스키마-추출은-특별-취급이-필요하다" class="level3" data-number="1.8.1">
+<h3 data-number="1.8.1" class="anchored" data-anchor-id="파일-스키마-추출은-특별-취급이-필요하다"><span class="header-section-number">1.8.1</span> 파일 스키마 추출은 특별 취급이 필요하다</h3>
 <p>TSV/FASTA 파일의 스키마(구분자, 컬럼 순서, 생산/소비 함수)는 코드의 <strong>실제 write 로직</strong> (f-string 안의 컬럼 순서, 조건부 컬럼 등)을 분석해야 합니다. 단순 추출로는 불가능하며, 전용 에이전트가 코드 흐름을 따라가야 합니다.</p>
 </section>
-<section id="병합-단계에서-빠지기-쉬운-항목들" class="level3" data-number="1.9.2">
-<h3 data-number="1.9.2" class="anchored" data-anchor-id="병합-단계에서-빠지기-쉬운-항목들"><span class="header-section-number">1.9.2</span> 병합 단계에서 빠지기 쉬운 항목들</h3>
+<section id="병합-단계에서-빠지기-쉬운-항목들" class="level3" data-number="1.8.2">
+<h3 data-number="1.8.2" class="anchored" data-anchor-id="병합-단계에서-빠지기-쉬운-항목들"><span class="header-section-number">1.8.2</span> 병합 단계에서 빠지기 쉬운 항목들</h3>
 <ul>
 <li>통계표의 행 수 (에이전트가 <code>*</code>로 남겨두는 경우)</li>
 <li>파이프라인 구조 다이어그램</li>
@@ -1135,25 +1218,26 @@ Phase 3: 메인 에이전트가 요약을 기반으로 METADATA_INVESTIGATION.md
 </ul>
 <p>이들은 <strong>오케스트레이터(리더 에이전트 또는 스크립트)</strong>가 자동 생성해야 합니다.</p>
 </section>
-<section id="permission-모드-주의" class="level3" data-number="1.9.3">
-<h3 data-number="1.9.3" class="anchored" data-anchor-id="permission-모드-주의"><span class="header-section-number">1.9.3</span> Permission 모드 주의</h3>
+<section id="permission-모드-주의" class="level3" data-number="1.8.3">
+<h3 data-number="1.8.3" class="anchored" data-anchor-id="permission-모드-주의"><span class="header-section-number">1.8.3</span> Permission 모드 주의</h3>
 <p><code>bypassPermissions</code> 모드로 에이전트를 실행해도 <code>/tmp</code> 디렉토리 생성에 실패하는 경우가 있었습니다. 산출물 디렉토리는 <strong>에이전트 실행 전에 미리 생성</strong>해 두어야 합니다.</p>
 <hr>
 </section>
 </section>
-<section id="결론" class="level2" data-number="1.10">
-<h2 data-number="1.10" class="anchored" data-anchor-id="결론"><span class="header-section-number">1.10</span> 결론</h2>
+<section id="결론" class="level2" data-number="1.9">
+<h2 data-number="1.9" class="anchored" data-anchor-id="결론"><span class="header-section-number">1.9</span> 결론</h2>
 <p>4번의 시행착오에서 배운 핵심:</p>
 <ol type="1">
 <li><strong>대규모 코드베이스는 단일 에이전트로 처리할 수 없다</strong> – Context window의 물리적 한계</li>
-<li><strong>LLM은 추상적 규칙보다 구체적 예시를 따른다</strong> – Gold Standard 참조 문서가 필수</li>
-<li><strong>중요 요구사항은 독립 섹션으로 분리해야 한다</strong> – 프롬프트 안에 묻히면 누락됨</li>
-<li><strong>“읽어라”와 “추출하라”는 근본적으로 다른 지시다</strong> – 요약 기반 합성은 원자적 디테일을 체계적으로 소실시킨다</li>
-<li><strong>순수 LLM 접근은 비결정적이다</strong> – 프롬프트 개선만으로는 100% 재현성을 달성할 수 없다</li>
-<li><strong>에이전트의 역할 설계가 결과 품질을 결정한다</strong> – 같은 코드를 봐도 역할에 따라 전혀 다른 출력이 나온다</li>
+<li><strong>LLM은 추상적 규칙보다 구체적 예시를 따른다</strong> – 완성된 예시 문서가 필수</li>
+<li><strong>“읽어라”와 “추출하라”는 근본적으로 다른 지시다</strong> – 요약 기반 합성은 원자적 디테일을 체계적으로 소실시킨다 (436 vs 2,499)</li>
+<li><strong>에이전트 역할 설계가 결과 품질의 핵심이다</strong> – 같은 코드를 같은 LLM이 보더라도, 역할에 따라 9.6배 차이가 발생한다</li>
+<li><strong>대용량 카테고리는 출력 토큰 한계를 고려해 분할해야 한다</strong> – Cat 3은 3개 서브 에이전트로 분할하여 해결</li>
+<li><strong>순수 LLM 접근은 비결정적이다</strong> – 2,499개를 성공적으로 추출했지만, 동일 코드로 재실행하면 항목 수와 내용이 달라진다</li>
 </ol>
 <p>한마디로: <strong>“무엇을 추출할 것인가”는 프롬프트의 영역이지만, “에이전트에게 무엇을 시킬 것인가”는 역할 설계의 영역이다.</strong></p>
-<p>이 한계를 인식한 후 설계한 해결책 – AST 코드 파서와 LLM을 결합한 하이브리드 파이프라인 – 은 <a href="../../../../../docs/blog/posts/Agent/01-코드분석/02-하이브리드_파이프라인_설계.html">다음 글</a>에서 다룹니다.</p>
+<p>4차 시도에서 순수 LLM 접근으로도 2,499+개의 고품질 메타데이터를 추출할 수 있음을 증명했습니다. 그러나 <strong>재현성 문제</strong>(같은 코드로 재실행해도 결과가 달라짐)는 프롬프트나 에이전트 설계만으로는 해결할 수 없는 근본적 한계입니다.</p>
+<p>이 한계를 구조적으로 해결하기 위한 접근 – AST 코드 파서와 LLM을 결합한 하이브리드 파이프라인 – 은 <a href="../../../../../docs/blog/posts/Agent/01-코드분석/02-하이브리드_파이프라인_설계.html">다음 글</a>에서 다룹니다.</p>
 
 
 </section>
