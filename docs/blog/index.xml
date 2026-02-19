@@ -12389,7 +12389,7 @@ saaipoctestkrc001.blob.core.windows.net:/saaipoctestkrc001/bc-aipoc-test-krc001 
  ]]></description>
   <category>Azure Cloud</category>
   <guid>https://dlwns0719.github.io/my_blog/docs/blog/posts/Azure_Cloud/01-클라우드_인프라_설정/01-Data_Lake_Storage.html</guid>
-  <pubDate>Thu, 19 Feb 2026 02:11:29 GMT</pubDate>
+  <pubDate>Thu, 19 Feb 2026 02:19:39 GMT</pubDate>
 </item>
 <item>
   <title>OpenAI 외 도구 호출 에이전트(Tool Calling Agent)</title>
@@ -13065,7 +13065,7 @@ font-style: inherit;">"qwen2.5(Ollama)"</span>)</span></code></pre></div></div>
 
  ]]></description>
   <guid>https://dlwns0719.github.io/my_blog/docs/blog/posts/RAG/15-Agent/04-Agent-More-LLMs.html</guid>
-  <pubDate>Thu, 19 Feb 2026 02:11:29 GMT</pubDate>
+  <pubDate>Thu, 19 Feb 2026 02:19:39 GMT</pubDate>
 </item>
 <item>
   <title>도구 (Tools)</title>
@@ -13905,7 +13905,7 @@ font-style: inherit;">"LangChain AI"</span>})</span></code></pre></div></div>
   <category>LangChain</category>
   <category>Prompt_Engineering</category>
   <guid>https://dlwns0719.github.io/my_blog/docs/blog/posts/RAG/15-Agent/01-Tools.html</guid>
-  <pubDate>Thu, 19 Feb 2026 02:11:29 GMT</pubDate>
+  <pubDate>Thu, 19 Feb 2026 02:19:39 GMT</pubDate>
 </item>
 </channel>
 </rss>

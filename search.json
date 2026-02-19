@@ -993,14 +993,24 @@
     "href": "docs/blog/posts/Agent/index.html",
     "title": "Agent",
     "section": "",
-    "text": "메타데이터 추출 시행착오와 설계 원칙\n하이브리드 파이프라인 설계: AST + LLM 자동화"
+    "text": "메타데이터 추출 시행착오와 설계 원칙\n하이브리드 파이프라인 설계: AST + LLM 자동화",
+    "crumbs": [
+      "Blog",
+      "Blog Posts",
+      "Agent"
+    ]
   },
   {
     "objectID": "docs/blog/posts/Agent/index.html#agent",
     "href": "docs/blog/posts/Agent/index.html#agent",
     "title": "Agent",
     "section": "",
-    "text": "메타데이터 추출 시행착오와 설계 원칙\n하이브리드 파이프라인 설계: AST + LLM 자동화"
+    "text": "메타데이터 추출 시행착오와 설계 원칙\n하이브리드 파이프라인 설계: AST + LLM 자동화",
+    "crumbs": [
+      "Blog",
+      "Blog Posts",
+      "Agent"
+    ]
   },
   {
     "objectID": "docs/blog/posts/RAG/15-Agent/04-Agent-More-LLMs.html",
