@@ -5,6 +5,8 @@ categories:
   - AI
   - LangChain
   - Prompt_Engineering
+execute:
+    eval: false
 ---
 
 
