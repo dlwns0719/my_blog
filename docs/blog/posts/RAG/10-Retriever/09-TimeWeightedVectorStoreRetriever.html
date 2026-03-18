@@ -80,9 +80,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../../../../../site_libs/quarto-html/quarto-syntax-highlighting-065a5179aebd64318d7ea99d77b64a9e.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../../../../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../../../../site_libs/bootstrap/bootstrap-5a73818b025f47a6d9fdc61b5aee3d21.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../../../../../site_libs/bootstrap/bootstrap-dark-0cc05e60083667b8b604a857b4577219.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="../../../../../site_libs/bootstrap/bootstrap-5a73818b025f47a6d9fdc61b5aee3d21.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="../../../../../site_libs/bootstrap/bootstrap-52ff868ffc0e454581af15a188b952cf.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../../../../site_libs/bootstrap/bootstrap-dark-5a6315042eb7711806fdef11cd019c18.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../../../../site_libs/bootstrap/bootstrap-52ff868ffc0e454581af15a188b952cf.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -586,7 +586,7 @@ window.Quarto = {
 <h2 data-number="2" class="anchored" data-anchor-id="환경-설정"><span class="header-section-number">2</span> 환경 설정</h2>
 <section id="api-키-로드" class="level3" data-number="2.1">
 <h3 data-number="2.1" class="anchored" data-anchor-id="api-키-로드"><span class="header-section-number">2.1</span> API 키 로드</h3>
-<div id="917ae0a5" class="cell" data-execution_count="1">
+<div id="88b5d37c" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>코드</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a><span class="co"># API 키를 환경변수로 관리하기 위한 설정 파일  </span></span>
@@ -600,7 +600,7 @@ window.Quarto = {
 <section id="langsmith-추적-설정" class="level3" data-number="2.2">
 <h3 data-number="2.2" class="anchored" data-anchor-id="langsmith-추적-설정"><span class="header-section-number">2.2</span> LangSmith 추적 설정</h3>
 <p>LangSmith를 활용하면 시간 가중치 계산 과정과 검색 점수 변화를 시각적으로 추적할 수 있다.</p>
-<div id="3521e5cf" class="cell" data-execution_count="2">
+<div id="0b1e038a" class="cell" data-execution_count="2">
 <details class="code-fold">
 <summary>코드</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1"></a><span class="co"># LangSmith 추적 설정 (https://smith.langchain.com)  </span></span>
@@ -636,7 +636,7 @@ window.Quarto = {
 <section id="retriever-초기화" class="level3" data-number="3.2">
 <h3 data-number="3.2" class="anchored" data-anchor-id="retriever-초기화"><span class="header-section-number">3.2</span> Retriever 초기화</h3>
 <p>벡터 저장소와 매우 낮은 감쇠율을 설정하여 retriever를 생성한다.</p>
-<div id="04eb00ce" class="cell" data-execution_count="3">
+<div id="dc7540fe" class="cell" data-execution_count="3">
 <details class="code-fold">
 <summary>코드</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1"></a><span class="im">from</span> datetime <span class="im">import</span> datetime, timedelta  </span>
@@ -666,7 +666,7 @@ window.Quarto = {
 <section id="샘플-데이터-추가" class="level3" data-number="3.3">
 <h3 data-number="3.3" class="anchored" data-anchor-id="샘플-데이터-추가"><span class="header-section-number">3.3</span> 샘플 데이터 추가</h3>
 <p>두 개의 문서를 추가한다. 첫 번째 문서는 어제 작성된 것으로, 두 번째 문서는 방금 작성된 것으로 설정한다.</p>
-<div id="7443dbd6" class="cell" data-execution_count="4">
+<div id="a0aa3234" class="cell" data-execution_count="4">
 <details class="code-fold">
 <summary>코드</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1"></a><span class="co"># 어제 날짜를 계산  </span></span>
@@ -696,7 +696,7 @@ window.Quarto = {
 <li>과거 문서가 최신 문서로 계산되는 효과가 있다</li>
 </ul></li>
 </ul>
-<div id="dcd3caf1" class="cell" data-execution_count="5">
+<div id="ecbebbd4" class="cell" data-execution_count="5">
 <details class="code-fold">
 <summary>코드</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1"></a><span class="co"># "테디노트 구독해 주세요."가 먼저 반환됨  </span></span>
@@ -739,7 +739,7 @@ window.Quarto = {
 <section id="retriever-초기화-1" class="level3" data-number="4.2">
 <h3 data-number="4.2" class="anchored" data-anchor-id="retriever-초기화-1"><span class="header-section-number">4.2</span> Retriever 초기화</h3>
 <p>벡터 저장소와 높은 감쇠율을 설정하여 retriever를 생성한다.</p>
-<div id="4a487074" class="cell" data-execution_count="6">
+<div id="140e4bf8" class="cell" data-execution_count="6">
 <details class="code-fold">
 <summary>코드</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1"></a><span class="co"># 임베딩 모델을 정의  </span></span>
@@ -760,7 +760,7 @@ window.Quarto = {
 <section id="샘플-데이터-추가-1" class="level3" data-number="4.3">
 <h3 data-number="4.3" class="anchored" data-anchor-id="샘플-데이터-추가-1"><span class="header-section-number">4.3</span> 샘플 데이터 추가</h3>
 <p>동일한 두 개의 문서를 추가한다. 첫 번째는 어제 작성, 두 번째는 방금 작성으로 설정한다.</p>
-<div id="3f49d504" class="cell" data-execution_count="7">
+<div id="9f8aa1ac" class="cell" data-execution_count="7">
 <details class="code-fold">
 <summary>코드</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1"></a><span class="co"># 어제 날짜를 계산  </span></span>
@@ -785,7 +785,7 @@ window.Quarto = {
 <section id="검색-결과-확인-1" class="level3" data-number="4.4">
 <h3 data-number="4.4" class="anchored" data-anchor-id="검색-결과-확인-1"><span class="header-section-number">4.4</span> 검색 결과 확인</h3>
 <p><code>decay_rate</code>가 0.999로 높으므로, 24시간이 지난 문서는 시간 페널티를 크게 받아 <strong>최신 문서</strong>가 먼저 반환된다.</p>
-<div id="fd970b72" class="cell" data-execution_count="8">
+<div id="9d8e37cb" class="cell" data-execution_count="8">
 <details class="code-fold">
 <summary>코드</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1"></a><span class="co"># "테디노트 구독 해주실꺼죠? Please!"가 먼저 반환됨  </span></span>
@@ -921,7 +921,7 @@ window.Quarto = {
 </section>
 <section id="mock_now-사용법" class="level3" data-number="6.2">
 <h3 data-number="6.2" class="anchored" data-anchor-id="mock_now-사용법"><span class="header-section-number">6.2</span> mock_now 사용법</h3>
-<div id="33b56f07" class="cell" data-execution_count="9">
+<div id="b4005065" class="cell" data-execution_count="9">
 <details class="code-fold">
 <summary>코드</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1"></a><span class="im">import</span> datetime  </span>
@@ -940,7 +940,7 @@ window.Quarto = {
 <section id="시간-변경-테스트" class="level3" data-number="6.3">
 <h3 data-number="6.3" class="anchored" data-anchor-id="시간-변경-테스트"><span class="header-section-number">6.3</span> 시간 변경 테스트</h3>
 <p>다양한 시간대에서 검색 결과가 어떻게 달라지는지 확인하여 적절한 <code>decay_rate</code>를 찾을 수 있다.</p>
-<div id="9a2e5515" class="cell" data-execution_count="10">
+<div id="b459a5f5" class="cell" data-execution_count="10">
 <details class="code-fold">
 <summary>코드</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1"></a><span class="co"># 과거 시점 (2024년 8월 29일)으로 설정하여 검색  </span></span>
@@ -959,7 +959,7 @@ window.Quarto = {
 <section id="decay_rate-튜닝-예제" class="level3" data-number="6.4">
 <h3 data-number="6.4" class="anchored" data-anchor-id="decay_rate-튜닝-예제"><span class="header-section-number">6.4</span> decay_rate 튜닝 예제</h3>
 <p>다양한 시간 간격에서 검색 결과를 테스트하여 최적의 <code>decay_rate</code>를 찾는다.</p>
-<div id="4e50d7ec" class="cell" data-execution_count="11">
+<div id="fcb44fef" class="cell" data-execution_count="11">
 <details class="code-fold">
 <summary>코드</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1"></a><span class="co"># 다양한 시간대 테스트  </span></span>
@@ -1121,7 +1121,7 @@ window.Quarto = {
 <section id="요약" class="level2" data-number="8">
 <h2 data-number="8" class="anchored" data-anchor-id="요약"><span class="header-section-number">8</span> 요약</h2>
 <p><code>TimeWeightedVectorStoreRetriever</code>는 의미적 유사도와 시간 기반 신선도를 결합하여 상황에 맞는 최적의 검색 결과를 제공한다. <code>decay_rate</code> 값을 조정하여 최신성과 관련성의 균형을 세밀하게 제어할 수 있으며, 뉴스, 규정집, 기술 문서 등 다양한 도메인에서 활용 가능하다. 실전에서는 문서 특성, 사용자 의도, 시간대 등을 고려한 동적 전략을 수립하여 검색 품질을 극대화할 수 있다.</p>
-<div id="659403bb" class="cell" data-execution_count="12">
+<div id="f5f7a28d" class="cell" data-execution_count="12">
 <details class="code-fold">
 <summary>코드</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1"></a><span class="cf">with</span> mock_now(datetime.datetime(<span class="dv">2024</span>, <span class="dv">8</span>, <span class="dv">29</span>, <span class="dv">00</span>, <span class="dv">00</span>)):  </span>
@@ -1138,7 +1138,7 @@ window.Quarto = {
 <section id="decay_rate-튜닝-예제-1" class="level3" data-number="8.1">
 <h3 data-number="8.1" class="anchored" data-anchor-id="decay_rate-튜닝-예제-1"><span class="header-section-number">8.1</span> decay_rate 튜닝 예제</h3>
 <p>다양한 시간 간격에서 검색 결과를 테스트하여 최적의 <code>decay_rate</code>를 찾는다.</p>
-<div id="01bab2c0" class="cell" data-execution_count="13">
+<div id="5bc83668" class="cell" data-execution_count="13">
 <details class="code-fold">
 <summary>코드</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1"></a><span class="co"># 다양한 시간대 테스트  </span></span>

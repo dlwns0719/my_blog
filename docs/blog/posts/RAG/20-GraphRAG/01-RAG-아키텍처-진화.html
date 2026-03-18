@@ -1,0 +1,1741 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ko" xml:lang="ko"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.25">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Junhyun Lee">
+<meta name="description" content="기본 RAG, 에이전틱 RAG, 그래프 RAG의 개념과 차이를 정리한다. 각 아키텍처가 해결하는 문제, 구현 방식, 적합한 사용 시나리오를 비교하고 단계별 도입 전략을 제시한다.">
+
+<title>RAG 아키텍처의 진화: 기본 RAG에서 그래프 RAG까지 – Junhyun Lee</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../../../site_libs/quarto-search/quarto-search.js"></script>
+<script src="../../../../../site_libs/quarto-search/autocomplete-preset-algolia.umd.js"></script>
+<meta name="quarto:offset" content="../../../../../">
+<script src="../../../../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../../../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../../../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../../../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../../../site_libs/quarto-html/quarto-syntax-highlighting-065a5179aebd64318d7ea99d77b64a9e.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../../../../site_libs/quarto-html/quarto-syntax-highlighting-dark-969ddfa49e00a70eb3423444dbc81f6c.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../../../../site_libs/quarto-html/quarto-syntax-highlighting-065a5179aebd64318d7ea99d77b64a9e.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../../../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../../../site_libs/bootstrap/bootstrap-52ff868ffc0e454581af15a188b952cf.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../../../../site_libs/bootstrap/bootstrap-dark-5a6315042eb7711806fdef11cd019c18.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../../../../site_libs/bootstrap/bootstrap-52ff868ffc0e454581af15a188b952cf.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "algolia": {
+    "application-id": "DUOR1DRC9D",
+    "search-only-api-key": "f264da5dea684ffb9e9b4a574af3ed61",
+    "index-name": "prod_QUARTO",
+    "analytics-events": true,
+    "show-logo": true,
+    "libDir": "site_libs"
+  },
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": true,
+  "language": {
+    "search-no-results-text": "일치 없음",
+    "search-matching-documents-text": "일치된 문서",
+    "search-copy-link-title": "검색 링크 복사",
+    "search-hide-matches-text": "추가 검색 결과 숨기기",
+    "search-more-match-text": "추가 검색결과",
+    "search-more-matches-text": "추가 검색결과",
+    "search-clear-button-title": "제거",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "취소",
+    "search-submit-button-title": "검색",
+    "search-label": "검색"
+  }
+}</script>
+<script src="https://cdn.jsdelivr.net/npm/algoliasearch@4.5.1/dist/algoliasearch-lite.umd.js"></script>
+
+
+<script type="text/javascript">
+var ALGOLIA_INSIGHTS_SRC = "https://cdn.jsdelivr.net/npm/search-insights/dist/search-insights.iife.min.js";
+!function(e,a,t,n,s,i,c){e.AlgoliaAnalyticsObject=s,e[s]=e[s]||function(){
+(e[s].queue=e[s].queue||[]).push(arguments)},i=a.createElement(t),c=a.getElementsByTagName(t)[0],
+i.async=1,i.src=n,c.parentNode.insertBefore(i,c)
+}(window,document,"script",ALGOLIA_INSIGHTS_SRC,"aa");
+</script>
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@algolia/autocomplete-plugin-algolia-insights">
+
+</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-6W0EKFMWBN"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-6W0EKFMWBN', { 'anonymize_ip': true});
+</script>
+<style>
+
+      .quarto-title-block .quarto-title-banner h1,
+      .quarto-title-block .quarto-title-banner h2,
+      .quarto-title-block .quarto-title-banner h3,
+      .quarto-title-block .quarto-title-banner h4,
+      .quarto-title-block .quarto-title-banner h5,
+      .quarto-title-block .quarto-title-banner h6
+      {
+        color: black;
+      }
+
+      .quarto-title-block .quarto-title-banner {
+        color: black;
+background: #EDF3F9;
+      }
+</style>
+<style>
+.custom-footer { 
+  text-align: center; 
+  font-size: 0.8em; 
+  color: #666; 
+  margin-top: 2rem; 
+}
+</style>
+
+
+<link rel="stylesheet" href="../../../../../styles.css">
+<meta property="og:title" content="RAG 아키텍처의 진화: 기본 RAG에서 그래프 RAG까지 – Junhyun Lee">
+<meta property="og:description" content="기본 RAG, 에이전틱 RAG, 그래프 RAG의 개념과 차이를 정리한다. 각 아키텍처가 해결하는 문제, 구현 방식, 적합한 사용 시나리오를 비교하고 단계별 도입 전략을 제시한다.">
+<meta property="og:site_name" content="Junhyun Lee">
+<meta name="twitter:title" content="RAG 아키텍처의 진화: 기본 RAG에서 그래프 RAG까지 – Junhyun Lee">
+<meta name="twitter:description" content="기본 RAG, 에이전틱 RAG, 그래프 RAG의 개념과 차이를 정리한다. 각 아키텍처가 해결하는 문제, 구현 방식, 적합한 사용 시나리오를 비교하고 단계별 도입 전략을 제시한다.">
+<meta name="twitter:card" content="summary">
+</head>
+
+<body class="nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="../../../../../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../../../../.././images/logo.png" alt="" class="navbar-logo light-content">
+    <img src="../../../../.././images/logo.png" alt="" class="navbar-logo dark-content">
+    </a>
+    <a class="navbar-brand" href="../../../../../index.html">
+    <span class="navbar-title">Junhyun Lee</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="검색"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="탐색 전환" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../../../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../../../docs/blog/index.html"> 
+<span class="menu-text">Blog</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../../../about.html"> 
+<span class="menu-text">Me</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/dlwns0719"> <i class="bi bi-github" role="img" aria-label="Github">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/in/dlwns0719/"> <i class="bi bi-linkedin" role="img" aria-label="Linkedin">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="다크 모드 전환"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-page-left">
+      <h1 class="title">RAG 아키텍처의 진화: 기본 RAG에서 그래프 RAG까지</h1>
+            <p class="subtitle lead">벡터 검색의 한계를 넘어서</p>
+                  <div>
+        <div class="description">
+          <p>기본 RAG, 에이전틱 RAG, 그래프 RAG의 개념과 차이를 정리한다. 각 아키텍처가 해결하는 문제, 구현 방식, 적합한 사용 시나리오를 비교하고 단계별 도입 전략을 제시한다.</p>
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">AI</div>
+                <div class="quarto-category">RAG</div>
+                <div class="quarto-category">GraphRAG</div>
+                <div class="quarto-category">Architecture</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta column-page-left">
+
+      <div>
+      <div class="quarto-title-meta-heading">저자</div>
+      <div class="quarto-title-meta-contents">
+               <p>Junhyun Lee </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">공개</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">2026년 03월 18일</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">목차</h2>
+   
+  <ul>
+  <li><a href="#rag-아키텍처의-진화" id="toc-rag-아키텍처의-진화" class="nav-link active" data-scroll-target="#rag-아키텍처의-진화"><span class="header-section-number">1</span> RAG 아키텍처의 진화</a>
+  <ul class="collapse">
+  <li><a href="#기본-rag-naive-rag" id="toc-기본-rag-naive-rag" class="nav-link" data-scroll-target="#기본-rag-naive-rag"><span class="header-section-number">1.1</span> 기본 RAG (Naive RAG)</a>
+  <ul class="collapse">
+  <li><a href="#동작-원리" id="toc-동작-원리" class="nav-link" data-scroll-target="#동작-원리"><span class="header-section-number">1.1.1</span> 동작 원리</a></li>
+  <li><a href="#저장-구조" id="toc-저장-구조" class="nav-link" data-scroll-target="#저장-구조"><span class="header-section-number">1.1.2</span> 저장 구조</a></li>
+  <li><a href="#한계" id="toc-한계" class="nav-link" data-scroll-target="#한계"><span class="header-section-number">1.1.3</span> 한계</a></li>
+  </ul></li>
+  <li><a href="#에이전틱-rag-agentic-rag" id="toc-에이전틱-rag-agentic-rag" class="nav-link" data-scroll-target="#에이전틱-rag-agentic-rag"><span class="header-section-number">1.2</span> 에이전틱 RAG (Agentic RAG)</a>
+  <ul class="collapse">
+  <li><a href="#기본-rag의-어떤-한계를-해결하는가" id="toc-기본-rag의-어떤-한계를-해결하는가" class="nav-link" data-scroll-target="#기본-rag의-어떤-한계를-해결하는가"><span class="header-section-number">1.2.1</span> 기본 RAG의 어떤 한계를 해결하는가</a></li>
+  <li><a href="#동작-원리-1" id="toc-동작-원리-1" class="nav-link" data-scroll-target="#동작-원리-1"><span class="header-section-number">1.2.2</span> 동작 원리</a></li>
+  <li><a href="#핵심-구성-요소" id="toc-핵심-구성-요소" class="nav-link" data-scroll-target="#핵심-구성-요소"><span class="header-section-number">1.2.3</span> 핵심 구성 요소</a></li>
+  <li><a href="#서브-agent-패턴" id="toc-서브-agent-패턴" class="nav-link" data-scroll-target="#서브-agent-패턴"><span class="header-section-number">1.2.4</span> 서브 Agent 패턴</a></li>
+  <li><a href="#기본-rag와의-차이" id="toc-기본-rag와의-차이" class="nav-link" data-scroll-target="#기본-rag와의-차이"><span class="header-section-number">1.2.5</span> 기본 RAG와의 차이</a></li>
+  <li><a href="#한계-1" id="toc-한계-1" class="nav-link" data-scroll-target="#한계-1"><span class="header-section-number">1.2.6</span> 한계</a></li>
+  </ul></li>
+  <li><a href="#그래프-rag-graph-rag" id="toc-그래프-rag-graph-rag" class="nav-link" data-scroll-target="#그래프-rag-graph-rag"><span class="header-section-number">1.3</span> 그래프 RAG (Graph RAG)</a>
+  <ul class="collapse">
+  <li><a href="#에이전틱-rag의-어떤-한계를-해결하는가" id="toc-에이전틱-rag의-어떤-한계를-해결하는가" class="nav-link" data-scroll-target="#에이전틱-rag의-어떤-한계를-해결하는가"><span class="header-section-number">1.3.1</span> 에이전틱 RAG의 어떤 한계를 해결하는가</a></li>
+  <li><a href="#핵심-개념-노드와-엣지" id="toc-핵심-개념-노드와-엣지" class="nav-link" data-scroll-target="#핵심-개념-노드와-엣지"><span class="header-section-number">1.3.2</span> 핵심 개념: 노드와 엣지</a></li>
+  <li><a href="#저장-구조-비교" id="toc-저장-구조-비교" class="nav-link" data-scroll-target="#저장-구조-비교"><span class="header-section-number">1.3.3</span> 저장 구조 비교</a></li>
+  <li><a href="#검색-방식의-차이" id="toc-검색-방식의-차이" class="nav-link" data-scroll-target="#검색-방식의-차이"><span class="header-section-number">1.3.4</span> 검색 방식의 차이</a></li>
+  <li><a href="#구현-아키텍처" id="toc-구현-아키텍처" class="nav-link" data-scroll-target="#구현-아키텍처"><span class="header-section-number">1.3.5</span> 구현 아키텍처</a></li>
+  <li><a href="#그래프-구축-방법" id="toc-그래프-구축-방법" class="nav-link" data-scroll-target="#그래프-구축-방법"><span class="header-section-number">1.3.6</span> 그래프 구축 방법</a></li>
+  </ul></li>
+  <li><a href="#가지-아키텍처-종합-비교" id="toc-가지-아키텍처-종합-비교" class="nav-link" data-scroll-target="#가지-아키텍처-종합-비교"><span class="header-section-number">1.4</span> 3가지 아키텍처 종합 비교</a></li>
+  <li><a href="#그래프-db-없이-유사하게-구현하는-방법" id="toc-그래프-db-없이-유사하게-구현하는-방법" class="nav-link" data-scroll-target="#그래프-db-없이-유사하게-구현하는-방법"><span class="header-section-number">1.5</span> 그래프 DB 없이 유사하게 구현하는 방법</a>
+  <ul class="collapse">
+  <li><a href="#메타데이터-필드에-관계-정보-포함" id="toc-메타데이터-필드에-관계-정보-포함" class="nav-link" data-scroll-target="#메타데이터-필드에-관계-정보-포함"><span class="header-section-number">1.5.1</span> 메타데이터 필드에 관계 정보 포함</a></li>
+  <li><a href="#그래프-db와의-비교" id="toc-그래프-db와의-비교" class="nav-link" data-scroll-target="#그래프-db와의-비교"><span class="header-section-number">1.5.2</span> 그래프 DB와의 비교</a></li>
+  </ul></li>
+  <li><a href="#단계별-도입-전략" id="toc-단계별-도입-전략" class="nav-link" data-scroll-target="#단계별-도입-전략"><span class="header-section-number">1.6</span> 단계별 도입 전략</a>
+  <ul class="collapse">
+  <li><a href="#전환-판단-기준" id="toc-전환-판단-기준" class="nav-link" data-scroll-target="#전환-판단-기준"><span class="header-section-number">1.6.1</span> 전환 판단 기준</a></li>
+  </ul></li>
+  <li><a href="#azure-서비스-매핑-참고" id="toc-azure-서비스-매핑-참고" class="nav-link" data-scroll-target="#azure-서비스-매핑-참고"><span class="header-section-number">1.7</span> Azure 서비스 매핑 (참고)</a>
+  <ul class="collapse">
+  <li><a href="#단계-기본-rag" id="toc-단계-기본-rag" class="nav-link" data-scroll-target="#단계-기본-rag"><span class="header-section-number">1.7.1</span> 1단계: 기본 RAG</a></li>
+  <li><a href="#단계-에이전틱-rag" id="toc-단계-에이전틱-rag" class="nav-link" data-scroll-target="#단계-에이전틱-rag"><span class="header-section-number">1.7.2</span> 2단계: 에이전틱 RAG</a></li>
+  <li><a href="#단계-그래프-rag" id="toc-단계-그래프-rag" class="nav-link" data-scroll-target="#단계-그래프-rag"><span class="header-section-number">1.7.3</span> 3단계: 그래프 RAG</a></li>
+  <li><a href="#azure-서비스-용어-해설" id="toc-azure-서비스-용어-해설" class="nav-link" data-scroll-target="#azure-서비스-용어-해설"><span class="header-section-number">1.7.4</span> Azure 서비스 용어 해설</a></li>
+  </ul></li>
+  <li><a href="#정리" id="toc-정리" class="nav-link" data-scroll-target="#정리"><span class="header-section-number">1.8</span> 정리</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block column-page-left" id="quarto-document-content">
+
+
+
+
+
+
+<section id="rag-아키텍처의-진화" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> RAG 아키텍처의 진화</h1>
+<p>RAG(Retrieval-Augmented Generation)는 LLM의 지식 한계를 외부 데이터 검색으로 보완하는 기술이다. 하지만 <strong>“검색 한 번으로 충분한가?”</strong>, <strong>“문서 간 관계를 어떻게 추적하는가?”</strong>라는 질문에 따라 RAG 아키텍처는 3단계로 진화해왔다.</p>
+<pre><code>기본 RAG → 에이전틱 RAG → 그래프 RAG
+(단순 검색)  (다단계 추론)   (관계 기반 탐색)</code></pre>
+<hr>
+<section id="기본-rag-naive-rag" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="기본-rag-naive-rag"><span class="header-section-number">1.1</span> 기본 RAG (Naive RAG)</h2>
+<section id="동작-원리" class="level3" data-number="1.1.1">
+<h3 data-number="1.1.1" class="anchored" data-anchor-id="동작-원리"><span class="header-section-number">1.1.1</span> 동작 원리</h3>
+<p>가장 단순한 형태의 RAG이다. 사용자 질문을 벡터로 변환하고, 유사한 문서 청크를 검색하여 LLM에 전달한다.</p>
+<pre><code>사용자 질문
+  → 질문을 벡터로 변환 (Embedding)
+    → 벡터 스토어에서 유사도 검색 (Retrieval)
+      → 검색된 청크를 LLM에 전달
+        → LLM이 답변 생성 (Generation)</code></pre>
+</section>
+<section id="저장-구조" class="level3" data-number="1.1.2">
+<h3 data-number="1.1.2" class="anchored" data-anchor-id="저장-구조"><span class="header-section-number">1.1.2</span> 저장 구조</h3>
+<p>문서를 일정 크기의 청크(chunk)로 분할하고, 각 청크를 벡터로 변환하여 저장한다.</p>
+<pre><code>원본 문서 → 청크 분할 → 임베딩 → 벡터 스토어
+
+[청크1: "파라미터 X는 0.5로 설정되어 있다..."] → [0.23, 0.45, 0.12, ...]
+[청크2: "모듈 A는 모듈 B의 출력을 입력으로..."] → [0.67, 0.33, 0.89, ...]
+[청크3: "최적화 알고리즘은 greedy 방식으로..."] → [0.11, 0.78, 0.56, ...]</code></pre>
+<p>각 청크는 <strong>독립적</strong>이다. 청크1과 청크2 사이에 관계가 있더라도, 벡터 스토어는 그 관계를 모른다.</p>
+</section>
+<section id="한계" class="level3" data-number="1.1.3">
+<h3 data-number="1.1.3" class="anchored" data-anchor-id="한계"><span class="header-section-number">1.1.3</span> 한계</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>한계</th>
+<th>설명</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>단일 검색</strong></td>
+<td>검색이 1회로 끝남. 첫 검색에서 충분한 정보를 못 찾으면 답변 품질 저하</td>
+</tr>
+<tr class="even">
+<td><strong>관계 무시</strong></td>
+<td>문서 간 관계를 모름. “A가 B에 영향을 준다”는 정보가 저장되지 않음</td>
+</tr>
+<tr class="odd">
+<td><strong>복잡한 질문 취약</strong></td>
+<td>여러 문서를 걸쳐 추론해야 하는 질문에 약함</td>
+</tr>
+</tbody>
+</table>
+<p><strong>적합한 경우:</strong> 단일 문서에서 답을 찾을 수 있는 단순 질의응답 (FAQ, 문서 검색 등)</p>
+<hr>
+</section>
+</section>
+<section id="에이전틱-rag-agentic-rag" class="level2" data-number="1.2">
+<h2 data-number="1.2" class="anchored" data-anchor-id="에이전틱-rag-agentic-rag"><span class="header-section-number">1.2</span> 에이전틱 RAG (Agentic RAG)</h2>
+<section id="기본-rag의-어떤-한계를-해결하는가" class="level3" data-number="1.2.1">
+<h3 data-number="1.2.1" class="anchored" data-anchor-id="기본-rag의-어떤-한계를-해결하는가"><span class="header-section-number">1.2.1</span> 기본 RAG의 어떤 한계를 해결하는가</h3>
+<p>기본 RAG는 검색 1회로 끝난다. 하지만 현실의 질문은 한 번의 검색으로 답하기 어려운 경우가 많다.</p>
+<blockquote class="blockquote">
+<p>“모듈 A에서 설계 조건을 변경하면, 최종 출력 모듈 G에 어떤 영향이 있는가?”</p>
+</blockquote>
+<p>이 질문에 답하려면 A → B → C → … → G까지 단계적으로 정보를 수집해야 한다. 기본 RAG는 이런 <strong>다단계 추론(multi-hop reasoning)</strong>을 할 수 없다.</p>
+</section>
+<section id="동작-원리-1" class="level3" data-number="1.2.2">
+<h3 data-number="1.2.2" class="anchored" data-anchor-id="동작-원리-1"><span class="header-section-number">1.2.2</span> 동작 원리</h3>
+<p>LLM이 <strong>스스로 판단하여 여러 번 검색</strong>한다. 검색 결과를 보고, 추가 검색이 필요한지, 어디를 더 봐야 하는지를 LLM이 결정한다.</p>
+<pre><code>사용자 질문: "모듈 A의 파라미터 변경이 모듈 G 출력에 미치는 영향은?"
+
+Agent(LLM):
+  "이 질문은 파이프라인 전체를 추적해야 한다"
+  → 1차 검색: 모듈 A 관련 문서 검색
+    → "A의 출력이 모듈 B의 입력이 된다"
+  → 2차 검색: 모듈 B 관련 문서 검색
+    → "B는 C에 필터링된 결과를 전달한다"
+  → 3차 검색: 모듈 C 관련 문서 검색
+    → ...
+  → N차: 모듈 G까지 도달
+  → 종합하여 영향 경로 답변 생성</code></pre>
+</section>
+<section id="핵심-구성-요소" class="level3" data-number="1.2.3">
+<h3 data-number="1.2.3" class="anchored" data-anchor-id="핵심-구성-요소"><span class="header-section-number">1.2.3</span> 핵심 구성 요소</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 64%">
+<col style="width: 35%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>구성 요소</th>
+<th>역할</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>메인 Agent</strong></td>
+<td>질문을 분석하고, 검색 전략을 수립하고, 결과를 종합하여 답변</td>
+</tr>
+<tr class="even">
+<td><strong>서브 Agent (선택)</strong></td>
+<td>특정 도메인/모듈을 전담 검색하는 하위 Agent</td>
+</tr>
+<tr class="odd">
+<td><strong>도구 (Tools)</strong></td>
+<td>벡터 검색, 키워드 검색, DB 조회 등 Agent가 사용할 수 있는 검색 도구</td>
+</tr>
+<tr class="even">
+<td><strong>메모리</strong></td>
+<td>이전 검색 결과를 기억하여 중복 검색 방지</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="서브-agent-패턴" class="level3" data-number="1.2.4">
+<h3 data-number="1.2.4" class="anchored" data-anchor-id="서브-agent-패턴"><span class="header-section-number">1.2.4</span> 서브 Agent 패턴</h3>
+<p>복잡한 시스템에서는 메인 Agent가 서브 Agent에게 작업을 분배한다.</p>
+<pre><code>메인 Agent: "파이프라인 전체를 추적해야 하니, 각 모듈 담당에게 물어보자"
+  → 서브 Agent 1 (모듈 A 전담): A의 출력 구조 검색
+  → 서브 Agent 2 (모듈 B 전담): B의 입력 처리 방식 검색
+  → 서브 Agent 3 (모듈 C 전담): C의 변환 로직 검색
+  → ...
+메인 Agent: 서브 Agent들의 결과를 종합하여 최종 답변</code></pre>
+</section>
+<section id="기본-rag와의-차이" class="level3" data-number="1.2.5">
+<h3 data-number="1.2.5" class="anchored" data-anchor-id="기본-rag와의-차이"><span class="header-section-number">1.2.5</span> 기본 RAG와의 차이</h3>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th></th>
+<th>기본 RAG</th>
+<th>에이전틱 RAG</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>검색 횟수</td>
+<td>1회 고정</td>
+<td>Agent가 필요한 만큼 반복</td>
+</tr>
+<tr class="even">
+<td>판단 주체</td>
+<td>개발자가 미리 설계한 파이프라인</td>
+<td>LLM이 실시간으로 판단</td>
+</tr>
+<tr class="odd">
+<td>검색 전략</td>
+<td>고정 (항상 같은 방식)</td>
+<td>질문에 따라 전략 변경</td>
+</tr>
+<tr class="even">
+<td>복잡한 질문</td>
+<td>한 번에 못 찾으면 부정확한 답변</td>
+<td>단계적 추적 가능</td>
+</tr>
+<tr class="odd">
+<td>비용</td>
+<td>LLM 호출 1회</td>
+<td>LLM 호출 N회 (비용 증가)</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="한계-1" class="level3" data-number="1.2.6">
+<h3 data-number="1.2.6" class="anchored" data-anchor-id="한계-1"><span class="header-section-number">1.2.6</span> 한계</h3>
+<p>에이전틱 RAG도 결국 <strong>텍스트 검색</strong>에 의존한다. “A → B → C” 관계를 추적할 때, 각 단계에서 텍스트를 검색하고 LLM이 관계를 추론해야 한다. 관계가 명시적으로 저장되어 있지 않기 때문에:</p>
+<ul>
+<li>검색 결과에 관계 정보가 포함되지 않을 수 있음</li>
+<li>경로가 길어질수록 중간에 맥락을 놓칠 수 있음</li>
+<li>매번 LLM이 관계를 추론하므로 비용과 시간이 증가</li>
+</ul>
+<p><strong>적합한 경우:</strong> 다단계 추론이 필요하지만, 관계 경로가 5단계 이내인 질문. 대부분의 실무 시나리오에서 충분히 효과적이다.</p>
+<hr>
+</section>
+</section>
+<section id="그래프-rag-graph-rag" class="level2" data-number="1.3">
+<h2 data-number="1.3" class="anchored" data-anchor-id="그래프-rag-graph-rag"><span class="header-section-number">1.3</span> 그래프 RAG (Graph RAG)</h2>
+<section id="에이전틱-rag의-어떤-한계를-해결하는가" class="level3" data-number="1.3.1">
+<h3 data-number="1.3.1" class="anchored" data-anchor-id="에이전틱-rag의-어떤-한계를-해결하는가"><span class="header-section-number">1.3.1</span> 에이전틱 RAG의 어떤 한계를 해결하는가</h3>
+<p>에이전틱 RAG는 관계를 <strong>텍스트에서 매번 추론</strong>한다. 하지만 데이터를 저장할 때 <strong>관계 자체를 함께 저장</strong>하면 어떨까? 그래프 RAG의 핵심 아이디어이다.</p>
+</section>
+<section id="핵심-개념-노드와-엣지" class="level3" data-number="1.3.2">
+<h3 data-number="1.3.2" class="anchored" data-anchor-id="핵심-개념-노드와-엣지"><span class="header-section-number">1.3.2</span> 핵심 개념: 노드와 엣지</h3>
+<p>그래프 RAG는 데이터를 <strong>노드(Node)</strong>와 <strong>엣지(Edge)</strong>로 저장한다.</p>
+<pre><code>노드: 개별 개념, 엔티티, 코드 요소 등
+엣지: 노드 간의 관계 (방향 + 의미)
+
+예시:
+  (파라미터 X) --[사용됨]--&gt; (필터링 함수)
+  (필터링 함수) --[출력]--&gt; (중간 결과 테이블)
+  (중간 결과 테이블) --[입력됨]--&gt; (최적화 모듈)
+  (최적화 모듈) --[생성]--&gt; (최종 보고서)</code></pre>
+</section>
+<section id="저장-구조-비교" class="level3" data-number="1.3.3">
+<h3 data-number="1.3.3" class="anchored" data-anchor-id="저장-구조-비교"><span class="header-section-number">1.3.3</span> 저장 구조 비교</h3>
+<pre><code>일반 RAG의 저장:
+  [청크1] → 벡터  ← 독립적, 관계 없음
+  [청크2] → 벡터
+  [청크3] → 벡터
+
+그래프 RAG의 저장:
+  [노드: 파라미터 X] → 벡터 + 관계 정보
+       ↓ (사용됨)
+  [노드: 필터링 함수] → 벡터 + 관계 정보
+       ↓ (출력)
+  [노드: 중간 결과] → 벡터 + 관계 정보
+       ↓ (입력됨)
+  [노드: 최적화 모듈] → 벡터 + 관계 정보</code></pre>
+<p><strong>벡터 스토어는 하나이고</strong>, 그 안에 데이터를 넣을 때 <strong>엣지(관계) 정보를 함께 저장</strong>하는 것이 핵심 차이이다.</p>
+</section>
+<section id="검색-방식의-차이" class="level3" data-number="1.3.4">
+<h3 data-number="1.3.4" class="anchored" data-anchor-id="검색-방식의-차이"><span class="header-section-number">1.3.4</span> 검색 방식의 차이</h3>
+<pre><code>질문: "파라미터 X를 변경하면 최종 출력에 어떤 영향?"
+
+일반 RAG:
+  → "파라미터 X"가 언급된 청크 3개 반환
+  → LLM이 그 3개만 보고 답변 (영향 경로를 모름)
+
+에이전틱 RAG:
+  → 1차: "파라미터 X" 검색 → "필터링 함수에서 사용"
+  → 2차: "필터링 함수" 검색 → "중간 결과를 출력"
+  → 3차: "중간 결과" 검색 → "최적화 모듈에 입력"
+  → 4차: "최적화 모듈" 검색 → "최종 보고서 생성"
+  → LLM이 4번의 검색 결과를 종합 (비용 4배)
+
+그래프 RAG:
+  → "파라미터 X" 노드 찾음
+  → 연결된 엣지를 따라 그래프 탐색 (DB 레벨에서 수행)
+    → 필터링 함수 → 중간 결과 → 최적화 모듈 → 최종 보고서
+  → 영향 경로 전체를 한 번에 LLM에 전달
+  → LLM 호출 1회로 완전한 답변 가능</code></pre>
+</section>
+<section id="구현-아키텍처" class="level3" data-number="1.3.5">
+<h3 data-number="1.3.5" class="anchored" data-anchor-id="구현-아키텍처"><span class="header-section-number">1.3.5</span> 구현 아키텍처</h3>
+<p>그래프 RAG는 <strong>그래프 DB + 벡터 스토어</strong>를 결합하여 구현한다.</p>
+<pre><code>[그래프 DB]                         [벡터 스토어]
+ 노드와 관계를 저장                    텍스트/벡터를 저장
+ 관계 기반 탐색 수행                   의미 기반 유사도 검색
+
+ (A)--[영향]--&gt;(B)--&gt;(C)            "파라미터 X는..." → [0.23, ...]
+
+              ↘          ↙
+             [Agent / LLM]
+      그래프 탐색 결과 + 벡터 검색 결과를 종합</code></pre>
+<section id="주요-기술-스택" class="level4" data-number="1.3.5.1">
+<h4 data-number="1.3.5.1" class="anchored" data-anchor-id="주요-기술-스택"><span class="header-section-number">1.3.5.1</span> 주요 기술 스택</h4>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>역할</th>
+<th>도구/서비스</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>그래프 DB</strong></td>
+<td>Neo4j, Amazon Neptune, Azure Cosmos DB (Gremlin API)</td>
+</tr>
+<tr class="even">
+<td><strong>벡터 스토어</strong></td>
+<td>FAISS, Chroma, Azure AI Search, Pinecone</td>
+</tr>
+<tr class="odd">
+<td><strong>LLM</strong></td>
+<td>GPT-4, Claude, Azure OpenAI</td>
+</tr>
+<tr class="even">
+<td><strong>프레임워크</strong></td>
+<td>LangChain, LlamaIndex, Microsoft GraphRAG</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="검색-흐름-상세" class="level4" data-number="1.3.5.2">
+<h4 data-number="1.3.5.2" class="anchored" data-anchor-id="검색-흐름-상세"><span class="header-section-number">1.3.5.2</span> 검색 흐름 상세</h4>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1"></a><span class="co"># 개념적인 그래프 RAG 검색 흐름 (pseudo-code)</span></span>
+<span id="cb10-2"><a href="#cb10-2"></a></span>
+<span id="cb10-3"><a href="#cb10-3"></a><span class="co"># 1단계: 질문에서 핵심 엔티티 추출 (LLM 사용)</span></span>
+<span id="cb10-4"><a href="#cb10-4"></a>entities <span class="op">=</span> llm.extract_entities(<span class="st">"파라미터 X를 변경하면 최종 출력에 어떤 영향?"</span>)</span>
+<span id="cb10-5"><a href="#cb10-5"></a><span class="co"># → ["파라미터 X"]</span></span>
+<span id="cb10-6"><a href="#cb10-6"></a></span>
+<span id="cb10-7"><a href="#cb10-7"></a><span class="co"># 2단계: 벡터 검색으로 관련 노드 찾기</span></span>
+<span id="cb10-8"><a href="#cb10-8"></a>start_nodes <span class="op">=</span> vector_store.similarity_search(<span class="st">"파라미터 X"</span>)</span>
+<span id="cb10-9"><a href="#cb10-9"></a><span class="co"># → [Node("파라미터_X", id=42)]</span></span>
+<span id="cb10-10"><a href="#cb10-10"></a></span>
+<span id="cb10-11"><a href="#cb10-11"></a><span class="co"># 3단계: 그래프 DB에서 관계 탐색</span></span>
+<span id="cb10-12"><a href="#cb10-12"></a>impact_path <span class="op">=</span> graph_db.traverse(</span>
+<span id="cb10-13"><a href="#cb10-13"></a>    start_node<span class="op">=</span><span class="dv">42</span>,</span>
+<span id="cb10-14"><a href="#cb10-14"></a>    relationship_types<span class="op">=</span>[<span class="st">"사용됨"</span>, <span class="st">"출력"</span>, <span class="st">"입력됨"</span>],</span>
+<span id="cb10-15"><a href="#cb10-15"></a>    max_depth<span class="op">=</span><span class="dv">5</span></span>
+<span id="cb10-16"><a href="#cb10-16"></a>)</span>
+<span id="cb10-17"><a href="#cb10-17"></a><span class="co"># → [파라미터_X → 필터링_함수 → 중간_결과 → 최적화_모듈 → 최종_보고서]</span></span>
+<span id="cb10-18"><a href="#cb10-18"></a></span>
+<span id="cb10-19"><a href="#cb10-19"></a><span class="co"># 4단계: 경로의 각 노드에서 상세 컨텍스트 수집</span></span>
+<span id="cb10-20"><a href="#cb10-20"></a>context <span class="op">=</span> []</span>
+<span id="cb10-21"><a href="#cb10-21"></a><span class="cf">for</span> node <span class="kw">in</span> impact_path:</span>
+<span id="cb10-22"><a href="#cb10-22"></a>    details <span class="op">=</span> vector_store.get_document(node.<span class="bu">id</span>)</span>
+<span id="cb10-23"><a href="#cb10-23"></a>    context.append(details)</span>
+<span id="cb10-24"><a href="#cb10-24"></a></span>
+<span id="cb10-25"><a href="#cb10-25"></a><span class="co"># 5단계: LLM에 경로 + 컨텍스트 전달하여 답변 생성</span></span>
+<span id="cb10-26"><a href="#cb10-26"></a>answer <span class="op">=</span> llm.generate(</span>
+<span id="cb10-27"><a href="#cb10-27"></a>    question<span class="op">=</span><span class="st">"파라미터 X를 변경하면 최종 출력에 어떤 영향?"</span>,</span>
+<span id="cb10-28"><a href="#cb10-28"></a>    graph_path<span class="op">=</span>impact_path,</span>
+<span id="cb10-29"><a href="#cb10-29"></a>    context<span class="op">=</span>context</span>
+<span id="cb10-30"><a href="#cb10-30"></a>)</span></code></pre></div><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+</section>
+<section id="그래프-구축-방법" class="level3" data-number="1.3.6">
+<h3 data-number="1.3.6" class="anchored" data-anchor-id="그래프-구축-방법"><span class="header-section-number">1.3.6</span> 그래프 구축 방법</h3>
+<p>그래프 RAG에서 가장 어려운 부분은 <strong>그래프를 어떻게 만드는가</strong>이다. 두 가지 접근법이 있다.</p>
+<section id="방법-1-llm-기반-자동-추출" class="level4" data-number="1.3.6.1">
+<h4 data-number="1.3.6.1" class="anchored" data-anchor-id="방법-1-llm-기반-자동-추출"><span class="header-section-number">1.3.6.1</span> 방법 1: LLM 기반 자동 추출</h4>
+<p>문서나 코드에서 LLM이 엔티티와 관계를 자동으로 추출한다.</p>
+<pre><code>원본 텍스트: "함수 calculate_score()는 threshold 값을 사용하여
+             후보를 필터링하고, 결과를 result_table에 저장한다."
+
+LLM 추출 결과:
+  노드: [calculate_score, threshold, result_table]
+  엣지: [(threshold) --[파라미터]--&gt; (calculate_score)]
+        [(calculate_score) --[저장]--&gt; (result_table)]</code></pre>
+<p>Microsoft GraphRAG 라이브러리가 이 방식을 사용한다.</p>
+</section>
+<section id="방법-2-수동반수동-정의" class="level4" data-number="1.3.6.2">
+<h4 data-number="1.3.6.2" class="anchored" data-anchor-id="방법-2-수동반수동-정의"><span class="header-section-number">1.3.6.2</span> 방법 2: 수동/반수동 정의</h4>
+<p>도메인 전문가가 핵심 관계를 직접 정의한다. 정확도가 높지만 노력이 많이 든다.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode numberSource yaml number-lines code-with-copy"><code class="sourceCode yaml"><span id="cb12-1"><a href="#cb12-1"></a><span class="co"># 수동으로 정의한 파이프라인 관계</span></span>
+<span id="cb12-2"><a href="#cb12-2"></a><span class="fu">nodes</span><span class="kw">:</span></span>
+<span id="cb12-3"><a href="#cb12-3"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">id</span><span class="kw">:</span><span class="at"> module_a</span></span>
+<span id="cb12-4"><a href="#cb12-4"></a><span class="at">    </span><span class="fu">type</span><span class="kw">:</span><span class="at"> module</span></span>
+<span id="cb12-5"><a href="#cb12-5"></a><span class="at">    </span><span class="fu">description</span><span class="kw">:</span><span class="at"> </span><span class="st">"입력 데이터 전처리"</span></span>
+<span id="cb12-6"><a href="#cb12-6"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">id</span><span class="kw">:</span><span class="at"> module_b</span></span>
+<span id="cb12-7"><a href="#cb12-7"></a><span class="at">    </span><span class="fu">type</span><span class="kw">:</span><span class="at"> module</span></span>
+<span id="cb12-8"><a href="#cb12-8"></a><span class="at">    </span><span class="fu">description</span><span class="kw">:</span><span class="at"> </span><span class="st">"필터링 및 정렬"</span></span>
+<span id="cb12-9"><a href="#cb12-9"></a></span>
+<span id="cb12-10"><a href="#cb12-10"></a><span class="fu">edges</span><span class="kw">:</span></span>
+<span id="cb12-11"><a href="#cb12-11"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">source</span><span class="kw">:</span><span class="at"> module_a</span></span>
+<span id="cb12-12"><a href="#cb12-12"></a><span class="at">    </span><span class="fu">target</span><span class="kw">:</span><span class="at"> module_b</span></span>
+<span id="cb12-13"><a href="#cb12-13"></a><span class="at">    </span><span class="fu">relationship</span><span class="kw">:</span><span class="at"> </span><span class="st">"출력을_입력으로_전달"</span></span>
+<span id="cb12-14"><a href="#cb12-14"></a><span class="at">    </span><span class="fu">data_format</span><span class="kw">:</span><span class="at"> </span><span class="st">"SQLite DB"</span></span>
+<span id="cb12-15"><a href="#cb12-15"></a><span class="at">    </span><span class="fu">key_tables</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="st">"sequence_table"</span><span class="kw">,</span><span class="at"> </span><span class="st">"config_table"</span><span class="kw">]</span></span></code></pre></div><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="방법-3-하이브리드" class="level4" data-number="1.3.6.3">
+<h4 data-number="1.3.6.3" class="anchored" data-anchor-id="방법-3-하이브리드"><span class="header-section-number">1.3.6.3</span> 방법 3: 하이브리드</h4>
+<p>LLM이 1차 추출하고, 전문가가 검증/보완한다. 실무에서 가장 현실적인 접근이다.</p>
+<hr>
+</section>
+</section>
+</section>
+<section id="가지-아키텍처-종합-비교" class="level2" data-number="1.4">
+<h2 data-number="1.4" class="anchored" data-anchor-id="가지-아키텍처-종합-비교"><span class="header-section-number">1.4</span> 3가지 아키텍처 종합 비교</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th>기본 RAG</th>
+<th>에이전틱 RAG</th>
+<th>그래프 RAG</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>검색 방식</strong></td>
+<td>벡터 유사도 1회</td>
+<td>Agent가 다중 검색</td>
+<td>그래프 탐색 + 벡터 검색</td>
+</tr>
+<tr class="even">
+<td><strong>관계 추적</strong></td>
+<td>불가</td>
+<td>LLM이 매번 추론</td>
+<td>그래프 DB에서 직접 탐색</td>
+</tr>
+<tr class="odd">
+<td><strong>복잡한 질문</strong></td>
+<td>약함</td>
+<td>중간 (5단계 이내)</td>
+<td>강함 (깊은 경로도 가능)</td>
+</tr>
+<tr class="even">
+<td><strong>구축 난이도</strong></td>
+<td>낮음</td>
+<td>중간</td>
+<td>높음</td>
+</tr>
+<tr class="odd">
+<td><strong>운영 비용</strong></td>
+<td>낮음</td>
+<td>중간 (LLM 다중 호출)</td>
+<td>높음 (그래프 DB 운영)</td>
+</tr>
+<tr class="even">
+<td><strong>LLM 호출 수</strong></td>
+<td>1회</td>
+<td>N회 (검색 횟수만큼)</td>
+<td>1~2회</td>
+</tr>
+<tr class="odd">
+<td><strong>저장소</strong></td>
+<td>벡터 스토어</td>
+<td>벡터 스토어</td>
+<td>벡터 스토어 + 그래프 DB</td>
+</tr>
+<tr class="even">
+<td><strong>적합한 시나리오</strong></td>
+<td>단순 Q&amp;A</td>
+<td>다단계 추론</td>
+<td>영향도 분석, 관계 탐색</td>
+</tr>
+</tbody>
+</table>
+<hr>
+</section>
+<section id="그래프-db-없이-유사하게-구현하는-방법" class="level2" data-number="1.5">
+<h2 data-number="1.5" class="anchored" data-anchor-id="그래프-db-없이-유사하게-구현하는-방법"><span class="header-section-number">1.5</span> 그래프 DB 없이 유사하게 구현하는 방법</h2>
+<p>그래프 DB를 도입하기 전에, 벡터 스토어만으로 관계 기반 검색을 <strong>흉내내는</strong> 방법이 있다.</p>
+<section id="메타데이터-필드에-관계-정보-포함" class="level3" data-number="1.5.1">
+<h3 data-number="1.5.1" class="anchored" data-anchor-id="메타데이터-필드에-관계-정보-포함"><span class="header-section-number">1.5.1</span> 메타데이터 필드에 관계 정보 포함</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode numberSource json number-lines code-with-copy"><code class="sourceCode json"><span id="cb13-1"><a href="#cb13-1"></a><span class="fu">{</span></span>
+<span id="cb13-2"><a href="#cb13-2"></a>  <span class="dt">"id"</span><span class="fu">:</span> <span class="st">"param-001"</span><span class="fu">,</span></span>
+<span id="cb13-3"><a href="#cb13-3"></a>  <span class="dt">"title"</span><span class="fu">:</span> <span class="st">"파라미터 X"</span><span class="fu">,</span></span>
+<span id="cb13-4"><a href="#cb13-4"></a>  <span class="dt">"content"</span><span class="fu">:</span> <span class="st">"필터링 임계값으로 사용되는 파라미터..."</span><span class="fu">,</span></span>
+<span id="cb13-5"><a href="#cb13-5"></a>  <span class="dt">"affects"</span><span class="fu">:</span> <span class="ot">[</span><span class="st">"func-002"</span><span class="ot">,</span> <span class="st">"func-003"</span><span class="ot">]</span><span class="fu">,</span></span>
+<span id="cb13-6"><a href="#cb13-6"></a>  <span class="dt">"affected_by"</span><span class="fu">:</span> <span class="ot">[</span><span class="st">"config-001"</span><span class="ot">]</span><span class="fu">,</span></span>
+<span id="cb13-7"><a href="#cb13-7"></a>  <span class="dt">"pipeline_stage"</span><span class="fu">:</span> <span class="st">"stage-2"</span><span class="fu">,</span></span>
+<span id="cb13-8"><a href="#cb13-8"></a>  <span class="dt">"module"</span><span class="fu">:</span> <span class="st">"module-a"</span></span>
+<span id="cb13-9"><a href="#cb13-9"></a><span class="fu">}</span></span></code></pre></div><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Agent가 검색 결과의 <code>affects</code> 필드를 읽고, 해당 ID를 추가 검색하는 방식이다.</p>
+<pre><code>1차 검색: "파라미터 X" → param-001 반환
+  → affects: ["func-002", "func-003"]
+2차 검색: func-002 조회 → affects: ["result-004"]
+3차 검색: result-004 조회 → affects: ["output-005"]
+→ 경로 완성</code></pre>
+<p>이것은 사실상 <strong>에이전틱 RAG + 관계 메타데이터</strong>의 조합이다. 그래프 DB 없이도 중간 규모의 관계 탐색이 가능하다.</p>
+</section>
+<section id="그래프-db와의-비교" class="level3" data-number="1.5.2">
+<h3 data-number="1.5.2" class="anchored" data-anchor-id="그래프-db와의-비교"><span class="header-section-number">1.5.2</span> 그래프 DB와의 비교</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th>그래프 DB 방식</th>
+<th>메타데이터 필드 방식</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>관계 탐색</td>
+<td>DB 엔진이 수행 (빠름)</td>
+<td>Agent가 다중 검색 (느림)</td>
+</tr>
+<tr class="even">
+<td>구축 난이도</td>
+<td>높음 (그래프 DB 설계/운영)</td>
+<td>낮음 (JSON 필드 추가)</td>
+</tr>
+<tr class="odd">
+<td>복잡한 경로</td>
+<td>10단계 이상도 가능</td>
+<td>3~4단계까지 현실적</td>
+</tr>
+<tr class="even">
+<td>추가 비용</td>
+<td>그래프 DB 비용 발생</td>
+<td>벡터 스토어 비용만</td>
+</tr>
+<tr class="odd">
+<td>전환 용이성</td>
+<td>-</td>
+<td>관계 데이터가 축적되어 그래프 DB 전환 시 재활용 가능</td>
+</tr>
+</tbody>
+</table>
+<hr>
+</section>
+</section>
+<section id="단계별-도입-전략" class="level2" data-number="1.6">
+<h2 data-number="1.6" class="anchored" data-anchor-id="단계별-도입-전략"><span class="header-section-number">1.6</span> 단계별 도입 전략</h2>
+<p>실무에서는 처음부터 그래프 RAG를 구축하기보다, 단계적으로 진화시키는 것이 현실적이다.</p>
+<pre><code>[1단계] 기본 RAG
+  - 벡터 스토어에 문서/메타데이터 저장
+  - 단순 질의응답 서비스 구축
+  - 검색 패턴과 사용자 질문 유형 분석
+      |
+      | 어떤 질문이 자주 실패하는지 파악
+      v
+[2단계] 에이전틱 RAG
+  - Agent가 다중 검색을 수행하도록 확장
+  - 메타데이터 JSON에 관계 필드(affects, affected_by) 추가
+  - 그래프 DB 없이도 관계 기반 검색 가능
+      |
+      | 관계 데이터 축적, 탐색 깊이/빈도 증가
+      v
+[3단계] 그래프 RAG
+  - 축적된 관계 데이터를 그래프 DB로 마이그레이션
+  - 깊은 경로 탐색, 영향도 분석 본격 지원
+  - 그래프 시각화로 시스템 이해도 향상</code></pre>
+<section id="전환-판단-기준" class="level3" data-number="1.6.1">
+<h3 data-number="1.6.1" class="anchored" data-anchor-id="전환-판단-기준"><span class="header-section-number">1.6.1</span> 전환 판단 기준</h3>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>기준</th>
+<th>2단계 유지</th>
+<th>3단계 전환</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>관계 탐색 깊이</td>
+<td>3~4단계면 충분</td>
+<td>5단계 이상 빈번</td>
+</tr>
+<tr class="even">
+<td>관계 데이터 규모</td>
+<td>수백 개</td>
+<td>수천 개 이상</td>
+</tr>
+<tr class="odd">
+<td>탐색 빈도</td>
+<td>가끔</td>
+<td>핵심 기능으로 상시 사용</td>
+</tr>
+<tr class="even">
+<td>성능 요구</td>
+<td>응답 수 초 허용</td>
+<td>실시간 응답 필요</td>
+</tr>
+<tr class="odd">
+<td>팀 역량</td>
+<td>그래프 DB 운영 경험 없음</td>
+<td>운영 가능</td>
+</tr>
+</tbody>
+</table>
+<hr>
+</section>
+</section>
+<section id="azure-서비스-매핑-참고" class="level2" data-number="1.7">
+<h2 data-number="1.7" class="anchored" data-anchor-id="azure-서비스-매핑-참고"><span class="header-section-number">1.7</span> Azure 서비스 매핑 (참고)</h2>
+<p>각 아키텍처 단계에서 활용할 수 있는 Azure 서비스를 정리한다.</p>
+<section id="단계-기본-rag" class="level3" data-number="1.7.1">
+<h3 data-number="1.7.1" class="anchored" data-anchor-id="단계-기본-rag"><span class="header-section-number">1.7.1</span> 1단계: 기본 RAG</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 24%">
+<col style="width: 52%">
+<col style="width: 24%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>역할</th>
+<th>Azure 서비스</th>
+<th>설명</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>벡터 스토어 + 검색</td>
+<td><strong>Azure AI Search</strong></td>
+<td>벡터 검색 + 키워드 검색 + 시맨틱 랭킹을 하나의 서비스로 제공</td>
+</tr>
+<tr class="even">
+<td>LLM</td>
+<td><strong>Azure OpenAI</strong></td>
+<td>GPT-4o, GPT-4 등 OpenAI 모델을 Azure 인프라에서 사용</td>
+</tr>
+<tr class="odd">
+<td>오케스트레이션</td>
+<td><strong>Azure AI Foundry</strong></td>
+<td>RAG 파이프라인 구성, 프롬프트 관리, 평가 도구</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="단계-에이전틱-rag" class="level3" data-number="1.7.2">
+<h3 data-number="1.7.2" class="anchored" data-anchor-id="단계-에이전틱-rag"><span class="header-section-number">1.7.2</span> 2단계: 에이전틱 RAG</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 24%">
+<col style="width: 52%">
+<col style="width: 24%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>역할</th>
+<th>Azure 서비스</th>
+<th>설명</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Agent 실행</td>
+<td><strong>Azure Container Apps</strong></td>
+<td>Agent 애플리케이션을 서버리스 컨테이너로 실행. 사용량에 따라 자동 확장/축소</td>
+</tr>
+<tr class="even">
+<td>API 관리</td>
+<td><strong>Azure API Management</strong></td>
+<td>Agent API의 인증, 사용량 제한, 로깅, 버전 관리</td>
+</tr>
+<tr class="odd">
+<td>LLM 라우팅</td>
+<td><strong>Azure AI Gateway</strong></td>
+<td>여러 LLM 모델을 하나의 엔드포인트로 관리. 모델 선택, 비용 추적, 폴백(fallback) 처리</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="단계-그래프-rag" class="level3" data-number="1.7.3">
+<h3 data-number="1.7.3" class="anchored" data-anchor-id="단계-그래프-rag"><span class="header-section-number">1.7.3</span> 3단계: 그래프 RAG</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 24%">
+<col style="width: 52%">
+<col style="width: 24%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>역할</th>
+<th>Azure 서비스</th>
+<th>설명</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>그래프 DB</td>
+<td><strong>Azure Cosmos DB (Gremlin API)</strong></td>
+<td>Apache TinkerPop Gremlin 쿼리 언어를 지원하는 분산 그래프 데이터베이스</td>
+</tr>
+<tr class="even">
+<td>그래프 DB (대안)</td>
+<td><strong>Azure Cosmos DB (Apache Gremlin)</strong></td>
+<td>글로벌 분산, 자동 확장, 밀리초 응답 시간</td>
+</tr>
+<tr class="odd">
+<td>벡터 + 그래프 통합 검색</td>
+<td>AI Search + Cosmos DB 조합</td>
+<td>벡터 검색 결과를 시작점으로, 그래프 DB에서 관계 탐색</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="azure-서비스-용어-해설" class="level3" data-number="1.7.4">
+<h3 data-number="1.7.4" class="anchored" data-anchor-id="azure-서비스-용어-해설"><span class="header-section-number">1.7.4</span> Azure 서비스 용어 해설</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 42%">
+<col style="width: 57%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>서비스</th>
+<th>한 줄 설명</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Azure AI Search</strong></td>
+<td>문서를 인덱싱하고 벡터/키워드/시맨틱 검색을 제공하는 관리형 검색 엔진</td>
+</tr>
+<tr class="even">
+<td><strong>Azure OpenAI</strong></td>
+<td>OpenAI 모델(GPT-4 등)을 Azure 클라우드에서 API로 사용하는 서비스</td>
+</tr>
+<tr class="odd">
+<td><strong>Azure Container Apps</strong></td>
+<td>Docker 컨테이너를 서버리스로 실행하는 서비스. 서버 관리 없이 앱 배포 가능</td>
+</tr>
+<tr class="even">
+<td><strong>Azure API Management</strong></td>
+<td>API 앞단에서 인증, 속도 제한, 모니터링을 처리하는 게이트웨이</td>
+</tr>
+<tr class="odd">
+<td><strong>Azure AI Gateway</strong></td>
+<td>여러 AI 모델 호출을 하나의 창구로 통합 관리. 비용 추적, 모델 폴백, 로깅</td>
+</tr>
+<tr class="even">
+<td><strong>Azure Cosmos DB</strong></td>
+<td>글로벌 분산 NoSQL/그래프 데이터베이스. Gremlin API로 그래프 쿼리 지원</td>
+</tr>
+<tr class="odd">
+<td><strong>Azure AI Foundry</strong></td>
+<td>AI 애플리케이션 개발/배포/모니터링 통합 플랫폼 (구 Azure AI Studio)</td>
+</tr>
+</tbody>
+</table>
+<hr>
+</section>
+</section>
+<section id="정리" class="level2" data-number="1.8">
+<h2 data-number="1.8" class="anchored" data-anchor-id="정리"><span class="header-section-number">1.8</span> 정리</h2>
+<ul>
+<li><strong>기본 RAG</strong>: 벡터 검색 1회. 단순 Q&amp;A에 적합. 빠르게 구축 가능.</li>
+<li><strong>에이전틱 RAG</strong>: Agent가 다중 검색. 다단계 추론 가능. 대부분의 실무 시나리오에 충분.</li>
+<li><strong>그래프 RAG</strong>: 관계를 명시적으로 저장. 깊은 영향도 분석에 강함. 구축/운영 비용 높음.</li>
+</ul>
+<p>핵심 메시지: <strong>1단계부터 시작하고, 관계 데이터를 축적하면서 필요에 따라 진화</strong>시키는 것이 가장 현실적인 전략이다. 처음부터 그래프 RAG를 목표로 하되, 그래프 DB 도입은 실제 필요성이 검증된 후에 해도 늦지 않다.</p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script type="text/javascript">
+
+// replace cmd keyboard shortcut w/ control on non-Mac platforms
+const kPlatformMac = typeof navigator !== 'undefined' ? /Mac/.test(navigator.platform) : false;
+if (!kPlatformMac) {
+   var kbds = document.querySelectorAll("kbd")
+   kbds.forEach(function(kbd) {
+      kbd.innerHTML = kbd.innerHTML.replace(/⌘/g, '⌃');
+   });
+}
+
+// tweak headings in pymd
+document.querySelectorAll(".pymd span.co").forEach(el => {
+   if (!el.innerText.startsWith("#|")) {
+      el.style.fontWeight = 1000;
+   }
+});
+
+</script>
+<!-- Begin Mailchimp Signup Form -->
+<div id="mc_embed_signup" style="padding-bottom: 1em; max-width: 400px;" class="ms-auto me-auto">
+  <p style="font-weight: 600; margin-bottom: 0;">Subscribe</p>
+  <span style="font-size: 0.9em;">Enjoy this blog? Get notified of new posts by email:</span>
+<form action="https://quarto.us14.list-manage.com/subscribe/post?u=c79fb56a311ae347fbe916740&amp;id=ec05dfca03" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate="">
+    <div id="mc_embed_signup_scroll">
+	
+        <div class="input-group mt-1 mb-2">
+        <input type="email" class="form-control" placeholder="Email Address" aria-label="Email Address" name="EMAIL" style="font-size: 0.8em; padding: .2em;">
+        </div>              
+
+	<div id="mce-responses" class="clear foot">
+		<div class="response" id="mce-error-response" style="display:none"></div>
+		<div class="response" id="mce-success-response" style="display:none"></div>
+	</div>    <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+    <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_c79fb56a311ae347fbe916740_ec05dfca03" tabindex="-1" value=""></div>
+        <div class="optionalParent">
+            <div class="clear foot" style="display: flex; align-items: center; justify-content: center;">
+              
+              
+                <input type="submit" value="Subscribe" name="subscribe" style="min-width: 150px; font-size: 0.8em;" id="mc-embedded-subscribe" class="button btn btn-light btn-sm ms-auto me-auto">
+            </div>
+        </div>
+    </div>
+</form>
+</div>
+
+<!--End mc_embed_signup-->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "복사완료!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "복사완료!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/dlwns0719\.github\.io\/my_blog");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<input type="hidden" id="giscus-base-theme" value="light">
+<input type="hidden" id="giscus-alt-theme" value="dark">
+<script>
+  function loadGiscus() {
+    // Function to get the theme based on body class
+    const getTheme = () => {
+      let baseTheme = document.getElementById('giscus-base-theme').value;
+      let altTheme = document.getElementById('giscus-alt-theme').value;
+      if (authorPrefersDark) {
+          [baseTheme, altTheme] = [altTheme, baseTheme];
+      }
+      return document.body.classList.contains('quarto-dark') ? altTheme : baseTheme;
+    };
+    const script = document.createElement("script");
+    script.src = "https://giscus.app/client.js";
+    script.async = true;
+    script.dataset.repo = "kmink3225/blog";
+    script.dataset.repoId = "R_kgDOLCZyDg";
+    script.dataset.category = "Blog";
+    script.dataset.categoryId = "";
+    script.dataset.mapping = "title";
+    script.dataset.reactionsEnabled = "1";
+    script.dataset.emitMetadata = "0";
+    script.dataset.inputPosition = "top";
+    script.dataset.theme = getTheme();
+    script.dataset.lang = "en";
+    script.crossOrigin = "anonymous";
+    // Append the script to the desired div instead of at the end of the body
+    document.getElementById("quarto-content").appendChild(script);
+  }
+  loadGiscus();
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Junhyun Lee</p>
+</div>   
+    <div class="nav-footer-center">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item">
+    <a class="nav-link" href="../../../../../about.html">
+<p>About</p>
+</a>
+  </li>  
+</ul>
+    </div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/dlwns0719/my_blog">
+      <i class="bi bi-github" role="img">
+</i> 
+    </a>
+  </li>  
+</ul>
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>
