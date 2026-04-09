@@ -80,9 +80,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../../../../../site_libs/quarto-html/quarto-syntax-highlighting-065a5179aebd64318d7ea99d77b64a9e.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../../../../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../../../../site_libs/bootstrap/bootstrap-52ff868ffc0e454581af15a188b952cf.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../../../../../site_libs/bootstrap/bootstrap-dark-5a6315042eb7711806fdef11cd019c18.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="../../../../../site_libs/bootstrap/bootstrap-52ff868ffc0e454581af15a188b952cf.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="../../../../../site_libs/bootstrap/bootstrap-5a73818b025f47a6d9fdc61b5aee3d21.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../../../../site_libs/bootstrap/bootstrap-dark-0cc05e60083667b8b604a857b4577219.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../../../../site_libs/bootstrap/bootstrap-5a73818b025f47a6d9fdc61b5aee3d21.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -641,7 +641,7 @@ background: #EDF3F9;
 <h1 data-number="2"><span class="header-section-number">2</span> 환경 설정</h1>
 <section id="api-키-및-추적-설정" class="level2" data-number="2.1">
 <h2 data-number="2.1" class="anchored" data-anchor-id="api-키-및-추적-설정"><span class="header-section-number">2.1</span> API 키 및 추적 설정</h2>
-<div id="851d3d5d" class="cell" data-execution_count="1">
+<div id="9356a2b4" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>코드</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1"></a><span class="co"># API 키를 환경변수로 관리하기 위한 설정 파일</span></span>
@@ -651,7 +651,7 @@ background: #EDF3F9;
 <span id="cb4-5"><a href="#cb4-5"></a>load_dotenv()</span></code></pre></div><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<div id="6cf4e692" class="cell" data-execution_count="2">
+<div id="62c24ce7" class="cell" data-execution_count="2">
 <details class="code-fold">
 <summary>코드</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1"></a><span class="co"># LangSmith 추적을 설정한다. https://smith.langchain.com</span></span>
@@ -662,7 +662,7 @@ background: #EDF3F9;
 <span id="cb5-6"><a href="#cb5-6"></a>logging.langsmith(<span class="st">"CH10-Retriever"</span>)</span></code></pre></div><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<div id="0c6ac08e" class="cell" data-execution_count="3">
+<div id="76cf0011" class="cell" data-execution_count="3">
 <details class="code-fold">
 <summary>코드</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1"></a><span class="co"># 샘플 벡터DB 구축</span></span>
@@ -700,7 +700,7 @@ background: #EDF3F9;
 <pre><code>USER_AGENT environment variable not set, consider setting it to identify your requests.
 4</code></pre>
 <p>검색된 결과 중 1개 문서의 내용을 출력한다.</p>
-<div id="8196fe93" class="cell" data-execution_count="4">
+<div id="260061ff" class="cell" data-execution_count="4">
 <details class="code-fold">
 <summary>코드</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1"></a><span class="co"># 1번 문서를 출력합니다.</span></span>
@@ -723,7 +723,7 @@ Assistant API는 실행 중에 함수를 호출할 때 실행을 일시 중지�
 <p><code>MultiQueryRetriever</code>에 사용할 LLM을 지정하고 질의 생성에 사용하면, retriever가 나머지 작업을 처리한다.</p>
 <section id="multiqueryretriever-생성" class="level3" data-number="3.1.1">
 <h3 data-number="3.1.1" class="anchored" data-anchor-id="multiqueryretriever-생성"><span class="header-section-number">3.1.1</span> MultiQueryRetriever 생성</h3>
-<div id="5445fa5c" class="cell" data-execution_count="5">
+<div id="d84a9d99" class="cell" data-execution_count="5">
 <details class="code-fold">
 <summary>코드</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1"></a><span class="im">from</span> langchain.retrievers.multi_query <span class="im">import</span> MultiQueryRetriever</span>
@@ -742,7 +742,7 @@ Assistant API는 실행 중에 함수를 호출할 때 실행을 일시 중지�
 </div>
 <p>아래는 다중 쿼리를 생성하는 중간 과정을 디버깅하기 위하여 실행하는 코드이다.</p>
 <p>먼저 <code>"langchain.retrievers.multi_query"</code> 로거를 가져온다. 이는 <code>logging.getLogger()</code> 함수를 사용하여 수행된다. 그 다음, 이 로거의 로그 레벨을 <code>INFO</code>로 설정하여, <code>INFO</code> 레벨 이상의 로그 메시지만 출력되도록 할 수 있다.</p>
-<div id="366e0324" class="cell" data-execution_count="6">
+<div id="06ac516a" class="cell" data-execution_count="6">
 <details class="code-fold">
 <summary>코드</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1"></a><span class="co"># 쿼리에 대한 로깅 설정</span></span>
@@ -756,7 +756,7 @@ Assistant API는 실행 중에 함수를 호출할 때 실행을 일시 중지�
 <section id="multiqueryretriever-실행-및-결과-분석" class="level3" data-number="3.1.2">
 <h3 data-number="3.1.2" class="anchored" data-anchor-id="multiqueryretriever-실행-및-결과-분석"><span class="header-section-number">3.1.2</span> MultiQueryRetriever 실행 및 결과 분석</h3>
 <p>이 코드는 <code>multiquery_retriever</code> 객체의 <code>invoke</code> 메서드를 사용하여 주어진 <code>question</code>과 관련된 문서를 검색한다. 검색된 문서들은 <code>unique_docs</code>라는 변수에 저장되며, 이 변수의 길이를 확인함으로써 검색된 관련 문서의 총 개수를 알 수 있다. 이 과정을 통해 사용자의 질문에 대한 관련 정보를 효과적으로 찾아내고 그 양을 파악할 수 있다.</p>
-<div id="41266bce" class="cell" data-execution_count="7">
+<div id="bb6c7c4a" class="cell" data-execution_count="7">
 <details class="code-fold">
 <summary>코드</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1"></a><span class="co"># 질문을 정의한다.</span></span>
@@ -806,7 +806,7 @@ OpenAI의 새로운 Assistants API는 대화와 더불어 강력한 도구 접�
 </section>
 <section id="lcel-chain-구현" class="level3" data-number="3.2.2">
 <h3 data-number="3.2.2" class="anchored" data-anchor-id="lcel-chain-구현"><span class="header-section-number">3.2.2</span> LCEL Chain 구현</h3>
-<div id="55adb142" class="cell" data-execution_count="8">
+<div id="056fdd57" class="cell" data-execution_count="8">
 <details class="code-fold">
 <summary>코드</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1"></a><span class="im">from</span> langchain_core.runnables <span class="im">import</span> RunnablePassthrough</span>
@@ -858,7 +858,7 @@ OpenAI의 새로운 Assistants API는 대화와 더불어 강력한 도구 접�
 <section id="custom-chain을-multiqueryretriever에-적용" class="level3" data-number="3.2.4">
 <h3 data-number="3.2.4" class="anchored" data-anchor-id="custom-chain을-multiqueryretriever에-적용"><span class="header-section-number">3.2.4</span> Custom Chain을 MultiQueryRetriever에 적용</h3>
 <p>이전에 생성한 Chain을 <code>MultiQueryRetriever</code>에 전달하여 검색을 수행할 수 있다.</p>
-<div id="99f2e039" class="cell" data-execution_count="9">
+<div id="af003050" class="cell" data-execution_count="9">
 <details class="code-fold">
 <summary>코드</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1"></a>multiquery_retriever <span class="op">=</span> MultiQueryRetriever.from_llm(</span>
@@ -867,7 +867,7 @@ OpenAI의 새로운 Assistants API는 대화와 더불어 강력한 도구 접�
 </details>
 </div>
 <p><code>MultiQueryRetriever</code>를 사용하여 문서를 검색하고 결과를 확인한다.</p>
-<div id="9c12c082" class="cell" data-execution_count="10">
+<div id="300365ad" class="cell" data-execution_count="10">
 <details class="code-fold">
 <summary>코드</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1"></a><span class="co"># 결과</span></span>

@@ -80,9 +80,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../../../../../site_libs/quarto-html/quarto-syntax-highlighting-065a5179aebd64318d7ea99d77b64a9e.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../../../../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../../../../site_libs/bootstrap/bootstrap-52ff868ffc0e454581af15a188b952cf.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../../../../../site_libs/bootstrap/bootstrap-dark-5a6315042eb7711806fdef11cd019c18.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="../../../../../site_libs/bootstrap/bootstrap-52ff868ffc0e454581af15a188b952cf.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="../../../../../site_libs/bootstrap/bootstrap-5a73818b025f47a6d9fdc61b5aee3d21.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../../../../site_libs/bootstrap/bootstrap-dark-0cc05e60083667b8b604a857b4577219.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../../../../site_libs/bootstrap/bootstrap-5a73818b025f47a6d9fdc61b5aee3d21.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -503,7 +503,7 @@ background: #EDF3F9;
 </section>
 <section id="환경-설정" class="level2" data-number="4">
 <h2 data-number="4" class="anchored" data-anchor-id="환경-설정"><span class="header-section-number">4</span> 환경 설정</h2>
-<div id="e9c32d21" class="cell" data-execution_count="1">
+<div id="1f8bbc42" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>코드</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a><span class="co"># API 키를 환경변수로 관리</span></span>
@@ -511,7 +511,7 @@ background: #EDF3F9;
 <span id="cb1-3"><a href="#cb1-3"></a>load_dotenv()</span></code></pre></div><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<div id="977d6b15" class="cell" data-execution_count="2">
+<div id="4b317e74" class="cell" data-execution_count="2">
 <details class="code-fold">
 <summary>코드</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1"></a><span class="co"># LangSmith 추적 설정 (선택사항: 디버깅 및 모니터링용)</span></span>
@@ -519,7 +519,7 @@ background: #EDF3F9;
 <span id="cb2-3"><a href="#cb2-3"></a>logging.langsmith(<span class="st">"CH10-Retriever"</span>)</span></code></pre></div><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<div id="2c53f1ad" class="cell" data-execution_count="3">
+<div id="f05956ee" class="cell" data-execution_count="3">
 <details class="code-fold">
 <summary>코드</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1"></a><span class="co"># 패키지 설치 (테디노트 커스텀 압축기)</span></span>
@@ -529,7 +529,7 @@ background: #EDF3F9;
 </section>
 <section id="헬퍼-함수-문서-출력" class="level2" data-number="5">
 <h2 data-number="5" class="anchored" data-anchor-id="헬퍼-함수-문서-출력"><span class="header-section-number">5</span> 헬퍼 함수: 문서 출력</h2>
-<div id="c63a499b" class="cell" data-execution_count="4">
+<div id="410d41ee" class="cell" data-execution_count="4">
 <details class="code-fold">
 <summary>코드</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1"></a><span class="co"># 문서를 시각적으로 보기 좋게 출력하는 함수</span></span>
@@ -545,7 +545,7 @@ background: #EDF3F9;
 <section id="기본-retriever-설정" class="level2" data-number="6">
 <h2 data-number="6" class="anchored" data-anchor-id="기본-retriever-설정"><span class="header-section-number">6</span> 기본 Retriever 설정</h2>
 <p>벡터 스토어 retriever를 초기화하고 문서를 검색합니다. 기본 retriever는 관련 문서와 무관한 문서를 함께 반환합니다.</p>
-<div id="f810226e" class="cell" data-execution_count="5">
+<div id="d322f914" class="cell" data-execution_count="5">
 <details class="code-fold">
 <summary>코드</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1"></a><span class="im">from</span> langchain_community.document_loaders <span class="im">import</span> TextLoader</span>
@@ -604,7 +604,7 @@ Word2Vec
 <section id="맥락적-압축contextualcompression" class="level2" data-number="7">
 <h2 data-number="7" class="anchored" data-anchor-id="맥락적-압축contextualcompression"><span class="header-section-number">7</span> 맥락적 압축(ContextualCompression)</h2>
 <p><code>LLMChainExtractor</code>는 LLM을 사용하여 문서에서 관련 내용만 추출합니다.</p>
-<div id="5486fd53" class="cell" data-execution_count="6">
+<div id="eef64564" class="cell" data-execution_count="6">
 <details class="code-fold">
 <summary>코드</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1"></a><span class="im">from</span> langchain_teddynote.document_compressors <span class="im">import</span> LLMChainExtractor <span class="co"># deprecated lang chain module을 테디가 다시 커스터마이징함</span></span>
@@ -686,7 +686,7 @@ Semantic Search
 <section id="llmchainfilter-문서-선택-기반-필터링" class="level2" data-number="8">
 <h2 data-number="8" class="anchored" data-anchor-id="llmchainfilter-문서-선택-기반-필터링"><span class="header-section-number">8</span> LLMChainFilter: 문서 선택 기반 필터링</h2>
 <p><code>LLMChainFilter</code>는 문서 내용을 수정하지 않고 관련 문서만 선택하여 반환합니다.</p>
-<div id="3bb07099" class="cell" data-execution_count="7">
+<div id="f337a8af" class="cell" data-execution_count="7">
 <details class="code-fold">
 <summary>코드</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1"></a><span class="im">from</span> langchain_teddynote.document_compressors <span class="im">import</span> LLMChainFilter <span class="co"># 입력쿼리와 관련된 내용만 필터링, 문서 내용 변경은 하지않음</span></span>
@@ -724,7 +724,7 @@ Embedding</code></pre>
 <li><code>EmbeddingsFilter</code> 를 사용하여 지정된 <strong>유사도 임계값(0.86)</strong> 이상인 문서를 필터링 합니다.</li>
 </ul></li>
 </ul>
-<div id="9a362a50" class="cell" data-execution_count="8">
+<div id="ff17edec" class="cell" data-execution_count="8">
 <details class="code-fold">
 <summary>코드</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1"></a><span class="im">from</span> langchain.retrievers.document_compressors <span class="im">import</span> EmbeddingsFilter</span>
@@ -757,7 +757,7 @@ Embedding</code></pre>
 <h2 data-number="9" class="anchored" data-anchor-id="documentcompressorpipeline-다단계-압축"><span class="header-section-number">9</span> DocumentCompressorPipeline: 다단계 압축</h2>
 <p>여러 compressor를 순차적으로 결합하여 최적화된 결과를 얻는다</p>
 <p><strong>파이프라인 단계:</strong> 1. <strong>TextSplitter</strong>: 문서를 작은 청크로 분할 2. <strong>EmbeddingsRedundantFilter</strong>: 중복 문서 제거 (유사도 0.95 이상) 3. <strong>EmbeddingsFilter</strong>: 관련성 필터링 (유사도 0.86 이상) 4. <strong>LLMChainExtractor</strong>: 최종 내용 추출</p>
-<div id="ef2e2276" class="cell" data-execution_count="9">
+<div id="937cdcba" class="cell" data-execution_count="9">
 <details class="code-fold">
 <summary>코드</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1"></a><span class="im">from</span> langchain.retrievers.document_compressors <span class="im">import</span> DocumentCompressorPipeline</span>
@@ -786,7 +786,7 @@ Embedding</code></pre>
 </details>
 </div>
 <p><code>ContextualCompressionRetriever</code>를 초기화하며, <code>base_compressor</code>로 <code>pipeline_compressor</code>를, <code>base_retriever</code>로 <code>retriever</code>를 사용합니다.</p>
-<div id="558c2b7c" class="cell" data-execution_count="10">
+<div id="92109dd0" class="cell" data-execution_count="10">
 <details class="code-fold">
 <summary>코드</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1"></a>compression_retriever <span class="op">=</span> ContextualCompressionRetriever(</span>

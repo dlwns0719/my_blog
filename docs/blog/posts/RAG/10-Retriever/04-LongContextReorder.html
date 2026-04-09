@@ -80,9 +80,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../../../../../site_libs/quarto-html/quarto-syntax-highlighting-065a5179aebd64318d7ea99d77b64a9e.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../../../../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../../../../site_libs/bootstrap/bootstrap-52ff868ffc0e454581af15a188b952cf.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../../../../../site_libs/bootstrap/bootstrap-dark-5a6315042eb7711806fdef11cd019c18.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="../../../../../site_libs/bootstrap/bootstrap-52ff868ffc0e454581af15a188b952cf.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="../../../../../site_libs/bootstrap/bootstrap-5a73818b025f47a6d9fdc61b5aee3d21.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../../../../site_libs/bootstrap/bootstrap-dark-0cc05e60083667b8b604a857b4577219.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../../../../site_libs/bootstrap/bootstrap-5a73818b025f47a6d9fdc61b5aee3d21.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -701,7 +701,7 @@ window.Quarto = {
 <section id="환경-설정" class="level3" data-number="3.1">
 <h3 data-number="3.1" class="anchored" data-anchor-id="환경-설정"><span class="header-section-number">3.1</span> 환경 설정</h3>
 <p>이 실습에서는 다음을 수행한다: 1. <code>Chroma</code> 벡터 저장소로 텍스트 데이터를 저장하고 검색한다 2. 일반 검색 결과와 재정렬된 결과를 비교한다 3. RAG 체인에 <code>LongContextReorder</code>를 통합한다</p>
-<div id="643f56e0" class="cell" data-execution_count="1">
+<div id="8859a76b" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>코드</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a><span class="co"># API 키를 환경변수로 관리하기 위한 설정 파일</span></span>
@@ -711,7 +711,7 @@ window.Quarto = {
 <span id="cb1-5"><a href="#cb1-5"></a>load_dotenv()</span></code></pre></div><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<div id="efd1ed2e" class="cell" data-execution_count="2">
+<div id="b43e5d54" class="cell" data-execution_count="2">
 <details class="code-fold">
 <summary>코드</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1"></a><span class="co"># LangSmith 추적을 설정합니다. https://smith.langchain.com</span></span>
@@ -755,7 +755,7 @@ window.Quarto = {
 </ul></li>
 <li>결과적으로, 원래 유사도가 높은 문서들이 앞과 뒤(즉, 컨텍스트의 처음과 끝)에 배치되고, 덜 관련 있거나 중간 순위 문서들은 가운데 쪽에 모이게 된다.</li>
 </ul>
-<div id="2b5d689d" class="cell" data-execution_count="3">
+<div id="81b2539d" class="cell" data-execution_count="3">
 <details class="code-fold">
 <summary>코드</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1"></a><span class="im">from</span> langchain_core.prompts <span class="im">import</span> PromptTemplate</span>
@@ -788,7 +788,7 @@ window.Quarto = {
 </details>
 </div>
 <p>검색기에 쿼리를 입력하여 검색을 수행합니다.</p>
-<div id="406b25fe" class="cell" data-execution_count="4">
+<div id="f18b957d" class="cell" data-execution_count="4">
 <details class="code-fold">
 <summary>코드</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1"></a>query <span class="op">=</span> <span class="st">"ChatGPT에 대해 무엇을 말해줄 수 있나요?"</span></span>
@@ -827,7 +827,7 @@ Document(page_content='FIFA 월드컵은 네 번째 해마다 열리며, 국제 
 <li>더 관련된 문서는 시작과 끝에 위치시킨다</li>
 </ul></li>
 </ul>
-<div id="011ec1b4" class="cell" data-execution_count="5">
+<div id="cb3c8580" class="cell" data-execution_count="5">
 <details class="code-fold">
 <summary>코드</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1"></a><span class="co"># 문서를 재정렬한다</span></span>
@@ -887,14 +887,14 @@ Document(page_content='ChatGPT는 복잡한 문제를 해결하거나 창의적�
 </section>
 <section id="rag-체인에-context-reordering-통합" class="level2" data-number="4">
 <h2 data-number="4" class="anchored" data-anchor-id="rag-체인에-context-reordering-통합"><span class="header-section-number">4</span> RAG 체인에 Context Reordering 통합</h2>
-<div id="c61ba99d" class="cell" data-execution_count="6">
+<div id="e5f30249" class="cell" data-execution_count="6">
 <details class="code-fold">
 <summary>코드</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1"></a><span class="kw">def</span> format_docs(docs):</span>
 <span id="cb8-2"><a href="#cb8-2"></a>    <span class="cf">return</span> <span class="st">"</span><span class="ch">\n</span><span class="st">"</span>.join([doc.page_content <span class="cf">for</span> i, doc <span class="kw">in</span> <span class="bu">enumerate</span>(docs)])</span></code></pre></div><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<div id="df29aa40" class="cell" data-execution_count="7">
+<div id="25b9cb28" class="cell" data-execution_count="7">
 <details class="code-fold">
 <summary>코드</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1"></a><span class="bu">print</span>(format_docs(docs))</span></code></pre></div><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></div>
@@ -910,7 +910,7 @@ ChatGPT의 기능은 지속적인 학습과 업데이트를 통해 더욱 발전
 아이폰, 아이패드, 맥북 등은 애플이 출시한 대표적인 제품들입니다.
 애플 워치와 에어팟 같은 웨어러블 기기도 애플의 인기 제품군에 속합니다.
 FIFA 월드컵은 네 번째 해마다 열리며, 국제 축구에서 가장 큰 행사입니다.</code></pre>
-<div id="3531063c" class="cell" data-execution_count="8">
+<div id="1450a1fc" class="cell" data-execution_count="8">
 <details class="code-fold">
 <summary>코드</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1"></a><span class="kw">def</span> format_docs(docs):</span>
@@ -932,7 +932,7 @@ FIFA 월드컵은 네 번째 해마다 열리며, 국제 축구에서 가장 큰
 </details>
 </div>
 <p>재정렬된 문서를 출력합니다.</p>
-<div id="a4c54f70" class="cell" data-execution_count="9">
+<div id="2a53383c" class="cell" data-execution_count="9">
 <details class="code-fold">
 <summary>코드</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1"></a><span class="co"># 재정렬된 문서를 출력</span></span>
@@ -949,7 +949,7 @@ FIFA 월드컵은 네 번째 해마다 열리며, 국제 축구에서 가장 큰
 [7] 이건 그냥 내가 아무렇게나 적어본 글입니다. [source: teddylee777@gmail.com]
 [8] 사용자와 대화하는 것처럼 설계된 AI인 ChatGPT는 다양한 질문에 답할 수 있습니다. [source: teddylee777@gmail.com]
 [9] ChatGPT는 복잡한 문제를 해결하거나 창의적인 아이디어를 제안하는 데에도 사용될 수 있습니다. [source: teddylee777@gmail.com]</code></pre>
-<div id="0c1b226c" class="cell" data-execution_count="10">
+<div id="2851b4d0" class="cell" data-execution_count="10">
 <details class="code-fold">
 <summary>코드</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1"></a><span class="im">from</span> langchain.prompts <span class="im">import</span> ChatPromptTemplate</span>
@@ -991,7 +991,7 @@ FIFA 월드컵은 네 번째 해마다 열리며, 국제 축구에서 가장 큰
 <ul>
 <li>재정렬된 문서의 검색 결과도 확인합니다.</li>
 </ul>
-<div id="4562613b" class="cell" data-execution_count="11">
+<div id="5770a8ea" class="cell" data-execution_count="11">
 <details class="code-fold">
 <summary>코드</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1"></a>answer <span class="op">=</span> chain.invoke(</span>
@@ -1010,7 +1010,7 @@ FIFA 월드컵은 네 번째 해마다 열리며, 국제 축구에서 가장 큰
 [8] 사용자와 대화하는 것처럼 설계된 AI인 ChatGPT는 다양한 질문에 답할 수 있습니다. [source: teddylee777@gmail.com]
 [9] ChatGPT는 복잡한 문제를 해결하거나 창의적인 아이디어를 제안하는 데에도 사용될 수 있습니다. [source: teddylee777@gmail.com]</code></pre>
 <p>답변을 출력합니다.</p>
-<div id="caaa92a6" class="cell" data-execution_count="12">
+<div id="c721c488" class="cell" data-execution_count="12">
 <details class="code-fold">
 <summary>코드</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1"></a><span class="bu">print</span>(answer)</span></code></pre></div><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></div>
