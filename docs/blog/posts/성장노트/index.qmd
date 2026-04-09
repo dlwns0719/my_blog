@@ -1,0 +1,21 @@
+---
+title: "성장노트"
+subtitle: 프로젝트를 통해 발견한 업무 성향과 개선 기록
+description: |
+categories:
+  - 성장노트
+author: Junhyun Lee
+date: 04/09/2026
+format:
+  html:
+    page-layout: full
+    code-fold: true
+    toc: true
+    number-sections: true
+draft: False
+---
+
+## 성장노트
+
+### 업무 성향 분석
+1.  [01-데이터 증강 프로젝트에서 발견한 업무 성향 문제점](./01-업무성향분석/01-데이터증강-프로젝트-업무성향-분석.qmd)
